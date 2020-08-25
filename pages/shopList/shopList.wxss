@@ -1,0 +1,66 @@
+/* pages/shopList/shopList.wxss */
+.shop_list {
+  width: calc(100% - 48rpx);
+  height: 100%;
+  margin: 0 auto;
+}
+.item {
+  width: 100%;
+  height: 179rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+.item:last-child {
+  border-bottom: unset;
+}
+.item_img {
+  width: 120rpx;
+  height: 120rpx;
+  margin-right: 20rpx;
+}
+.item_img image {
+  width: 100%;
+  height: 100%;
+}
+.item_des {
+  width: calc(100% - 140rpx);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-flow: column;
+}
+.item_shopname {
+  width: 100%;
+  height: 80rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+.shopname {
+  width: calc(100% - 140rpx);
+  height: 100%;
+}
+.name {
+  width: 100%;
+  margin-bottom: 10rpx;
+}
+.address {
+  width: 100%;
+}
+.distance {
+  width: 120rpx;
+}
+.distance > view {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.distance text {
+  display: inline-block;
+  width: calc(100% - 10rpx);
+}

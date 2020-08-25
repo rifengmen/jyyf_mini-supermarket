@@ -1,0 +1,7 @@
+<!--pages/goodsDetail/goodsDetail.wxml-->
+<view class="container" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
+  <!-- 搜索 start -->
+  <view class="">{{goodsId}}</view>
+  <!-- 搜索 end -->
+</view>
+

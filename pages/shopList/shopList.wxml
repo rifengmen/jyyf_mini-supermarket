@@ -1,0 +1,166 @@
+<!--pages/shopList/shopList.wxml-->
+<view class="container color333333 font28 bgffffff">
+  <scroll-view class="shop_list">
+    <view class="item">
+      <view class="item_img border_r500 overflow">
+        <image src="../../lib/images/logo.jpg"></image>
+      </view>
+      <view class="item_des">
+        <view class="item_shopname">
+          <view class="shopname">
+            <view class="name font32 font_blod ellipsis">金威超市太西店</view>
+            <view class="address color999999 font24 ellipsis">太行西街17号</view>
+          </view>
+          <view class="distance">
+            <view class="dist">
+              <text class="ellipsis">333333.33</text>m
+            </view>
+            <view class="colord94242 font24">离我最近</view>
+          </view>
+        </view>
+        <view class="shopdes color999999 font24">
+          <text>电话：0351-8390251</text>
+          <text>营业时间：06:00 - 23:00</text>
+        </view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="item_img border_r500 overflow">
+        <image src="../../lib/images/logo.jpg"></image>
+      </view>
+      <view class="item_des">
+        <view class="item_shopname">
+          <view class="shopname">
+            <view class="name font32 font_blod ellipsis">金威超市太西店</view>
+            <view class="address color999999 font24 ellipsis">太行西街17号</view>
+          </view>
+          <view class="distance">
+            <view class="dist">
+              <text class="ellipsis">333333.33</text>m
+            </view>
+            <view class="colord94242 font24">离我最近</view>
+          </view>
+        </view>
+        <view class="shopdes color999999 font24">
+          <text>电话：0351-8390251</text>
+          <text>营业时间：06:00 - 23:00</text>
+        </view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="item_img border_r500 overflow">
+        <image src="../../lib/images/logo.jpg"></image>
+      </view>
+      <view class="item_des">
+        <view class="item_shopname">
+          <view class="shopname">
+            <view class="name font32 font_blod ellipsis">金威超市太西店</view>
+            <view class="address color999999 font24 ellipsis">太行西街17号</view>
+          </view>
+          <view class="distance">
+            <view class="dist">
+              <text class="ellipsis">333333.33</text>m
+            </view>
+            <view class="colord94242 font24">离我最近</view>
+          </view>
+        </view>
+        <view class="shopdes color999999 font24">
+          <text>电话：0351-8390251</text>
+          <text>营业时间：06:00 - 23:00</text>
+        </view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="item_img border_r500 overflow">
+        <image src="../../lib/images/logo.jpg"></image>
+      </view>
+      <view class="item_des">
+        <view class="item_shopname">
+          <view class="shopname">
+            <view class="name font32 font_blod ellipsis">金威超市太西店</view>
+            <view class="address color999999 font24 ellipsis">太行西街17号</view>
+          </view>
+          <view class="distance">
+            <view class="dist">
+              <text class="ellipsis">333333.33</text>m
+            </view>
+            <view class="colord94242 font24">离我最近</view>
+          </view>
+        </view>
+        <view class="shopdes color999999 font24">
+          <text>电话：0351-8390251</text>
+          <text>营业时间：06:00 - 23:00</text>
+        </view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="item_img border_r500 overflow">
+        <image src="../../lib/images/logo.jpg"></image>
+      </view>
+      <view class="item_des">
+        <view class="item_shopname">
+          <view class="shopname">
+            <view class="name font32 font_blod ellipsis">金威超市太西店</view>
+            <view class="address color999999 font24 ellipsis">太行西街17号</view>
+          </view>
+          <view class="distance">
+            <view class="dist">
+              <text class="ellipsis">333333.33</text>m
+            </view>
+            <view class="colord94242 font24">离我最近</view>
+          </view>
+        </view>
+        <view class="shopdes color999999 font24">
+          <text>电话：0351-8390251</text>
+          <text>营业时间：06:00 - 23:00</text>
+        </view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="item_img border_r500 overflow">
+        <image src="../../lib/images/logo.jpg"></image>
+      </view>
+      <view class="item_des">
+        <view class="item_shopname">
+          <view class="shopname">
+            <view class="name font32 font_blod ellipsis">金威超市太西店</view>
+            <view class="address color999999 font24 ellipsis">太行西街17号</view>
+          </view>
+          <view class="distance">
+            <view class="dist">
+              <text class="ellipsis">333333.33</text>m
+            </view>
+            <view class="colord94242 font24">离我最近</view>
+          </view>
+        </view>
+        <view class="shopdes color999999 font24">
+          <text>电话：0351-8390251</text>
+          <text>营业时间：06:00 - 23:00</text>
+        </view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="item_img border_r500 overflow">
+        <image src="../../lib/images/logo.jpg"></image>
+      </view>
+      <view class="item_des">
+        <view class="item_shopname">
+          <view class="shopname">
+            <view class="name font32 font_blod ellipsis">金威超市太西店</view>
+            <view class="address color999999 font24 ellipsis">太行西街17号</view>
+          </view>
+          <view class="distance">
+            <view class="dist">
+              <text class="ellipsis">333333.33</text>m
+            </view>
+            <view class="colord94242 font24">离我最近</view>
+          </view>
+        </view>
+        <view class="shopdes color999999 font24">
+          <text>电话：0351-8390251</text>
+          <text>营业时间：06:00 - 23:00</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

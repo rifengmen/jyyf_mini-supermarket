@@ -1,0 +1,57 @@
+<!--pages/register/register.wxml-->
+<view class="container">
+	<!-- logo start -->
+	<view class="logo border_r8 overflow bg71d793">
+		<view class="logo_img border_r500 overflow">
+			<image src="{{shoplogo}}"></image>
+		</view>
+		<text class="apptitle colorffffff font36 font_blod tc">{{apptitle}}</text>
+	</view>
+	<!-- logo end -->
+	<!-- 手机号码 start -->
+	<view class='line'>
+		<view class="line_img">
+			<image src="../../lib/images/phone.png"></image>
+		</view>
+		<view class='right'>
+			<input type='number' class='ipt' bindinput='usercode' value='{{usercode1}}' wx:if="{{usercode1}}"></input>
+			<input type='number' placeholder='请输入手机号' class='ipt' bindinput='usercode' wx:if="{{!usercode1}}"></input>
+		</view>
+	</view>
+	<!-- 手机号码 end -->
+	<!-- 密码 start -->
+	<view class='line'>
+		<text>密码</text>
+		<view class='right'>
+			<input type='text' placeholder='请输入密码' class='ipt' bindinput='password' password wx:if="{{!password1}}" focus='true'></input>
+			<input type='text' class='ipt' bindinput='password' password value='{{password1}}' wx:if="{{password1}}"></input>
+		</view>
+	</view>
+	<!-- 密码 end -->
+	<!-- 记住密码 自动登录 start -->
+	<view class='checkBox'>
+		<checkbox-group>
+			<label class='first' bindtap='change1'>
+				<checkbox value='{{index}}' checked="{{remember}}"></checkbox>
+				<text>记住密码</text>
+			</label>
+			<label class='first' bindtap='change2'>
+				<checkbox value='{{index}}' checked="{{auto}}"></checkbox>
+				<text>自动登录</text>
+			</label>
+		</checkbox-group>
+	</view>
+	<!-- 记住密码 自动登录 end -->
+	<!-- 登录按钮 start -->
+	<view class='btn' bindtap='btn'>
+		登录
+	</view>
+	<!-- 登录按钮 end -->
+	<!-- 注册 找回密码 start -->
+	<view class='box'>
+		<text class='left' bindtap='toNewUser'>注册新用户</text>
+		<text class='rig' bindtap='findPassword'>找回密码</text>
+		<text class='jiechu' bindtap='jiechu'>解除绑定</text>
+	</view>
+	<!-- 注册 找回密码 end -->
+</view>

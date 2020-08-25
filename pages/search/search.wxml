@@ -1,0 +1,38 @@
+<!--pages/search/search.wxml-->
+<view class="container" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
+  <!-- 搜索 start -->
+  <view class="search_cont color666 font26">
+    <view class="search">
+      <view class="search_input fl">
+        <image src="/lib/images/search.png" class="fr"></image>
+        <form action="javascript:return true;">
+          <input
+            type="text"
+            focus
+            confirm-type='search'
+            placeholder="请输入标签进行搜索"
+            class="fl"
+            value="{{search_val}}"
+            bindconfirm="getSearchList"
+            bindfocus="setHistoryFlag"
+            />
+        </form>
+      </view>
+    </view>
+  </view>
+  <!-- 搜索 end -->
+  <!-- 搜索历史 start -->
+  <view class="search_history" wx:if="{{historyFlag}}">搜索历史</view>
+  <!-- 搜索历史 end -->
+  <!-- 搜索结果 start -->
+  <view class="main" wx:else>
+    <view class="searchList">
+      <navigator class="searchitem" wx:for="{{searchList}}" wx:key="*this" url="/pages/goodsDetail/goodsDetail?goodsId={{item.goodsid}}">
+        <view>{{item.name}}</view>
+        <view>{{item.desc}}</view>
+        <view>{{item.goodsid}}</view>
+      </navigator>
+    </view>
+  </view>
+  <!-- 搜索结果 end -->
+</view>

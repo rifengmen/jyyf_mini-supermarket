@@ -1,0 +1,267 @@
+/* 字体尺寸 start */
+.font10 {
+  font-size: 10rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font12 {
+  font-size: 12rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font14 {
+  font-size: 14rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font16 {
+  font-size: 16rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font18 {
+  font-size: 18rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font20 {
+  font-size: 20rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font22 {
+  font-size: 22rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font24 {
+  font-size: 24rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font26 {
+  font-size: 26rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font28 {
+  font-size: 28rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font30 {
+  font-size: 30rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font32 {
+  font-size: 32rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font34 {
+  font-size: 34rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font36 {
+  font-size: 36rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font38 {
+  font-size: 38rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font40 {
+  font-size: 40rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font50 {
+  font-size: 50rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font60 {
+  font-size: 60rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font70 {
+  font-size: 70rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+.font80 {
+  font-size: 80rpx;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+/* 字体尺寸 end */
+
+/* 字体粗细 start */
+.font_lighter {
+  font-weight: lighter;
+}
+.font_blod{
+  font-weight: bold;
+}
+.font_bloder {
+  font-weight: bolder
+}
+.font_inherit {
+  font-weight: inherit;
+}
+/* 字体粗细 end */
+
+/* 字体颜色 start */
+.color000000 {
+  color: #000;
+}
+.color333333 {
+  color: #333;
+}
+.color666666 {
+  color: #666;
+}
+.color999999 {
+  color: #999;
+}
+.colorffffff {
+  color: #ffffff;
+}
+.colorfa6400 {
+  color: #fa6400;
+}
+.colord94242 {
+  color: #d94242;
+}
+.color71d793 {
+  color: #71d793;
+}
+/* 字体颜色 end */
+
+/* 背景颜色 start */
+.bgffffff {
+  background-color: #ffffff;
+}
+.bgcf1322 {
+  background-color: #cf1322;
+}
+.bg71d793 {
+  background-color: #71d793;
+}
+.bgcecece {
+  background-color: #cecece;
+}
+.bge7e7e7 {
+  background-color: #e7e7e7;
+}
+.bgfafafa {
+  background-color: #fafafa;
+}
+.bgf9f9f9 {
+  background-color: #f9f9f9;
+}
+.bgfbd2af {
+  background-color: #fbd2af;
+}
+.bgd17537 {
+  background-color: #D17537;
+}
+/* 背景颜色 end */
+/* 背景渐变 start */
+.bg71d793_linear {
+  background:linear-gradient(180deg,#71d793 0%,#f9f9f9 100%);
+}
+.bgf68e74_linear {
+  background:linear-gradient(180deg,#f68e74 0%,#ffffff 100%);
+}
+/* 背景渐变 end */
+/* 圆角 start */
+.border_r4 {
+  border-radius: 4rpx;
+}
+.border_r6 {
+  border-radius: 6rpx;
+}
+.border_r8 {
+  border-radius: 8rpx;
+}
+.border_r10 {
+  border-radius: 10rpx;
+}
+.border_r12 {
+  border-radius: 12rpx;
+}
+.border_r14 {
+  border-radius: 14rpx;
+}
+.border_r16 {
+  border-radius: 16rpx;
+}
+.border_r18 {
+  border-radius: 18rpx;
+}
+.border_r20 {
+  border-radius: 20rpx;
+}
+.border_r500 {
+  border-radius: 500rpx;
+}
+/* 圆角 end */
+/* 层级 start */
+.z_index_-2 {
+  z-index: -2;
+}
+.z_index_-1 {
+  z-index: -1;
+}
+.z_index_1 {
+  z-index: 1;
+}
+.z_index_2 {
+  z-index: 2;
+}
+.z_index_5 {
+  z-index: 5;
+}
+.z_index_10 {
+  z-index: 10;
+}
+.z_index_20 {
+  z-index: 20;
+}
+.z_index_999 {
+  z-index: 999;
+}
+.z_index_99999 {
+  z-index: 99999;
+}
+/* 层级 end */
+/* 单行文本溢出隐藏 start */
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* 单行文本溢出隐藏 end */
+
+/* 布局方式 start */
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.tl {
+  text-align: left;
+}
+.tc {
+  text-align: center;
+}
+.tr {
+  text-align: right;
+}
+.overflow {
+  overflow: hidden;
+}
+/* 布局方式 end */
+/* 取消微信默认样式 start */
+button::after {
+  content: unset;
+  width: unset;
+  height: unset;
+  position: unset;
+  top: unset;
+  left: unset;
+  border: unset;
+  transform: unset;
+  transform-origin: unset;
+  box-sizing: unset;
+  border-radius: unset;
+  
+}  
+/* 取消微信默认样式 end */

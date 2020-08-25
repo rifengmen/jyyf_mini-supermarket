@@ -1,0 +1,12 @@
+<!--pages/userInfo/userInfo.wxml-->
+<view class="container color333333 font28" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
+	<view class="userinfo_cont">
+		<view class="desc">
+			<view class="picture border_r500 overflow" bindtap="isAuthor">
+				<image src="{{userInfo.avatarUrl || '/lib/images/userinfo.png'}}"></image>
+			</view>
+			<view class="nick_name" bindtap="isAuthor">{{userInfo.nickName || '授权登录'}}</view>
+		</view>
+	</view>
+  <navigator url="/pages/login/login">login</navigator>
+</view>
