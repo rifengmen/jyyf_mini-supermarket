@@ -10,7 +10,7 @@ require("../app.js")
 // 开发地址
 // const _api = ''
 
-const http = (url, data, method) => {
+const http = (url, data, method = 'GET') => {
   let app = getApp()
   let globalData = app.globalData
   return new Promise(function (resolve, reject) {

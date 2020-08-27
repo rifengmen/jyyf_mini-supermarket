@@ -1,22 +1,17 @@
 {
   "pages": [
     "pages/login/login",
-    "pages/register/register",
-    "pages/index/index",
     "pages/shopList/shopList",
-    "pages/author/author",
-
-    "pages/category/category",
-
-    "pages/scan/scan",
-
-    "pages/cart/cart",
-
-    "pages/userInfo/userInfo",
-
+    "pages/index/index",
     "pages/search/search",
-
-    "pages/goodsDetail/goodsDetail"
+    "pages/goodsDetail/goodsDetail",
+    "pages/category/category",
+    "pages/scan/scan",
+    "pages/cart/cart",
+    "pages/userInfo/userInfo",
+    "pages/author/author",
+    "pages/register/register",
+    "pages/payPassword/payPassword"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -62,8 +57,12 @@
     "color": "#666666",
     "selectedColor": "#71d793"
   },
-  "plugins": {
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于获取最近的门店"
+    }
   },
+  "plugins": {},
   "networkTimeout": {
     "request": 10000,
     "downloadFile": 10000

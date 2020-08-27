@@ -2,7 +2,12 @@
 .logo {
   width: 208rpx;
   height: 208rpx;
-  margin: 130rpx auto;
+  margin: 0 auto;
+  padding: 130rpx 0;
+}
+.logo_cont {
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -21,92 +26,81 @@
   width: 100%;
   height: 68rpx;
 }
-
-
 .line {
   width: calc(100% - 80rpx);
   height: 90rpx;
   margin: 0 auto 20rpx auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1rpx solid #e5e5e5;
 }
-
-.line text {
-  float: left;
-  font-size: 30rpx;
-  margin-left: 20rpx;
-}
-
-.right {
-  float: right;
-  border: 1px solid #bebfbf;
-  height: 70rpx;
-  margin-top: 15rpx;
-  width: 65%;
+.line_img {
+  width: 34rpx;
+  height: 50rpx;
   margin-right: 20rpx;
 }
-
-.ipt {
-  width: 92%;
+.line_img image {
+  width: 100%;
   height: 100%;
-  margin: 0 auto;
 }
-
-.first {
-  margin-left: 20rpx;
-  margin-right: 40rpx;
+.line .input {
+  width: calc(100% - 54rpx);
+  height: 100%;
 }
-
-.checkBox {
-  font-size: 30rpx;
-  color: #6a6a6b;
+.input input {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.imgcode .line_img {
+  width: 38rpx;
+  height: 40rpx;
+}
+.imgcode .input {
+  width: calc(100% - 64rpx);
+  height: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
-
-.btn {
-  width: 93%;
-  height: 90rpx;
-  background: #f57043;
-  margin: 30rpx auto;
-  line-height: 90rpx;
-  text-align: center;
-  color: #ffffff;
+.imgcode input {
+  width: calc(100% - 200rpx);
 }
-
-.box {
-  width: 93%;
-  margin: 0 auto;
-  color: #6a6a6b;
+.imgcode .sendcode {
+  width: 180rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+.imgcode .sendcode image {
+  width: 100%;
+  height: 100%;
+}
+.code .line_img {
+  width: 43rpx;
+  height: 35rpx;
+}
+.code .input {
+  width: calc(100% - 64rpx);
+  height: 100%;
   display: flex;
-  justify-content: space-between
+  justify-content: space-between;
+  align-items: center;
 }
-
-.left {
-  float: left;
-  text-decoration: underline;
+.code input {
+  width: calc(100% - 200rpx);
 }
-
-.rig {
-  float: right;
-  text-decoration: underline;
+.code .sendcode {
+  width: 180rpx;
+  height: 48rpx;
+  line-height: 48rpx;
+  border: 1rpx solid #71d793;
 }
-
-.img {
-  width: 300rpx;
-  margin: 100rpx auto;
-  font-size: 30rpx;
-  text-align: center;
-  color: #6a6a6b;
-}
-
-.erweima {
-  width: 300rpx;
-  height: 300rpx;
-}
-
-.floatclear {
-  clear: both;
-}
-
-.jiechu {
-  text-decoration: underline;
+.btn {
+  width: calc(100% - 48rpx);
+  height: 70rpx;
+  line-height: 70rpx;
+  margin: 50rpx auto 0 auto;
 }

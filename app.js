@@ -35,39 +35,36 @@ App({
     baseUrl: 'http://www.91jyrj.com:8088/eshop/',
     // openid
     openid: '',
-    // 会员号
-    memcode: '',
-    // 用户信息
-    userInfo: null,
+    // 会员头像
+    userImg: '',
     // sessionId
     sessionId: '',
     // 搜索内容
     search_val: '',
     // 扫码次数
-    codecount: '',
-    //
-    auto: '',
-    // 用户code
-    usercode: '',
-    // 用户密码
-    password1: '',
-    // 
-    remember: '',
+    codecount: 1,
     // 会员类型
     viptype: '',
-    // 会员code
+    // 会员号
     memcode: '',
     // 用户名称
     memname: '',
+    // 手机号
+    mobile: '',
     // 店铺名称
-    shopname: '',
+    deptname: '',
     // 店铺code
-    shopcode: '',
+    deptcode: '',
+    // 经纬度
+    longitude: '',
+    latitude: '',
+    // 倒计时时长
+    countdownnum: '90',
 
 
 
     // 店铺code
-    shopcode: '',
+    deptcode: '',
     //店面图标
     shoplogo: '../../lib/images/logo.jpg',
     //app首页图

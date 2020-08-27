@@ -2,13 +2,14 @@
 //获取应用实例
 const app = getApp()
 const request = require("../../utils/request.js")
+const toast = require("../../utils/toast.js")
 
 Page({
   data: {
-    // openid
-    openid: app.globalData.openid,
     // 基础路径
     baseUrl: app.globalData.baseUrl,
+    // 门店名称
+    deptname: '',
     // 搜索内容
     search_val: '',
     // 通知列表
@@ -55,9 +56,8 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad () {
-    // 初始化扫码次数
-    app.globalData.codecount = 1
+  onLoad: function (options) {
+    
   },
 
   /**
@@ -73,7 +73,8 @@ Page({
   onShow: function () {
     let self = this
     self.setData({
-      search_val: app.globalData.search_val
+      search_val: app.globalData.search_val,
+      deptname: app.globalData.deptname
     })
   },
 
@@ -96,12 +97,8 @@ Page({
    */
   onPullDownRefresh: function () {
     wx.showLoading({
-      title: '内容刷新中...',
-      mask: true
+      title: '内容刷新中...'
     })
-    // 获取公告列表
-    // 获取banner图列表
-    // 获取商品列表
   },
 
   /**
@@ -118,9 +115,6 @@ Page({
 
   },
 
-
-  // 自定义方法
-
   // 手指触摸后移动(阻止冒泡)
   catchTouchMove (res) {
     return false
@@ -129,35 +123,20 @@ Page({
   // 获取banner图列表
   getBannerList () {
     let data = {}
-    request.http('', data, 'POST').then(res => {
+    request.http('', data).then(res => {
       console.log(res)
     }).catch(error => {
-      console.log(error)
-      wx.showToast({
-        title: error.error,
-        icon: 'none',
-        duration: 2000
-      })
-      setTimeout(function () {
-        wx.hideToast()
-      },3000)
+      toast.toast(error.error)
     })
   },
 
   // 获取公告列表
   getNoticeList () {
     let data = {}
-    request.http('', data, 'POST').then(res => {
-      console.log(res)
+    request.http('', data).then(res => {
+      
     }).catch(error => {
-      wx.showToast({
-        title: error.error,
-        icon: 'none',
-        duration: 2000
-      })
-      setTimeout(function () {
-        wx.hideToast()
-      },3000)
+      toast.toast(error.error)
     })
   }
 })

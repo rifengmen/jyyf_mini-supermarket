@@ -265,3 +265,8 @@ button::after {
   
 }  
 /* 取消微信默认样式 end */
+/* input框 start */
+input::placeholder {
+  color: #999999;
+}
+/* input框 end */

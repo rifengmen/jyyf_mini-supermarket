@@ -1,11 +1,13 @@
 <!--pages/register/register.wxml-->
-<view class="container">
+<view class="container color333333 font28">
 	<!-- logo start -->
-	<view class="logo border_r8 overflow bg71d793">
-		<view class="logo_img border_r500 overflow">
-			<image src="{{shoplogo}}"></image>
+	<view class="logo">
+		<view class="logo_cont border_r8 overflow bg71d793">
+				<view class="logo_img border_r500 overflow">
+				<image src="{{shoplogo}}"></image>
+			</view>
+			<text class="apptitle colorffffff font36 font_blod tc">{{apptitle}}</text>
 		</view>
-		<text class="apptitle colorffffff font36 font_blod tc">{{apptitle}}</text>
 	</view>
 	<!-- logo end -->
 	<!-- 手机号码 start -->
@@ -13,45 +15,37 @@
 		<view class="line_img">
 			<image src="../../lib/images/phone.png"></image>
 		</view>
-		<view class='right'>
-			<input type='number' class='ipt' bindinput='usercode' value='{{usercode1}}' wx:if="{{usercode1}}"></input>
-			<input type='number' placeholder='请输入手机号' class='ipt' bindinput='usercode' wx:if="{{!usercode1}}"></input>
+		<view class='input'>
+			<input type='number' placeholder='请输入手机号' bindinput='setMobile'></input>
 		</view>
 	</view>
 	<!-- 手机号码 end -->
-	<!-- 密码 start -->
-	<view class='line'>
-		<text>密码</text>
-		<view class='right'>
-			<input type='text' placeholder='请输入密码' class='ipt' bindinput='password' password wx:if="{{!password1}}" focus='true'></input>
-			<input type='text' class='ipt' bindinput='password' password value='{{password1}}' wx:if="{{password1}}"></input>
+	<!-- 图片验证码 start -->
+	<view class='line imgcode'>
+		<view class="line_img">
+			<image src="../../lib/images/imgcode.png"></image>
+		</view>
+		<view class='input'>
+			<input type='number' placeholder='请输入图形验证码' bindinput='setImgcode'></input>
+			<view class="sendcode color71d793 border_r500 tc">
+				<image src="{{baseUrl + img}}" bindtap="getVerifyCodeGraphic"></image>
+			</view>
 		</view>
 	</view>
-	<!-- 密码 end -->
-	<!-- 记住密码 自动登录 start -->
-	<view class='checkBox'>
-		<checkbox-group>
-			<label class='first' bindtap='change1'>
-				<checkbox value='{{index}}' checked="{{remember}}"></checkbox>
-				<text>记住密码</text>
-			</label>
-			<label class='first' bindtap='change2'>
-				<checkbox value='{{index}}' checked="{{auto}}"></checkbox>
-				<text>自动登录</text>
-			</label>
-		</checkbox-group>
+	<!-- 图片验证码 end -->
+	<!-- 验证码 start -->
+	<view class='line code'>
+		<view class="line_img">
+			<image src="../../lib/images/code.png"></image>
+		</view>
+		<view class='input'>
+			<input type='number' placeholder='请输入短信验证码' bindinput='setCode'></input>
+			<view class="sendcode color71d793 border_r500 tc" wx:if="{{numflag}}">{{num + ' s'}}</view>
+			<view class="sendcode color71d793 border_r500 tc" wx:else bindtap="countDown">发送验证码</view>
+		</view>
 	</view>
-	<!-- 记住密码 自动登录 end -->
+	<!-- 验证码 end -->
 	<!-- 登录按钮 start -->
-	<view class='btn' bindtap='btn'>
-		登录
-	</view>
+	<view class='btn colorffffff font32 bg71d793 border_r500 tc' bindtap='perfectInfoForWX'>注册</view>
 	<!-- 登录按钮 end -->
-	<!-- 注册 找回密码 start -->
-	<view class='box'>
-		<text class='left' bindtap='toNewUser'>注册新用户</text>
-		<text class='rig' bindtap='findPassword'>找回密码</text>
-		<text class='jiechu' bindtap='jiechu'>解除绑定</text>
-	</view>
-	<!-- 注册 找回密码 end -->
 </view>

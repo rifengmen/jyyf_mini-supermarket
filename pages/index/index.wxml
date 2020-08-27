@@ -7,12 +7,12 @@
 			<!-- 定位 搜索 start -->
 			<view class="search_cont">
 				<!-- 定位 start -->
-				<view class="gps">
+				<navigator url="/pages/shopList/shopList" class="gps">
 					<view class="gps_img">
 						<image src="../../lib/images/gps.png"></image>
 					</view>
-					<text class="font32 colorffffff ellipsis">定位地址定位地址定位地址定位地址定位地址定位地址</text>
-				</view>
+					<text class="font32 colorffffff ellipsis">{{deptname}}</text>
+				</navigator>
 				<!-- 定位 end -->
 				<!-- 搜索 start -->
 				<navigator class="search bgf9f9f9 border_r500" url="/pages/search/search">

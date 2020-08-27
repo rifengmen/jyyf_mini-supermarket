@@ -1,13 +1,14 @@
 // pages/author/author.js
 const app = getApp()
+const request = require("../../utils/request.js")
+const toast = require("../../utils/toast.js")
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    // 用户信息
-    userInfo: {},
     // 是否授权
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -21,32 +22,32 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
+    let self = this
+    let openid = app.globalData.openid
+    let defaultOpenid = app.globalData.defaultOpenid
+    if (openid && openid !== defaultOpenid) {
+      self.setData({
         hasUserInfo: true
       })
       wx.navigateBack()
-    } else if (this.data.canIUse) {
+    } else if (self.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
+        self.setData({
           hasUserInfo: true
         })
+        app.globalData.userImg = res.userInfo.avatarUrl
         wx.navigateBack()
       }
     } else {
+      let self = this
       // 在没有 open-type=getUserInfo 版本的兼容处理
       wx.getUserInfo({
         success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-          wx.navigateBack()
+          app.globalData.userImg = res.userInfo.avatarUrl
+          // 获取code
+          self.getCode()
         }
       })
     }
@@ -103,16 +104,59 @@ Page({
 
   // 获取用户信息
   getUserInfo (e) {
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-    wx.navigateBack()
+    let self = this
+    app.globalData.userImg = e.detail.userInfo.avatarUrl
+    // 获取code
+    self.getCode()
   },
 
   // 取消授权
   cancelAuthor () {
     wx.navigateBack()
-  }
+  },
+
+  // 获取code
+  getCode () {
+    let self = this
+    wx.login({
+      success: res => {
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        if (res.code) {
+          self.setData({
+            code: res.code
+          })
+        } else {
+          toast.toast('登录失败！' + res.errMsg)
+        }
+      },
+      // 接口调用结束
+      complete () {
+        // 获取openid
+        self.getOpenID()
+      }
+    })
+  },
+
+  // 获取openid
+  getOpenID () {
+    let self = this
+    let data = {
+      code: self.data.code
+    }
+    request.http('system/customlogin.do?method=getOpenID', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        app.globalData.openid = res.data.openid
+        self.setData({
+          openid: res.data.openid,
+          hasUserInfo: true
+        })
+        wx.navigateBack()
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
 })
