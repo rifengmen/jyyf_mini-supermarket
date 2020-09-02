@@ -45,7 +45,7 @@
   width: 120rpx;
   height: 40rpx;
   line-height: 40rpx;
-  border: 1rpx solid #71d793;
+  border: 1px solid #71d793;
 }
 .address {
   width: 100%;

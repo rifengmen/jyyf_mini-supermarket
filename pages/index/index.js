@@ -31,12 +31,20 @@ Page({
     recommendList: [],
     // 专区列表
     hotList: [],
-    
-
-    show1: false,
-    show2: false,
-    allC: 0,
-    allM: 0
+    // 弹框组件显示开关
+    dialogFlag: false,
+    // 弹窗title
+    dialogTitle: '',
+    // 弹窗价格
+    dialogPrice: '',
+    // 弹窗斤
+    dialogJin: '',
+    // 弹窗两
+    dialogLiang: '',
+    // 弹窗重量
+    dialogCount: '',
+    // 弹窗合计金额
+    dialogTotalMoney: '',
   },
   /**
    * 生命周期函数--监听页面加载
@@ -82,6 +90,8 @@ Page({
     self.getTheme()
     // 获取专区列表
     self.getHotList()
+    // 更新购物车数量
+    self.getCartCount()
   },
 
   /**
@@ -469,6 +479,112 @@ Page({
                 url: "plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=" + roomid + "&custom_params=${customParams}"
             })
           }
+        }
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 添加购物车
+  addCart (e) {
+    let self = this
+    // 获取添加购物车组件
+    let addcart = self.selectComponent('#addCart')
+    let goods = e.currentTarget.dataset.goods
+    // 判断是否散称
+    if (goods.scaleflag) {
+      self.setData({
+        dialogFlag: true,
+        dialogTitle: goods.Name,
+        dialogPrice: goods.Highpprice,
+      })
+    } else {
+      // 调用子组件，传入商品信息添加购物车
+      addcart.addCart(goods)
+    }
+  },
+
+  // 弹窗取消
+  dialogCancel () {
+    let self = this
+    self.setData({
+      dialogFlag: false,
+      dialogJin: '',
+      dialogLiang: '',
+      dialogCount: '',
+      dialogTotalMoney: '',
+    })
+  },
+
+  // 弹窗确认
+  dialogConfirm () {
+    let self = this
+    // 获取添加购物车组件
+    let addcart = self.selectComponent('#addCart')
+    goods.count = self.data.dialogCount
+    // 调用子组件，传入商品信息添加购物车
+    addcart.addCart(goods)
+  },
+  
+  // 设置弹窗斤
+  setDialogJin (e) {
+    let self = this
+    self.setData({
+      dialogJin: e.detail.value
+    })
+    // 设置弹窗重量
+    self.setDialogCount()
+    // 设置弹窗金额
+    self.setDialogTotalMoney()
+  },
+
+  // 设置弹窗两
+  setDialogLiang (e) {
+    let self = this
+    self.setData({
+      dialogLiang: e.detail.value
+    })
+    // 设置弹窗重量
+    self.setDialogCount()
+    // 设置弹窗金额
+    self.setDialogTotalMoney()
+  },
+
+  // 设置弹窗重量
+  setDialogCount () {
+    let self = this
+    self.setData({
+      dialogCount: (self.data.dialogJin/2 + self.data.dialogLiang/20).toFixed(2)
+    })
+  },
+
+  // 设置弹窗金额
+  setDialogTotalMoney () {
+    let self = this
+    self.setData({
+      dialogTotalMoney: (self.data.dialogPrice * self.data.dialogCount).toFixed(2)
+    })
+  },
+
+  // 更新购物车数量
+  getCartCount () {
+    let self = this
+    let data = {}
+    request.http('bill/shoppingcar.do?method=getCarProductCount', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        if (res.data.data) {
+          wx.setTabBarBadge({
+            index: 3,
+            text: (res.data.data).toString()
+          })
+        } else {
+          wx.removeTabBarBadge({
+            index: 3
+          })
         }
       } else {
         toast.toast(res.message)

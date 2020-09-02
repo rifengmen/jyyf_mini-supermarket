@@ -3,30 +3,44 @@
 	<!-- 商品列表 start -->
 	<view class="main">
 		<view class="goods_list2">
-			<navigator class="goods_item2" wx:for="{{goodsList}}" wx:key="index" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + item.Gdscode + '&title=' + item.Name}}">
-				<view class="item_img">
-					<image src="{{baseUrl + item.Defaultimage}}" mode="aspectFit"></image>
-				</view>
-				<view class="item_desc">
-					<view class="item_name ellipsis2">{{item.Name}}</view>
-					<view class="price_cont">
-						<view class="price" wx:if="{{item.scaleflag}}">
-							<view class="actual_price colorfa6400">￥{{item.Highpprice/2}}/斤</view>
-							<del class="price color999999 font22" wx:if="{{item.Highoprice !== item.Highpprice}}">￥{{item.Highoprice/2}}/斤</del>
-						</view>
-						<view class="price" wx:else>
-							<view class="actual_price colorfa6400">￥{{item.Highpprice}}</view>
-							<del class="price color999999 font22" wx:if="{{item.Highoprice !== item.Highpprice}}">￥{{item.Highoprice}}</del>
-						</view>
-						<view class="cart">
-							<view class="cart_img">
-								<addCart id="addCart" gdscode="{{item.Gdscode}}" buyprice="{{item.Highpprice}}"></addCart>
+			<block>
+				<navigator class="goods_item2 bgffffff" hover-class="none" wx:for="{{goodsList}}" wx:key="index" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + item.Gdscode + '&title=' + item.Name}}">
+					<view class="item_img">
+						<image src="{{baseUrl + item.Defaultimage}}" mode="aspectFit" lazy-load="true"></image>
+					</view>
+					<view class="item_desc">
+						<view class="item_name ellipsis2">{{item.Name}}</view>
+						<view class="price_cont">
+							<view class="price" wx:if="{{item.scaleflag}}">
+								<view class="actual_price colorfa6400">￥{{item.Highpprice/2}}/斤</view>
+								<del class="price color999999 font22" wx:if="{{item.Highoprice !== item.Highpprice}}">￥{{item.Highoprice/2}}/斤</del>
+							</view>
+							<view class="price" wx:else>
+								<view class="actual_price colorfa6400">￥{{item.Highpprice}}</view>
+								<del class="price color999999 font22" wx:if="{{item.Highoprice !== item.Highpprice}}">￥{{item.Highoprice}}</del>
+							</view>
+							<view class="cart">
+								<view class="cart_img">
+									<addCart id="addCart" gdscode="{{item.Gdscode}}" buyprice="{{item.Highpprice}}"></addCart>
+								</view>
 							</view>
 						</view>
 					</view>
+				</navigator>
+			</block>
+			<view class="nodata_cont" wx:if="{{!goodsList.length && getFlag}}">
+				<view class="nodata">
+					<image src="/lib/images/goodsNodata.png"></image>
 				</view>
-			</navigator>
+				<view class="color999999 tc">暂无相关商品～</view>
+			</view>
 		</view>
 	</view>
 	<!-- 商品列表 end -->
+	<!-- 购物车 start -->
+	<view class="tocart bg000000 border_r500">
+		<image src="/lib/images/toCart.png" class="tocart_img border_r500 overflow"></image>
+		<view class="cart_count colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{cartCount}}">{{(cartCount > 99) ? '99+' : cartCount}}</view>
+	</view>
+	<!-- 购物车 end -->
 </view>

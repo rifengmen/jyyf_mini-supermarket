@@ -196,3 +196,89 @@
   height: 100%;
 }
 /* 商品列表2 end */
+/* 无数据样式 start */
+.nodata_cont {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+.nodata {
+  width: 362rpx;
+  height: 280rpx;
+  margin-bottom: 50rpx;
+}
+.nodata image {
+  width: 100%;
+  height: 100%;
+}
+/* 无数据样式 end */
+/* dialog start */
+/* component/dialog/dialog.wxss */
+.dialog_cont {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, .7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dialog {
+  width: 540rpx;
+  height: 470rpx;
+  padding: 40rpx;
+}
+.dialog_title {
+  width: 100%;
+  height: 36rpx;
+  line-height: 40rpx;
+  margin-bottom: 30rpx;
+}
+.dialog_section {
+  width: 100%;
+  height: 52rpx;
+  line-height: 52rpx;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.dialog_section_tit {
+  margin-right: 20rpx;
+}
+.dialog_section_cont {
+  width: 360rpx;
+  height: 100%;
+}
+.dialog_input {
+  width: calc(100% - 50rpx);
+  height: 46rpx;
+  border: 1px solid #999999;
+  padding: 0 24rpx;
+}
+.dialog_btn {
+  width: calc(100% - 80rpx);
+  height: 50rpx;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dialog_cancel {
+  width: 173rpx;
+  height: 48rpx;
+  line-height: 48rpx;
+  border: 1px solid #999999;
+}
+.dialog_confirm {
+  width: 173rpx;
+  height: 48rpx;
+  line-height: 48rpx;
+  border: 1px solid #71d793;
+}
+/* dialog end */

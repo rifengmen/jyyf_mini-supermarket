@@ -199,10 +199,10 @@ Page({
   // 注册
   perfectInfoForWX () {
     let self = this
-    let usercode = self.data.usercode
+    let mobile = self.data.mobile
     let code = self.data.code
     // 验证手机号
-    if (!usercode) {
+    if (!mobile) {
      toast.toast('请填写手机号!')
       return false
     }
@@ -212,7 +212,7 @@ Page({
       return false
     }
     let data = {
-      mobile: usercode,
+      mobile: mobile,
       checkcode: code
     }
     request.http('system/customlogin.do?method=perfectInfoForWX', data).then(result => {

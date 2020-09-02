@@ -31,6 +31,7 @@ Page({
           self.getCode()
         } else {
           // 未授权设置为游客
+          app.globalData.openid = app.globalData.defaultOpenid
           self.setData({
             openid: app.globalData.defaultOpenid
           })

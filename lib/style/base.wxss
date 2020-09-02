@@ -1,83 +1,83 @@
 /* 字体尺寸 start */
 .font10 {
   font-size: 10rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font12 {
   font-size: 12rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font14 {
   font-size: 14rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font16 {
   font-size: 16rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font18 {
   font-size: 18rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font20 {
   font-size: 20rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font22 {
   font-size: 22rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font24 {
   font-size: 24rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font26 {
   font-size: 26rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font28 {
   font-size: 28rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font30 {
   font-size: 30rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font32 {
   font-size: 32rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font34 {
   font-size: 34rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font36 {
   font-size: 36rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font38 {
   font-size: 38rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font40 {
   font-size: 40rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font50 {
   font-size: 50rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font60 {
   font-size: 60rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font70 {
   font-size: 70rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 .font80 {
   font-size: 80rpx;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
 /* 字体尺寸 end */
 
@@ -132,6 +132,9 @@
 }
 .bgcf1322 {
   background-color: #cf1322;
+}
+.bgfa5151 {
+  background-color: #fa5151;
 }
 .bg71d793 {
   background-color: #71d793;

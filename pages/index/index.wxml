@@ -7,7 +7,7 @@
 			<!-- 定位 搜索 start -->
 			<view class="search_cont">
 				<!-- 定位 start -->
-				<navigator url="/pages/shopList/shopList" class="gps">
+				<navigator class="gps" hover-class="none" url="/pages/shopList/shopList">
 					<view class="gps_img">
 						<image src="../../lib/images/gps.png"></image>
 					</view>
@@ -15,7 +15,7 @@
 				</navigator>
 				<!-- 定位 end -->
 				<!-- 搜索 start -->
-				<navigator class="search bgf9f9f9 border_r500" url="/pages/search/search">
+				<navigator class="search bgf9f9f9 border_r500" hover-class="none" url="/pages/search/search">
 					<view class="search_input fl">
 						<image src="/lib/images/search.png" class="fr"></image>
 						<form action="javascript:return true;">
@@ -30,7 +30,7 @@
 			<view class="banner border_r10 overflow bgffffff">
 				<swiper class="banner_swiper" indicator-color="#ffffff" indicator-active-color="#71d793" autoplay="true" circular="true" interval="4000" duration="500" current="{{swiperCurrent}}" bindchange="swiperChange">
 					<swiper-item wx:for="{{bannerList}}" wx:key="index">
-						<image class="swiper_item" src="{{baseUrl + item.Imageurl}}" bindtap="toBannerDetail" data-id="{{item.ImageID}}"></image>
+						<image src="{{baseUrl + item.Imageurl}}" class="swiper_item" lazy-load="true" bindtap="toBannerDetail" data-id="{{item.ImageID}}"></image>
 					</swiper-item>
 				</swiper>
 				<view class="dots">
@@ -73,13 +73,13 @@
 	<!-- 自定义功能区 end -->
 	<!-- 公告 start -->
 	<view class="notice_cont border_r500 overflow bgffffff">
-		<navigator url="/pages/message/noticeList/noticeList" class="notice_img">
+		<navigator class="notice_img" hover-class="none" url="/pages/message/noticeList/noticeList">
 			<image src="../../lib/images/notice.png"></image>
 		</navigator>
 		<view class="notice_list">
 			<swiper class="notice_swiper" autoplay="true" circular="true" interval="5000" vertical="true">
 				<swiper-item wx:for="{{noticeList}}" wx:key="index" catchtouchmove='catchTouchMove'>
-					<navigator url="{{'/pages/message/noticeDetail/noticeDetail?id=' + item.id}}" class="notice_item ellipsis">{{item.title}}</navigator>
+					<navigator class="notice_item ellipsis" hover-class="none" url="{{'/pages/message/noticeDetail/noticeDetail?id=' + item.id}}">{{item.title}}</navigator>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -118,7 +118,7 @@
 				<swiper-item>
 					<view class="goods_item1 border_r10 overflow bgffffff">
 						<view class="item_img overflow">
-							<image src="../../lib/images/ceshi002.png" mode="aspectFit"></image>
+							<image src="../../lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
 						</view>
 						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
 						<view class="price_cont">
@@ -135,7 +135,7 @@
 				<swiper-item>
 					<view class="goods_item1 border_r10 overflow bgffffff">
 						<view class="item_img overflow">
-							<image src="../../lib/images/ceshi002.png"></image>
+							<image src="../../lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
 						</view>
 						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
 						<view class="price_cont">
@@ -152,7 +152,7 @@
 				<swiper-item>
 					<view class="goods_item1 border_r10 overflow bgffffff">
 						<view class="item_img overflow">
-							<image src="../../lib/images/ceshi002.png"></image>
+							<image src="../../lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
 						</view>
 						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
 						<view class="price_cont">
@@ -169,7 +169,7 @@
 				<swiper-item>
 					<view class="goods_item1 border_r10 overflow bgffffff">
 						<view class="item_img overflow">
-							<image src="../../lib/images/ceshi002.png"></image>
+							<image src="../../lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
 						</view>
 						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
 						<view class="price_cont">
@@ -186,7 +186,24 @@
 				<swiper-item>
 					<view class="goods_item1 border_r10 overflow bgffffff">
 						<view class="item_img overflow">
-							<image src="../../lib/images/ceshi002.png"></image>
+							<image src="../../lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
+						</view>
+						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
+						<view class="price_cont">
+							<view class="price">
+								<view class="actual_price colorfa6400 font26">￥20.00</view>
+								<del class="price color999999 font20">￥30.00</del>
+							</view>
+							<view class="cart">
+								<image src="../../lib/images/addcart.png"></image>
+							</view>
+						</view>
+					</view>
+				</swiper-item>
+				<swiper-item>
+					<view class="goods_item1 border_r10 overflow bgffffff">
+						<view class="item_img overflow">
+							<image src="../../lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
 						</view>
 						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
 						<view class="price_cont">
@@ -210,7 +227,7 @@
 		<view class="tit font36 font_blod">每日推荐</view>
 		<view class="recommend border_r10 overflow bgffffff" wx:for="{{recommendList}}" wx:key="index" data-index='{{index}}'>
 			<!-- 标题 start -->
-			<navigator url="{{'/pages/goodsList/goodsList?cateid=' + item.Id + '&title=' + item.storecategoryname}}" class="recommend_tit">
+			<navigator class="recommend_tit" hover-class="none" url="{{'/pages/goodsList/goodsList?cateid=' + item.Id + '&title=' + item.storecategoryname}}">
 				<view class="tit_img" wx:if="{{item.showway === 1}}">
 					<image src="{{baseUrl + item.ico}}"></image>
 				</view>
@@ -219,9 +236,9 @@
 			<!-- 标题 end -->
 			<!-- 商品列表 start -->
 			<view class='goods_list1'>
-				<navigator url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + goods.Gdscode + '&title=' + goods.Name}}" class="goods_item1 border_r10 overflow" wx:for-item="goods" wx:for-index="gindex" wx:for="{{item.gdscodelist}}" wx:key="gindex">
+				<navigator class="goods_item1 border_r10 overflow" hover-class="none" wx:for-item="goods" wx:for-index="gindex" wx:for="{{item.gdscodelist}}" wx:key="gindex" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + goods.Gdscode + '&title=' + goods.Name}}">
 					<view class="item_img overflow">
-						<image src="{{baseUrl + goods.Defaultimage}}" mode="aspectFit"></image>
+						<image src="{{baseUrl + goods.Defaultimage}}" mode="aspectFit" lazy-load="true"></image>
 					</view>
 					<view class="item_name ellipsis">{{goods.Name}}</view>
 					<view class="price_cont">
@@ -234,7 +251,7 @@
 							<del class="price color999999 font20" wx:if="{{goods.Highoprice !== goods.Highpprice}}">￥{{goods.Highoprice}}</del>
 						</view>
 						<view class="cart">
-							<addCart id="addCart" gdscode="{{goods.Gdscode}}" buyprice="{{goods.Highpprice}}"></addCart>
+							<addCart id="addCart" catchtap="addCart" data-goods="{{goods}}"></addCart>
 						</view>
 					</view>
 				</navigator>
@@ -243,4 +260,42 @@
 		</view>
 	</view>
 	<!-- recommendList end -->
+	<!-- dialog start -->
+	<view class="dialog_cont color999999 font28 z_index_99999" wx:if="{{dialogFlag}}">
+	<view class="dialog border_r20 bgffffff ellipsis">
+		<view class="dialog_title font32 font_blod color333333">{{dialogTitle}}</view>
+		<view class="dialog_section">
+			<view class="dialog_section_tit">单价：</view>
+			<view class="dialog_section_cont color333333">{{dialogPrice/2}}元/斤</view>
+		</view>
+		<view class="dialog_section">
+			<view class="dialog_section_tit">斤数(500g)：</view>
+			<view class="dialog_section_cont color333333">
+        <input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入斤数" value="{{dialogJin}}" bindinput="setDialogJin"></input>
+      </view>
+		</view>
+		<view class="dialog_section">
+			<view class="dialog_section_tit">两数(50g)：</view>
+			<view class="dialog_section_cont color333333">
+        <input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入两数" value="{{dialogLiang}}" bindinput="setDialogLiang"></input>
+      </view>
+		</view>
+		<view class="dialog_section">
+			<view class="dialog_section_tit">重量相当于：</view>
+			<view class="dialog_section_cont color333333">{{dialogCount}}kg</view>
+		</view>
+		<view class="dialog_section">
+			<view class="dialog_section_tit">大致金额：</view>
+			<view class="dialog_section_cont color333333">
+				<text class="colorf6400">{{dialogTotalMoney}}</text>
+				<text>元</text>
+			</view>
+		</view>
+		<view class="dialog_btn">
+			<view class="dialog_cancel border_r500 bgffffff tc" bindtap="dialogCancel">取消</view>
+			<view class="dialog_confirm colorffffff border_r500 bg71d793 tc" bindtap="dialogConfirm">确认</view>
+		</view>
+	</view>
+</view>
+	<!-- dialog end -->
 </view>

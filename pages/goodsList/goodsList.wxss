@@ -4,3 +4,28 @@
   height: 100vh;
   margin: 0 auto;
 }
+.tocart {
+  position: fixed;
+  bottom: 80rpx;
+  left: 40rpx;
+  width: 100rpx;
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, .1);
+}
+.tocart_img {
+  width: 100%;
+  height: 100%;
+}
+.cart_count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 36rpx;
+  height: 36rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,4 +1,4 @@
-// pages/component/addcart.js
+// component/addCart/addCart.js
 require('../../app.js')
 const request = require('../../utils/request.js')
 const toast = require('../../utils/toast.js')
@@ -8,26 +8,7 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    // 商品code
-    gdscode: {
-      type: String,
-      value: ''
-    },
-    // 商品价格
-    buyprice: {
-      type: String,
-      value: ''
-    },
-    // 商品数量
-    count: {
-      type: String,
-      value: '1'
-    },
-    // 扫码购标识，扫码购为1，否则为0
-    barflag: {
-      type: String,
-      value: '0'
-    }
+    
   },
 
   /**
@@ -36,6 +17,14 @@ Component({
   data: {
     // 用户id
     userid: getApp().globalData.userid,
+    // 商品数量
+    count: 1,
+    // 商品code
+    gdscode: '',
+    // 商品价格
+    buyprice: '',
+    // 扫码购标识，扫码购为1，否则为0
+    barflag: 0,
   },
 
   /**
@@ -43,29 +32,62 @@ Component({
    */
   methods: {
     // 加入购物车
-    addCart () {
+    addCart (goods) {
       let self = this
       let app = getApp()
       let data = {
         Userid: app.globalData.userid,
-        Gdscode: self.data.gdscode,
-        Count: self.data.count,
-        Buyprice: self.data.buyprice,
+        Gdscode: goods.Gdscode,
+        Count: goods.count || self.data.count,
+        Buyprice: goods.Highpprice,
         barflag: self.data.barflag,
-        Actuslmoney: self.data.buyprice,
+        Actuslmoney: goods.Highpprice,
       }
-      console.log(app, '11')
-      let authorFlag = app.authorFlag()
-      if (!authorFlag) {
-        console.log('22')
+      // 验证是否授权
+      if (!app.authorFlag()) {
         wx.navigateTo({
           url: '/pages/author/author',
         })
+        return false
+      }
+      // 验证是否绑定手机号码
+      if (!app.memcodeflag()) {
+        wx.navigateTo({
+          url: '/pages/register/register',
+        })
+        return false
       }
       request.http('bill/shoppingcar.do?method=inputIntoCar', data).then(result => {
         let res = result.data
         if (res.flag === 1) {
           toast.toast('添加成功')
+          // 更新购物车数量
+          self.getCartCount()
+        } else {
+          toast.toast(res.message)
+        }
+      }).catch(error => {
+        toast.toast(error.error)
+      })
+    },
+
+    // 更新购物车数量
+    getCartCount () {
+      let self = this
+      let data = {}
+      request.http('bill/shoppingcar.do?method=getCarProductCount', data).then  (result => {
+        let res = result.data
+        if (res.flag === 1) {
+          if (res.data.data) {
+            wx.setTabBarBadge({
+              index: 3,
+              text: (res.data.data).toString()
+            })
+          } else {
+            wx.removeTabBarBadge({
+              index: 3
+            })
+          }
         } else {
           toast.toast(res.message)
         }

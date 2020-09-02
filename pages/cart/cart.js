@@ -19,7 +19,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    
   },
 
   /**
@@ -75,11 +75,6 @@ Page({
 
   // 获取购物车列表
   getCartList () {
-    if (!app.authorFlag()) {
-      wx.navigateTo({
-        url: '/pages/author/author',
-      })
-    }
     let self = this
     let data = {}
     request.http('bill/shoppingcar.do?method=listMyCar', data).then(result => {

@@ -62,6 +62,8 @@ App({
     latitude: '',
     // 倒计时时长
     countdownnum: '90',
+    // 购物车数量
+    cartCount: 0,
 
 
 

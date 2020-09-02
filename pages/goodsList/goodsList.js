@@ -44,7 +44,11 @@ Page({
     // 热门分类标志 默认0
     hotCategoryflag: 1,
     // 商品列表
-    goodsList: []
+    goodsList: [],
+    // 购物车数量
+    cartCount: 0,
+    // 请求开关
+    getFlag: false,
   },
 
   /**
@@ -81,7 +85,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let self = this
+    // 更新购物车数量
+    self.getCartCount()
   },
 
   /**
@@ -104,7 +110,8 @@ Page({
   onPullDownRefresh: function () {
     let self = this
     self.setData({
-      page: 1
+      page: 1,
+      goodsList: [],
     })
     // 请求对应商品列表
     self.sendMethods()
@@ -117,8 +124,11 @@ Page({
     let self = this
     // 计算总页数
     let totalPage = Math.ceil(self.data.rowCount / self.data.count)
+    // 下一页
+    let page = self.data.page
+    page++
     self.setData({
-      page: page++
+      page: page
     })
     if (self.data.page > totalPage) {
       toast.toast('暂无更多商品')
@@ -230,18 +240,46 @@ Page({
 
   // 发送列表请求
   getList (data, url) {
+    let self = this
     wx.showLoading({
       title: '正在加载',
     })
-    let self = this
+    // 设置请求开关
+    self.setData({
+      getFlag: false
+    })
     request.http(url, data).then(result => {
       wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         wx.hideLoading()
+        let goodsList = self.data.goodsList
+        goodsList.push(...res.data)
         self.setData({
-          goodsList: res.data,
+          goodsList: goodsList,
           rowCount: res.rowCount
+        })
+      } else {
+        toast.toast(res.message)
+      }
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 更新购物车数量
+  getCartCount () {
+    let self = this
+    let data = {}
+    request.http('bill/shoppingcar.do?method=getCarProductCount', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          cartCount: res.data.data
         })
       } else {
         toast.toast(res.message)

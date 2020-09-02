@@ -1,27 +1,35 @@
 <!--pages/cart/cart.wxml-->
-<view class="container color333333 font28">
+<view class="container color333333 font28 bgf9f9f9">
 	<!-- 商品列表 start -->
 	<view class="main">
 		<view class="goods_list2">
-			<navigator class="goods_item2" wx:for="{{cartList}}" wx:key="index" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + item.Gdscode + '&title=' + item.Pname}}">
-				<view class="item_img">
-					<image src="{{baseUrl + item.Pimg}}" mode="aspectFit"></image>
-				</view>
-				<view class="item_desc">
-					<view class="item_name ellipsis2">{{item.Pname}}</view>
-					<view class="price_cont">
-						<view class="price">
-							<view class="actual_price colorfa6400">￥{{item.actualprice}}</view>
-							<del class="price color999999 font22">￥{{item.saleprice}}</del>
-						</view>
-						<view class="cart">
-							<view class="cart_img">
-								<image src="../../lib/images/addcart.png"></image>
+			<block wx:if="{{cartList.length}}">
+				<navigator class="goods_item2" hover-class="none" wx:for="{{cartList}}" wx:key="index" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + item.Gdscode + '&title=' + item.Pname}}">
+					<view class="item_img">
+						<image src="{{baseUrl + item.Pimg}}" mode="aspectFit"></image>
+					</view>
+					<view class="item_desc">
+						<view class="item_name ellipsis2">{{item.Pname}}</view>
+						<view class="price_cont">
+							<view class="price">
+								<view class="actual_price colorfa6400">￥{{item.actualprice}}</view>
+								<del class="price color999999 font22">￥{{item.saleprice}}</del>
+							</view>
+							<view class="cart">
+								<view class="cart_img">
+									<image src="../../lib/images/addcart.png"></image>
+								</view>
 							</view>
 						</view>
 					</view>
+				</navigator>
+			</block>
+			<view class="nodata_cont" wx:else>
+				<view class="nodata">
+					<image src="/lib/images/cartNodata.png"></image>
 				</view>
-			</navigator>
+				<view class="color999999 tc">您的购物车空空如也快去购物吧～</view>
+			</view>
 		</view>
 	</view>
 	<!-- 商品列表 end -->

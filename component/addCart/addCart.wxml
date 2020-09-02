@@ -1,4 +1,4 @@
-<!--pages/component/addcart.wxml-->
-<view class="addcart" catchtap="addCart">
-  <image src="/lib/images/addcart.png"></image>
+<!--component/addCart/addCart.wxml-->
+<view class="addcart">
+  <image src="/lib/images/addcart.png" class="addcart_img"></image>
 </view>

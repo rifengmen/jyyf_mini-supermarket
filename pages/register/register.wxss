@@ -96,7 +96,7 @@
   width: 180rpx;
   height: 48rpx;
   line-height: 48rpx;
-  border: 1rpx solid #71d793;
+  border: 1px solid #71d793;
 }
 .btn {
   width: calc(100% - 48rpx);
