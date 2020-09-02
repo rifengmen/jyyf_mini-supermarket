@@ -1,3 +1,7 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "addCart": "/component/addCart/addCart"
+  },
+  "navigationBarBackgroundColor": "#71d793",
+  "navigationBarTextStyle": "white"
 }

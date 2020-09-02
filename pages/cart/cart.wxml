@@ -1,2 +1,28 @@
 <!--pages/cart/cart.wxml-->
-<text>pages/cart/cart.wxml</text>
+<view class="container color333333 font28">
+	<!-- 商品列表 start -->
+	<view class="main">
+		<view class="goods_list2">
+			<navigator class="goods_item2" wx:for="{{cartList}}" wx:key="index" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + item.Gdscode + '&title=' + item.Pname}}">
+				<view class="item_img">
+					<image src="{{baseUrl + item.Pimg}}" mode="aspectFit"></image>
+				</view>
+				<view class="item_desc">
+					<view class="item_name ellipsis2">{{item.Pname}}</view>
+					<view class="price_cont">
+						<view class="price">
+							<view class="actual_price colorfa6400">￥{{item.actualprice}}</view>
+							<del class="price color999999 font22">￥{{item.saleprice}}</del>
+						</view>
+						<view class="cart">
+							<view class="cart_img">
+								<image src="../../lib/images/addcart.png"></image>
+							</view>
+						</view>
+					</view>
+				</view>
+			</navigator>
+		</view>
+	</view>
+	<!-- 商品列表 end -->
+</view>

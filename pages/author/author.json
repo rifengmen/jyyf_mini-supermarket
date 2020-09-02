@@ -1,8 +1,4 @@
 {
   "usingComponents": {},
-  "backgroundTextStyle": "light",
-  "navigationBarBackgroundColor": "#ffffff",
-  "navigationBarTitleText": "授权登录",
-  "navigationBarTextStyle": "black",
-  "enablePullDownRefresh": false
+  "navigationBarTitleText": "授权登录"
 }

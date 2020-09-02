@@ -1,11 +1,18 @@
 // pages/cart/cart.js
+const app = getApp()
+const request = require("../../utils/request.js")
+const toast = require("../../utils/toast.js")
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    // 基础路径
+    baseUrl: app.globalData.baseUrl,
+    // 购物车列表
+    cartList: [],
   },
 
   /**
@@ -26,7 +33,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let self = this
+    // 获取购物车列表
+    self.getCartList()
   },
 
   /**
@@ -62,5 +71,28 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  // 获取购物车列表
+  getCartList () {
+    if (!app.authorFlag()) {
+      wx.navigateTo({
+        url: '/pages/author/author',
+      })
+    }
+    let self = this
+    let data = {}
+    request.http('bill/shoppingcar.do?method=listMyCar', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          cartList: res.data.carList
+        })
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
 })

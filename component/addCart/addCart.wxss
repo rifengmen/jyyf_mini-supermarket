@@ -1,0 +1,9 @@
+/* pages/component/addcart.wxss */
+.addcart {
+  width: 100%;
+  height: 100%;
+}
+.addcart image {
+  width: 100%;
+  height: 100%;
+}

@@ -1,4 +1,8 @@
 // pages/search/search.js
+const app = getApp()
+const request = require("../../utils/request.js")
+const toast = require("../../utils/toast.js")
+
 Page({
 
   /**
@@ -7,22 +11,28 @@ Page({
   data: {
     // 搜索内容
     search_val: '',
-    // 搜索历史
-    historyFlag: true,
-    // 商品列表
-    searchList: [],
-    // 页数
-    page: 1,
-    // 每页条数
-    pageSize: 15
+    // 搜索历史列表
+    hostoryList: [
+      {name: '搜索1'},
+      {name: '搜索2'},
+      {name: '搜索3'},
+      {name: '搜索4'},
+      {name: '搜索5'},
+      {name: '搜索6'},
+      {name: '搜索'},
+      {name: '搜索8'},
+      {name: '搜索9'},
+      {name: '搜索10'},
+    ],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      search_val: getApp().globalData.search_val
+    let self = this
+    self.setData({
+      search_val: app.globalData.search_val
     })
   },
 
@@ -74,46 +84,67 @@ Page({
   onShareAppMessage: function () {
 
   },
-  // 获取搜索结果列表
-  getSearchList (e) {
-    var globalData = getApp().globalData
-    globalData.search_val = e.detail.value
-    this.setData({
-      search_val: globalData.search_val,
-      historyFlag: false,
-      searchList: [
-        {
-          name: '商品名称000001',
-          desc: '测试商品000001介绍，测试商品000001介绍，测试商品000001介绍，测试商品000001介绍',
-          goodsid: '000001'
-        },
-        {
-          name: '商品名称000002',
-          desc: '测试商品000002介绍，测试商品000001介绍，测试商品000001介绍，测试商品000001介绍',
-          goodsid: '000002'
-        },
-        {
-          name: '商品名称000003',
-          desc: '测试商品000003介绍，测试商品000001介绍，测试商品000001介绍，测试商品000001介绍',
-          goodsid: '000003'
-        },
-        {
-          name: '商品名称000004',
-          desc: '测试商品000004介绍，测试商品000001介绍，测试商品000001介绍，测试商品000001介绍',
-          goodsid: '000004'
-        },
-        {
-          name: '商品名称000005',
-          desc: '测试商品000005介绍，测试商品000001介绍，测试商品000001介绍，测试商品000001介绍',
-          goodsid: '000005'
-        }
-      ]
+
+  // 获取搜索记录
+  getHistoryList () {
+    let self = this
+    let data = {}
+    request.http('', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          hostoryList: res.data
+        })
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
     })
   },
-  // 设置搜索历史展示开关
-  setHistoryFlag () {
-    this.setData({
-      historyFlag: true
+
+  // 清空搜索记录
+  clearHistoryList () {
+    console.log('清空搜索记录')
+  },
+
+  // 去搜索列表页
+  toGoodsList (e) {
+    let sname = e.detail.value
+    let title = '搜索列表'
+    app.globalData.search_val = sname
+    wx.navigateTo({
+      url: '/pages/goodsList/goodsList?sname=' + sname + '&title=' + title,
     })
-  }
+  },
+
+  // 获取商品列表
+  getGoodsList (e) {
+    let self = this
+    let data = {
+      Sname: e.detail.value,
+      Sortflg: self.data.sortflg,
+      sorttype: self.data.sorttype,
+      Page: self.data.page,
+      pageSize: self.data.count,
+      barcode: '',
+      Scode: '',
+    }
+    request.http('info/goods.do?method=getProductListByshortcode', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        wx.hideLoading()
+        app.globalData.search_val = e.detail.value
+        self.setData({
+          search_val: e.detail.value,
+          historyFlag: false,
+          goodsList: res.data
+        })
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
 })

@@ -13,8 +13,8 @@ Page({
     distanceFlag: true,
     // 门店列表
     shopList: [],
-    // 用户会员号
-    memcode: '',
+    // 用户id
+    userid: '',
   },
 
   /**
@@ -36,13 +36,13 @@ Page({
    */
   onShow: function () {
     let self = this
-    // 隐藏返回首页按钮
+    // 隐藏小房子按钮
     wx.hideHomeButton()
     wx.showLoading({
       title: '正在加载',
     })
     self.setData({
-      memcode: app.globalData.memcode
+      userid: app.globalData.userid
     })
     // 获取定位
     self.getLocation()
@@ -138,9 +138,9 @@ Page({
     let index = e.currentTarget.dataset.index
     let deptcode = self.data.shopList[index].deptcode
     let deptname = self.data.shopList[index].deptname
-    let memcode = self.data.memcode
+    let userid = self.data.userid
     let data = {
-      userid: memcode,
+      userid: userid,
       Deptcode: deptcode
     }
     request.http('system/dept.do?method=changeDept', data).then(result => {

@@ -109,6 +109,9 @@
 .color999999 {
   color: #999;
 }
+.colord0cfcf {
+  color: #d0cfcf;
+}
 .colorffffff {
   color: #ffffff;
 }
@@ -138,6 +141,12 @@
 }
 .bge7e7e7 {
   background-color: #e7e7e7;
+}
+.bge2dede {
+  background-color: #e2dede;
+}
+.bgf0f0f0 {
+  background-color: #f0f0f0;
 }
 .bgfafafa {
   background-color: #fafafa;
@@ -221,13 +230,20 @@
   z-index: 99999;
 }
 /* 层级 end */
-/* 单行文本溢出隐藏 start */
+/* 文本溢出隐藏 start */
 .ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* 单行文本溢出隐藏 end */
+.ellipsis2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+/* 文本溢出隐藏 end */
 
 /* 布局方式 start */
 .fl {

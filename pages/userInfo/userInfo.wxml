@@ -9,7 +9,7 @@
 				<view wx:if="{{!openidType}}" bindtap="isAuthor">游客，请授权登录</view>
 				<view wx:else>{{memname}}</view>
 				<navigator url="/pages/register/register" wx:if="{{openidType && !memcode}}">访客，点击此处绑定手机，注册/登录</navigator>
-				<navigator url="/pages/payPassword/payPassword" wx:if="{{memcode}}" class="colorffffff font24 bg71d793 tc border_r500">会员卡 > </navigator>
+				<navigator url="/pages/userInfo/payPassword/payPassword" wx:if="{{memcode}}" class="colorffffff font24 bg71d793 tc border_r500">会员卡 > </navigator>
 			</view>
 		</view>
 	</view>

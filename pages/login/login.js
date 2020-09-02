@@ -10,9 +10,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // 店铺logo
+    // 商家logo
     shoplogo: app.globalData.shoplogo,
-    // apptitle
+    // app标题
     apptitle: app.globalData.apptitle,
     // openid
     openid: '',
@@ -52,7 +52,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    // 隐藏小房子按钮
+    wx.hideHomeButton()
   },
 
   /**
@@ -157,13 +158,15 @@ Page({
       if(res.flag === 1){
         // cookie
         let sessionId = result.header['Set-Cookie']
+        // 用户id
+        let userid = res.data.customerid
         // 用户名称
         let memname = res.data.memname
         // 用户code
         let memcode = res.data.memcode
-        // 店铺名称
+        // 门店名称
         let deptname = res.data.shopInfo.shopname
-        // 店铺code
+        // 门店code
         let deptcode = res.data.shopInfo.shopcode
         // 用户身份标识，0：批发客户（app功能）；1：普通客户
         let iscustomer = res.data.iscustomer
@@ -188,11 +191,12 @@ Page({
         if (sessionId) {
           app.globalData.sessionId = sessionId
         }
+        app.globalData.userid = userid
         app.globalData.memname = memname
         app.globalData.memcode = memcode
         app.globalData.deptname = deptname
         app.globalData.deptcode = deptcode
-        // 未设置默认店铺先选择店铺
+        // 未设置默门店先选择门店
         if (!isdefaultdept){
           wx.redirectTo({
             url: '../shopList/shopList',

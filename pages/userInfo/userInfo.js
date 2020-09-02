@@ -26,6 +26,13 @@ Page({
    */
   onLoad: function (options) {
     let self = this
+    let openid = app.globalData.openid
+    let defaultOpenid = app.globalData.defaultOpenid
+    if (openid && openid !== defaultOpenid) {
+      self.setData({
+        openidType: 1
+      })
+    }
     // 是否授权登录
     self.isAuthor()
   },
@@ -126,19 +133,21 @@ Page({
       if(res.flag === 1){
         // cookie
         let sessionId = result.header['Set-Cookie']
+        // 用户id
+        let userid = res.data.customerid
         // 用户名称
         let memname = res.data.memname
         // 用户code
         let memcode = res.data.memcode
-        // 店铺名称
+        //门店名称
         let deptname = res.data.shopInfo.shopname
-        // 店铺code
+        // 门店code
         let deptcode = res.data.shopInfo.shopcode
         // 用户身份标识，0：批发客户（app功能）；1：普通客户
         let iscustomer = res.data.iscustomer
         // 卡支付标志，1：开通；0：未开通；null：未知
         let coflag = res.data.coflag
-        // 是否设置默认店铺
+        // 是否设置默认门店
         let isdefaultdept = res.data.isdefaultdept
         // 只允许普通客户登录小程序
         if (iscustomer !== 1) {
@@ -157,6 +166,7 @@ Page({
         if (sessionId) {
           app.globalData.sessionId = sessionId
         }
+        app.globalData.userid = userid
         app.globalData.memname = memname
         app.globalData.memcode = memcode
         app.globalData.deptname = deptname
@@ -168,7 +178,7 @@ Page({
             memcode: memcode
           })
         }
-        // 未设置默认店铺先选择店铺
+        // 未设置默认门店先选择门店
         // if (!isdefaultdept && memcode){
         //   wx.redirectTo({
         //     url: '../shopList/shopList',

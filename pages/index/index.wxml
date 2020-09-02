@@ -27,88 +27,82 @@
 			</view>
 			<!-- 定位 搜索 end -->
 			<!-- banner start -->
-			<view class="border_r10 overflow bgffffff">
-				<swiper class="banner_swiper" indicator-dots="true" indicator-color="#ffffff" indicator-active-color="#71d793" autoplay="true" circular="true" interval="3000" duration="500">
+			<view class="banner border_r10 overflow bgffffff">
+				<swiper class="banner_swiper" indicator-color="#ffffff" indicator-active-color="#71d793" autoplay="true" circular="true" interval="4000" duration="500" current="{{swiperCurrent}}" bindchange="swiperChange">
 					<swiper-item wx:for="{{bannerList}}" wx:key="index">
-						<image class="swiper_item" src="{{item}}"></image>
+						<image class="swiper_item" src="{{baseUrl + item.Imageurl}}" bindtap="toBannerDetail" data-id="{{item.ImageID}}"></image>
 					</swiper-item>
 				</swiper>
+				<view class="dots">
+					<block wx:for="{{bannerList}}" wx:key="index">
+						<view class="dot {{index === swiperCurrent ? 'active bg71d793' : 'bgffffff'}} border_r500"></view>
+					</block>
+				</view>
 			</view>
 			<!-- banner end -->
 		</view>
 	</view>
 	<!-- 广告位 end -->
-	<!-- 分类 start -->
-	<view class="index_cate overflow">
-		<view class="cate_item fl" wx:for="{{modulePictureList}}" wx:key="index">
-			<view class="cate_img border_r500 overflow">
-				<image src="{{item.picturename}}"></image>
+	<!-- 自定义功能区 start -->
+	<view class="auto_cate overflow">
+		<scroll-view class="cate_list" scroll-x enable-flex="true" bindscroll="conScroll" bindscrolltolower="conScrLower" upper-threshold="50rpx" bindscrolltoupper="conScrUpper" scroll-with-animation>
+			<view class="auto_down">
+				<view class="cate_item down" wx:for="{{modulePictureList}}" wx:key="index" wx:if="{{index%2 === 0}}" data-moduletype="{{item.moduletype}}" bindtap="toAutoCate">
+					<view class="cate_img border_r500 overflow">
+						<image src="{{baseUrl + item.picturename}}"></image>
+					</view>
+					<text class="cate_name ellipsis">{{item.modulename}}</text>
+				</view>
 			</view>
-			<text class="cate_name ellipsis">{{item.modulename}}</text>
-		</view>
+			<view class="auto_up">
+				<view class="cate_item up" wx:for="{{modulePictureList}}" wx:key="index" wx:if="{{index%2 === 1}}" data-moduletype="{{item.moduletype}}" bindtap="toAutoCate">
+					<view class="cate_img border_r500 overflow">
+						<image src="{{baseUrl + item.picturename}}"></image>
+					</view>
+					<text class="cate_name ellipsis">{{item.modulename}}</text>
+				</view>
+			</view>
+		</scroll-view>
+		<!-- 自定义滚动条 start -->
+		<block wx:if="{{modulePictureList.length > 10}}">
+			<view class="con-sc-line-one {{lefOrRigOne ? 'con-sc-line-one-left' : 'con-sc-line-one-right'}} border_r500 bg71d793" animation="{{animationData}}"></view>
+			<view class='con-sc-line-two border_r500 bge2dede' style='left: {{leftTwo}}'></view>
+		</block>
+		<!-- 自定义滚动条 end -->
 	</view>
-	<!-- 分类 end -->
+	<!-- 自定义功能区 end -->
 	<!-- 公告 start -->
 	<view class="notice_cont border_r500 overflow bgffffff">
-		<view class="notice_img">
+		<navigator url="/pages/message/noticeList/noticeList" class="notice_img">
 			<image src="../../lib/images/notice.png"></image>
-		</view>
+		</navigator>
 		<view class="notice_list">
 			<swiper class="notice_swiper" autoplay="true" circular="true" interval="5000" vertical="true">
-				<swiper-item wx:for="{{noticeList}}" wx:key="index">
-					<view class="notice_item ellipsis">{{item}}</view>
+				<swiper-item wx:for="{{noticeList}}" wx:key="index" catchtouchmove='catchTouchMove'>
+					<navigator url="{{'/pages/message/noticeDetail/noticeDetail?id=' + item.id}}" class="notice_item ellipsis">{{item.title}}</navigator>
 				</swiper-item>
 			</swiper>
 		</view>
 	</view>
 	<!-- 公告 end -->
+	<!-- 海报区 start -->
+	<view class="poster overflow">
+		<view class="poster_img fl" wx:for="{{posterList}}" wx:key="index" bindtap="toBannerDetail" data-id="{{item.ImageID}}">
+			<image src="{{baseUrl + item.Imageurl}}" mode="aspectFit"></image>
+		</view>
+	</view>
+	<!-- 海报区 end -->
 	<!-- 专区 start -->
 	<view class="zone overflow">
-		<view class="zone_item border_r10 bgfbd2af fl">
+		<navigator url="{{'/pages/goodsList/goodsList?cateid=' + item.Id + '&title=' + item.storecategoryname}}" class="zone_item border_r10 bgfbd2af fl" wx:for="{{hotList}}" wx:key="index">
 			<view class="zone_itemtit">
-				<view class="zone_itemname colorfa6400 font34 font_blod">拼团专区</view>
+				<view class="zone_itemname colorfa6400 font32 font_blod ellipsis">{{item.storecategoryname}}</view>
 				<view class="tozone border_r500 colorffffff font24 bgd17537 tc">去看看</view>
 			</view>
-			<view class="zone_itemimg">
-				<image src="../../lib/images/cateceshi001.png"></image>
+			<view class="zone_itemimg border_r500 overflow bgffffff">
+				<image src="{{baseUrl + item.ico}}" mode="aspectFit"></image>
 			</view>
-		</view>
-		<view class="zone_item border_r10 bgfbd2af fl">
-			<view class="zone_itemtit">
-				<view class="zone_itemname colorfa6400 font34 font_blod">拼团专区</view>
-				<view class="tozone border_r500 colorffffff font24 bgd17537 tc">去看看</view>
-			</view>
-			<view class="zone_itemimg">
-				<image src="../../lib/images/cateceshi001.png"></image>
-			</view>
-		</view>
-		<view class="zone_item border_r10 bgfbd2af fl">
-			<view class="zone_itemtit">
-				<view class="zone_itemname colorfa6400 font34 font_blod">拼团专区</view>
-				<view class="tozone border_r500 colorffffff font24 bgd17537 tc">去看看</view>
-			</view>
-			<view class="zone_itemimg">
-				<image src="../../lib/images/cateceshi001.png"></image>
-			</view>
-		</view>
-		<view class="zone_item border_r10 bgfbd2af fl">
-			<view class="zone_itemtit">
-				<view class="zone_itemname colorfa6400 font34 font_blod">拼团专区</view>
-				<view class="tozone border_r500 colorffffff font24 bgd17537 tc">去看看</view>
-			</view>
-			<view class="zone_itemimg">
-				<image src="../../lib/images/cateceshi001.png"></image>
-			</view>
-		</view>
-		<view class="zone_item border_r10 bgfbd2af fl">
-			<view class="zone_itemtit">
-				<view class="zone_itemname colorfa6400 font34 font_blod">拼团专区</view>
-				<view class="tozone border_r500 colorffffff font24 bgd17537 tc">去看看</view>
-			</view>
-			<view class="zone_itemimg">
-				<image src="../../lib/images/cateceshi001.png"></image>
-			</view>
-		</view>
+		</navigator>
 	</view>
 	<!-- 专区 end -->
 	<!-- 限时抢购 start -->
@@ -119,17 +113,18 @@
 			</view>
 			<text class="colorffffff font32 font_blod">限时抢购</text>
 		</view>
-		<view class="list overflow">
+		<view class="goods_list1 overflow">
 			<swiper class="timeslimit_swiper" autoplay="true" circular="true" interval="8000" display-multiple-items="3">
 				<swiper-item>
-					<view class="item border_r10 overflow">
+					<view class="goods_item1 border_r10 overflow bgffffff">
 						<view class="item_img overflow">
-							<image src="../../lib/images/ceshi002.png"></image>
+							<image src="../../lib/images/ceshi002.png" mode="aspectFit"></image>
 						</view>
 						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
 						<view class="price_cont">
 							<view class="price">
 								<view class="actual_price colorfa6400 font26">￥20.00</view>
+								<del class="price color999999 font20">￥30.00</del>
 							</view>
 							<view class="cart">
 								<image src="../../lib/images/addcart.png"></image>
@@ -138,7 +133,7 @@
 					</view>
 				</swiper-item>
 				<swiper-item>
-					<view class="item border_r10 overflow">
+					<view class="goods_item1 border_r10 overflow bgffffff">
 						<view class="item_img overflow">
 							<image src="../../lib/images/ceshi002.png"></image>
 						</view>
@@ -146,6 +141,7 @@
 						<view class="price_cont">
 							<view class="price">
 								<view class="actual_price colorfa6400 font26">￥20.00</view>
+								<del class="price color999999 font20">￥30.00</del>
 							</view>
 							<view class="cart">
 								<image src="../../lib/images/addcart.png"></image>
@@ -154,7 +150,7 @@
 					</view>
 				</swiper-item>
 				<swiper-item>
-					<view class="item border_r10 overflow">
+					<view class="goods_item1 border_r10 overflow bgffffff">
 						<view class="item_img overflow">
 							<image src="../../lib/images/ceshi002.png"></image>
 						</view>
@@ -162,6 +158,7 @@
 						<view class="price_cont">
 							<view class="price">
 								<view class="actual_price colorfa6400 font26">￥20.00</view>
+								<del class="price color999999 font20">￥30.00</del>
 							</view>
 							<view class="cart">
 								<image src="../../lib/images/addcart.png"></image>
@@ -170,7 +167,7 @@
 					</view>
 				</swiper-item>
 				<swiper-item>
-					<view class="item border_r10 overflow">
+					<view class="goods_item1 border_r10 overflow bgffffff">
 						<view class="item_img overflow">
 							<image src="../../lib/images/ceshi002.png"></image>
 						</view>
@@ -178,6 +175,7 @@
 						<view class="price_cont">
 							<view class="price">
 								<view class="actual_price colorfa6400 font26">￥20.00</view>
+								<del class="price color999999 font20">￥30.00</del>
 							</view>
 							<view class="cart">
 								<image src="../../lib/images/addcart.png"></image>
@@ -186,7 +184,7 @@
 					</view>
 				</swiper-item>
 				<swiper-item>
-					<view class="item border_r10 overflow">
+					<view class="goods_item1 border_r10 overflow bgffffff">
 						<view class="item_img overflow">
 							<image src="../../lib/images/ceshi002.png"></image>
 						</view>
@@ -194,6 +192,7 @@
 						<view class="price_cont">
 							<view class="price">
 								<view class="actual_price colorfa6400 font26">￥20.00</view>
+								<del class="price color999999 font20">￥30.00</del>
 							</view>
 							<view class="cart">
 								<image src="../../lib/images/addcart.png"></image>
@@ -206,99 +205,42 @@
 		<!-- 限时抢购 end -->
 	</view>
 	<!-- 限时抢购 end -->
-	<!-- 限时抢购 start -->
-	<view class="timeslimit border_r10 bgf68e74_linear">
-		<view class="tit">
-			<view class="tit_img">
-				<image src="../../lib/images/timeslimit.png"></image>
+	<!-- recommendList start -->
+	<view class="recommendList">
+		<view class="tit font36 font_blod">每日推荐</view>
+		<view class="recommend border_r10 overflow bgffffff" wx:for="{{recommendList}}" wx:key="index" data-index='{{index}}'>
+			<!-- 标题 start -->
+			<navigator url="{{'/pages/goodsList/goodsList?cateid=' + item.Id + '&title=' + item.storecategoryname}}" class="recommend_tit">
+				<view class="tit_img" wx:if="{{item.showway === 1}}">
+					<image src="{{baseUrl + item.ico}}"></image>
+				</view>
+				<view class='tit_text font32 font_blod' wx:if="{{item.showway === 2}}">{{item.storecategoryname}}</view>
+			</navigator>
+			<!-- 标题 end -->
+			<!-- 商品列表 start -->
+			<view class='goods_list1'>
+				<navigator url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + goods.Gdscode + '&title=' + goods.Name}}" class="goods_item1 border_r10 overflow" wx:for-item="goods" wx:for-index="gindex" wx:for="{{item.gdscodelist}}" wx:key="gindex">
+					<view class="item_img overflow">
+						<image src="{{baseUrl + goods.Defaultimage}}" mode="aspectFit"></image>
+					</view>
+					<view class="item_name ellipsis">{{goods.Name}}</view>
+					<view class="price_cont">
+						<view class="price" wx:if="{{goods.scaleflag}}">
+							<view class="actual_price colorfa6400 font26">￥{{goods.Highpprice/2}}/斤</view>
+							<del class="price color999999 font20" wx:if="{{goods.Highoprice !== goods.Highpprice}}">￥{{goods.Highoprice/2}}/斤</del>
+						</view>
+						<view class="price" wx:else>
+							<view class="actual_price colorfa6400 font26">￥{{goods.Highpprice}}</view>
+							<del class="price color999999 font20" wx:if="{{goods.Highoprice !== goods.Highpprice}}">￥{{goods.Highoprice}}</del>
+						</view>
+						<view class="cart">
+							<addCart id="addCart" gdscode="{{goods.Gdscode}}" buyprice="{{goods.Highpprice}}"></addCart>
+						</view>
+					</view>
+				</navigator>
 			</view>
-			<text class="colorffffff font32 font_blod">限时抢购</text>
+			<!-- 商品列表 end -->
 		</view>
-		<view class="list overflow">
-			<swiper class="timeslimit_swiper" autoplay="true" circular="true" interval="8000" display-multiple-items="3">
-				<swiper-item>
-					<view class="item border_r10 overflow">
-						<view class="item_img overflow">
-							<image src="../../lib/images/ceshi002.png"></image>
-						</view>
-						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400 font26">￥20.00</view>
-							</view>
-							<view class="cart">
-								<image src="../../lib/images/addcart.png"></image>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="item border_r10 overflow">
-						<view class="item_img overflow">
-							<image src="../../lib/images/ceshi002.png"></image>
-						</view>
-						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400 font26">￥20.00</view>
-							</view>
-							<view class="cart">
-								<image src="../../lib/images/addcart.png"></image>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="item border_r10 overflow">
-						<view class="item_img overflow">
-							<image src="../../lib/images/ceshi002.png"></image>
-						</view>
-						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400 font26">￥20.00</view>
-							</view>
-							<view class="cart">
-								<image src="../../lib/images/addcart.png"></image>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="item border_r10 overflow">
-						<view class="item_img overflow">
-							<image src="../../lib/images/ceshi002.png"></image>
-						</view>
-						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400 font26">￥20.00</view>
-							</view>
-							<view class="cart">
-								<image src="../../lib/images/addcart.png"></image>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="item border_r10 overflow">
-						<view class="item_img overflow">
-							<image src="../../lib/images/ceshi002.png"></image>
-						</view>
-						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400 font26">￥20.00</view>
-							</view>
-							<view class="cart">
-								<image src="../../lib/images/addcart.png"></image>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
-			</swiper>
-		</view>
-		<!-- 限时抢购 end -->
 	</view>
-	<!-- 限时抢购 end -->
+	<!-- recommendList end -->
 </view>

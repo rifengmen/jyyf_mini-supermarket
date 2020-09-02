@@ -1,4 +1,4 @@
-// pages/payPassword/payPassword.js
+// pages/userInfo/balance/balance.js
 Page({
 
   /**

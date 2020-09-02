@@ -1,0 +1,32 @@
+<!--pages/goodsList/goodsList.wxml-->
+<view class="container color333333 font28">
+	<!-- 商品列表 start -->
+	<view class="main">
+		<view class="goods_list2">
+			<navigator class="goods_item2" wx:for="{{goodsList}}" wx:key="index" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + item.Gdscode + '&title=' + item.Name}}">
+				<view class="item_img">
+					<image src="{{baseUrl + item.Defaultimage}}" mode="aspectFit"></image>
+				</view>
+				<view class="item_desc">
+					<view class="item_name ellipsis2">{{item.Name}}</view>
+					<view class="price_cont">
+						<view class="price" wx:if="{{item.scaleflag}}">
+							<view class="actual_price colorfa6400">￥{{item.Highpprice/2}}/斤</view>
+							<del class="price color999999 font22" wx:if="{{item.Highoprice !== item.Highpprice}}">￥{{item.Highoprice/2}}/斤</del>
+						</view>
+						<view class="price" wx:else>
+							<view class="actual_price colorfa6400">￥{{item.Highpprice}}</view>
+							<del class="price color999999 font22" wx:if="{{item.Highoprice !== item.Highpprice}}">￥{{item.Highoprice}}</del>
+						</view>
+						<view class="cart">
+							<view class="cart_img">
+								<addCart id="addCart" gdscode="{{item.Gdscode}}" buyprice="{{item.Highpprice}}"></addCart>
+							</view>
+						</view>
+					</view>
+				</view>
+			</navigator>
+		</view>
+	</view>
+	<!-- 商品列表 end -->
+</view>
