@@ -139,6 +139,9 @@
 .bg71d793 {
   background-color: #71d793;
 }
+.bg329e56 {
+  background-color: #329e56;
+}
 .bgcecece {
   background-color: #cecece;
 }
@@ -289,3 +292,8 @@ input::placeholder {
   color: #999999;
 }
 /* input框 end */
+/* del标签 start */
+del {
+  text-decoration: line-through;
+}
+/* del标签 end */

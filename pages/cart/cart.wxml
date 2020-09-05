@@ -1,36 +1,113 @@
 <!--pages/cart/cart.wxml-->
-<view class="container color333333 font28 bgf9f9f9">
+<view class="container color333333 font28 bgf0f0f0">
+	<!-- 编辑栏 start -->
+	<view class="editor bgffffff">
+		<view class="deptname">
+			<view class="shop">
+				<image src="/lib/images/shop.png" mode="aspectFit"></image>
+			</view>
+			<view class="name ellipsis">{{deptname}}</view>
+		</view>
+		<view class="btn" bindtap="editorCartList">{{editorFlag ? '完成' : '编辑'}}</view>
+	</view>
+	<!-- 编辑栏 end -->
 	<!-- 商品列表 start -->
 	<view class="main">
-		<view class="goods_list2">
-			<block wx:if="{{cartList.length}}">
-				<navigator class="goods_item2" hover-class="none" wx:for="{{cartList}}" wx:key="index" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + item.Gdscode + '&title=' + item.Pname}}">
-					<view class="item_img">
-						<image src="{{baseUrl + item.Pimg}}" mode="aspectFit"></image>
-					</view>
-					<view class="item_desc">
-						<view class="item_name ellipsis2">{{item.Pname}}</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400">￥{{item.actualprice}}</view>
-								<del class="price color999999 font22">￥{{item.saleprice}}</del>
-							</view>
-							<view class="cart">
-								<view class="cart_img">
-									<image src="../../lib/images/addcart.png"></image>
+		<view class="goods_cont bgffffff border_r10 overflow" wx:if="{{cartList.length}}">
+			<view class="goods_list2">
+				<view class="goods" wx:for="{{cartList}}" wx:key="index">
+					<radio value="" checked="{{item.flag}}" bindtap="setFlag" data-index="{{index}}" wx:if="{{editorFlag}}"></radio>
+					<navigator class="goods_item2" hover-class="none" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + item.Gdscode + '&title=' + item.Pname}}">
+						<view class="item_img">
+							<image src="{{baseUrl + item.Pimg}}" mode="aspectFit"></image>
+						</view>
+						<view class="item_desc">
+							<view class="item_name ellipsis2">{{item.Pname}}</view>
+							<view class="price_cont">
+								<view class="price">
+									<view class="actual_price colorfa6400">￥{{item.actualprice}}</view>
+									<del class="color999999 font22">￥{{item.saleprice}}</del>
+								</view>
+								<view class="cart">
+									<view class="editor_cart bgf0f0f0 border_r500">
+										<view class="subtrack_cart btn border_r500 overflow" catchtap="subtrackCart" data-index="{{index}}">
+											<image src="/lib/images/subtrack.png"></image>
+										</view>
+										<input class="input_cart font24 tc" type="number" value="{{item.buyAMT}}"></input>
+										<view class="add_cart btn border_r500 overflow" catchtap="addCart" data-index="{{index}}">
+											<image src="/lib/images/add.png"></image>
+										</view>
+									</view>
 								</view>
 							</view>
 						</view>
-					</view>
-				</navigator>
-			</block>
-			<view class="nodata_cont" wx:else>
-				<view class="nodata">
-					<image src="/lib/images/cartNodata.png"></image>
+					</navigator>
 				</view>
-				<view class="color999999 tc">您的购物车空空如也快去购物吧～</view>
 			</view>
+		</view>
+		<view class="nodata_cont" wx:if="{{!cartList.length && getFlag}}">
+			<view class="nodata">
+				<image src="/lib/images/cartNodata.png"></image>
+			</view>
+			<view class="color999999 tc">您的购物车空空如也快去购物吧～</view>
 		</view>
 	</view>
 	<!-- 商品列表 end -->
+	<!-- 结算栏 start -->
+	<view class="account bgffffff">
+		<view class="account_cont" wx:if="{{!editorFlag}}">
+			<view class="total">
+				<view class="total_tit">合计：</view>
+				<view class="total_num colorfa6400 font36 font_blod ellipsis">￥{{actMoney}}</view>
+				<view class="">优惠：￥{{discountMoney}}</view>
+			</view>
+			<view class="toEditorOrder colorffffff font32 border_r500 bg71d793 tc" bindtap="toEditorOrder">去结算</view>
+		</view>
+		<view class="group" wx:else>
+			<view class="all_btn" bindtap="radioChange">
+				<radio id="all" value="" checked="{{allFlag}}"></radio>
+				<label class="font24" for="all">{{allFlag ? '不选' : '全选'}}</label>
+			</view>
+			<view class="delete_btn color666666 font32 border_r500 bgffffff tc" bindtap="deleteBtn">删除</view>
+		</view>
+	</view>
+	<!-- 结算栏 end -->
+	<!-- dialog start -->
+	<view class="dialog_cont color999999 font28 z_index_99999" wx:if="{{dialogFlag}}">
+		<view class="dialog border_r20 bgffffff ellipsis">
+			<view class="dialog_title font32 font_blod color333333">{{dialogTitle}}</view>
+			<view class="dialog_section">
+				<view class="dialog_section_tit">单价：</view>
+				<view class="dialog_section_cont color333333">{{dialogPrice/2}}元/斤</view>
+			</view>
+			<view class="dialog_section">
+				<view class="dialog_section_tit">斤数(500g)：</view>
+				<view class="dialog_section_cont color333333">
+					<input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入斤数" value="{{dialogJin}}" bindinput="setDialogJin"></input>
+				</view>
+			</view>
+			<view class="dialog_section">
+				<view class="dialog_section_tit">两数(50g)：</view>
+				<view class="dialog_section_cont color333333">
+					<input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入两数" value="{{dialogLiang}}" bindinput="setDialogLiang"></input>
+				</view>
+			</view>
+			<view class="dialog_section">
+				<view class="dialog_section_tit">重量相当于：</view>
+				<view class="dialog_section_cont color333333">{{dialogCount}}kg</view>
+			</view>
+			<view class="dialog_section">
+				<view class="dialog_section_tit">大致金额：</view>
+				<view class="dialog_section_cont color333333">
+					<text class="colorf6400">{{dialogTotalMoney}}</text>
+					<text>元</text>
+				</view>
+			</view>
+			<view class="dialog_btn">
+				<view class="dialog_cancel border_r500 bgffffff tc" bindtap="dialogClose">取消</view>
+				<view class="dialog_confirm colorffffff border_r500 bg71d793 tc" bindtap="dialogConfirm">确认</view>
+			</view>
+		</view>
+	</view>
+	<!-- dialog end -->
 </view>

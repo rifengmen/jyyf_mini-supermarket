@@ -8,7 +8,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    
+    from: {
+      type: String,
+      value: ''
+    }
   },
 
   /**
@@ -62,7 +65,7 @@ Component({
         if (res.flag === 1) {
           toast.toast('添加成功')
           // 更新购物车数量
-          self.getCartCount()
+          self.triggerEvent('getCartCount')
         } else {
           toast.toast(res.message)
         }
@@ -72,28 +75,29 @@ Component({
     },
 
     // 更新购物车数量
-    getCartCount () {
-      let self = this
-      let data = {}
-      request.http('bill/shoppingcar.do?method=getCarProductCount', data).then  (result => {
-        let res = result.data
-        if (res.flag === 1) {
-          if (res.data.data) {
-            wx.setTabBarBadge({
-              index: 3,
-              text: (res.data.data).toString()
-            })
-          } else {
-            wx.removeTabBarBadge({
-              index: 3
-            })
-          }
-        } else {
-          toast.toast(res.message)
-        }
-      }).catch(error => {
-        toast.toast(error.error)
-      })
-    },
+    // getCartCount () {
+    //   let self = this
+    //   let data = {}
+    //   request.http('bill/shoppingcar.do?method=getCarProductCount', data).then  (result => {
+    //     let res = result.data
+    //     if (res.flag === 1) {
+    //       self.triggerEvent('getCartCount')
+    //       // if (res.data.data) {
+    //       //   wx.setTabBarBadge({
+    //       //     index: 3,
+    //       //     text: (res.data.data).toString()
+    //       //   })
+    //       // } else {
+    //       //   wx.removeTabBarBadge({
+    //       //     index: 3
+    //       //   })
+    //       // }
+    //     } else {
+    //       toast.toast(res.message)
+    //     }
+    //   }).catch(error => {
+    //     toast.toast(error.error)
+    //   })
+    // },
   }
 })

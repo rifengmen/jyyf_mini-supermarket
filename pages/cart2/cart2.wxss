@@ -1,0 +1,6 @@
+/* pages/cart2/cart2.wxss */
+.main {
+  width: calc(100% - 48rpx);
+  height: 100vh;
+  margin: 0 auto;
+}

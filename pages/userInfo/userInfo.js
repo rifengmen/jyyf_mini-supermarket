@@ -178,6 +178,8 @@ Page({
             memcode: memcode
           })
         }
+        // 更新购物车
+        self.getCartCount()
         // 未设置默认门店先选择门店
         // if (!isdefaultdept && memcode){
         //   wx.redirectTo({
@@ -190,5 +192,30 @@ Page({
     }).catch(error => {
       toast.toast(error.error)
     })
-  }
+  },
+
+  // 更新购物车
+  getCartCount () {
+    let self = this
+    let data = {}
+    request.http('bill/shoppingcar.do?method=getCarProductCount', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        if (res.data.data) {
+          wx.setTabBarBadge({
+            index: 3,
+            text: (res.data.data).toString()
+          })
+        } else {
+          wx.removeTabBarBadge({
+            index: 3
+          })
+        }
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
 })

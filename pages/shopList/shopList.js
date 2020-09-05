@@ -40,6 +40,7 @@ Page({
     wx.hideHomeButton()
     wx.showLoading({
       title: '正在加载',
+      mask: true,
     })
     self.setData({
       userid: app.globalData.userid

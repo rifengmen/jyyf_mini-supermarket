@@ -23,9 +23,9 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 36rpx;
-  height: 36rpx;
+  height: 34rpx;
+  padding: 0 17rpx;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
 }

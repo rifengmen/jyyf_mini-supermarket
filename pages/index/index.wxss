@@ -97,8 +97,8 @@ swiper.banner_swiper {
 /* 广告位 end */
 /* 自定义功能区 start */
 .auto_cate {
-  width: calc(100% - 48rpx);
-  margin: 24rpx auto;
+  width: calc(100% - 36rpx);
+  margin: 12rpx auto;
   position: relative;
 }
 .cate_list {
@@ -287,11 +287,10 @@ swiper.timeslimit_swiper {
   width: 100%;
   height: auto;
   margin-bottom: 14rpx;
-  padding: 10rpx 0;
 }
 .recommend_tit .tit_img {
   width: 100%;
-  height: 172rpx;
+  height: 314rpx;
 }
 .recommend_tit .tit_img image {
   width: 100%;

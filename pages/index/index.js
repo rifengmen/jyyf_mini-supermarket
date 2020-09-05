@@ -45,6 +45,8 @@ Page({
     dialogCount: '',
     // 弹窗合计金额
     dialogTotalMoney: '',
+    // 商品信息
+    goods: '',
   },
   /**
    * 生命周期函数--监听页面加载
@@ -98,7 +100,9 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    let self = this
+    // 弹窗关闭
+    self.dialogClose()
   },
 
   /**
@@ -281,7 +285,7 @@ Page({
         case 16:
           // 购物评价
           wx.navigateTo({
-            url: '/pages/userInfo/commentList/commentList',
+            url: '/pages/auto/commentList/commentList',
           })
           break;
         case 17:
@@ -500,6 +504,7 @@ Page({
         dialogFlag: true,
         dialogTitle: goods.Name,
         dialogPrice: goods.Highpprice,
+        goods: goods,
       })
     } else {
       // 调用子组件，传入商品信息添加购物车
@@ -507,8 +512,8 @@ Page({
     }
   },
 
-  // 弹窗取消
-  dialogCancel () {
+  // 弹窗关闭
+  dialogClose () {
     let self = this
     self.setData({
       dialogFlag: false,
@@ -524,9 +529,11 @@ Page({
     let self = this
     // 获取添加购物车组件
     let addcart = self.selectComponent('#addCart')
+    let goods = self.data.goods
     goods.count = self.data.dialogCount
     // 调用子组件，传入商品信息添加购物车
     addcart.addCart(goods)
+    self.dialogClose()
   },
   
   // 设置弹窗斤

@@ -1,7 +1,170 @@
 <!--pages/goodsDetail/goodsDetail.wxml-->
-<view class="container color333333 font28" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
-  <!-- 搜索 start -->
-  <view class="">商品详情</view>
-  <!-- 搜索 end -->
+<view class="container color333333 font28 bgf0f0f0" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
+	<!-- banner start -->
+	<view class="banner border_r10 overflow bgffffff">
+		<swiper class="banner_swiper" indicator-color="#ffffff" indicator-active-color="#71d793" autoplay="true" circular="true" interval="4000" duration="500" current="{{swiperCurrent}}" bindchange="swiperChange">
+			<swiper-item wx:for="{{goodsDetail.images}}" wx:key="index">
+				<image src="{{baseUrl + item.image}}" class="swiper_item" lazy-load="true" mode="aspectFit"></image>
+			</swiper-item>
+		</swiper>
+		<view class="dots" wx:if="{{goodsDetail.images.length > 1}}">
+			<block wx:for="{{goodsDetail.images}}" wx:key="index">
+				<view class="dot {{index === swiperCurrent ? 'active bg71d793' : 'bgffffff'}} border_r500"></view>
+			</block>
+		</view>
+	</view>
+	<!-- banner end -->
+	<!-- goodsname start -->
+	<view class="goods_desc1 bgffffff">
+		<view class="goods_name">
+			<view class="name font32 font_blod">{{goodsDetail.Name}}</view>
+			<view class="price" wx:if="{{goodsDetail.scaleflag}}">
+				<view class="actual_price colorfa6400 font38 font_blod">￥{{goodsDetail.preferential/2}}/斤</view>
+				<del class="color999999 font28" wx:if="{{goodsDetail.preferential !== goodsDetail.originalcost}}">￥{{goodsDetail.originalcost/2}}/斤</del>
+			</view>
+			<view class="price" wx:else>
+				<view class="actual_price colorfa6400 font38 font_blod">￥{{goodsDetail.preferential}}</view>
+				<del class="color999999 font28" wx:if="{{goodsDetail.preferential !== goodsDetail.originalcost}}">￥{{goodsDetail.originalcost}}</del>
+			</view>
+		</view>
+		<view class="goods_time">
+			<view class="goods_placeoforigin tr">产地：{{goodsDetail.placeoforigin || '暂无'}}</view>
+		</view>
+	</view>
+	<!-- goodsname end -->
+	<!-- 销量 库存 好评 start -->
+	<view class="goods_desc2 bgffffff">
+		<view class="desc">
+			<view class="desc_name color666666 font24">月销量</view>
+			<view class="desc_num">{{goodsDetail.cumulativesales || 0}}</view>
+		</view>
+		<view class="desc">
+			<view class="desc_name color666666 font24">门店库存</view>
+			<view class="desc_num">{{goodsDetail.deptstock || 0}}</view>
+		</view>
+		<view class="desc">
+			<view class="desc_name color666666 font24">配送库存</view>
+			<view class="desc_num">{{goodsDetail.sendstock || 0}}</view>
+		</view>
+		<view class="desc">
+			<view class="desc_name color666666 font24">好评率</view>
+			<view class="desc_num">{{(goodsDetail.EvaluationGC/goodsDetail.EvaluationTC)*100 || 100}}%</view>
+		</view>
+	</view>
+	<!-- 销量 库存 好评 end -->
+	<!-- 评价 start -->
+	<view class="comment_cont bgffffff">
+		<view class="tit">
+			<view class="font_blod">商品评价({{goodsDetail.EvaluationTC}})</view>
+			<navigator class="more" hover-class="none" wx:if="{{goodsDetail.EvaluationTC}}" url="/pages/auto/commentList/commentList?title=商品评价&from=goodsDetail&gdscode={{Gdscode}}">查看全部 > </navigator>
+		</view>
+		<view class="comment_list">
+			<view class="comment_item font24" wx:for="{{commentList}}" wx:key="index">
+				<view class="user border_r500 overflow">
+					<image src="/lib/images/ceshi000.png" mode="aspectFit"></image>
+				</view>
+				<view class="desc">
+					<view>{{item.Username}}</view>
+					<view class="color999999">{{item.Etime}}</view>
+					<view class="text">{{item.content}}</view>
+					<!-- <view class="desc_img overflow">
+						<view class="img fl">
+							<image src="/lib/images/ceshi001.png" mode="aspectFit"></image>
+						</view>
+						<view class="img fl">
+							<image src="/lib/images/ceshi001.png" mode="aspectFit"></image>
+						</view>
+						<view class="img fl">
+							<image src="/lib/images/ceshi001.png" mode="aspectFit"></image>
+						</view>
+						<view class="img fl">
+							<image src="/lib/images/ceshi001.png" mode="aspectFit"></image>
+						</view>
+						<view class="img fl">
+							<image src="/lib/images/ceshi001.png" mode="aspectFit"></image>
+						</view>
+						<view class="img fl">
+							<image src="/lib/images/ceshi001.png" mode="aspectFit"></image>
+						</view>
+						<view class="img fl">
+							<image src="/lib/images/ceshi001.png" mode="aspectFit"></image>
+						</view>
+						<view class="img fl">
+							<image src="/lib/images/ceshi001.png" mode="aspectFit"></image>
+						</view>
+						<view class="img fl">
+							<image src="/lib/images/ceshi001.png" mode="aspectFit"></image>
+						</view>
+					</view> -->
+				</view>
+			</view>
+		</view>
+	</view>
+	<!-- 评价 end -->
+	<!-- 详情 start -->
+	<view class="goods_desc3 bgf0f0f0">
+		<view></view>
+	</view>
+	<!-- 详情 end -->
+	<!-- 导航 加购物车 start -->
+	<view class="nav_cart bgffffff">
+		<view class="nav">
+			<navigator class="nav_img" hover-class="none" open-type="switchTab" url="/pages/index/index">
+				<image src="/lib/images/index.png"></image>
+			</navigator>
+			<navigator class="nav_img" hover-class="none" open-type="switchTab" url="/pages/cart/cart">
+				<image src="/lib/images/cart.png"></image>
+        <view class="cart_num colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{cartCount}}">{{cartCount}}</view>
+			</navigator>
+			<navigator class="nav_img" hover-class="none" open-type="switchTab" url="/pages/userInfo/userInfo">
+				<image src="/lib/images/userInfo.png"></image>
+			</navigator>
+		</view>
+		<view class="cart_cont colorffffff font32">
+			<view class="often_btn btn tc bg71d793 border_r500" bindtap="setOften" wx:if="{{goodsDetail.alwaysbuyflag}}">取消常购</view>
+			<view class="often_btn btn tc bg71d793 border_r500" bindtap="setOften" wx:else>设为常购</view>
+			<view class="cart_btn btn tc bg329e56 border_r500">
+        <addCart id="addCart" catchtap="addCart" data-goods="{{goodsDetail}}" bind:getCartCount="getCartCount" from="goodsDetail"></addCart>
+      </view>
+		</view>
+	</view>
+	<!-- 导航 加购物车 end -->
+  <!-- dialog start -->
+	<view class="dialog_cont color999999 font28 z_index_99999" wx:if="{{dialogFlag}}">
+		<view class="dialog border_r20 bgffffff ellipsis">
+			<view class="dialog_title font32 font_blod color333333">{{dialogTitle}}</view>
+			<view class="dialog_section">
+				<view class="dialog_section_tit">单价：</view>
+				<view class="dialog_section_cont color333333">{{dialogPrice/2}}元/斤</view>
+			</view>
+			<view class="dialog_section">
+				<view class="dialog_section_tit">斤数(500g)：</view>
+				<view class="dialog_section_cont color333333">
+					<input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入斤数" value="{{dialogJin}}" bindinput="setDialogJin"></input>
+				</view>
+			</view>
+			<view class="dialog_section">
+				<view class="dialog_section_tit">两数(50g)：</view>
+				<view class="dialog_section_cont color333333">
+					<input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入两数" value="{{dialogLiang}}" bindinput="setDialogLiang"></input>
+				</view>
+			</view>
+			<view class="dialog_section">
+				<view class="dialog_section_tit">重量相当于：</view>
+				<view class="dialog_section_cont color333333">{{dialogCount}}kg</view>
+			</view>
+			<view class="dialog_section">
+				<view class="dialog_section_tit">大致金额：</view>
+				<view class="dialog_section_cont color333333">
+					<text class="colorf6400">{{dialogTotalMoney}}</text>
+					<text>元</text>
+				</view>
+			</view>
+			<view class="dialog_btn">
+				<view class="dialog_cancel border_r500 bgffffff tc" bindtap="dialogClose">取消</view>
+				<view class="dialog_confirm colorffffff border_r500 bg71d793 tc" bindtap="dialogConfirm">确认</view>
+			</view>
+		</view>
+	</view>
+	<!-- dialog end -->
 </view>
-

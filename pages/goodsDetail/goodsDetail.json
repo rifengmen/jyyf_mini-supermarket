@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "addCart": "/component/addCart/addCart"
+  },
   "enablePullDownRefresh": true
 }

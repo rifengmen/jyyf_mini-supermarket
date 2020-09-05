@@ -30,7 +30,7 @@
 			<view class="banner border_r10 overflow bgffffff">
 				<swiper class="banner_swiper" indicator-color="#ffffff" indicator-active-color="#71d793" autoplay="true" circular="true" interval="4000" duration="500" current="{{swiperCurrent}}" bindchange="swiperChange">
 					<swiper-item wx:for="{{bannerList}}" wx:key="index">
-						<image src="{{baseUrl + item.Imageurl}}" class="swiper_item" lazy-load="true" bindtap="toBannerDetail" data-id="{{item.ImageID}}"></image>
+						<image src="{{baseUrl + item.Imageurl}}" class="swiper_item" lazy-load="true" bindtap="toBannerDetail" data-id="{{item.ImageID}}" mode="aspectFit"></image>
 					</swiper-item>
 				</swiper>
 				<view class="dots">
@@ -51,7 +51,7 @@
 					<view class="cate_img border_r500 overflow">
 						<image src="{{baseUrl + item.picturename}}"></image>
 					</view>
-					<text class="cate_name ellipsis">{{item.modulename}}</text>
+					<view class="cate_name tc">{{item.modulename}}</view>
 				</view>
 			</view>
 			<view class="auto_up">
@@ -124,7 +124,7 @@
 						<view class="price_cont">
 							<view class="price">
 								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="price color999999 font20">￥30.00</del>
+								<del class="color999999 font20">￥30.00</del>
 							</view>
 							<view class="cart">
 								<image src="../../lib/images/addcart.png"></image>
@@ -141,7 +141,7 @@
 						<view class="price_cont">
 							<view class="price">
 								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="price color999999 font20">￥30.00</del>
+								<del class="color999999 font20">￥30.00</del>
 							</view>
 							<view class="cart">
 								<image src="../../lib/images/addcart.png"></image>
@@ -158,7 +158,7 @@
 						<view class="price_cont">
 							<view class="price">
 								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="price color999999 font20">￥30.00</del>
+								<del class="color999999 font20">￥30.00</del>
 							</view>
 							<view class="cart">
 								<image src="../../lib/images/addcart.png"></image>
@@ -175,7 +175,7 @@
 						<view class="price_cont">
 							<view class="price">
 								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="price color999999 font20">￥30.00</del>
+								<del class="color999999 font20">￥30.00</del>
 							</view>
 							<view class="cart">
 								<image src="../../lib/images/addcart.png"></image>
@@ -192,7 +192,7 @@
 						<view class="price_cont">
 							<view class="price">
 								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="price color999999 font20">￥30.00</del>
+								<del class="color999999 font20">￥30.00</del>
 							</view>
 							<view class="cart">
 								<image src="../../lib/images/addcart.png"></image>
@@ -209,7 +209,7 @@
 						<view class="price_cont">
 							<view class="price">
 								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="price color999999 font20">￥30.00</del>
+								<del class="color999999 font20">￥30.00</del>
 							</view>
 							<view class="cart">
 								<image src="../../lib/images/addcart.png"></image>
@@ -229,7 +229,7 @@
 			<!-- 标题 start -->
 			<navigator class="recommend_tit" hover-class="none" url="{{'/pages/goodsList/goodsList?cateid=' + item.Id + '&title=' + item.storecategoryname}}">
 				<view class="tit_img" wx:if="{{item.showway === 1}}">
-					<image src="{{baseUrl + item.ico}}"></image>
+					<image src="{{baseUrl + item.ico}}" mode="aspectFit"></image>
 				</view>
 				<view class='tit_text font32 font_blod' wx:if="{{item.showway === 2}}">{{item.storecategoryname}}</view>
 			</navigator>
@@ -244,14 +244,14 @@
 					<view class="price_cont">
 						<view class="price" wx:if="{{goods.scaleflag}}">
 							<view class="actual_price colorfa6400 font26">￥{{goods.Highpprice/2}}/斤</view>
-							<del class="price color999999 font20" wx:if="{{goods.Highoprice !== goods.Highpprice}}">￥{{goods.Highoprice/2}}/斤</del>
+							<del class="color999999 font20" wx:if="{{goods.Highoprice !== goods.Highpprice}}">￥{{goods.Highoprice/2}}/斤</del>
 						</view>
 						<view class="price" wx:else>
 							<view class="actual_price colorfa6400 font26">￥{{goods.Highpprice}}</view>
-							<del class="price color999999 font20" wx:if="{{goods.Highoprice !== goods.Highpprice}}">￥{{goods.Highoprice}}</del>
+							<del class="color999999 font20" wx:if="{{goods.Highoprice !== goods.Highpprice}}">￥{{goods.Highoprice}}</del>
 						</view>
 						<view class="cart">
-							<addCart id="addCart" catchtap="addCart" data-goods="{{goods}}"></addCart>
+							<addCart id="addCart" catchtap="addCart" data-goods="{{goods}}" bind:getCartCount="getCartCount"></addCart>
 						</view>
 					</view>
 				</navigator>
@@ -262,40 +262,40 @@
 	<!-- recommendList end -->
 	<!-- dialog start -->
 	<view class="dialog_cont color999999 font28 z_index_99999" wx:if="{{dialogFlag}}">
-	<view class="dialog border_r20 bgffffff ellipsis">
-		<view class="dialog_title font32 font_blod color333333">{{dialogTitle}}</view>
-		<view class="dialog_section">
-			<view class="dialog_section_tit">单价：</view>
-			<view class="dialog_section_cont color333333">{{dialogPrice/2}}元/斤</view>
-		</view>
-		<view class="dialog_section">
-			<view class="dialog_section_tit">斤数(500g)：</view>
-			<view class="dialog_section_cont color333333">
-        <input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入斤数" value="{{dialogJin}}" bindinput="setDialogJin"></input>
-      </view>
-		</view>
-		<view class="dialog_section">
-			<view class="dialog_section_tit">两数(50g)：</view>
-			<view class="dialog_section_cont color333333">
-        <input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入两数" value="{{dialogLiang}}" bindinput="setDialogLiang"></input>
-      </view>
-		</view>
-		<view class="dialog_section">
-			<view class="dialog_section_tit">重量相当于：</view>
-			<view class="dialog_section_cont color333333">{{dialogCount}}kg</view>
-		</view>
-		<view class="dialog_section">
-			<view class="dialog_section_tit">大致金额：</view>
-			<view class="dialog_section_cont color333333">
-				<text class="colorf6400">{{dialogTotalMoney}}</text>
-				<text>元</text>
+		<view class="dialog border_r20 bgffffff ellipsis">
+			<view class="dialog_title font32 font_blod color333333">{{dialogTitle}}</view>
+			<view class="dialog_section">
+				<view class="dialog_section_tit">单价：</view>
+				<view class="dialog_section_cont color333333">{{dialogPrice/2}}元/斤</view>
+			</view>
+			<view class="dialog_section">
+				<view class="dialog_section_tit">斤数(500g)：</view>
+				<view class="dialog_section_cont color333333">
+					<input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入斤数" value="{{dialogJin}}" bindinput="setDialogJin"></input>
+				</view>
+			</view>
+			<view class="dialog_section">
+				<view class="dialog_section_tit">两数(50g)：</view>
+				<view class="dialog_section_cont color333333">
+					<input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入两数" value="{{dialogLiang}}" bindinput="setDialogLiang"></input>
+				</view>
+			</view>
+			<view class="dialog_section">
+				<view class="dialog_section_tit">重量相当于：</view>
+				<view class="dialog_section_cont color333333">{{dialogCount}}kg</view>
+			</view>
+			<view class="dialog_section">
+				<view class="dialog_section_tit">大致金额：</view>
+				<view class="dialog_section_cont color333333">
+					<text class="colorf6400">{{dialogTotalMoney}}</text>
+					<text>元</text>
+				</view>
+			</view>
+			<view class="dialog_btn">
+				<view class="dialog_cancel border_r500 bgffffff tc" bindtap="dialogClose">取消</view>
+				<view class="dialog_confirm colorffffff border_r500 bg71d793 tc" bindtap="dialogConfirm">确认</view>
 			</view>
 		</view>
-		<view class="dialog_btn">
-			<view class="dialog_cancel border_r500 bgffffff tc" bindtap="dialogCancel">取消</view>
-			<view class="dialog_confirm colorffffff border_r500 bg71d793 tc" bindtap="dialogConfirm">确认</view>
-		</view>
 	</view>
-</view>
 	<!-- dialog end -->
 </view>

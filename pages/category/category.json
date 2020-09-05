@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
-  "navigationBarTitleText": "分类",
-  "enablePullDownRefresh": true
+  "usingComponents": {
+    "addCart": "/component/addCart/addCart"
+  },
+  "navigationBarTitleText": "全部商品",
+  "onReachBottomDistance": 50
 }

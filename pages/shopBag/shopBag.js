@@ -1,4 +1,4 @@
-// pages/userInfo/commentList/commentList.js
+// pages/shopBag/shopBag.js
 Page({
 
   /**

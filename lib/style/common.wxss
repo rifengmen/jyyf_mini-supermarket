@@ -43,7 +43,7 @@
 .cate_item {
   width: 121rpx;
   height: 160rpx;
-  margin: 0 24rpx 24rpx 0;
+  margin: 12rpx;
 }
 .cate_img {
   width: 90rpx;
@@ -179,6 +179,8 @@
 .goods_item2 .price del {
   text-decoration: line-through;
   height: 100%;
+  display: flex;
+  align-items: center;
 }
 .goods_item2 .cart {
   width: 30%;
@@ -193,6 +195,26 @@
 }
 .goods_item2 .cart image {
   width: 100%;
+  height: 100%;
+}
+.editor_cart {
+  width: 174rpx;
+  height: 40rpx;
+  padding: 4rpx 8rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cart .btn {
+  width: 40rpx;
+  height: 40rpx;
+}
+.cart .btn image {
+  width: 100%;
+  height: 100%;
+}
+.cart .input_cart {
+  width: 80rpx;
   height: 100%;
 }
 /* 商品列表2 end */
@@ -216,7 +238,6 @@
 }
 /* 无数据样式 end */
 /* dialog start */
-/* component/dialog/dialog.wxss */
 .dialog_cont {
   position: fixed;
   top: 0;
