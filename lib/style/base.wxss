@@ -112,6 +112,9 @@
 .colord0cfcf {
   color: #d0cfcf;
 }
+.colorc7c7c7 {
+  color: #c7c7c7;
+}
 .colorffffff {
   color: #ffffff;
 }
@@ -166,6 +169,9 @@
 .bgd17537 {
   background-color: #D17537;
 }
+.bgf7b500 {
+  background-color: #f7b500;
+}
 /* 背景颜色 end */
 /* 背景渐变 start */
 .bg71d793_linear {
@@ -207,6 +213,12 @@
   border-radius: 500rpx;
 }
 /* 圆角 end */
+.border_be5e5e5 {
+  border-bottom: 1px solid #e5e5e5;
+}
+.border_bf0f0f0 {
+  border-bottom: 1px solid #f0f0f0;
+}
 /* 层级 start */
 .z_index_-2 {
   z-index: -2;

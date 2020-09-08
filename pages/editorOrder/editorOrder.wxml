@@ -1,2 +1,122 @@
 <!--pages/editorOrder/editorOrder.wxml-->
-<text>pages/editorOrder/editorOrder.wxml</text>
+<view class="container color333333 font28 bgf9f9f9" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
+	<!-- 选择地址 start -->
+	<view class="address_cont bgffffff" bindtap="setAddress">
+		<view class="address" wx:if="{{address}}">
+			<view class="name font_blod">{{'收货人' + '  ' + '18735605086'}}</view>
+			<view class="color666666 font24">{{'山西省长治市潞城区太西街阳光小区3单元'}}</view>
+		</view>
+		<view class="address" wx:else>
+			<view class="">请选择收货地址</view>
+		</view>
+		<view class="more colorc7c7c7 tr"> > </view>
+	</view>
+	<!-- 选择地址 end -->
+	<!-- 分割线 start -->
+	<view class="decollator bgffffff overflow">
+		<image src="/lib/images/decollator.png" mode="aspectFill"></image>
+	</view>
+	<!-- 分割线 end -->
+	<!-- 门店名称 start -->
+	<view class="deptname_cont bgffffff">
+		<view class="deptname_border border_be5e5e5">
+			<view class="deptname">
+				<view class="img">
+					<image src="/lib/images/shop.png"></image>
+				</view>
+				<view class="name font_blod ellipsis">{{deptname + deptname + deptname + deptname + deptname}}</view>
+			</view>
+			<view class="orderCount color999999 tr">共{{orderCount}}种</view>
+		</view>
+	</view>
+	<!-- 门店名称 end -->
+	<!-- 订单商品列表 start -->
+	<view class="goodslist bgffffff">
+		<view class="goods_list2 border_be5e5e5">
+			<view class="goods_item2 bgffffff" hover-class="none" wx:for="{{cartList}}" wx:key="index">
+				<view class="item_img">
+					<image src="{{baseUrl + item.Pimg}}" mode="aspectFit" lazy-load="true"></image>
+				</view>
+				<view class="item_desc">
+					<view class="item_name ellipsis2">{{item.Pname}}</view>
+					<view class="price_cont">
+						<view class="price">
+							<view class="actual_price colorfa6400">￥{{item.actualprice}}</view>
+							<del class="color999999 font22">￥{{item.saleprice}}</del>
+						</view>
+						<view class="cart">
+							<view>× {{item.buyAMT}}</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<!-- 订单商品列表 end -->
+	<!-- 备注 start -->
+	<view class="section bgffffff">
+		<view class="remark border_be5e5e5">
+			<view class="section_tit color666666">备注</view>
+			<view class="section_cont">
+				<textarea class="tr" bindblur="setRemark" auto-height placeholder="备注信息" />
+				</view>
+		</view>
+  </view>
+  <!-- 备注 end -->
+  <!-- 优惠券 start -->
+  <view class="section bgffffff">
+		<view class="remark border_be5e5e5">
+			<view class="section_tit color666666">优惠券</view>
+      <view class="section_cont">
+        可用
+        <text class="colorfa6400">{{'599'}}</text>
+        张
+      </view>
+		</view>
+  </view>
+  <!-- 优惠券 end -->
+  <!-- 积分抵扣 startt -->
+  <view class="section bgffffff order_score">
+		<view class="remark">
+			<view class="section_tit color666666">积分抵扣</view>
+      <view class="section_cont">
+        可用
+        <text class="colorfa6400">{{'599'}}</text>
+        积分可抵
+        <text class="colorfa6400">{{'599'}}</text>
+        元
+      </view>
+		</view>
+  </view>
+  <!-- 积分抵扣 end -->
+  <!-- 结算信息 start -->
+  <view class="pay_desc bgffffff">
+    <view class="pay_cont border_be5e5e5">
+    <view class="">
+      <view>商品总额</view>
+      <view class="font_blod">￥99999.99</view>
+    </view>
+    <view class="">
+      <view>优惠</view>
+      <view class="colorfa6400 font_blod">￥99999.99</view>
+    </view>
+    <view class="">
+      <view>运费</view>
+      <view class="colorfa6400 font_blod">￥99999.99</view>
+    </view>
+    </view>
+  </view>
+  <!-- 结算信息 end -->
+  <!-- 实付金额 start -->
+  <view class="order_money bgffffff tr">
+  实付金额：
+  <text class="colorfa6400 font32 font_blod">￥9999.99</text>
+  </view>
+  <!-- 实付金额 end -->
+  <!-- 支付按钮 start -->
+  <view class="btn_cont colorffffff font32 bgffffff">
+    <view class="card_btn border_r500 bgf7b500 tc">余额支付</view>
+    <view class="wechat_btn border_r500 bg71d793 tc">微信支付</view>
+  </view>
+  <!-- 支付按钮 end -->
+</view>

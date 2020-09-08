@@ -15,6 +15,8 @@ Page({
     deptname: '',
     // 购物车列表
     cartList: [],
+    // 购物车数量
+    cartCount: 0,
     // 扫码购标识,1扫码购，0非扫码购
     SMGflag: 0,
     // 请求开关
@@ -103,6 +105,8 @@ Page({
     self.getCartList()
     // 更新购物车数量
     self.getCartCount()
+    // 关闭下拉刷新
+    wx.stopPullDownRefresh()
   },
 
   /**
@@ -465,6 +469,9 @@ Page({
     request.http('bill/shoppingcar.do?method=getCarProductCount', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        self.setData({
+          cartCount: res.data.data
+        })
         if (res.data.data) {
           wx.setTabBarBadge({
             index: 3,

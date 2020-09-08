@@ -138,6 +138,8 @@ Page({
     })
     // 请求对应商品列表
     self.sendMethods()
+    // 关闭下拉刷新
+    wx.stopPullDownRefresh()
   },
 
   /**

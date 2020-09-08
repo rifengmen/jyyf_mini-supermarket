@@ -17,7 +17,7 @@
 			<view class="goods_list2">
 				<view class="goods" wx:for="{{cartList}}" wx:key="index">
 					<radio value="" checked="{{item.flag}}" bindtap="setFlag" data-index="{{index}}" wx:if="{{editorFlag}}"></radio>
-					<navigator class="goods_item2" hover-class="none" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + item.Gdscode + '&title=' + item.Pname}}">
+					<navigator class="goods_item2 border_be5e5e5" hover-class="none" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + item.Gdscode + '&title=' + item.Pname}}">
 						<view class="item_img">
 							<image src="{{baseUrl + item.Pimg}}" mode="aspectFit"></image>
 						</view>
@@ -33,7 +33,7 @@
 										<view class="subtrack_cart btn border_r500 overflow" catchtap="subtrackCart" data-index="{{index}}">
 											<image src="/lib/images/subtrack.png"></image>
 										</view>
-										<input class="input_cart font24 tc" type="number" value="{{item.buyAMT}}"></input>
+										<view class="input_cart font24 tc" bindtap="">{{item.buyAMT}}</view>
 										<view class="add_cart btn border_r500 overflow" catchtap="addCart" data-index="{{index}}">
 											<image src="/lib/images/add.png"></image>
 										</view>
@@ -61,7 +61,7 @@
 				<view class="total_num colorfa6400 font36 font_blod ellipsis">￥{{actMoney}}</view>
 				<view class="">优惠：￥{{discountMoney}}</view>
 			</view>
-			<view class="toEditorOrder colorffffff font32 border_r500 bg71d793 tc" bindtap="toEditorOrder">去结算</view>
+			<view class="toEditorOrder colorffffff font32 border_r500 bg71d793 tc" bindtap="toEditorOrder">去结算({{cartCount}})</view>
 		</view>
 		<view class="group" wx:else>
 			<view class="all_btn" bindtap="radioChange">

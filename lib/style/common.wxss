@@ -129,7 +129,6 @@
 .goods_item2 {
   width: 100%;
   height: 189rpx;
-  border-bottom: 1rpx solid #e5e5e5;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -216,6 +215,9 @@
 .cart .input_cart {
   width: 80rpx;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /* 商品列表2 end */
 /* 无数据样式 start */

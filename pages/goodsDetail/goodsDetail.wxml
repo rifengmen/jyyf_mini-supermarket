@@ -59,7 +59,7 @@
 			<navigator class="more" hover-class="none" wx:if="{{goodsDetail.EvaluationTC}}" url="/pages/auto/commentList/commentList?title=商品评价&from=goodsDetail&gdscode={{Gdscode}}">查看全部 > </navigator>
 		</view>
 		<view class="comment_list">
-			<view class="comment_item font24" wx:for="{{commentList}}" wx:key="index">
+			<view class="comment_item font24 border_bf0f0f0" wx:for="{{commentList}}" wx:key="index">
 				<view class="user border_r500 overflow">
 					<image src="/lib/images/ceshi000.png" mode="aspectFit"></image>
 				</view>

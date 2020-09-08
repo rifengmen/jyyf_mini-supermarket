@@ -4,7 +4,7 @@
 	<view class="main">
 		<view class="goods_list2">
 			<block>
-				<navigator class="goods_item2 bgffffff" hover-class="none" wx:for="{{goodsList}}" wx:key="index" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + item.Gdscode + '&title=' + item.Name}}">
+				<navigator class="goods_item2 bgffffff border_be5e5e5" hover-class="none" wx:for="{{goodsList}}" wx:key="index" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + item.Gdscode + '&title=' + item.Name}}">
 					<view class="item_img">
 						<image src="{{baseUrl + item.Defaultimage}}" mode="aspectFit" lazy-load="true"></image>
 					</view>

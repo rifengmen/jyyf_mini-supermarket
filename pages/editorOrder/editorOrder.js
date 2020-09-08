@@ -1,10 +1,26 @@
 // pages/editorOrder/editorOrder.js
+const app = getApp()
+const request = require("../../utils/request.js")
+const toast = require("../../utils/toast.js")
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    // 基础路径
+    baseUrl: app.globalData.baseUrl,
+    // 门店名称
+    deptname: '',
+    // 收货地址
+    address: '',
+    // 订单商品数量
+    orderCount: 999,
+    // 购物车列表
+    cartList: [],
+    // 订单备注
+    remark: '',
 
   },
 
@@ -26,7 +42,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let self = this
+    self.setData({
+      deptname: app.globalData.deptname,
+    })
+    // 获取购物车列表
+    self.getCartList()
   },
 
   /**
@@ -62,5 +83,43 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  // 获取购物车列表
+  getCartList () {
+    let self = this
+    let data = {}
+    // 设置请求开关
+    self.setData({
+      getFlag: false
+    })
+    request.http('bill/shoppingcar.do?method=listMyCar', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          cartList: res.data.carList,
+        })
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 设置订单备注
+  setRemark (e) {
+    let self = this
+    self.setData({
+      remark: e.detail.value,
+    })
+  },
+
+  // 设置收货地址
+  setAddress () {
+    let self = this
+    this.setData({
+      address: '123456'
+    })
+  },
 })

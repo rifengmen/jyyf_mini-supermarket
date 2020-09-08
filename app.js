@@ -32,7 +32,7 @@ App({
     // 游客openid
     defaultOpenid: "WX19000101000000000",
     // baseUrl
-    baseUrl: 'http://www.91jyrj.com:8088/eshop/',
+    baseUrl: 'https://www.91jyrj.com/eshop/',
     // baseUrl: 'https://www.jwkgou.com:8443/simple-eshop/',
     // openid
     openid: '',

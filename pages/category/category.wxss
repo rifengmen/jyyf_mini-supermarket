@@ -6,7 +6,6 @@
   width: calc(100% - 36rpx);
   height: 182rpx;
   padding: 0 18rpx;
-  border-bottom: 1px solid #f0f0f0;
 }
 .cate_list {
   width: 100%;

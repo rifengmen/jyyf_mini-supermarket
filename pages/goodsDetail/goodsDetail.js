@@ -111,6 +111,8 @@ Page({
     self.getGoodsDetail()
     // 获取商品评价列表
     self.getGoodsCommentList()
+    // 关闭下拉刷新
+    wx.stopPullDownRefresh()
   },
 
   /**
