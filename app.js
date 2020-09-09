@@ -65,6 +65,8 @@ App({
     countdownnum: '90',
     // 购物车数量
     cartCount: 0,
+    // 收货地址
+    address: '',
 
 
 

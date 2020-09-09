@@ -13,6 +13,10 @@ Page({
     baseUrl: app.globalData.baseUrl,
     // 门店名称
     deptname: '',
+    // 收货方式开关
+    pickTypeFlag: false,
+    // 收货方式,0:自提;1:配送
+    pickType: 1,
     // 收货地址
     address: '',
     // 订单商品数量
@@ -45,6 +49,7 @@ Page({
     let self = this
     self.setData({
       deptname: app.globalData.deptname,
+      address: app.globalData.address
     })
     // 获取购物车列表
     self.getCartList()
@@ -54,7 +59,10 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    let self = this
+    self.setData({
+      pickTypeFlag: false,
+    })
   },
 
   /**
@@ -115,11 +123,36 @@ Page({
     })
   },
 
-  // 设置收货地址
-  setAddress () {
+  // 设置收货方式开关
+  setPickTypeFlag () {
     let self = this
-    this.setData({
-      address: '123456'
+    self.setData({
+      pickTypeFlag: !self.data.pickTypeFlag
     })
+  },
+
+  // 阻止冒泡,空方法
+  setStop () {},
+
+  // 设置收货方式
+  setPickType (e) {
+    let self = this
+    self.setData({
+      pickType: parseInt(e.detail.value)
+    })
+  },
+
+  // 收货方式下一步
+  nextBtn () {
+    let self = this
+    if (self.data.pickType) {
+      wx.navigateTo({
+        url: '/pages/userInfo/addressList/addressList',
+      })
+    } else {
+      wx.navigateTo({
+        url: '/pages/userInfo/selfPickUp/selfPickUp',
+      })
+    }
   },
 })

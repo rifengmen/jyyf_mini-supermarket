@@ -127,6 +127,9 @@
 .color71d793 {
   color: #71d793;
 }
+.color0091ff {
+  color: #0091ff;
+}
 /* 字体颜色 end */
 
 /* 背景颜色 start */
@@ -218,6 +221,12 @@
 }
 .border_bf0f0f0 {
   border-bottom: 1px solid #f0f0f0;
+}
+.border_a979797_2 {
+  border: 2px solid #979797;
+}
+.border_a71d793_2 {
+  border: 2px solid #71d793;
 }
 /* 层级 start */
 .z_index_-2 {

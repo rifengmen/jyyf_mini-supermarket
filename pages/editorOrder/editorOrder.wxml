@@ -1,10 +1,20 @@
 <!--pages/editorOrder/editorOrder.wxml-->
-<view class="container color333333 font28 bgf9f9f9" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
+<view class="container color333333 font28 bgf0f0f0" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
 	<!-- 选择地址 start -->
-	<view class="address_cont bgffffff" bindtap="setAddress">
+	<view class="address_cont bgffffff" bindtap="setPickTypeFlag">
 		<view class="address" wx:if="{{address}}">
-			<view class="name font_blod">{{'收货人' + '  ' + '18735605086'}}</view>
-			<view class="color666666 font24">{{'山西省长治市潞城区太西街阳光小区3单元'}}</view>
+			<block wx:if="{{address.pickType}}">
+				<view class="name font_blod">{{'收货人' + '  ' + '18735605086'}}</view>
+				<view class="color666666 font24">{{'山西省长治市潞城区太西街阳光小区3单元'}}</view>
+			</block>
+			<block wx:else>
+				<view class="name">
+					<view class="font_blod">{{deptname}}</view>
+					<view class="tag colorffffff font24 bg71d793 border_r500 tc">自提</view>
+					<view class="color999999 font24">(提货时间08:00-12:00)</view>
+				</view>
+				<view class="">{{address.name + '  ' + address.phone}}</view>
+			</block>
 		</view>
 		<view class="address" wx:else>
 			<view class="">请选择收货地址</view>
@@ -119,4 +129,21 @@
     <view class="wechat_btn border_r500 bg71d793 tc">微信支付</view>
   </view>
   <!-- 支付按钮 end -->
+	<!-- 收货方式 start -->
+	<view class="pick_cont overflow {{pickTypeFlag ? 'pickTypeFlag' : ''}}" bindtap="setPickTypeFlag">
+		<view class="pick_type bgffffff" catchtap="setStop">
+			<radio-group class="group" bindchange="setPickType">
+				<view class="pick border_r6 {{!pickType ? 'border_a71d793_2 color71d793' : 'border_a979797_2'}}">
+					<label class="" for="pick1">到店自提</label>
+					<radio id="pick1" value="0" checked="false"></radio>
+				</view>
+				<view class="pick border_r6 {{pickType ? 'border_a71d793_2 color71d793' : 'border_a979797_2'}}">
+					<label class="" for="pick2">配送到家</label>
+					<radio id="pick2" value="1" checked="true"></radio>
+				</view>
+			</radio-group>
+			<view class="next_btn colorffffff font32 bg71d793 tc border_r500" bindtap="nextBtn">下一步</view>
+		</view>
+	</view>
+	<!-- 收货方式 end -->
 </view>

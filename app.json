@@ -28,6 +28,8 @@
     "pages/userInfo/orderList/orderList",
     "pages/userInfo/orderDetail/orderDetail",
     "pages/userInfo/myCode/myCode",
+    "pages/userInfo/addressList/addressList",
+    "pages/userInfo/selfPickUp/selfPickUp",
     "pages/auto/nearby/nearby",
     "pages/auto/lottery/lottery",
     "pages/auto/lotteryList/lotteryList",

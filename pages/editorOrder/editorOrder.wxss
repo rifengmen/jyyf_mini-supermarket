@@ -19,7 +19,16 @@
   flex-flow: column;
 }
 .address_cont .address .name {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   margin-bottom: 8rpx;
+}
+.address_cont .address .name .tag {
+  width: 80rpx;
+  height: 32rpx;
+  line-height: 32rpx;
+  margin: 0 16rpx;
 }
 .address_cont .more {
   width: 90rpx;
@@ -157,3 +166,52 @@
 .btn_cont .card_btn {
   margin-bottom: 30rpx;
 }
+/* 收货方式 start */
+.pick_cont {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 0;
+  background-color: rgba(0, 0, 0, .7);
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.pickTypeFlag {
+  height: 100vh;
+  transition: linear .5s;
+}
+.pick_type {
+  width: calc(100% - 128rpx);
+  height: 500rpx;
+  padding: 100rpx 64rpx 60rpx 64rpx;
+  border-radius: 30rpx 30rpx 0 0;
+}
+.group {
+  width: 100%;
+  height: 306rpx;
+  margin-bottom: 100rpx;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: column;
+}
+.pick {
+  width: calc(100% - 80rpx);
+  height: 120rpx;
+  padding: 0 40rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pick label {
+  width: 100%;
+  height: 100%;
+  line-height: 120rpx;
+}
+.next_btn {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+/* 收货方式 end */
