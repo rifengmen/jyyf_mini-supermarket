@@ -1,0 +1,65 @@
+<!--pages/userInfo/editorAddress/editorAddress.wxml-->
+<view class="container color333333 font28 bgffffff" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
+	<!-- 收货人 start -->
+	<view class="section border_be5e5e5">
+		<view class="section_tit">收货人</view>
+		<view class="section_desc">
+			<input type="" value="{{addressUsername}}" placeholder="名字" bindinput="setUsername"></input>
+		</view>
+	</view>
+	<!-- 收货人 end -->
+	<!-- 手机号 start -->
+	<view class="section border_be5e5e5">
+		<view class="section_tit">手机号</view>
+		<view class="section_desc">
+			<input type="number" value="{{addressPhone}}" placeholder="手机号" bindinput="setPhone"></input>
+		</view>
+	</view>
+	<!-- 手机号 end -->
+	<!-- 收货地址 start -->
+	<!-- <view class="section border_be5e5e5">
+		<view class="section_tit">收货地址</view>
+		<view class="section_desc">
+			<input type="number" value="" placeholder="选择收货地址" bindinput="setPhone"></input>
+		</view>
+	</view> -->
+	<!-- 收货地址 end -->
+	<!-- 区域 start -->
+	<view class="section border_be5e5e5">
+		<view class="section_tit">区域</view>
+		<view class="section_desc">
+			<picker bindchange="listOneAreaChange" value="{{listOneAreaIndex}}" range="{{listOneArea}}" range-key="{{'areaname'}}">{{listOneArea[listOneAreaIndex].areaname}}</picker>
+		</view>
+	</view>
+	<!-- 区域 end -->
+	<!-- 街道 start -->
+	<view class="section border_be5e5e5">
+		<view class="section_tit">街道</view>
+		<view class="section_desc">
+			<picker bindchange="listSubAreaChange" value="{{listSubAreaIndex}}" range="{{listSubArea}}" range-key="{{'areaname'}}">{{listSubArea[listSubAreaIndex].areaname}}</picker>
+		</view>
+	</view>
+	<!-- 街道 end -->
+	<!-- 详细地址 start -->
+	<view class="section border_be5e5e5">
+		<view class="section_tit">详细地址</view>
+		<view class="section_desc">
+			<input type="number" value="{{addressAddress}}" placeholder="详细地址" bindinput="setAddressAddress"></input>
+		</view>
+	</view>
+	<!-- 详细地址 end -->
+	<!-- 设为默认 start -->
+	<!-- <view class="section isdefault border_be5e5e5">
+		<view class="section_tit">设为默认</view>
+		<view class="section_desc">
+			<switch checked="{{addressIsdefault}}" bindchange="setIsdefault" />
+		</view>
+	</view> -->
+	<!-- 设为默认 end -->
+	<!-- 保存按钮 start -->
+	<view class="btn colorffffff font32 bg71d793 tc border_r500 border_a71d793" bindtap="save">保存地址</view>
+	<!-- 保存按钮 end -->
+	<!-- 删除按钮 start -->
+	<view class="btn color666666 font32 bgffffff tc border_r500 border_a979797" bindtap="delete" wx:if="{{id}}">删除该地址</view>
+	<!-- 删除按钮 end -->
+</view>

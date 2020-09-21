@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "messageList": "/component/messageList/messageList"
+  },
+  "navigationBarTitleText": "中奖记录"
+}

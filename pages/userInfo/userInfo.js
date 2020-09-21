@@ -1,7 +1,8 @@
 // pages/userInfo/userInfo.js
 const app = getApp()
-const request = require("../../utils/request.js")
-const toast = require("../../utils/toast.js")
+const request = require("../../utils/request")
+const toast = require("../../utils/toast")
+const utils = require("../../utils/util")
 
 Page({
 
@@ -18,7 +19,13 @@ Page({
     // 用户名称
     memname: '',
     // 会员号
-    memcode: ''
+    memcode: '',
+    // 余额
+    cardInfo: '',
+    // 优惠券
+    tickNum: 0,
+    // 积分
+    score: '',
   },
 
   /**
@@ -56,7 +63,7 @@ Page({
     self.setData({
       openid: openid,
       memcode: memcode,
-      userImg: userImg
+      userImg: userImg,
     })
     if (openid && openid !== defaultOpenid) {
       self.setData({
@@ -67,6 +74,12 @@ Page({
       // 获取用户信息
       self.login()
     }
+    // 获取优惠券数量
+    self.getTickNum()
+    // 获取卡余额
+    self.getCardInfo()
+    // 获取积分
+    self.getScore()
   },
 
   /**
@@ -125,7 +138,7 @@ Page({
       wxID: self.data.openid,
       usercode: '',
       password: '',
-      // 团秒标志，0：否；1：是 ；2：小程序自动登录 
+      // 团秒标志，0：否；1：是 ；2：小程序自动登录
       tmFlag: 2
     }
     request.http('system/customlogin.do?method=login', data).then(result => {
@@ -149,6 +162,8 @@ Page({
         let coflag = res.data.coflag
         // 是否设置默认门店
         let isdefaultdept = res.data.isdefaultdept
+        // 手机号码
+        let mobile = res.data.mobile
         // 只允许普通客户登录小程序
         if (iscustomer !== 1) {
          toast.toast('当前帐号类型不正确,不可使用!')
@@ -159,7 +174,7 @@ Page({
           app.globalData.viptype = 3
         }
         // 是否开通支付
-        if (coflag && coflag == 1 ) {
+        if (coflag && coflag === 1 ) {
           app.globalData.viptype = 2
         }
         // 设session
@@ -171,6 +186,8 @@ Page({
         app.globalData.memcode = memcode
         app.globalData.deptname = deptname
         app.globalData.deptcode = deptcode
+        app.globalData.mobile = mobile
+        app.globalData.coflag = coflag
         // 更新页面信息
         if (self.data.memcode !== app.globalData.memcode) {
           self.setData({
@@ -178,8 +195,11 @@ Page({
             memcode: memcode
           })
         }
-        // 更新购物车
-        self.getCartCount()
+        // 判断是否授权
+        if (self.data.openidType) {
+          // 更新购物车
+          self.getCartCount()
+        }
         // 未设置默认门店先选择门店
         // if (!isdefaultdept && memcode){
         //   wx.redirectTo({
@@ -188,6 +208,57 @@ Page({
         // }
       } else {
         toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 获取优惠券数量
+  getTickNum () {
+    let self = this
+    let data = {}
+    request.http('mem/member.do?method=listCoupon', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          tickNum: res.data.length
+        })
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 获取卡余额
+  getCardInfo () {
+    let self = this
+    let data = {}
+    request.http('mem/card.do?method=getMyCardInfo', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          cardInfo: res.data
+        })
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 获取积分
+  getScore () {
+    let self = this
+    let data = {
+      memcode: app.globalData.memcode,
+      startdate: utils.formatTime(new Date())
+    }
+    request.http('mem/card.do?method=listScoreDtl', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          score: res.data
+        })
       }
     }).catch(error => {
       toast.toast(error.error)

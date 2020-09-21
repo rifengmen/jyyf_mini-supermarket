@@ -1,7 +1,8 @@
 // pages/goodsDetail/goodsDetail.js
 const app = getApp()
-const request = require("../../utils/request.js")
-const toast = require("../../utils/toast.js")
+const request = require("../../utils/request")
+const toast = require("../../utils/toast")
+const WxParse = require('../../wxParse/wxParse')
 
 Page({
 
@@ -62,7 +63,7 @@ Page({
     })
     // 设置title
     wx.setNavigationBarTitle({
-      title: self.data.title, 
+      title: self.data.title,
     })
     // 获取商品详情
     self.getGoodsDetail()
@@ -143,12 +144,23 @@ Page({
         self.setData({
           goodsDetail: res.data
         })
+        // 渲染富文本内容
+        self.setDescribe()
       } else {
         toast.toast(res.message)
       }
     }).catch(error => {
       toast.toast(error.error)
     })
+  },
+
+  // 渲染富文本内容
+  setDescribe () {
+    let self = this
+    let describe = self.data.goodsDetail.describe
+    let baseUrl = self.data.baseUrl
+    describe = describe.replace(/upload\/images/g, (baseUrl + 'upload/images'))
+    WxParse.wxParse('describe', 'html', describe, self, 5)
   },
 
   // 获取商品评价列表
@@ -226,7 +238,7 @@ Page({
         dialogPrice: goods.Highpprice,
         goods: goods,
       })
-    } else { 
+    } else {
       // 调用子组件，传入商品信息添加购物车
       addcart.addCart(goods)
     }
@@ -256,7 +268,7 @@ Page({
     addcart.addCart(goods)
     self.dialogClose()
   },
-  
+
   // 设置弹窗斤
   setDialogJin (e) {
     let self = this

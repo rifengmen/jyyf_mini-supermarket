@@ -1,6 +1,13 @@
 // component/dialog/dialog.js
 Component({
   /**
+   * 组件的一些选项
+   */
+  options: {
+    addGlobalClass: true
+  },
+
+  /**
    * 组件的属性列表
    */
   properties: {
@@ -20,6 +27,6 @@ Component({
   methods: {
     // 取消按钮
     cancel () {},
-    // 
+    //
   }
 })

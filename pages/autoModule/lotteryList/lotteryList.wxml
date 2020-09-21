@@ -1,0 +1,14 @@
+<!--pages/autoModule/lotteryList/lotteryList.wxml-->
+<view class="container color333333 font28 bgffffff">
+  <view class="lottery_cont">
+    <block>
+      <messageList messageList="{{lotteryList}}"></messageList>
+    </block>
+    <view class="nodata_cont" wx:if="{{!lotteryList.length && getFlag}}">
+      <view class="nodata overflow">
+        <image src="/lib/images/orderNodata.png"></image>
+      </view>
+      <view class="color999999 tc">您的中奖记录空空如也～</view>
+    </view>
+  </view>
+</view>

@@ -115,6 +115,9 @@
 .colorc7c7c7 {
   color: #c7c7c7;
 }
+.colorcecece {
+  color: #cecece;
+}
 .colorffffff {
   color: #ffffff;
 }
@@ -130,6 +133,9 @@
 .color0091ff {
   color: #0091ff;
 }
+.colorrgba0 {
+  color: rgba(255, 255, 255, 0);
+}
 /* 字体颜色 end */
 
 /* 背景颜色 start */
@@ -142,11 +148,17 @@
 .bgfa5151 {
   background-color: #fa5151;
 }
+.bge42837 {
+  background-color: #e42837;
+}
 .bg71d793 {
   background-color: #71d793;
 }
 .bg329e56 {
   background-color: #329e56;
+}
+.bg38b060 {
+  background-color: #38b060;
 }
 .bgcecece {
   background-color: #cecece;
@@ -221,6 +233,21 @@
 }
 .border_bf0f0f0 {
   border-bottom: 1px solid #f0f0f0;
+}
+.border_affffff {
+  border: 1px solid #ffffff;
+}
+.border_a71d793 {
+  border: 1px solid #71d793;
+}
+.border_a38b060 {
+  border: 1px solid #38b060;
+}
+.border_a979797 {
+  border: 1px solid #979797;
+}
+.border_acecece {
+  border: 1px solid #cecece;
 }
 .border_a979797_2 {
   border: 2px solid #979797;
@@ -306,7 +333,7 @@ button::after {
   box-sizing: unset;
   border-radius: unset;
   
-}  
+}
 /* 取消微信默认样式 end */
 /* input框 start */
 input::placeholder {

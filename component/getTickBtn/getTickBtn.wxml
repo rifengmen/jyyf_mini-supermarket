@@ -1,0 +1,2 @@
+<!--component/getTickBtn/getTickBtn.wxml-->
+<view catchtap="getTick">立即领取</view>

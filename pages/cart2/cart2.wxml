@@ -1,9 +1,9 @@
-<!--pages/cart2/cart2.wxml-->
+<!--pages/cart/cart.wxml-->
 <view class="container color333333 font28 bgf0f0f0">
 	<!-- 编辑栏 start -->
 	<view class="editor bgffffff">
 		<view class="deptname">
-			<view class="shop">
+			<view class="shop overflow">
 				<image src="/lib/images/shop.png" mode="aspectFit"></image>
 			</view>
 			<view class="name ellipsis">{{deptname}}</view>
@@ -18,7 +18,7 @@
 				<view class="goods" wx:for="{{cartList}}" wx:key="index">
 					<radio value="" checked="{{item.flag}}" bindtap="setFlag" data-index="{{index}}" wx:if="{{editorFlag}}"></radio>
 					<navigator class="goods_item2 border_be5e5e5" hover-class="none" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + item.Gdscode + '&title=' + item.Pname}}">
-						<view class="item_img">
+						<view class="item_img overflow">
 							<image src="{{baseUrl + item.Pimg}}" mode="aspectFit"></image>
 						</view>
 						<view class="item_desc">
@@ -33,7 +33,7 @@
 										<view class="subtrack_cart btn border_r500 overflow" catchtap="subtrackCart" data-index="{{index}}">
 											<image src="/lib/images/subtrack.png"></image>
 										</view>
-										<view class="input_cart font24 tc" type="number">{{item.buyAMT}}</view>
+										<view class="input_cart font24 tc" bindtap="">{{item.buyAMT}}</view>
 										<view class="add_cart btn border_r500 overflow" catchtap="addCart" data-index="{{index}}">
 											<image src="/lib/images/add.png"></image>
 										</view>
@@ -46,7 +46,7 @@
 			</view>
 		</view>
 		<view class="nodata_cont" wx:if="{{!cartList.length && getFlag}}">
-			<view class="nodata">
+			<view class="nodata overflow">
 				<image src="/lib/images/cartNodata.png"></image>
 			</view>
 			<view class="color999999 tc">您的购物车空空如也快去购物吧～</view>

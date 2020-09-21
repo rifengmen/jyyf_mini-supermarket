@@ -1,4 +1,5 @@
 /* pages/goodsDetail/goodsDetail.wxss */
+@import "/wxParse/wxParse.wxss";
 .banner {
   width: 100%;
   height: 562rpx;
@@ -147,8 +148,9 @@ swiper.banner_swiper {
 }
 .goods_desc3 {
   width: 100%;
-  height: 90rpx;
+  /*height: 90rpx;*/
   /* margin-top: 20rpx; */
+  margin-bottom: 110rpx;
 }
 
 .nav_cart {

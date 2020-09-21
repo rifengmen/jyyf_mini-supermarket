@@ -1,7 +1,7 @@
 // pages/userInfo/selfPickUp/selfPickUp.js
 const app = getApp()
-const request = require("../../../utils/request.js")
-const toast = require("../../../utils/toast.js")
+const request = require("../../../utils/request")
+const toast = require("../../../utils/toast")
 
 Page({
 
@@ -33,7 +33,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let self= this
+    self.setData({
+      phone: app.globalData.mobile,
+    })
   },
 
   /**
@@ -47,7 +50,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    let self = this
   },
 
   /**
@@ -105,6 +108,7 @@ Page({
       name: self.data.name,
       phone: self.data.phone
     }
+    app.globalData.addressId = ''
     wx.navigateBack()
   },
 })

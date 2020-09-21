@@ -4,20 +4,24 @@
 		<view class="address bgffffff border_r10">
       <view class="address_tit border_be5e5e5">
 			<view class="font32 font_blod">配送地址</view>
-			<view class="addAddress color0091ff" bindtap="addAddress">新增配送地址</view>
+			<navigator class="addAddress color0091ff" hover-class="none" url="/pages/userInfo/editorAddress/editorAddress?from={{from}}">新增配送地址</navigator>
 		</view>
 		<view class="address_list">
 			<view class="address_item border_be5e5e5" wx:for="{{addressList}}" wx:key="index">
-        <view class="item_desc">
+        <view class="item_desc" bindtap="setAddress" data-address="{{item}}">
           <view class="name">
             <view class="">{{item.username + '  ' + item.phone}}</view>
             <view class="tag colorffffff font24 bg71d793 border_r500 tc" wx:if="{{item.isdefault}}">默认</view>
           </view>
-          <view class="color666666 font24">{{item.parentAreaName + item.address}}</view>
+          <view class="color666666 font24">{{item.parentAreaName + '  ' + item.areaname + '  ' + item.address}}</view>
         </view>
-        <view class="item_editor">
-          <image src="/lib/images/addressEditor.png"></image>
+        <view class="item_editor" catchtap="toEditorAddress" data-address="{{item}}">
+          <view class="editor">
+            <image src="/lib/images/addressEditor.png"></image>
+          </view>
+          <view class="isdefault {{item.isdefault ? 'color71d793 border_a71d793' : 'color999999 border_a979797'}} border_r8 tc" catchtap="setIsdefault" data-address="{{item}}">{{item.isdefault ? '取消' : '默认'}}</view>
         </view>
+        <image class="no_send" src="/lib/images/noSend.png" wx:if="{{!item.sendflag && from === 'editorOrder'}}"></image>
 			</view>
 		</view>
     </view>

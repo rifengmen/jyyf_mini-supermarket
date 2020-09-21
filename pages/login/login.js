@@ -1,8 +1,8 @@
 // pages/login/login.js
 //获取应用实例
 const app = getApp()
-const request = require("../../utils/request.js")
-const toast = require("../../utils/toast.js")
+const request = require("../../utils/request")
+const toast = require("../../utils/toast")
 
 Page({
 
@@ -68,7 +68,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    
+
   },
 
   /**
@@ -143,7 +143,7 @@ Page({
       toast.toast(error.error)
     })
   },
-  
+
   // 获取用户信息
   login () {
     let self = this
@@ -151,7 +151,7 @@ Page({
       wxID: self.data.openid,
       usercode: '',
       password: '',
-      // 团秒标志，0：否；1：是 ；2：小程序自动登录 
+      // 团秒标志，0：否；1：是 ；2：小程序自动登录
       tmFlag: 2
     }
     request.http('system/customlogin.do?method=login', data).then(result => {
@@ -175,17 +175,19 @@ Page({
         let coflag = res.data.coflag
         // 默认门店标志
         let isdefaultdept = res.data.isDefaultDept
+        // 手机号码
+        let mobile = res.data.mobile
         // 只允许普通客户登录小程序
         if (iscustomer !== 1) {
           toast.toast('当前帐号类型不正确,不可使用')
-          return 
+          return
         }
         // 设置会员信息(已注册会员)
         if (memcode) {
           app.globalData.viptype = 3
         }
         // 是否开通支付
-        if (coflag && coflag == 1 ) {
+        if (coflag && coflag === 1 ) {
           app.globalData.viptype = 2
         }
         // 设session
@@ -197,6 +199,8 @@ Page({
         app.globalData.memcode = memcode
         app.globalData.deptname = deptname
         app.globalData.deptcode = deptcode
+        app.globalData.mobile = mobile
+        app.globalData.coflag = coflag
         // 未设置默门店先选择门店
         if (!isdefaultdept){
           wx.redirectTo({

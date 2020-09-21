@@ -11,9 +11,9 @@
 	</view>
 	<!-- logo end -->
 	<!-- 手机号码 start -->
-	<view class='line'>
+	<view class='line border_be5e5e5'>
 		<view class="line_img">
-			<image src="../../lib/images/phone.png"></image>
+			<image src="/lib/images/phone.png"></image>
 		</view>
 		<view class='input'>
 			<input type='number' placeholder='请输入手机号' bindinput='setMobile'></input>
@@ -23,7 +23,7 @@
 	<!-- 图片验证码 start -->
 	<view class='line imgcode'>
 		<view class="line_img">
-			<image src="../../lib/images/imgcode.png"></image>
+			<image src="/lib/images/imgcode.png"></image>
 		</view>
 		<view class='input'>
 			<input type='number' placeholder='请输入图形验证码' bindinput='setImgcode'></input>
@@ -36,12 +36,12 @@
 	<!-- 验证码 start -->
 	<view class='line code'>
 		<view class="line_img">
-			<image src="../../lib/images/code.png"></image>
+			<image src="/lib/images/code.png"></image>
 		</view>
 		<view class='input'>
 			<input type='number' placeholder='请输入短信验证码' bindinput='setCode'></input>
-			<view class="sendcode color71d793 border_r500 tc" wx:if="{{numflag}}">{{num + ' s'}}</view>
-			<view class="sendcode color71d793 border_r500 tc" wx:else bindtap="countDown">发送验证码</view>
+			<view class="sendcode colorcecece border_acecece border_r500 tc" wx:if="{{numflag}}">{{num + ' s'}}</view>
+			<view class="sendcode color71d793 border_a71d793 border_r500 tc" wx:else bindtap="countDown">发送验证码</view>
 		</view>
 	</view>
 	<!-- 验证码 end -->

@@ -1,0 +1,5 @@
+/* component/startdate/startdate.wxss */
+.date_img {
+  width: 40rpx;
+  height: 40rpx;
+}

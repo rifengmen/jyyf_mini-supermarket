@@ -1,7 +1,7 @@
-// pages/cart2/cart2.js
+// pages/cart/cart.js
 const app = getApp()
-const request = require("../../utils/request.js")
-const toast = require("../../utils/toast.js")
+const request = require("../../utils/request")
+const toast = require("../../utils/toast")
 
 Page({
 
@@ -53,7 +53,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+
   },
 
   /**
@@ -85,7 +85,12 @@ Page({
     // 弹窗关闭
     self.dialogClose()
     self.setData({
+      allFlag: false,
       editorFlag: false,
+      cartList: [],
+      totalMoney: 0.00,
+      actMoney: 0.00,
+      discountMoney: 0.00,
     })
   },
 
@@ -124,9 +129,13 @@ Page({
   },
 
   // 获取购物车列表
-  getCartList () {
+  getCartList() {
     let self = this
     let data = {}
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
     // 设置请求开关
     self.setData({
       getFlag: false
@@ -135,22 +144,25 @@ Page({
       let res = result.data
       if (res.flag === 1) {
         let cartList = res.data.carList
-        cartList.forEach(val => {
-          val.flag = false
-        })
-        self.setData({
-          SMGflag: res.data.SMGflag
-        })
-        let countData = {
-          cartList: cartList,
-          totalmoney: res.data.totalmoney,
-          actmoney: res.data.actmoney
+        if (cartList.length) {
+          cartList.forEach(val => {
+            val.flag = false
+          })
+          self.setData({
+            SMGflag: res.data.SMGflag
+          })
+          let countData = {
+            cartList: cartList,
+            totalmoney: res.data.totalmoney,
+            actmoney: res.data.actmoney
+          }
+          // 购物车重新计算
+          self.countCart(countData)
         }
-        // 购物车重新计算
-        self.countCart(countData)
       } else {
         toast.toast(res.message)
       }
+      wx.hideLoading()
       // 设置请求开关
       self.setData({
         getFlag: true
@@ -290,7 +302,7 @@ Page({
     self.dialogClose()
     // {"Gdscode":"2000013200","Count":5,"Xuhao":9}
   },
-  
+
   // 设置弹窗斤
   setDialogJin (e) {
     let self = this
@@ -442,8 +454,6 @@ Page({
         }
         // 购物车重新计算
         self.countCart(countData)
-        // 更新购物车
-        self.getCartCount()
       }
       toast.toast(res.message)
     }).catch(error => {
@@ -452,14 +462,25 @@ Page({
   },
 
   // 购物车重新计算
-  countCart (countData) {
+  countCart(countData) {
     let self = this
-    self.setData({
-      cartList: countData.cartList,
-      totalMoney: countData.totalmoney,
-      actMoney: (countData.actmoney).toFixed(2),
-      discountMoney: (countData.totalmoney - countData.actmoney).toFixed(2)
-    })
+    if (countData.cartList.length) {
+      self.setData({
+        cartList: countData.cartList || [],
+        totalMoney: countData.totalmoney || 0,
+        actMoney: (countData.actmoney).toFixed(2) || 0,
+        discountMoney: (countData.totalmoney - countData.actmoney).toFixed(2) || 0
+      })
+    } else {
+      self.setData({
+        cartList: [],
+        totalMoney: 0,
+        actMoney: 0,
+        discountMoney: 0
+      })
+    }
+    // 更新购物车
+    self.getCartCount()
   },
 
   // 更新购物车

@@ -1,0 +1,6 @@
+<!--component/startdate/startdate.wxml-->
+<view>
+  <picker mode="date" value="{{startdate}}" bindchange="dateChange">
+    <image class="date_img" src="/lib/images/dateImg.png"></image>
+  </picker>
+</view>

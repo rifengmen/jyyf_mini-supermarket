@@ -1,7 +1,7 @@
 // pages/noticeList/noticeList.js
 const app = getApp()
-const request = require("../../../utils/request.js")
-const toast = require("../../../utils/toast.js")
+const request = require("../../../utils/request")
+const toast = require("../../../utils/toast")
 
 Page({
 

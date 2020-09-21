@@ -1,0 +1,4 @@
+<!--pages/autoModule/commentList/commentList.wxml-->
+<view class="container color333333 font28 bgf0f0f0" data-weui-theme="dark">
+  我的评价
+</view>

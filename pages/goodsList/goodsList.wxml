@@ -5,7 +5,7 @@
 		<view class="goods_list2">
 			<block>
 				<navigator class="goods_item2 bgffffff border_be5e5e5" hover-class="none" wx:for="{{goodsList}}" wx:key="index" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + item.Gdscode + '&title=' + item.Name}}">
-					<view class="item_img">
+					<view class="item_img overflow">
 						<image src="{{baseUrl + item.Defaultimage}}" mode="aspectFit" lazy-load="true"></image>
 					</view>
 					<view class="item_desc">
@@ -29,7 +29,7 @@
 				</navigator>
 			</block>
 			<view class="nodata_cont" wx:if="{{!goodsList.length && getFlag}}">
-				<view class="nodata">
+				<view class="nodata overflow">
 					<image src="/lib/images/goodsNodata.png"></image>
 				</view>
 				<view class="color999999 tc">暂无相关商品～</view>

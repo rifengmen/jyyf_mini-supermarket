@@ -1,0 +1,26 @@
+<template name="card">
+  <view class="card_cont colorffffff">
+    <image class="card_bg" src="/lib/images/cardBg.png"></image>
+    <view class="card">
+      <view class="card_desc">
+        <view class="name font32" wx:if="{{type === 'balance'}}">账户余额(元)</view>
+        <view class="name font32" wx:if="{{type === 'score'}}">账户积分(分)</view>
+        <view class="num font70">{{cardData || 0}}</view>
+      </view>
+      <navigator class="toRecharge bg329e56" hover-class="none" url="/pages/autoModule/recharge/recharge" wx:if="{{type === 'balance'}}">
+        <image src="/lib/images/toRecharge.png"></image>
+        <text>充值 ></text>
+      </navigator>
+    </view>
+  </view>
+</template>
+
+<template name="list">
+  <view class="item {{(index + 1) === list.length ? '' : 'border_be5e5e5'}}" wx:for="{{list}}" wx:key="index">
+    <view class="name_cont">
+      <view class="name">{{item.name}}</view>
+      <view class="color999999">{{item.time}}</view>
+    </view>
+    <view class="desc">{{item.desc}}</view>
+  </view>
+</template>

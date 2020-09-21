@@ -11,7 +11,6 @@
   justify-content: center;
   align-items: flex-start;
   flex-flow: column;
-  border-bottom: 1rpx solid #e5e5e5;
 }
 .item:last-child {
   border-bottom: unset;

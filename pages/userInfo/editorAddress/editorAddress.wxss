@@ -1,0 +1,25 @@
+/* pages/userInfo/editorAddress/editorAddress.wxss */
+.section {
+  width: calc(100% - 48rpx);
+  height: 84rpx;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.isdefault {
+  justify-content: space-between;
+}
+.section_tit {
+  margin-right: 100rpx;
+}
+picker {
+  width: 300rpx;
+  height: 50rpx;
+}
+.btn {
+  width: calc(100% - 48rpx);
+  height: 80rpx;
+  line-height: 80rpx;
+  margin: 60rpx auto 0 auto;
+}

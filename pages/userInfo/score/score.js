@@ -1,11 +1,22 @@
 // pages/userInfo/score/score.js
+const app = getApp()
+const request = require("../../../utils/request")
+const toast = require("../../../utils/toast")
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    // 查询开始时间
+    startdate: '',
+    // 卡片信息
+    cardData: 0,
+    // 记录列表
+    list: [],
+    // 模板传入类型
+    type: 'score',
   },
 
   /**
@@ -62,5 +73,31 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  // 获取列表内容
+  getList (e) {
+    let self = this
+    let data = {
+      memcode: app.globalData.memcode,
+      startdate: e.detail
+    }
+    request.http('mem/card.do?method=listScoreDtl', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        let datas = res.data
+        datas.dataList.forEach(item => {
+          item.name = item.changetype
+          item.time = item.saletime
+          item.desc = item.Score
+        })
+        self.setData({
+          cardData: datas.Score,
+          list: datas.dataList
+        })
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
 })

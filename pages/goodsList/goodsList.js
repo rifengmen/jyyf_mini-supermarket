@@ -1,6 +1,6 @@
 const app = getApp()
-const request = require("../../utils/request.js")
-const toast = require("../../utils/toast.js")
+const request = require("../../utils/request")
+const toast = require("../../utils/toast")
 
 // pages/goodsList/goodsList.js
 Page({
@@ -89,7 +89,7 @@ Page({
     })
     // 设置title
     wx.setNavigationBarTitle({
-      title: self.data.title, 
+      title: self.data.title,
     })
     // 请求对应商品列表
     self.sendMethods()
@@ -278,7 +278,6 @@ Page({
       wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
-        wx.hideLoading()
         let goodsList = self.data.goodsList
         goodsList.push(...res.data)
         self.setData({
@@ -288,6 +287,7 @@ Page({
       } else {
         toast.toast(res.message)
       }
+      wx.hideLoading()
       // 设置请求开关
       self.setData({
         getFlag: true
@@ -341,7 +341,7 @@ Page({
     addcart.addCart(goods)
     self.dialogClose()
   },
-  
+
   // 设置弹窗斤
   setDialogJin (e) {
     let self = this

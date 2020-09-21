@@ -1,11 +1,18 @@
 // pages/userInfo/payPassword/payPassword.js
+const app = getApp()
+const request = require("../../../utils/request")
+const toast = require("../../../utils/toast")
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    // 会员卡号
+    memcode: '',
+    // 支付开通标志
+    coflag: '',
   },
 
   /**
@@ -26,14 +33,22 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let self = this
+    self.setData({
+      memcode: app.globalData.memcode,
+      coflag: app.globalData.coflag,
+    })
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    let self = this
+    self.setData({
+      memcode: '',
+      coflag: '',
+    })
   },
 
   /**
@@ -62,5 +77,14 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  // 关闭会员支付
+  closePayPassword () {
+    let self = this
+    wx.showModal({
+      title: '会员支付暂不支持关闭功能',
+      showCancel: false,
+    })
+  },
 })

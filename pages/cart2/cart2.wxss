@@ -1,4 +1,4 @@
-/* pages/cart2/cart2.wxss */
+/* pages/cart/cart.wxss */
 .editor {
   position: fixed;
   top: 0;

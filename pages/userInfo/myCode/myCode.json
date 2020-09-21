@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "password": "/component/password/password"
+  },
   "navigationBarTitleText": "电子会员"
 }

@@ -1,7 +1,7 @@
 //index.js
 const app = getApp()
-const request = require("../../utils/request.js")
-const toast = require("../../utils/toast.js")
+const request = require("../../utils/request")
+const toast = require("../../utils/toast")
 
 Page({
   data: {
@@ -52,10 +52,29 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let self = this
     // 设置title
     wx.setNavigationBarTitle({
       title: app.globalData.apptitle
     })
+    self.setData({
+      deptname: app.globalData.deptname,
+      deptcode: app.globalData.deptcode,
+    })
+    // 获取banner列表
+    self.getBannerList()
+    // 获取自定义功能列表
+    self.getModulePictureList()
+    // 获取公告列表
+    self.getNoticeList()
+    // 获取海报列表
+    self.getPosterList()
+    // 获取推荐商品列表
+    self.getTheme()
+    // 获取专区列表
+    self.getHotList()
+    // 更新购物车数量
+    self.getCartCount()
   },
 
   /**
@@ -75,24 +94,7 @@ Page({
    */
   onShow: function () {
     let self = this
-    self.setData({
-      search_val: app.globalData.search_val,
-      deptname: app.globalData.deptname,
-      deptcode: app.globalData.deptcode,
-    })
-    // 获取banner列表
-    self.getBannerList()
-    // 获取自定义功能列表
-    self.getModulePictureList()
-    // 获取公告列表
-    self.getNoticeList()
-    // 获取海报列表
-    self.getPosterList()
-    // 获取推荐商品列表
-    self.getTheme()
-    // 获取专区列表
-    self.getHotList()
-    // 更新购物车数量
+     // 更新购物车数量
     self.getCartCount()
   },
 
@@ -116,7 +118,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    
+
   },
 
   /**
@@ -267,7 +269,7 @@ Page({
         case 13:
           // 周边看看
           wx.navigateTo({
-            url: '/pages/auto/nearby/nearby',
+            url: '/pages/autoModule/nearby/nearby',
           })
           break;
         case 14:
@@ -279,13 +281,13 @@ Page({
         case 15:
           // 领券中心
           wx.navigateTo({
-            url: '/pages/auto/getCoupon/getCoupon',
+            url: '/pages/tickList/tickList?from=auto',
           })
           break;
         case 16:
           // 购物评价
           wx.navigateTo({
-            url: '/pages/auto/commentList/commentList',
+            url: '/pages/autoModule/commentList/commentList',
           })
           break;
         case 17:
@@ -297,13 +299,13 @@ Page({
         case 18:
           // 我的优惠券
           wx.navigateTo({
-            url: '/pages/userInfo/myCoupon/myCoupon',
+            url: '/pages/tickList/tickList?from=userInfo',
           })
           break;
         case 19:
           // 积分抽奖
           wx.navigateTo({
-            url: '/pages/auto/lottery/lottery',
+            url: '/pages/autoModule/lottery/lottery',
           })
           break;
         default:
@@ -322,9 +324,9 @@ Page({
     var addLen;
     if (self.data.flag) {
       // 40为红色线条的长度rpx  28为红色和灰色线条的空白区域8rpx 加上 灰色线条的长度20rpx
-      addLen = 40 + e.detail.scrollLeft / scrollLen * 28 + 'rpx' 
+      addLen = 40 + e.detail.scrollLeft / scrollLen * 28 + 'rpx'
     }else{
-      addLen = 40 + (scrollLen - e.detail.scrollLeft) / scrollLen * 28 + 'rpx' 
+      addLen = 40 + (scrollLen - e.detail.scrollLeft) / scrollLen * 28 + 'rpx'
     }
     self.animation.width(addLen).step();
     self.setData({
@@ -460,15 +462,15 @@ Page({
           })
         } else if (linktype === 5) { // 充值中心
           wx.navigateTo({
-            url: '/pages/auto/recharge/recharge',
+            url: '/pages/autoModule/recharge/recharge',
           })
         } else if (linktype === 6) { // 积分抽奖
           wx.navigateTo({
-            url: '/pages/auto/lottery/lottery',
-          })  
+            url: '/pages/autoModule/lottery/lottery',
+          })
         } else if (linktype === 7) { // 领券中心
           wx.navigateTo({
-            url: '/pages/auto/getCoupon/getCoupon',
+            url: '/pages/tickList/tickList?from=auto',
           })
         } else if (linktype === 8) { // 直播
           let roomid = res.data.linkcode;
@@ -478,7 +480,7 @@ Page({
               url: '/pages/roomplayList/roomplayList',
             })
           } else {
-            let customParams = encodeURIComponent(JSON.stringify({ path: 'pages/login/login', pid: 1 })) 
+            let customParams = encodeURIComponent(JSON.stringify({ path: 'pages/login/login', pid: 1 }))
             wx.navigateTo({
                 url: "plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=" + roomid + "&custom_params=${customParams}"
             })
@@ -535,7 +537,7 @@ Page({
     addcart.addCart(goods)
     self.dialogClose()
   },
-  
+
   // 设置弹窗斤
   setDialogJin (e) {
     let self = this

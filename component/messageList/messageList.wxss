@@ -1,0 +1,24 @@
+/* component/messageList/messageList.wxss */
+/* 记录 消息 列表 start */
+.message_item {
+  width: calc(100% - 48rpx);
+  height: 120rpx;
+  margin: 20rpx auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.message_item:last-child {
+  border-bottom: unset;
+}
+.message_tit {
+  width: calc(100% - 200rpx);
+  margin-right: 40rpx;
+}
+.message_desc {
+  width: 160rpx;
+}
+.message_name {
+  margin-bottom: 10rpx;
+}
+/* 记录 消息 列表 end */

@@ -1,7 +1,7 @@
 <!--pages/shopList/shopList.wxml-->
 <view class="container color333333 font28 bgffffff">
 	<scroll-view class="shop_list">
-		<view class="item" wx:for="{{shopList}}" wx:key="index" bindtap="changeDept" data-index="{{index}}">
+		<view class="item border_be5e5e5" wx:for="{{shopList}}" wx:key="index" bindtap="changeDept" data-index="{{index}}">
 			<view class="item_desc">
 				<view class="item_shopname">
 					<view class="shopname">

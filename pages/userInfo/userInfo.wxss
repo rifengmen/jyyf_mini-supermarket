@@ -1,15 +1,18 @@
 /* pages/userInfo/userInfo.wxss */
+/* 会员信息 start */
 .userinfo_cont {
   width: calc(100% - 48rpx);
-  height: 100%;
-  padding: 20rpx 24rpx;
+  height: 170rpx;
+  padding: 30rpx 24rpx 0 24rpx;
 }
 .desc {
-  width: 100%;
-  height: auto;
+  width: calc(100% - 80rpx);
+  height: calc(100% - 1px);
+  padding: 0 40rpx;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  border-radius: 10rpx 10rpx 0 0;
 }
 .picture {
   width: 100rpx;
@@ -20,3 +23,98 @@
   width: 100%;
   height: 100%;
 }
+.nick_name {
+  width: calc(100% - 240rpx);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-flow: column;
+}
+.nick_name .name {
+  margin-bottom: 10rpx;
+}
+.nick_name .navs {
+  height: 38rpx;
+  line-height: 38rpx;
+  padding: 0 30rpx;
+}
+.my_code {
+  width: 120rpx;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+.my_code image {
+  width: 60rpx;
+  height: 60rpx;
+  margin-bottom: 10rpx;
+}
+/* 会员信息 end */
+.user_section {
+  width: calc(100% - 108rpx);
+  height: auto;
+  margin: 0 auto 24rpx auto;
+  padding: 30rpx 30rpx 10rpx 30rpx;
+}
+.user_section .tit {
+  width: 100%;
+  height: 40rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.user_section .cont {
+  width: 100%;
+  height: auto;
+  padding-top: 20rpx;
+}
+.user_section .cont .item {
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+.user_section .cont .name {
+  height: 50rpx;
+  line-height: 50rpx;
+}
+.user_section .cont .img {
+  width: 62rpx;
+  height: 62rpx;
+}
+.user_section .cont image {
+  width: 100%;
+  height: 100%;
+}
+/* card信息 start */
+.card {
+  border-radius: 0 0 10rpx 10rpx;
+}
+.card_item {
+  width: calc(100% / 3 - 20rpx);
+  height: 80rpx;
+  padding: 0 10rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+.card_item > view:first-child {
+  margin-bottom: 10rpx;
+}
+/* card信息 end */
+/* 我的订单 start */
+.order .item {
+  width: 20%;
+}
+/* 我的订单 end */
+/* 其他 start */
+.other .item {
+  width: 25%;
+}
+/* 其他 end */
+

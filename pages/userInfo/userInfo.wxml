@@ -1,16 +1,117 @@
 <!--pages/userInfo/userInfo.wxml-->
-<view class="container color333333 font28" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
-	<view class="userinfo_cont">
-		<view class="desc">
+<view class="container color333333 font28 bgf9f9f9" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
+	<!-- 会员信息 start -->
+	<view class="userinfo_cont bg71d793">
+		<view class="desc bgffffff border_be5e5e5">
 			<view class="picture border_r500 overflow" bindtap="isAuthor">
-				<image src="{{userImg ? userImg : '../../lib/images/userInfo.png'}}"></image>
+				<image src="{{userImg ? userImg : '/lib/images/userInfo.png'}}"></image>
 			</view>
 			<view class="nick_name">
-				<view wx:if="{{!openidType}}" bindtap="isAuthor">游客，请授权登录</view>
-				<view wx:else>{{memname}}</view>
-				<navigator hover-class="none" url="/pages/register/register" wx:if="{{openidType && !memcode}}">访客，点击此处绑定手机，注册/登录</navigator>
-				<navigator hover-class="none" url="/pages/userInfo/payPassword/payPassword" wx:if="{{memcode}}" class="colorffffff font24 bg71d793 tc border_r500">会员卡 > </navigator>
+				<view class="name font32 font_blod" wx:if="{{!openidType}}" bindtap="isAuthor">游客，请授权登录</view>
+				<view class="name font32 font_blod" wx:else>{{memname}}</view>
+				<navigator class="navs" hover-class="none" url="/pages/register/register" wx:if="{{openidType && !memcode}}">访客，点击此处绑定手机，注册/登录</navigator>
+				<navigator class="navs colorffffff font24 bg71d793 tc border_r500" hover-class="none" url="/pages/userInfo/payPassword/payPassword" wx:if="{{memcode}}">会员卡 > </navigator>
 			</view>
+			<navigator class="my_code" hover-class="none" url="/pages/userInfo/myCode/myCode">
+				<image src="/lib/images/myCode.png"></image>
+				<view class="tc">电子会员</view>
+			</navigator>
 		</view>
 	</view>
+	<!-- 会员信息 end -->
+	<!-- card信息 start -->
+	<view class="card user_section overflow bgffffff">
+		<navigator class="card_item fl" hover-class="none" url="/pages/userInfo/balance/balance">
+			<view class="tc ellipsis">{{cardInfo.money || 0}}</view>
+			<view class="tc color666666">账户余额</view>
+		</navigator>
+		<navigator class="card_item ellipsis fl" hover-class="none" url="/pages/tickList/tickList?from=userInfo">
+			<view class="tc">{{tickNum}}</view>
+			<view class="tc color666666">优惠券</view>
+		</navigator>
+		<navigator class="card_item fl" hover-class="none" url="/pages/userInfo/score/score">
+			<view class="tc ellipsis">{{score.Score || 0}}</view>
+			<view class="tc color666666">积分</view>
+		</navigator>
+	</view>
+	<!-- card信息 end -->
+	<!-- 我的订单 start -->
+	<view class="order user_section bgffffff border_r10">
+		<view class="tit">
+			<view class="font_blod">我的订单</view>
+			<navigator class="color666666 font24" hover-class="none" url="/pages/userInfo/orderList/orderList">全部订单 ></navigator>
+		</view>
+		<view class="cont overflow">
+			<navigator class="item fl" hover-class="none" url="/pages/userInfo/orderList/orderList?orderType=1">
+				<view class="img">
+					<image src="/lib/images/orderType1.png"></image>
+				</view>
+				<view class="name font24">待付款</view>
+			</navigator>
+			<navigator class="item fl" hover-class="none" url="/pages/userInfo/orderList/orderList?orderType=2">
+				<view class="img">
+					<image src="/lib/images/orderType2.png"></image>
+				</view>
+				<view class="name font24">待发货</view>
+			</navigator>
+			<navigator class="item fl" hover-class="none" url="/pages/userInfo/orderList/orderList?orderType=3">
+				<view class="img">
+					<image src="/lib/images/orderType3.png"></image>
+				</view>
+				<view class="name font24">待收货</view>
+			</navigator>
+			<navigator class="item fl" hover-class="none" url="/pages/userInfo/orderList/orderList?orderType=4">
+				<view class="img">
+					<image src="/lib/images/orderType4.png"></image>
+				</view>
+				<view class="name font24">已完成</view>
+			</navigator>
+			<navigator class="item fl" hover-class="none" url="/pages/userInfo/orderList/orderList?orderType=5">
+				<view class="img">
+					<image src="/lib/images/orderType5.png"></image>
+				</view>
+				<view class="name font24">退款/售后</view>
+			</navigator>
+		</view>
+	</view>
+	<!-- 我的订单 end -->
+	<!-- 其他 start -->
+	<view class="other user_section bgffffff border_r10">
+		<view class="tit">
+			<view class="font_blod">其他</view>
+		</view>
+		<view class="cont overflow">
+			<navigator class="item fl" hover-class="none" open-type="switchTab" url="/pages/scan/scan">
+				<view class="img">
+					<image src="/lib/images/userScan.png"></image>
+				</view>
+				<view class="name font24">扫码购</view>
+			</navigator>
+			<navigator class="item fl" hover-class="none" url="/pages/userInfo/scanOrder/scanOrder">
+				<view class="img">
+					<image src="/lib/images/scanOrder.png"></image>
+				</view>
+				<view class="name font24">扫码购订单</view>
+			</navigator>
+			<navigator class="item fl" hover-class="none" url="/pages/message/messageList/messageList">
+				<view class="img">
+					<image src="/lib/images/myMessage.png"></image>
+				</view>
+				<view class="name font24">我的消息</view>
+			</navigator>
+			<navigator class="item fl" hover-class="none" url="/pages/userInfo/addressList/addressList">
+				<view class="img">
+					<image src="/lib/images/myAddress.png"></image>
+				</view>
+				<view class="name font24">收货地址</view>
+			</navigator>
+			<navigator class="item fl" hover-class="none" url="/pages/autoModule/commentList/commentList">
+				<view class="img">
+					<image src="/lib/images/myComment.png"></image>
+				</view>
+				<view class="name font24">我的评价</view>
+			</navigator>
+		</view>
+	</view>
+	<!-- 其他 end -->
 </view>

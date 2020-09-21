@@ -1,2 +1,20 @@
 <!--pages/userInfo/balance/balance.wxml-->
-<text>pages/userInfo/balance/balance.wxml</text>
+<import src="/pages/template/template.wxml" />
+<view class="container color333333 font28">
+  <!-- 卡片 start -->
+  <template is="card" data="{{cardData, type}}"></template>
+  <!-- 卡片 end -->
+  <!-- 列表 start -->
+  <view class="list_cont">
+    <view class="tit border_be5e5e5">
+      <view class="tit_name font32 font_blod">明细</view>
+      <view class="startdate">
+        <startdate id="startdate" bind:getList="getList"></startdate>
+      </view>
+    </view>
+    <view class="list_desc">
+      <template is="list" data="{{list}}"></template>
+    </view>
+  </view>
+  <!-- 列表 end -->
+</view>

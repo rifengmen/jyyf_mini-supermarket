@@ -1,8 +1,8 @@
 // pages/shopList/shopList.js
 //获取应用实例
 const app = getApp()
-const request = require("../../utils/request.js")
-const toast = require("../../utils/toast.js")
+const request = require("../../utils/request")
+const toast = require("../../utils/toast")
 Page({
 
   /**
@@ -149,7 +149,7 @@ Page({
       if (res.flag === 1) {
         app.globalData.deptname = deptname
         app.globalData.deptcode = deptcode
-        wx.switchTab({
+        wx.reLaunch({
           url: '../index/index',
         })
       } else {
@@ -186,7 +186,7 @@ Page({
         })
         app.globalData.deptcode = deptcode
         app.globalData.deptname = deptname
-        wx.switchTab({
+        wx.reLaunch({
           url: '../index/index',
         })
       } else {

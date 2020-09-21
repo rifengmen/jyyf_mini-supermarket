@@ -1,7 +1,7 @@
 // pages/category/category.js
 const app = getApp()
-const request = require("../../utils/request.js")
-const toast = require("../../utils/toast.js")
+const request = require("../../utils/request")
+const toast = require("../../utils/toast")
 
 Page({
 
@@ -137,8 +137,10 @@ Page({
         self.setData({
           level1: res.data
         })
-        // 获取二级分类
-        self.getLevel2()
+        if (res.data.length) {
+          // 获取二级分类
+          self.getLevel2()
+        }
       } else {
         toast.toast(res.message)
       }
@@ -173,7 +175,6 @@ Page({
           // 获取商品列表
         self.getGoodsList()
         } else {
-          wx.hideLoading()
           // 设置请求开关
           self.setData({
             getFlag: true
@@ -182,6 +183,7 @@ Page({
       } else {
         toast.toast(res.message)
       }
+      wx.hideLoading()
     }).catch(error => {
       toast.toast(error.error)
     })
@@ -300,7 +302,7 @@ Page({
     addcart.addCart(goods)
     self.dialogClose()
   },
-  
+
   // 设置弹窗斤
   setDialogJin (e) {
     let self = this

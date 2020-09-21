@@ -1,7 +1,7 @@
 // pages/search/search.js
 const app = getApp()
-const request = require("../../utils/request.js")
-const toast = require("../../utils/toast.js")
+const request = require("../../utils/request")
+const toast = require("../../utils/toast")
 
 Page({
 
@@ -47,7 +47,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
   },
 
   /**

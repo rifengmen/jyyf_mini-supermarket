@@ -22,7 +22,7 @@ App({
         }
       }
     })
-    
+
   },
 
   // 全局变量
@@ -32,6 +32,7 @@ App({
     // 游客openid
     defaultOpenid: "WX19000101000000000",
     // baseUrl
+    // baseUrl: 'http://192.168.29.100:8088/simple-eshop/',
     baseUrl: 'https://www.91jyrj.com/eshop/',
     // baseUrl: 'https://www.jwkgou.com:8443/simple-eshop/',
     // openid
@@ -54,6 +55,8 @@ App({
     memname: '',
     // 手机号
     mobile: '',
+    // 支付开通标志,1为开通，0未开通，null未知
+    coflag: 0,
     // 门店名称
     deptname: '',
     // 门店code
@@ -65,8 +68,14 @@ App({
     countdownnum: '90',
     // 购物车数量
     cartCount: 0,
-    // 收货地址
+    // 收货地址(编辑订单用)
     address: '',
+    // 地址id
+    addressId: '',
+    // 地址详情(编辑地址用)
+    addressDetail: '',
+    // level1 分类列表一级分类
+    level1: [],
 
 
 
@@ -109,7 +118,7 @@ App({
     let defaultOpenid = self.globalData.defaultOpenid
     if (openid === defaultOpenid) {
       return false
-    } else { 
+    } else {
       return true
    }
  },

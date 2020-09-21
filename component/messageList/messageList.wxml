@@ -1,0 +1,8 @@
+<!--component/messageList/messageList.wxml-->
+<view class="message_item border_be5e5e5" wx:for="{{messageList}}" wx:key="index">
+  <view class="message_tit">
+    <view class="message_name font32 ellipsis">{{item.prizeName}}</view>
+    <view class="message_time color666666 ellipsis">{{item.prizeCent}}</view>
+  </view>
+  <view class="message_desc color666666 tr">{{item.prizeDate}}</view>
+</view>

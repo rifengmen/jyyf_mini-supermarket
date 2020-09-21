@@ -1,0 +1,56 @@
+<!--pages/autoModule/recharge/recharge.wxml-->
+<view class="container color333333 font28 bgf0f0f0">
+  <!-- banner start -->
+  <view class="banner border_r10 overflow bgffffff">
+    <swiper class="banner_swiper" indicator-color="#ffffff" indicator-active-color="#71d793" autoplay="true" circular="true" interval="4000" duration="500" current="{{swiperCurrent}}" bindchange="swiperChange">
+      <swiper-item wx:for="{{bannerList}}" wx:key="index">
+        <image src="{{baseUrl + item.Imageurl}}" class="swiper_item" lazy-load="true" bindtap="toBannerDetail" data-id="{{item.ImageID}}" mode="aspectFit"></image>
+      </swiper-item>
+    </swiper>
+    <view class="dots">
+      <block wx:for="{{bannerList}}" wx:key="index">
+        <view class="dot {{index === swiperCurrent ? 'active bg71d793' : 'bgffffff'}} border_r500"></view>
+      </block>
+    </view>
+  </view>
+  <!-- banner end -->
+  <!-- 卡信息 start -->
+  <view class="card_cont bgffffff">
+    <view class="img">
+      <image src="/lib/images/rechargeImg.png"></image>
+    </view>
+    <view class="card_desc">
+      <view class="cardno">{{memcode}}</view>
+      <view class="money color666666">余额: {{cardInfo.money || 0}}</view>
+    </view>
+  </view>
+  <!-- 卡信息 end -->
+  <!-- 充值金额 start -->
+  <view class="rechargeMoney_cont bgffffff">
+    <view class="tit">充值金额</view>
+    <view class="money font60 font_blod">
+      <view class="">￥</view>
+      <input class="input" type="number" value="{{money}}" bindinput="setMoney" placeholder="请填写充值金额" />
+    </view>
+  </view>
+  <!-- 充值金额 end -->
+  <!-- 支付方式列表 start -->
+  <view class="paymodelist bgffffff">
+    <view class="tit">支付方式</view>
+    <view class="item">
+      <radio-group bindchange="radioChange">
+        <label class="item_desc">
+          <view class="name">
+            <image src="/lib/images/wechat.png"></image>
+            <view>微信支付</view>
+          </view>
+          <view class="weui-cell__hd">
+            <radio value="" checked="true"/>
+          </view>
+        </label>
+      </radio-group>
+    </view>
+  </view>
+  <!-- 支付方式列表 end -->
+  <view class="btn colorffffff font32 bg71d793 border_r500 tc" bindtap="sendPay">支付</view>
+</view>

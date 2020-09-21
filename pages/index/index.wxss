@@ -242,14 +242,14 @@ swiper.notice_swiper {
 }
 .timeslimit .tit {
   width: calc(100% - 48rpx);
-  height: 32rpx;
+  height: 42rpx;
   padding: 24rpx;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
 .timeslimit .tit_img {
-  width: 32rpx;
+  width: 37rpx;
   height: 100%;
   margin-right: 20rpx;
 }

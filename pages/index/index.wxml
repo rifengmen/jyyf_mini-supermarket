@@ -8,8 +8,8 @@
 			<view class="search_cont">
 				<!-- 定位 start -->
 				<navigator class="gps" hover-class="none" url="/pages/shopList/shopList">
-					<view class="gps_img">
-						<image src="../../lib/images/gps.png"></image>
+					<view class="gps_img overflow">
+						<image src="/lib/images/gps.png"></image>
 					</view>
 					<text class="font32 colorffffff ellipsis">{{deptname}}</text>
 				</navigator>
@@ -73,8 +73,8 @@
 	<!-- 自定义功能区 end -->
 	<!-- 公告 start -->
 	<view class="notice_cont border_r500 overflow bgffffff">
-		<navigator class="notice_img" hover-class="none" url="/pages/message/noticeList/noticeList">
-			<image src="../../lib/images/notice.png"></image>
+		<navigator class="notice_img overflow" hover-class="none" url="/pages/message/noticeList/noticeList">
+			<image src="/lib/images/notice.png"></image>
 		</navigator>
 		<view class="notice_list">
 			<swiper class="notice_swiper" autoplay="true" circular="true" interval="5000" vertical="true">
@@ -87,7 +87,7 @@
 	<!-- 公告 end -->
 	<!-- 海报区 start -->
 	<view class="poster overflow">
-		<view class="poster_img fl" wx:for="{{posterList}}" wx:key="index" bindtap="toBannerDetail" data-id="{{item.ImageID}}">
+		<view class="poster_img fl overflow" wx:for="{{posterList}}" wx:key="index" bindtap="toBannerDetail" data-id="{{item.ImageID}}">
 			<image src="{{baseUrl + item.Imageurl}}" mode="aspectFit"></image>
 		</view>
 	</view>
@@ -106,121 +106,121 @@
 	</view>
 	<!-- 专区 end -->
 	<!-- 限时抢购 start -->
-	<view class="timeslimit border_r10 bgf68e74_linear">
-		<view class="tit">
-			<view class="tit_img">
-				<image src="../../lib/images/timeslimit.png"></image>
-			</view>
-			<text class="colorffffff font32 font_blod">限时抢购</text>
-		</view>
-		<view class="goods_list1 overflow">
-			<swiper class="timeslimit_swiper" autoplay="true" circular="true" interval="8000" display-multiple-items="3">
-				<swiper-item>
-					<view class="goods_item1 border_r10 overflow bgffffff">
-						<view class="item_img overflow">
-							<image src="../../lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
-						</view>
-						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="color999999 font20">￥30.00</del>
-							</view>
-							<view class="cart">
-								<image src="../../lib/images/addcart.png"></image>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="goods_item1 border_r10 overflow bgffffff">
-						<view class="item_img overflow">
-							<image src="../../lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
-						</view>
-						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="color999999 font20">￥30.00</del>
-							</view>
-							<view class="cart">
-								<image src="../../lib/images/addcart.png"></image>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="goods_item1 border_r10 overflow bgffffff">
-						<view class="item_img overflow">
-							<image src="../../lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
-						</view>
-						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="color999999 font20">￥30.00</del>
-							</view>
-							<view class="cart">
-								<image src="../../lib/images/addcart.png"></image>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="goods_item1 border_r10 overflow bgffffff">
-						<view class="item_img overflow">
-							<image src="../../lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
-						</view>
-						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="color999999 font20">￥30.00</del>
-							</view>
-							<view class="cart">
-								<image src="../../lib/images/addcart.png"></image>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="goods_item1 border_r10 overflow bgffffff">
-						<view class="item_img overflow">
-							<image src="../../lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
-						</view>
-						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="color999999 font20">￥30.00</del>
-							</view>
-							<view class="cart">
-								<image src="../../lib/images/addcart.png"></image>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="goods_item1 border_r10 overflow bgffffff">
-						<view class="item_img overflow">
-							<image src="../../lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
-						</view>
-						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="color999999 font20">￥30.00</del>
-							</view>
-							<view class="cart">
-								<image src="../../lib/images/addcart.png"></image>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
-			</swiper>
-		</view>
-		<!-- 限时抢购 end -->
-	</view>
+	<!--<view class="timeslimit border_r10 bgf68e74_linear">-->
+		<!--<view class="tit">-->
+			<!--<view class="tit_img overflow">-->
+				<!--<image src="/lib/images/timeslimit.png" mode="aspectFit"></image>-->
+			<!--</view>-->
+			<!--<text class="colorffffff font32 font_blod">限时抢购</text>-->
+		<!--</view>-->
+		<!--<view class="goods_list1 overflow">-->
+			<!--<swiper class="timeslimit_swiper" autoplay="true" circular="true" interval="8000" display-multiple-items="3">-->
+				<!--<swiper-item>-->
+					<!--<view class="goods_item1 border_r10 overflow bgffffff">-->
+						<!--<view class="item_img overflow">-->
+							<!--<image src="/lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>-->
+						<!--</view>-->
+						<!--<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>-->
+						<!--<view class="price_cont">-->
+							<!--<view class="price">-->
+								<!--<view class="actual_price colorfa6400 font26">￥20.00</view>-->
+								<!--<del class="color999999 font20">￥30.00</del>-->
+							<!--</view>-->
+							<!--<view class="cart overflow">-->
+								<!--<image src="/lib/images/addcart.png"></image>-->
+							<!--</view>-->
+						<!--</view>-->
+					<!--</view>-->
+				<!--</swiper-item>-->
+				<!--<swiper-item>-->
+					<!--<view class="goods_item1 border_r10 overflow bgffffff">-->
+						<!--<view class="item_img overflow">-->
+							<!--<image src="/lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>-->
+						<!--</view>-->
+						<!--<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>-->
+						<!--<view class="price_cont">-->
+							<!--<view class="price">-->
+								<!--<view class="actual_price colorfa6400 font26">￥20.00</view>-->
+								<!--<del class="color999999 font20">￥30.00</del>-->
+							<!--</view>-->
+							<!--<view class="cart overflow">-->
+								<!--<image src="/lib/images/addcart.png"></image>-->
+							<!--</view>-->
+						<!--</view>-->
+					<!--</view>-->
+				<!--</swiper-item>-->
+				<!--<swiper-item>-->
+					<!--<view class="goods_item1 border_r10 overflow bgffffff">-->
+						<!--<view class="item_img overflow">-->
+							<!--<image src="/lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>-->
+						<!--</view>-->
+						<!--<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>-->
+						<!--<view class="price_cont">-->
+							<!--<view class="price">-->
+								<!--<view class="actual_price colorfa6400 font26">￥20.00</view>-->
+								<!--<del class="color999999 font20">￥30.00</del>-->
+							<!--</view>-->
+							<!--<view class="cart overflow">-->
+								<!--<image src="/lib/images/addcart.png"></image>-->
+							<!--</view>-->
+						<!--</view>-->
+					<!--</view>-->
+				<!--</swiper-item>-->
+				<!--<swiper-item>-->
+					<!--<view class="goods_item1 border_r10 overflow bgffffff">-->
+						<!--<view class="item_img overflow">-->
+							<!--<image src="/lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>-->
+						<!--</view>-->
+						<!--<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>-->
+						<!--<view class="price_cont">-->
+							<!--<view class="price">-->
+								<!--<view class="actual_price colorfa6400 font26">￥20.00</view>-->
+								<!--<del class="color999999 font20">￥30.00</del>-->
+							<!--</view>-->
+							<!--<view class="cart overflow">-->
+								<!--<image src="/lib/images/addcart.png"></image>-->
+							<!--</view>-->
+						<!--</view>-->
+					<!--</view>-->
+				<!--</swiper-item>-->
+				<!--<swiper-item>-->
+					<!--<view class="goods_item1 border_r10 overflow bgffffff">-->
+						<!--<view class="item_img overflow">-->
+							<!--<image src="/lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>-->
+						<!--</view>-->
+						<!--<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>-->
+						<!--<view class="price_cont">-->
+							<!--<view class="price">-->
+								<!--<view class="actual_price colorfa6400 font26">￥20.00</view>-->
+								<!--<del class="color999999 font20">￥30.00</del>-->
+							<!--</view>-->
+							<!--<view class="cart overflow">-->
+								<!--<image src="/lib/images/addcart.png"></image>-->
+							<!--</view>-->
+						<!--</view>-->
+					<!--</view>-->
+				<!--</swiper-item>-->
+				<!--<swiper-item>-->
+					<!--<view class="goods_item1 border_r10 overflow bgffffff">-->
+						<!--<view class="item_img overflow">-->
+							<!--<image src="/lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>-->
+						<!--</view>-->
+						<!--<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>-->
+						<!--<view class="price_cont">-->
+							<!--<view class="price">-->
+								<!--<view class="actual_price colorfa6400 font26">￥20.00</view>-->
+								<!--<del class="color999999 font20">￥30.00</del>-->
+							<!--</view>-->
+							<!--<view class="cart overflow">-->
+								<!--<image src="/lib/images/addcart.png"></image>-->
+							<!--</view>-->
+						<!--</view>-->
+					<!--</view>-->
+				<!--</swiper-item>-->
+			<!--</swiper>-->
+		<!--</view>-->
+		<!--&lt;!&ndash; 限时抢购 end &ndash;&gt;-->
+	<!--</view>-->
 	<!-- 限时抢购 end -->
 	<!-- recommendList start -->
 	<view class="recommendList">
@@ -228,7 +228,7 @@
 		<view class="recommend border_r10 overflow bgffffff" wx:for="{{recommendList}}" wx:key="index" data-index='{{index}}'>
 			<!-- 标题 start -->
 			<navigator class="recommend_tit" hover-class="none" url="{{'/pages/goodsList/goodsList?cateid=' + item.Id + '&title=' + item.storecategoryname}}">
-				<view class="tit_img" wx:if="{{item.showway === 1}}">
+				<view class="tit_img overflow" wx:if="{{item.showway === 1}}">
 					<image src="{{baseUrl + item.ico}}" mode="aspectFit"></image>
 				</view>
 				<view class='tit_text font32 font_blod' wx:if="{{item.showway === 2}}">{{item.storecategoryname}}</view>
