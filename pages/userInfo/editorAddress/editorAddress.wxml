@@ -17,12 +17,13 @@
 	</view>
 	<!-- 手机号 end -->
 	<!-- 收货地址 start -->
-	<!-- <view class="section border_be5e5e5">
+	<view class="section border_be5e5e5">
 		<view class="section_tit">收货地址</view>
-		<view class="section_desc">
-			<input type="number" value="" placeholder="选择收货地址" bindinput="setPhone"></input>
+		<view class="section_desc" bindtap="setGps">
+			<view class="color999999" wx:if="{{gpsAddress}}">{{gpsAddress}}</view>
+			<input type="" value="" placeholder="选择收货地址" disabled wx:else></input>
 		</view>
-	</view> -->
+	</view>
 	<!-- 收货地址 end -->
 	<!-- 区域 start -->
 	<view class="section border_be5e5e5">
@@ -44,7 +45,7 @@
 	<view class="section border_be5e5e5">
 		<view class="section_tit">详细地址</view>
 		<view class="section_desc">
-			<input type="number" value="{{addressAddress}}" placeholder="详细地址" bindinput="setAddressAddress"></input>
+			<input type="" value="{{addressAddress}}" placeholder="详细地址" bindinput="setAddressAddress"></input>
 		</view>
 	</view>
 	<!-- 详细地址 end -->

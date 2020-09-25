@@ -1,2 +1,14 @@
 <!--pages/userInfo/complaintList/complaintList.wxml-->
-<text>pages/userInfo/complaintList/complaintList.wxml</text>
+<view class="container color333333 font28 bgf0f0f0">
+  <view class="complaint_cont bgffffff">
+    <block wx:for="{{complaintList}}" wx:key="index">
+      <navigator class="item border_be5e5e5" hover-class="none" url="/pages/userInfo/complaintDetail/complaintDetail?id={{item.id}}&type={{type}}">
+        <view class="content ellipsis">{{item.content}}</view>
+        <view class="color999999">{{item.addtime}}</view>
+      </navigator>
+    </block>
+  </view>
+  <view class="btn_cont bgffffff">
+    <navigator class="btn colorffffff font32 bg71d793 border_r500 tc" hover-class="none" url="/pages/userInfo/addComplaint/addComplaint?type={{type}}&title={{title}}">{{type ? '提出建议' : '去投诉'}}</navigator>
+  </view>
+</view>

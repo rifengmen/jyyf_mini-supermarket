@@ -1,0 +1,63 @@
+/* pages/userInfo/recordDetail/recordDetail.wxss */
+.goods_cont {
+  width: calc(100% - 48rpx);
+  height: auto;
+  margin-bottom: 24rpx;
+  padding: 0 24rpx;
+}
+.goods_cont .tit {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.goods_cont .item {
+  width: 100%;
+  height: auto;
+  padding: 10rpx 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.goods_cont .item:last-child {
+  border-bottom: unset;
+}
+.goods_cont .item .name_price {
+  width: calc(100% - 180rpx);
+  height: 100%;
+  margin-right: 20rpx;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-flow: column;
+}
+.goods_cont .item .name {
+  margin-bottom: 10rpx;
+}
+.goods_cont .item .price .text {
+  margin-right: 30rpx;
+}
+.goods_cont .item .add_count {
+  width: 160rpx;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  flex-flow: column;
+}
+.goods_cont .item .add {
+  width: 100%;
+  height: 60rpx;
+  line-height: 60rpx;
+  margin-bottom: 10rpx;
+}
+.section {
+  width: calc(100% - 48rpx);
+  height: 90rpx;
+  padding: 0 24rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.section .tit {
+  margin-right: 40rpx;
+}

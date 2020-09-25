@@ -11,14 +11,19 @@
 .message_item:last-child {
   border-bottom: unset;
 }
+.message_age {
+  width: 10rpx;
+  height: 10rpx;
+  margin: 0 20rpx;
+}
 .message_tit {
   width: calc(100% - 200rpx);
   margin-right: 40rpx;
 }
-.message_desc {
-  width: 160rpx;
+.message_cent {
+  margin-top: 10rpx;
 }
-.message_name {
-  margin-bottom: 10rpx;
+.message_date {
+  width: 160rpx;
 }
 /* 记录 消息 列表 end */

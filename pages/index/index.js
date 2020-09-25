@@ -287,7 +287,7 @@ Page({
         case 16:
           // 购物评价
           wx.navigateTo({
-            url: '/pages/autoModule/commentList/commentList',
+            url: '/pages/autoModule/commentList/commentList?title=我的评价&from=auto',
           })
           break;
         case 17:
@@ -587,12 +587,12 @@ Page({
       if (res.flag === 1) {
         if (res.data.data) {
           wx.setTabBarBadge({
-            index: 3,
+            index: 2,
             text: (res.data.data).toString()
           })
         } else {
           wx.removeTabBarBadge({
-            index: 3
+            index: 2
           })
         }
       } else {

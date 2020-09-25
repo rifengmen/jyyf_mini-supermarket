@@ -1,1 +1,37 @@
 /* pages/userInfo/complaintList/complaintList.wxss */
+.complaint_cont {
+  width: calc(100% - 48rpx);
+  height: auto;
+  padding: 0 24rpx 200rpx 24rpx;
+}
+.complaint_cont .item {
+  width: 100%;
+  height: 136rpx;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-flow: column;
+}
+.complaint_cont .item:last-child {
+  border-bottom: unset;
+}
+.complaint_cont .item .content {
+  width: 100%;
+  margin-bottom: 10rpx;
+}
+.btn_cont {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: calc(100vw - 80rpx);
+  height: 200rpx;
+  padding: 0 40rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+}

@@ -501,12 +501,12 @@ Page({
         })
         if (res.data.data) {
           wx.setTabBarBadge({
-            index: 3,
+            index: 2,
             text: (res.data.data).toString()
           })
         } else {
           wx.removeTabBarBadge({
-            index: 3
+            index: 2
           })
         }
       } else {

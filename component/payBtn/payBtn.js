@@ -53,6 +53,11 @@ Component({
       type:String,
       value: '',
     },
+    // 订单编号
+    tradeno: {
+      type: String,
+      value: '',
+    },
   },
 
   /**

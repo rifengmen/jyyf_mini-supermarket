@@ -16,20 +16,23 @@ Component({
   },
 
   /**
-   * 组件所在页面的生命周期
+   * 组件的生命周期
    */
-  pageLifetimes: {
-    show: function() {
+  lifetimes: {
+    // 在组件实例刚刚被创建时执行
+    created () {
+
+    },
+    // 在组件实例进入页面节点树时执行
+    attached () {
+
+    },
+    // 在组件在视图层布局完成后执行
+    ready () {
       let self = this
       // 设置开始时间
       self.setStartdate()
     },
-    hide: function() {
-      // 页面被隐藏
-    },
-    resize: function(size) {
-      // 页面尺寸变化
-    }
   },
 
   /**

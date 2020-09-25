@@ -13,7 +13,7 @@
 					<view class="tag colorffffff font24 bg71d793 border_r500 tc">自提</view>
 					<view class="color999999 font24">(提货时间08:00-12:00)</view>
 				</view>
-				<view class="">{{address.name + '  ' + address.phone}}</view>
+				<view class="">{{address.username + '  ' + address.phone}}</view>
 			</block>
 		</view>
 		<view class="address" wx:else>
@@ -34,7 +34,7 @@
 				<view class="img overflow">
 					<image src="/lib/images/shop.png"></image>
 				</view>
-				<view class="name font_blod ellipsis">{{deptname + deptname + deptname + deptname + deptname}}</view>
+				<view class="name font_blod ellipsis">{{deptname}}</view>
 			</view>
 			<view class="orderCount color999999 tr">共{{orderDetail.Skucount}}种</view>
 		</view>
@@ -139,7 +139,7 @@
 			<payBtn id="cardBtn" data-from="card" from="card" payMoney="{{payMoney}}" scoreFlag="{{scoreFlag}}" score="{{score}}" tick="{{tick}}" freight="{{freight.freight}}" orderDetail="{{orderDetail}}" remark="{{remark}}" password="{{password}}" bindtap="payVerify"></payBtn>
 		</view>
     <view class="wechat_btn border_r500 bg71d793 tc" wx:if="{{paymode7Flag}}">
-			<payBtn id="wechatBtn" data-from="wechat" from="wechat" payMoney="{{payMoney}}" useScoreMoney="{{useScoreMoney}}" tick="{{tick}}" freight="{{freight.freight}}" orderDetail="{{orderDetail}}" remark="{{remark}}" password="{{password}}" bindtap="payVerify"></payBtn>
+			<payBtn id="wechatBtn" data-from="wechat" from="wechat" payMoney="{{payMoney}}" scoreFlag="{{scoreFlag}}" score="{{score}}" tick="{{tick}}" freight="{{freight.freight}}" orderDetail="{{orderDetail}}" remark="{{remark}}" password="{{password}}" bindtap="payVerify"></payBtn>
 		</view>
   </view>
   <!-- 支付按钮 end -->

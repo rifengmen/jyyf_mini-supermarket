@@ -24,3 +24,21 @@
     <view class="desc">{{item.desc}}</view>
   </view>
 </template>
+
+<template name="comment">
+  <view class="comment_item font24 border_bf0f0f0" wx:for="{{commentList}}" wx:key="index">
+    <view class="user border_r500 overflow">
+      <image src="/lib/images/userInfo.png" mode="aspectFit"></image>
+    </view>
+    <view class="desc">
+      <view class="name">{{item.username}}</view>
+      <view class="color999999">{{item.Etime}}</view>
+      <view class="text">{{item.content}}</view>
+      <!-- <view class="desc_img overflow">
+        <view class="img fl overflow">
+          <image src="/lib/images/ceshi001.png" mode="aspectFit"></image>
+        </view>
+      </view> -->
+    </view>
+  </view>
+</template>

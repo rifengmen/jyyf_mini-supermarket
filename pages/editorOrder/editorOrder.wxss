@@ -1,7 +1,7 @@
 /* pages/editorOrder/editorOrder.wxss */
 /* 选择地址 start */
 .address_cont {
-  width: clac(100% - 48rpx);
+  width: calc(100% - 48rpx);
   height: auto;
   padding: 0 24rpx;
   display: flex;

@@ -364,4 +364,21 @@
   align-items: center;
 }
 /* 密码弹框 end */
+/* 日历定位 start */
+.setdate {
+  position: fixed;
+  bottom: 80rpx;
+  left: 40rpx;
+  width: 100rpx;
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, .1);
+}
+.setdate .startdate {
+  width: 100%;
+  height: 100%;
+}
+/* 日历定位 end */
 

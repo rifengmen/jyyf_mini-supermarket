@@ -1,0 +1,8 @@
+<!--pages/message/detail/detail.wxml-->
+<view class="container color333333 font28">
+  <view class="cont">
+    <view class="tit font32 font_blod tc ">{{detail.title}}</view>
+    <view class="time color999999 tc">{{time}}</view>
+    <rich-text class="" nodes="{{nodes}}"></rich-text>
+  </view>
+</view>

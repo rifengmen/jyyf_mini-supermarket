@@ -26,6 +26,10 @@ Page({
     Utype: 2,
     // 商品详情
     goodsDetail: '',
+    // evaluation 好评率
+    evaluation: 100,
+    // 富文本
+    describe: '',
     // 轮播点儿下标
     swiperCurrent: 0,
     // 评价列表
@@ -141,8 +145,13 @@ Page({
     request.http('info/goods.do?method=getProductDetails', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let goodsDetail = res.data
+        let EvaluationGC = res.data.EvaluationGC
+        let EvaluationTC = res.data.EvaluationTC
+        let evaluation = (((EvaluationGC / EvaluationTC).toFixed(4) || 1) * 100)
         self.setData({
-          goodsDetail: res.data
+          goodsDetail: goodsDetail,
+          evaluation: evaluation,
         })
         // 渲染富文本内容
         self.setDescribe()
@@ -159,8 +168,11 @@ Page({
     let self = this
     let describe = self.data.goodsDetail.describe
     let baseUrl = self.data.baseUrl
-    describe = describe.replace(/upload\/images/g, (baseUrl + 'upload/images'))
-    WxParse.wxParse('describe', 'html', describe, self, 5)
+    describe = describe.replace(/upload\/images/g, (baseUrl + 'upload/images')).replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:block;float:left;margin: 0 auto"')
+    self.setData({
+      describe: describe
+    })
+    // WxParse.wxParse('describe', 'html', describe, self, 5)
   },
 
   // 获取商品评价列表

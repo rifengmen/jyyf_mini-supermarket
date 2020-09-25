@@ -1,7 +1,7 @@
 /* pages/userInfo/editorAddress/editorAddress.wxss */
 .section {
   width: calc(100% - 48rpx);
-  height: 84rpx;
+  min-height: 84rpx;
   margin: 0 auto;
   display: flex;
   justify-content: flex-start;
@@ -13,6 +13,12 @@
 .section_tit {
   margin-right: 100rpx;
 }
+.section_desc {
+  width: 60%;
+  line-height: 1.5;
+  padding: 18rpx 0;
+  white-space: pre-wrap;
+}
 picker {
   width: 300rpx;
   height: 50rpx;
@@ -22,4 +28,8 @@ picker {
   height: 80rpx;
   line-height: 80rpx;
   margin: 60rpx auto 0 auto;
+}
+#map {
+  width: 100%;
+  height: 500rpx;
 }

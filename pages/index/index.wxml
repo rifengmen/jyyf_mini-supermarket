@@ -79,7 +79,7 @@
 		<view class="notice_list">
 			<swiper class="notice_swiper" autoplay="true" circular="true" interval="5000" vertical="true">
 				<swiper-item wx:for="{{noticeList}}" wx:key="index" catchtouchmove='catchTouchMove'>
-					<navigator class="notice_item ellipsis" hover-class="none" url="{{'/pages/message/noticeDetail/noticeDetail?id=' + item.id}}">{{item.title}}</navigator>
+					<navigator class="notice_item ellipsis" hover-class="none" url="{{'/pages/message/detail/detail?id=' + item.id + '&type=notice&time=' + item.Pubdate}}">{{item.title}}</navigator>
 				</swiper-item>
 			</swiper>
 		</view>

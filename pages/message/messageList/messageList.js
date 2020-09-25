@@ -1,18 +1,35 @@
 // pages/message/messageList/messageList.js
+const app = getApp()
+const request = require("../../../utils/request")
+const toast = require("../../../utils/toast")
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    // 请求开关
+    getFlag: false,
+    // 公告列表
+    messageList: [],
+    // 查询开始时间
+    startdate: '',
+    // 页码
+    page: 1,
+    // 每页条数
+    count: 15,
+    // 总条数
+    rowCount: 0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let self = this
+    // 获取消息列表
+    self.getMessageList()
   },
 
   /**
@@ -47,14 +64,36 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    let self = this
+    self.setData({
+      page: 1,
+      messageList: [],
+    })
+    // 获取消息列表
+    self.getMessageList()
+    // 关闭下拉刷新
+    wx.stopPullDownRefresh()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let self = this
+    // 计算总页数
+    let totalPage = Math.ceil(self.data.rowCount / self.data.count)
+    // 下一页
+    let page = self.data.page
+    page++
+    self.setData({
+      page: page
+    })
+    if (self.data.page > totalPage) {
+      toast.toast('暂无更多')
+      return false
+    }
+    // 获取消息列表
+    self.getMessageList()
   },
 
   /**
@@ -62,5 +101,64 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  // 获取消息列表
+  getMessageList () {
+    let self = this
+    let data = {
+      messageFlag: 1,
+      Page: self.data.page,
+      pageSize: self.data.count
+    }
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
+    // 设置请求开关
+    self.setData({
+      getFlag: false
+    })
+    request.http('info/InformationController.do?method=listmessage', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        let messageList = res.data
+        messageList.forEach(item => {
+          item.prizeName = item.title
+          item.prizeDate = item.addtime
+          item.readflag = item.flag
+        })
+        let _messageList = self.data.messageList
+        _messageList.push(... messageList)
+        self.setData({
+          messageList: _messageList,
+          rowCount: res.rowCount
+        })
+      } else {
+        toast.toast(res.message)
+      }
+      wx.hideLoading()
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 设置阅读
+  setList (e) {
+    let self = this
+    let id = e.detail
+    let messageList = self.data.messageList
+    messageList.forEach(item => {
+      if (item.id === id) {
+        item.readflag = 1
+      }
+    })
+    self.setData({
+      messageList: messageList
+    })
+  },
 })

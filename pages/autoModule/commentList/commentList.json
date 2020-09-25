@@ -1,4 +1,5 @@
 {
   "usingComponents": {},
-  "navigationBarTitleText": "我的评价"
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 50
 }

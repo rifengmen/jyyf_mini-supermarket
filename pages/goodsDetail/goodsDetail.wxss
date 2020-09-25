@@ -1,5 +1,6 @@
 /* pages/goodsDetail/goodsDetail.wxss */
-@import "/wxParse/wxParse.wxss";
+/*@import "/wxParse/wxParse.wxss";*/
+@import "/pages/template/template.wxss";
 .banner {
   width: 100%;
   height: 562rpx;
@@ -84,67 +85,6 @@ swiper.banner_swiper {
 }
 .goods_desc2 .desc .desc_name {
   margin-bottom: 12rpx;
-}
-.comment_cont {
-  width: calc(100% - 48rpx);
-  height: auto;
-  padding: 10rpx 24rpx;
-  margin-bottom: 20rpx;
-}
-.comment_cont .tit {
-  width: 100%;
-  height: 50rpx;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.comment_list {
-  width: 100%;
-  height: auto;
-}
-.comment_item {
-  width: 100%;
-  height: auto;
-  margin: 20rpx;
-  display: flex;
-  justify-content: space-between;
-}
-.comment_item:last-child {
-  border-bottom: unset;
-}
-.comment_item .user {
-  width: 60rpx;
-  height: 60rpx;
-  margin-right: 20rpx;
-}
-.comment_item .user image {
-  width: 100%;
-  height: 100%;
-}
-.comment_item .desc {
-  width: calc(100% - 80rpx);
-  height: auto;
-}
-.comment_item .desc .text {
-  width: 100%;
-  height: auto;
-  white-space: pre-wrap;
-  margin-top: 20rpx;
-}
-.comment_item .desc_img {
-  width: 100%;
-  height: auto;
-  padding: 20rpx 0;
-}
-.comment_item .desc_img .img {
-  width: 100rpx;
-  height: 100rpx;
-  margin: 0 20rpx 20rpx 0;
-  border: 1px solid #f0f0f0
-}
-.comment_item .img image {
-  width: 100%;
-  height: 100%;
 }
 .goods_desc3 {
   width: 100%;

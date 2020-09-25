@@ -33,6 +33,10 @@ Page({
     addressPhone: '',
     // 街道
     addressAreaid: '',
+    // 定位
+    gps: '',
+    //  定位信息
+    gpsAddress: '',
     // 详细地址
     addressAddress: '',
     // 默认地址
@@ -222,6 +226,19 @@ Page({
     })
   },
 
+  // 设置地图位置
+  setGps () {
+    let self = this
+    wx.chooseLocation({
+        success (res) {
+          self.setData({
+            gps: res,
+            gpsAddress: res.address + res.name
+          })
+        }
+    })
+  },
+
   // 设置详细地址
   setAddressAddress (e) {
     let self = this
@@ -258,6 +275,11 @@ Page({
       toast.toast('请填写手机号')
       return false
     }
+    // 验证定位
+    if (!self.data.gpsAddress) {
+      toast.toast('请选择收货地址')
+      return false
+    }
     // 验证区域
     if (!self.data.listOneAreaIndex) {
       toast.toast('请选择区域')
@@ -279,6 +301,10 @@ Page({
       Address: self.data.addressAddress,
       Username: self.data.addressUsername,
       Phone: self.data.addressPhone,
+      Longitude: self.data.gps.longitude,
+      Latitude: self.data.gps.latitude,
+      mapaddress: self.data.gpsAddress,
+      maptype: 'TX',
     }
     request.http('system/myuser.do?method=saveAddress', data).then(result => {
       let res = result.data

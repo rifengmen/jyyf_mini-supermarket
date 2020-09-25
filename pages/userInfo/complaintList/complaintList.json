@@ -1,4 +1,5 @@
 {
   "usingComponents": {},
-  "navigationBarTitleText": "投诉建议"
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 50
 }

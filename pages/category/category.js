@@ -113,7 +113,7 @@ Page({
       page: page
     })
     if (self.data.page > totalPage) {
-      toast.toast('暂无更多商品')
+      toast.toast('暂无更多')
       return false
     }
     // 获取商品列表
@@ -352,12 +352,12 @@ Page({
       if (res.flag === 1) {
         if (res.data.data) {
           wx.setTabBarBadge({
-            index: 3,
+            index: 2,
             text: (res.data.data).toString()
           })
         } else {
           wx.removeTabBarBadge({
-            index: 3
+            index: 2
           })
         }
       } else {

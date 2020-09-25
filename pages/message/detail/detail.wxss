@@ -1,0 +1,17 @@
+/* pages/message/detail/detail.wxss */
+.cont {
+  width: calc(100% - 48rpx);
+  height: auto;
+  padding: 24rpx;
+}
+.tit {
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+}
+.time {
+  width: 100%;
+  height: 40rpx;
+  line-height: 40rpx;
+  margin-bottom: 60rpx;
+}

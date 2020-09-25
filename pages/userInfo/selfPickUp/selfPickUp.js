@@ -10,7 +10,7 @@ Page({
    */
   data: {
     // 名字
-    name: '',
+    username: '',
     // 手机号
     phone: '',
   },
@@ -78,7 +78,7 @@ Page({
   setName (e) {
     let self = this
     self.setData({
-      name: (e.detail.value).trim()
+      username: (e.detail.value).trim()
     })
   },
 
@@ -94,7 +94,7 @@ Page({
   confirm () {
     let self = this
     // 验证名字
-    if (!self.data.name) {
+    if (!self.data.username) {
       toast.toast('请填写名字')
       return false
     }
@@ -105,7 +105,7 @@ Page({
     }
     app.globalData.address = {
       pickType: 0,
-      name: self.data.name,
+      username: self.data.username,
       phone: self.data.phone
     }
     app.globalData.addressId = ''

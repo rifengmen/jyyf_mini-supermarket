@@ -156,7 +156,7 @@ Page({
       page: page
     })
     if (self.data.page > totalPage) {
-      toast.toast('暂无更多商品')
+      toast.toast('暂无更多')
       return false
     }
     // 请求对应商品列表
@@ -275,7 +275,6 @@ Page({
       getFlag: false
     })
     request.http(url, data).then(result => {
-      wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         let goodsList = self.data.goodsList

@@ -1,0 +1,43 @@
+<!--pages/userInfo/recordDetail/recordDetail.wxml-->
+<view class="container color333333 font28 bgf0f0f0">
+  <view class="record">
+    <!-- 商品列表 start -->
+    <view class="goods_cont bgffffff">
+      <view class="tit font32 font_blod">商品清单</view>
+      <block wx:for="{{recordDetail}}" wx:key="index">
+        <view class="item border_be5e5e5">
+          <view class="name_price">
+            <view class="name">{{item.Productname}}</view>
+            <view class="price">
+              <text>￥{{item.Paidprice}}</text>
+              <del class="color999999 font24">￥{{item.Receivableprice}}</del>
+            </view>
+          </view>
+          <view class="add_count tr">
+            <navigator class="add colorffffff bg71d793 border_r4 tc" hover-class="none" url="/pages/autoModule/addComment/addComment?Gdscode={{item.Gdscode}}&Gdsname={{item.Productname}}">去评价</navigator>
+            <view class="count">×{{item.Salecount}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <!-- 商品列表 end -->
+    <!-- 订单信息 start -->
+    <view class="section bgffffff border_be5e5e5">
+      <view class="tit">门店编号：</view>
+      <text class="">{{deptcode}}</text>
+    </view>
+    <view class="section bgffffff border_be5e5e5">
+      <view class="tit">门店名称：</view>
+      <text class="">{{deptname}}</text>
+    </view>
+    <view class="section bgffffff border_be5e5e5">
+      <view class="tit">流水号：</view>
+      <text class="">{{flowno}}</text>
+    </view>
+    <view class="section bgffffff">
+      <view class="tit">下单时间：</view>
+      <text class="">{{saletime}}</text>
+    </view>
+    <!-- 订单信息 end -->
+  </view>
+</view>

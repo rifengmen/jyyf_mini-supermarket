@@ -1,0 +1,26 @@
+<!--pages/userInfo/recordList/recordList.wxml-->
+<view class="container color333333 font28">
+  <view class="record_list">
+    <block wx:if="{{recordList.length}}" wx:for="{{recordList}}" wx:key="index">
+      <navigator class="item border_be5e5e5" hover-class="none" url="/pages/userInfo/recordDetail/recordDetail?flowno={{item.flowno}}&deptcode={{item.deptcode}}&deptname={{item.deptname}}&saletime={{item.saletime}}">
+        <view class="tit">
+          <view class="deptname font32 ellipsis">{{item.deptname}}</view>
+          <view class="time color999999 ellipsis">{{item.saletime}}</view>
+        </view>
+        <view class="desc">
+          <view class="add color71d793 font24">+{{item.Score}}分</view>
+          <view class="font36">-￥{{item.Money}}</view>
+        </view>
+      </navigator>
+    </block>
+    <view class="nodata_cont" wx:if="{{!recordList.length && getFlag}}">
+      <view class="nodata overflow">
+        <image src="/lib/images/orderNodata.png"></image>
+      </view>
+      <view class="color999999 tc">您的消费记录空空如也～</view>
+    </view>
+  </view>
+  <view class="setdate border_r500">
+    <startdate id="startdate" class="startdate" bind:getList="setStartdate"></startdate>
+  </view>
+</view>

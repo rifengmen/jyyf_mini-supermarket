@@ -57,6 +57,8 @@ Page({
     pd: [{password: ''}, {password: ''}, {password: ''}, {password: ''}, {password: ''}, {password: ''},],
     // focusFlag input框获取焦点开关
     focusFlag: false,
+    // 点击的按钮
+    frombtn: '',
   },
 
   /**
@@ -387,15 +389,17 @@ Page({
     let self = this
     let address = app.globalData.address || ''
     let from = e.currentTarget.dataset.from
+    self.setData({
+      frombtn: from,
+    })
     // 获取支付按钮
-    let cardBtn = self.selectComponent('#cardBtn')
     let wechatBtn = self.selectComponent('#wechatBtn')
     // 验证收货地址
     if (!address) {
       toast.toast('请选择收货地址')
       return false
     }
-    if (from === 'card') {
+    if (from === 'card' || self.data.scoreFlag || self.data.tick) {
       self.setData({
         passwordFlag: true,
       })
@@ -471,12 +475,19 @@ Page({
     let cardBtn = self.selectComponent('#cardBtn')
     let wechatBtn = self.selectComponent('#wechatBtn')
     let password = self.data.password
+    let from = self.data.frombtn
     if (password.length < 6) {
       toast.toast('请输入支付密码')
       return false
     }
-    // 支付
-    cardBtn.pay()
+    if (from === 'card') {
+      // 支付
+      cardBtn.pay()
+    } else if (from === 'wechat') {
+      // 支付
+      wechatBtn.pay()
+    }
+
   },
 
 })
