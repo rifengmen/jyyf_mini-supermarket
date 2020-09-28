@@ -7,7 +7,7 @@
 				<view class="cate_img {{level1ActiveIndex === index ? 'active' : ''}} border_r500 overflow">
 					<image src="{{baseUrl + item.ico}}" lazy-load="true"></image>
 				</view>
-				<view class="cate_name {{level1ActiveIndex === index ? 'color71d793 font_blod' : ''}} tc">{{item.classname}}</view>
+				<view class="cate_name {{level1ActiveIndex === index ? 'color71d793 font_blod' : ''}} tc ellipsis">{{item.classname}}</view>
 			</view>
 		</scroll-view>
 	</view>
@@ -15,8 +15,12 @@
 	<view class="main">
 		<!-- 二级分类 start -->
 		<view class="level2 bgf0f0f0">
-			<view class="level2_item {{level2ActiveIndex === index ? 'bgffffff' : 'bgf0f0f0'}}" wx:for="{{level2}}" wx:key="index" data-classid="{{item.classid}}" data-index="{{index}}" bindtap="setLevel2ActiveIndex">
-				<view class="level2_name {{level2ActiveIndex === index ? 'active font_blod' : ''}}">{{item.classname}}</view>
+			<view class="level2_list">
+				<block wx:for="{{level2}}" wx:key="index">
+					<view class="level2_item {{level2ActiveIndex === index ? 'bgffffff' : 'bgf0f0f0'}}" data-classid="{{item.classid}}" data-index="{{index}}" bindtap="setLevel2ActiveIndex">
+						<view class="level2_name {{level2ActiveIndex === index ? 'active font_blod' : ''}}">{{item.classname}}</view>
+					</view>
+				</block>
 			</view>
 		</view>
 		<!-- 二级分类 end -->

@@ -42,7 +42,7 @@
 /* 分类样式 start */
 .cate_item {
   width: 121rpx;
-  height: 160rpx;
+  height: 170rpx;
   margin: 12rpx;
 }
 .cate_img {
@@ -128,7 +128,7 @@
 }
 .goods_item2 {
   width: 100%;
-  height: 189rpx;
+  min-height: 190rpx;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -140,14 +140,26 @@
   width: 150rpx;
   height: 150rpx;
   margin-right: 20rpx;
+  position: relative;
 }
 .goods_item2 .item_img image {
   width: 100%;
   height: 100%;
 }
+.goods_item2 .item_img .age {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .goods_item2 .item_desc {
   width: calc(100% - 170rpx);
-  height: calc(100% - 20rpx);
+  min-height: 170rpx;
   padding: 10rpx 0;
   display: flex;
   justify-content: space-between;
@@ -156,7 +168,10 @@
 }
 .goods_item2 .item_name {
   width: 100%;
-  height: 80rpx;
+  max-height: 80rpx;
+}
+.goods_item2 .panicBuy {
+  width: 100%;
 }
 .goods_item2 .price_cont {
   width: 100%;
@@ -281,7 +296,6 @@
 .dialog_input {
   width: calc(100% - 50rpx);
   height: 46rpx;
-  border: 1px solid #999999;
   padding: 0 24rpx;
 }
 .dialog_btn {

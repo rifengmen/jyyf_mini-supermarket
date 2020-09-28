@@ -26,7 +26,7 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    // 领取优惠券
+    // 领取电子券
     getTick () {
       let self = this
       let tickid = self.data.tickid

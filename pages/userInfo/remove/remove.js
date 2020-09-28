@@ -1,4 +1,8 @@
 // pages/userInfo/remove/remove.js
+const app = getApp()
+const request = require("../../../utils/request")
+const toast = require("../../../utils/toast")
+
 Page({
 
   /**
@@ -62,5 +66,39 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  // 确认解绑弹窗
+  isRemove () {
+    let self= this
+    wx.showModal({
+      title: '提示',
+      content: '您确认解除绑定吗？（解除绑定后只能以游客身份浏览）',
+      success: res=>{
+        if (res.confirm) {
+          // 解除绑定
+          self.remove()
+        }
+      }
+    })
+  },
+
+  // 解除绑定
+  remove () {
+    let self = this
+    let data = {
+      wxID: app.globalData.openid
+    }
+    request.http('system/customlogin.do?method=unBindOpenID', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        wx.reLaunch({
+          url: "/pages/login/login"
+        })
+      }
+      toast.toast(res.message)
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
 })

@@ -8,10 +8,16 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    // 调用的地方
     from: {
       type: String,
       value: ''
-    }
+    },
+    // 抢购单号
+    panicBuy: {
+      type: String,
+      value: ''
+    },
   },
 
   /**
@@ -45,7 +51,9 @@ Component({
         Buyprice: goods.Highpprice,
         barflag: self.data.barflag,
         Actuslmoney: goods.Highpprice,
+        panicbuycode: goods.panicbuycode,
       }
+      let url = ''
       // 验证是否授权
       if (!app.authorFlag()) {
         wx.navigateTo({
@@ -56,14 +64,23 @@ Component({
       // 验证是否绑定手机号码
       if (!app.memcodeflag()) {
         wx.navigateTo({
-          url: '/pages/register/register',
+          url: '/pages/userInfo/userInfo',
         })
         return false
       }
-      request.http('bill/shoppingcar.do?method=inputIntoCar', data).then(result => {
+      if (self.data.panicBuy) {
+        url = 'info/panicGdscode.do?method=inputIntoCarForPanic'
+      } else {
+        url = 'bill/shoppingcar.do?method=inputIntoCar'
+      }
+      request.http(url, data).then(result => {
         let res = result.data
         if (res.flag === 1) {
-          toast.toast('添加成功')
+          if (self.data.panicBuy) {
+            toast.toast(res.message)
+          } else {
+            toast.toast('添加成功')
+          }
           // 更新购物车数量
           self.triggerEvent('getCartCount')
         } else {

@@ -67,7 +67,7 @@
       <view class="">￥{{orderDetail.Actprice}}</view>
     </view>
     <view class="">
-      <view class="">优惠券</view>
+      <view class="">电子券</view>
       <view class="colorfa6400">-￥{{tick.paymoney || 0}}</view>
     </view>
     <view class="">

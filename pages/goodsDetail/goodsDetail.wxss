@@ -67,6 +67,17 @@ swiper.banner_swiper {
   justify-content: flex-end;
   align-items: center;
 }
+.panicBuy {
+  width: calc(100% - 48rpx);
+  height: auto;
+  padding: 24rpx;
+  margin-bottom: 24rpx;
+}
+.panicBuy_desc {
+  width: 100%;
+  height: 60rpx;
+  line-height: 60rpx;
+}
 .goods_desc2 {
   width: 100%;
   height: 124rpx;

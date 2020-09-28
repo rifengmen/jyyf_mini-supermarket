@@ -3,5 +3,5 @@
     "getTickBtn": "/component/getTickBtn/getTickBtn",
     "useTickBtn": "/component/useTickBtn/useTickBtn"
   },
-  "navigationBarTitleText": "优惠券详情"
+  "navigationBarTitleText": "电子券详情"
 }

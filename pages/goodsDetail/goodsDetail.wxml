@@ -20,20 +20,40 @@
 	<view class="goods_desc1 bgffffff">
 		<view class="goods_name">
 			<view class="name font32 font_blod">{{goodsDetail.Name}}</view>
-			<view class="price" wx:if="{{goodsDetail.scaleflag}}">
-				<view class="actual_price colorfa6400 font38 font_blod">￥{{goodsDetail.preferential/2}}/斤</view>
-				<del class="color999999 font28" wx:if="{{goodsDetail.preferential !== goodsDetail.originalcost}}">￥{{goodsDetail.originalcost/2}}/斤</del>
-			</view>
-			<view class="price" wx:else>
-				<view class="actual_price colorfa6400 font38 font_blod">￥{{goodsDetail.preferential}}</view>
-				<del class="color999999 font28" wx:if="{{goodsDetail.preferential !== goodsDetail.originalcost}}">￥{{goodsDetail.originalcost}}</del>
-			</view>
+			<block wx:if="{{panicBuy}}">
+				<view class="price" wx:if="{{goodsDetail.scaleflag}}">
+					<view class="actual_price colorfa6400 font38 font_blod">￥{{goodsDetail.panicprice / 2}}/斤</view>
+					<del class="color999999 font28" wx:if="{{goodsDetail.panicprice !== goodsDetail.saleprice}}">￥{{goodsDetail.saleprice / 2}}/斤</del>
+				</view>
+				<view class="price" wx:else>
+					<view class="actual_price colorfa6400 font38 font_blod">￥{{goodsDetail.panicprice}}</view>
+					<del class="color999999 font28" wx:if="{{goodsDetail.panicprice !== goodsDetail.saleprice}}">￥{{goodsDetail.saleprice}}</del>
+				</view>
+			</block>
+			<block wx:else>
+				<view class="price" wx:if="{{goodsDetail.scaleflag}}">
+					<view class="actual_price colorfa6400 font38 font_blod">￥{{goodsDetail.preferential / 2}}/斤</view>
+					<del class="color999999 font28" wx:if="{{goodsDetail.preferential !== goodsDetail.originalcost}}">￥{{goodsDetail.originalcost / 2}}/斤</del>
+				</view>
+				<view class="price" wx:else>
+					<view class="actual_price colorfa6400 font38 font_blod">￥{{goodsDetail.preferential}}</view>
+					<del class="color999999 font28" wx:if="{{goodsDetail.preferential !== goodsDetail.originalcost}}">￥{{goodsDetail.originalcost}}</del>
+				</view>
+			</block>
 		</view>
 		<view class="goods_time">
 			<view class="goods_placeoforigin tr">产地：{{goodsDetail.placeoforigin || '暂无'}}</view>
 		</view>
 	</view>
 	<!-- goodsname end -->
+	<!-- 抢购信息 start -->
+	<view class="panicBuy bgffffff" wx:if="{{panicBuy}}">
+		<view class="panicBuy_desc">抢购时间：{{goodsDetail.startdate}} - {{goodsDetail.enddate}}</view>
+		<view class="panicBuy_desc">单人限量：{{goodsDetail.buyamountper}}</view>
+		<view class="panicBuy_desc">总限量：{{goodsDetail.totalamount}}</view>
+		<view class="panicBuy_desc">已购：{{goodsDetail.havebuyamount}}</view>
+	</view>
+	<!-- 抢购信息 end -->
 	<!-- 销量 库存 好评 start -->
 	<view class="goods_desc2 bgffffff">
 		<view class="desc">
@@ -91,7 +111,7 @@
 			<view class="often_btn btn tc bg71d793 border_r500" bindtap="setOften" wx:if="{{goodsDetail.alwaysbuyflag}}">取消常购</view>
 			<view class="often_btn btn tc bg71d793 border_r500" bindtap="setOften" wx:else>设为常购</view>
 			<view class="cart_btn btn tc bg329e56 border_r500">
-        <addCart id="addCart" catchtap="addCart" data-goods="{{goodsDetail}}" bind:getCartCount="getCartCount" from="goodsDetail"></addCart>
+        <addCart id="addCart" catchtap="addCart" data-goods="{{goodsDetail}}" panicBuy="{{panicBuy}}" bind:getCartCount="getCartCount" from="goodsDetail"></addCart>
       </view>
 		</view>
 	</view>

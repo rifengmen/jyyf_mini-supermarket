@@ -9,6 +9,6 @@
     </block>
   </view>
   <view class="btn_cont bgffffff">
-    <navigator class="btn colorffffff font32 bg71d793 border_r500 tc" hover-class="none" url="/pages/userInfo/addComplaint/addComplaint?type={{type}}&title={{title}}">{{type ? '提出建议' : '去投诉'}}</navigator>
+    <navigator class="btn colorffffff font32 bg71d793 border_r500 tc" hover-class="none" url="/pages/userInfo/addComplaint/addComplaint?type={{type}}&title={{title}}">{{type ? '去投诉' : '提出建议'}}</navigator>
   </view>
 </view>

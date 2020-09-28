@@ -9,8 +9,12 @@
       <view class="">我要投诉</view>
       <view class="color999999 font24">投诉记录 > </view>
     </navigator>
-    <navigator class="set_item" hover-class="none" url="/pages/userInfo/about/about">
+    <navigator class="set_item border_be5e5e5" hover-class="none" url="/pages/userInfo/about/about">
       <view class="">关于我们</view>
+      <view class="color999999 font24">公司介绍 > </view>
+    </navigator>
+    <navigator class="set_item" hover-class="none" url="/pages/webUrl/webUrl">
+      <view class="">联系我们</view>
       <view class="color999999 font24">期待您的联系 > </view>
     </navigator>
   </view>

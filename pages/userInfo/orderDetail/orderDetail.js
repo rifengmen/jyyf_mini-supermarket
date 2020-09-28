@@ -20,7 +20,7 @@ Page({
     paymodename: '',
     // 商品总额
     totalMoney: 0,
-    // 优惠券
+    // 电子券
     tick: '',
     // 积分抵扣
     score: '',

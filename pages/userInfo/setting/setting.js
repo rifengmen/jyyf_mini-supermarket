@@ -1,4 +1,8 @@
 // pages/userInfo/setting/setting.js
+const app = getApp()
+const request = require("../../../utils/request")
+const toast = require("../../../utils/toast")
+
 Page({
 
   /**

@@ -23,7 +23,7 @@ Page({
     orderDetail: '',
     // 储值卡支付方式开关
     paymode3Flag: false,
-    // 优惠券支付方式开关
+    // 电子券支付方式开关
     paymode4Flag: false,
     // 积分抵扣支付方式开关
     paymode5Flag: false,
@@ -43,7 +43,7 @@ Page({
     useScoreMoney: 0,
     // 积分使用开关
     scoreFlag: false,
-    // 优惠券
+    // 电子券
     tick: '',
     // 运费
     freight: '',
@@ -91,7 +91,7 @@ Page({
     // 获取购物车列表
     self.getCartList()
     }
-    // 获取优惠券信息
+    // 获取电子券信息
     self.getTick()
     // 获取收货地址
     self.getAddress()
@@ -186,7 +186,7 @@ Page({
     let self = this
     let data = {
       payMoney: parseFloat(self.data.payMoney),
-      Totalmoney: self.data.orderDetail.totalmoney + self.data.freight.freight,
+      Totalmoney: self.data.orderDetail.needpaymoney + self.data.freight.freight,
     }
     self.setData({
       scoreFlag: false,
@@ -204,7 +204,7 @@ Page({
     })
   },
 
-  // 获取优惠券信息
+  // 获取电子券信息
   getTick () {
     let self = this
     let tick = app.globalData.tick
@@ -291,7 +291,7 @@ Page({
     })
   },
 
-  // 去优惠券列表
+  // 去电子券列表
   toTickList () {
     let self = this
     if (!self.data.address) {
@@ -299,7 +299,7 @@ Page({
       return false
     }
     wx.navigateTo({
-      url: '/pages/tickList/tickList?from=editorOrder&payMoney=' + self.data.payMoney + '&Totalmoney=' + self.data.orderDetail.totalmoney,
+      url: '/pages/tickList/tickList?from=editorOrder&payMoney=' + self.data.payMoney + '&Totalmoney=' + self.data.orderDetail.needpaymoney,
     })
   },
 
@@ -368,12 +368,12 @@ Page({
   setPayMoney () {
     let self = this
     // 商品总金额
-    let totalMoney = self.data.orderDetail.totalmoney
+    let totalMoney = self.data.orderDetail.needpaymoney
     // 积分抵扣金额
     let useScoreMoney = self.data.useScoreMoney
     // 运费
     let freight = self.data.freight.freight
-    // 优惠券
+    // 电子券
     let tickMoney = self.data.tick.paymoney || ''
     self.setData({
       payMoney: (totalMoney - useScoreMoney - (tickMoney || 0) + freight).toFixed(2)
@@ -413,10 +413,12 @@ Page({
   setPasswordFlag () {
     let self = this
     self.setData({
-      passwordFlag: !self.data.passwordFlag,
+      passwordFlag: false,
       password: '',
       pd: [{password: ''}, {password: ''}, {password: ''}, {password: ''}, {password: ''}, {password: ''},],
     })
+    // input框失去焦点
+    self.blurInput()
   },
 
   // stops 阻止冒泡

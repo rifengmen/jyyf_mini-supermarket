@@ -1,18 +1,27 @@
 // pages/autoModule/nearby/nearby.js
+const app = getApp()
+const request = require("../../../utils/request")
+const toast = require("../../../utils/toast")
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    // 基础路径
+    baseUrl: app.globalData.baseUrl,
+    // 周边店铺列表
+    nearbyList: [],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let self = this
+    // 获取附近店铺列表
+    self.getNearbyList()
   },
 
   /**
@@ -62,5 +71,27 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  // 获取附近店铺列表
+  getNearbyList () {
+    let self = this
+    let data = {
+      Longitude: app.globalData.longitude,
+      Latitude: app.globalData.latitude,
+      deptType: 3,
+    }
+    request.http('system/dept.do?method=listDeptInfo', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          nearbyList: res.data
+        })
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
 })

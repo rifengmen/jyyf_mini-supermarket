@@ -22,7 +22,7 @@ Page({
     memcode: '',
     // 余额
     cardInfo: '',
-    // 优惠券
+    // 电子券
     tickNum: 0,
     // 积分
     score: '',
@@ -60,10 +60,12 @@ Page({
     let defaultOpenid = app.globalData.defaultOpenid
     let memcode = app.globalData.memcode
     let userImg = app.globalData.userImg
+    let memname = app.globalData.memname
     self.setData({
       openid: openid,
       memcode: memcode,
       userImg: userImg,
+      memname: memname
     })
     if (openid && openid !== defaultOpenid) {
       self.setData({
@@ -74,7 +76,7 @@ Page({
       // 获取用户信息
       self.login()
     }
-    // 获取优惠券数量
+    // 获取电子券数量
     self.getTickNum()
     // 获取卡余额
     self.getCardInfo()
@@ -214,7 +216,7 @@ Page({
     })
   },
 
-  // 获取优惠券数量
+  // 获取电子券数量
   getTickNum () {
     let self = this
     let data = {}

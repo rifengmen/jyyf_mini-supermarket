@@ -31,7 +31,7 @@ Page({
   onLoad: function (options) {
     let self = this
     self.setData({
-      type: options.type,
+      type: parseFloat(options.type),
       title: options.title
     })
     wx.setNavigationBarTitle({

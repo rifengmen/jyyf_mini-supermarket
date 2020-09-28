@@ -1,18 +1,29 @@
 // pages/userInfo/about/about.js
+const app = getApp()
+const request = require("../../../utils/request")
+const toast = require("../../../utils/toast")
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    // 商家logo
+    shoplogo: app.globalData.shoplogo,
+    // app标题
+    apptitle: app.globalData.apptitle,
+    // about
+    about: '',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let self = this
+    // 获取about
+    self.getAbout()
   },
 
   /**
@@ -62,5 +73,25 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  // 获取about
+  getAbout () {
+    let self = this
+    let data = {
+      UserCode: app.globalData.memcode
+    }
+    request.http('appversion.do?method=appAbout', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          about: res.data
+        })
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
 })

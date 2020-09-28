@@ -27,7 +27,7 @@
 		</navigator>
 		<navigator class="card_item ellipsis fl" hover-class="none" url="/pages/tickList/tickList?from=userInfo">
 			<view class="tc">{{tickNum}}</view>
-			<view class="tc color666666">优惠券</view>
+			<view class="tc color666666">电子券</view>
 		</navigator>
 		<navigator class="card_item fl" hover-class="none" url="/pages/userInfo/score/score">
 			<view class="tc ellipsis">{{score.Score || 0}}</view>

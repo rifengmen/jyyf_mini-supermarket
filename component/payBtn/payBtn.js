@@ -28,7 +28,7 @@ Component({
       type: Object,
       value: null,
     },
-    // 优惠券金额
+    // 电子券金额
     tick: {
       type: Object,
       value: null,
@@ -89,7 +89,7 @@ Component({
       let paylist = [
         {paymode: paymode, paymoney: self.data.payMoney},
       ]
-      // 优惠券
+      // 电子券
       if (tick) {
         let paydesc = {
           paymode: tick.paymode,

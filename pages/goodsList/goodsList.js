@@ -155,7 +155,7 @@ Page({
     self.setData({
       page: page
     })
-    if (self.data.page > totalPage) {
+    if (self.data.panicBuy || self.data.page > totalPage) {
       toast.toast('暂无更多')
       return false
     }
@@ -213,7 +213,7 @@ Page({
     let data = {
       Datatype: self.data.datatype,
       Page: self.data.page,
-      Count: self.data.count,
+      pageSize: self.data.count,
       Sortflg: self.data.sortflg,
       sorttype: self.data.sorttype,
     }
@@ -302,6 +302,9 @@ Page({
     // 获取添加购物车组件
     let addcart = self.selectComponent('#addCart')
     let goods = e.currentTarget.dataset.goods
+    if (self.data.panicBuy) {
+      goods.Highpprice = goods.panicprice
+    }
     // 判断是否散称
     if (goods.scaleflag) {
       self.setData({
@@ -335,6 +338,9 @@ Page({
     // 获取添加购物车组件
     let addcart = self.selectComponent('#addCart')
     let goods = self.data.goods
+    if (self.data.panicBuy) {
+      goods.Highpprice = goods.panicprice
+    }
     goods.count = self.data.dialogCount
     // 调用子组件，传入商品信息添加购物车
     addcart.addCart(goods)

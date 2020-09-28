@@ -32,7 +32,7 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    // 使用优惠券
+    // 使用电子券
     useTick (e) {
       let self = this
       let tick = self.data.tick

@@ -164,9 +164,15 @@ Page({
   // 修改轮播点儿
   swiperChange (e) {
     let self = this
+    let {source, current} = e.detail
     self.setData({
       swiperCurrent: e.detail.current
     })
+    if (source === 'autoplay' || source === 'touch') {
+      self.setData({
+        current
+      })
+    }
   },
 
   // 获取自定义功能列表
@@ -297,7 +303,7 @@ Page({
           })
           break;
         case 18:
-          // 我的优惠券
+          // 我的电子券
           wx.navigateTo({
             url: '/pages/tickList/tickList?from=userInfo',
           })

@@ -187,6 +187,9 @@
 .bgf7b500 {
   background-color: #f7b500;
 }
+.bg999999 {
+  background-color: #999999;
+}
 /* 背景颜色 end */
 /* 背景渐变 start */
 .bg71d793_linear {

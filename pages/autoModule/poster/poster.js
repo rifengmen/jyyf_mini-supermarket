@@ -1,4 +1,4 @@
-// pages/userInfo/userDetail/userDetail.js
+// pages/autoModule/poster/poster.js
 const app = getApp()
 const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
@@ -9,10 +9,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // 用户昵称
-    memname: '',
-    // vip，会员等级
-    vip: '',
+    // 门店code
+    Deptcode: '',
+    // 门店信息 deptdesc
+    deptDetail: '',
   },
 
   /**
@@ -20,13 +20,11 @@ Page({
    */
   onLoad: function (options) {
     let self = this
-    let memnameArr = app.globalData.memname
-    let memname = memnameArr.slice(0, memnameArr.lastIndexOf('('))
-    let vip = memnameArr.slice(memnameArr.lastIndexOf('(') + 1, -1)
     self.setData({
-      memname: memname,
-      vip: vip
+      Deptcode: options.Deptcode,
     })
+    // 获取门店信息
+    self.getDeptDetail()
   },
 
   /**
@@ -78,42 +76,23 @@ Page({
 
   },
 
-  // 设置用户昵称
-  setMemname (e) {
+  // 获取门店信息
+  getDeptDetail () {
     let self = this
-    self.setData({
-      memname: e.detail.value
-    })
-  },
-
-  // 确认修改弹窗
-  isModifyMemname () {
-    let self = this
-    wx.showModal({
-      title: '提示',
-      content: '确认修改您的昵称吗？',
-      success: res=>{
-        if (res.confirm) {
-          // 修改用户昵称
-          self.modifyMemname()
-        }
-      }
-    })
-  },
-
-  // 修改用户昵称
-  modifyMemname () {
-    let self= this
-    let data ={
-      memName: self.data.memname
+    let data = {
+      Deptcode: self.data.Deptcode
     }
-    request.http('system/customlogin.do?method=modifyname', data).then(result => {
+    request.http('info/poster.do?method=listdtlForWX', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        app.globalData.memname = self.data.memname + '(' + self.data.vip + ')'
-        wx.navigateBack()
+        if (res.data.length) {
+          self.setData({
+            deptDetail: res.data[0].content
+          })
+        }
+      } else {
+        toast.toast(res.message)
       }
-      toast.toast(res.message)
     }).catch(error => {
       toast.toast(error.error)
     })

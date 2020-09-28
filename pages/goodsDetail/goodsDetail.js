@@ -26,6 +26,10 @@ Page({
     Utype: 2,
     // 商品详情
     goodsDetail: '',
+    // 抢购商品详情
+    goodsDetail2: '',
+    // panicBuy,抢购标识
+    panicBuy: '',
     // evaluation 好评率
     evaluation: 100,
     // 富文本
@@ -63,7 +67,9 @@ Page({
       deptname: app.globalData.deptname,
       deptcode: app.globalData.deptcode,
       Gdscode: options.Gdscode,
-      title: options.title
+      title: options.title,
+      panicbuycode: options.panicbuycode,
+      panicBuy: options.panicBuy,
     })
     // 设置title
     wx.setNavigationBarTitle({
@@ -137,21 +143,80 @@ Page({
   // 获取商品详情
   getGoodsDetail () {
     let self = this
+    let data = ''
+    let url = ''
+    if (self.data.panicBuy) {
+      data = {
+        Gdscode: self.data.Gdscode,
+        panicbuycode: self.data.panicbuycode
+      }
+      url = 'info/panicGdscode.do?method=getPanicBuyGdscode'
+    } else {
+      data = {
+        Gdscode: self.data.Gdscode,
+        Utype: self.data.Utype,
+        Deptcode: self.data.deptcode
+      }
+      url = 'info/goods.do?method=getProductDetails'
+    }
+    request.http(url, data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        let EvaluationGC = ''
+        let EvaluationTC = ''
+        let evaluation = ''
+        if (!self.data.panicBuy) {
+          EvaluationGC = res.data.EvaluationGC
+          EvaluationTC = res.data.EvaluationTC
+          evaluation = (((EvaluationGC / EvaluationTC).toFixed(4) || 1) * 100)
+        }
+        self.setData({
+          goodsDetail: res.data,
+          evaluation: evaluation,
+        })
+        // 渲染富文本内容
+        self.setDescribe()
+        if (self.data.panicBuy) {
+          // 获取抢购商品详情
+          self.getGoodsDetail2()
+        }
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 获取抢购商品详情
+  getGoodsDetail2 () {
+    let self = this
     let data = {
       Gdscode: self.data.Gdscode,
       Utype: self.data.Utype,
       Deptcode: self.data.deptcode
     }
+    // 验证是否抢购商品
+    if (!self.data.panicBuy) {
+      return false
+    }
     request.http('info/goods.do?method=getProductDetails', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        let goodsDetail = res.data
+        let goodsDetail = self.data.goodsDetail
+        let goodsDetail2 = res.data
+        goodsDetail.placeoforigin = goodsDetail.Placeoforigin
+        goodsDetail.cumulativesales = goodsDetail2.cumulativesales
+        goodsDetail.deptstock = goodsDetail2.deptstock
+        goodsDetail.sendstock = goodsDetail2.sendstock
+        goodsDetail.EvaluationGC = res.data.EvaluationGC
+        goodsDetail.EvaluationTC = res.data.EvaluationTC
         let EvaluationGC = res.data.EvaluationGC
         let EvaluationTC = res.data.EvaluationTC
         let evaluation = (((EvaluationGC / EvaluationTC).toFixed(4) || 1) * 100)
         self.setData({
           goodsDetail: goodsDetail,
-          evaluation: evaluation,
+          evaluation: evaluation
         })
         // 渲染富文本内容
         self.setDescribe()
@@ -240,8 +305,12 @@ Page({
     // 获取添加购物车组件
     let addcart = self.selectComponent('#addCart')
     let goods = e.currentTarget.dataset.goods
-    goods.Gdscode = goods.gdscode
-    goods.Highpprice = goods.preferential
+    if (self.data.panicBuy) {
+      goods.Highpprice = goods.panicprice
+    } else {
+      goods.Highpprice = goods.preferential
+      goods.Gdscode = goods.gdscode
+    }
     // 判断是否散称
     if (goods.scaleflag) {
       self.setData({
@@ -275,6 +344,12 @@ Page({
     // 获取添加购物车组件
     let addcart = self.selectComponent('#addCart')
     let goods = self.data.goods
+    if (self.data.panicBuy) {
+      goods.Highpprice = goods.panicprice
+    } else {
+      goods.Highpprice = goods.preferential
+      goods.Gdscode = goods.gdscode
+    }
     goods.count = self.data.dialogCount
     // 调用子组件，传入商品信息添加购物车
     addcart.addCart(goods)

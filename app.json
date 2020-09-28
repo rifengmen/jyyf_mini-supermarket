@@ -48,12 +48,14 @@
     "pages/userInfo/about/about",
     "pages/userInfo/remove/remove",
     "pages/autoModule/nearby/nearby",
+    "pages/autoModule/poster/poster",
     "pages/autoModule/lottery/lottery",
     "pages/autoModule/lotteryList/lotteryList",
     "pages/autoModule/recharge/recharge",
     "pages/autoModule/addComment/addComment",
     "pages/autoModule/commentList/commentList",
-    "pages/roomplayList/roomplayList"
+    "pages/roomplayList/roomplayList",
+    "pages/webUrl/webUrl"
   ],
   "window": {
     "backgroundTextStyle": "dark",

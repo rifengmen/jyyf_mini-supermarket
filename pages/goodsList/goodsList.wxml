@@ -1,84 +1,115 @@
 <!--pages/goodsList/goodsList.wxml-->
 <view class="container color333333 font28">
-	<!-- 商品列表 start -->
-	<view class="main">
-		<view class="goods_list2">
-			<block>
-				<navigator class="goods_item2 bgffffff border_be5e5e5" hover-class="none" wx:for="{{goodsList}}" wx:key="index" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + item.Gdscode + '&title=' + item.Name}}">
-					<view class="item_img overflow">
-						<image src="{{baseUrl + item.Defaultimage}}" mode="aspectFit" lazy-load="true"></image>
-					</view>
-					<view class="item_desc">
-						<view class="item_name ellipsis2">{{item.Name}}</view>
-						<view class="price_cont">
-							<view class="price" wx:if="{{item.scaleflag}}">
-								<view class="actual_price colorfa6400">￥{{item.Highpprice/2}}/斤</view>
-								<del class="color999999 font22" wx:if="{{item.Highoprice !== item.Highpprice}}">￥{{item.Highoprice/2}}/斤</del>
-							</view>
-							<view class="price" wx:else>
-								<view class="actual_price colorfa6400">￥{{item.Highpprice}}</view>
-								<del class="color999999 font22" wx:if="{{item.Highoprice !== item.Highpprice}}">￥{{item.Highoprice}}</del>
-							</view>
-							<view class="cart">
-								<view class="cart_img">
-									<addCart id="addCart" catchtap="addCart" data-goods="{{item}}" bind:getCartCount="getCartCount"></addCart>
-								</view>
-							</view>
-						</view>
-					</view>
-				</navigator>
-			</block>
-			<view class="nodata_cont" wx:if="{{!goodsList.length && getFlag}}">
-				<view class="nodata overflow">
-					<image src="/lib/images/goodsNodata.png"></image>
-				</view>
-				<view class="color999999 tc">暂无相关商品～</view>
-			</view>
-		</view>
-	</view>
-	<!-- 商品列表 end -->
-	<!-- 购物车 start -->
-	<navigator class="tocart bg000000 border_r500" hover-class="none" url="/pages/cart2/cart2">
-		<image src="/lib/images/toCart.png" class="tocart_img border_r500 overflow"></image>
-		<view class="cart_count colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{cartCount}}">{{cartCount}}</view>
-	</navigator>
-	<!-- 购物车 end -->
-	<!-- dialog start -->
-	<view class="dialog_cont color999999 font28 z_index_99999" wx:if="{{dialogFlag}}">
-		<view class="dialog border_r20 bgffffff ellipsis">
-			<view class="dialog_title font32 font_blod color333333">{{dialogTitle}}</view>
-			<view class="dialog_section">
-				<view class="dialog_section_tit">单价：</view>
-				<view class="dialog_section_cont color333333">{{dialogPrice/2}}元/斤</view>
-			</view>
-			<view class="dialog_section">
-				<view class="dialog_section_tit">斤数(500g)：</view>
-				<view class="dialog_section_cont color333333">
-					<input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入斤数" value="{{dialogJin}}" bindinput="setDialogJin"></input>
-				</view>
-			</view>
-			<view class="dialog_section">
-				<view class="dialog_section_tit">两数(50g)：</view>
-				<view class="dialog_section_cont color333333">
-					<input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入两数" value="{{dialogLiang}}" bindinput="setDialogLiang"></input>
-				</view>
-			</view>
-			<view class="dialog_section">
-				<view class="dialog_section_tit">重量相当于：</view>
-				<view class="dialog_section_cont color333333">{{dialogCount}}kg</view>
-			</view>
-			<view class="dialog_section">
-				<view class="dialog_section_tit">大致金额：</view>
-				<view class="dialog_section_cont color333333">
-					<text class="colorf6400">{{dialogTotalMoney}}</text>
-					<text>元</text>
-				</view>
-			</view>
-			<view class="dialog_btn">
-				<view class="dialog_cancel border_r500 bgffffff tc" bindtap="dialogClose">取消</view>
-				<view class="dialog_confirm colorffffff border_r500 bg71d793 tc" bindtap="dialogConfirm">确认</view>
-			</view>
-		</view>
-	</view>
-	<!-- dialog end -->
+  <!-- 商品列表 start -->
+  <view class="main">
+    <view class="goods_list2">
+      <block>
+        <navigator class="goods_item2 bgffffff border_be5e5e5" hover-class="none" wx:for="{{goodsList}}" wx:key="index"
+                   url="/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&title={{item.Name}}&panicBuy={{panicBuy}}&panicbuycode={{item.panicbuycode}}">
+          <view class="item_img overflow">
+            <image src="{{baseUrl + item.Defaultimage}}" mode="aspectFit" lazy-load="true"></image>
+            <view class="age colorffffff" wx:if="{{panicBuy && item.flag}}">已抢光</view>
+          </view>
+          <view class="item_desc">
+            <view class="item_name ellipsis2">{{item.Name}}</view>
+            <view class="panicBuy color999999 font24" wx:if="{{panicBuy}}">抢购时间：{{item.startdate}} - {{item.enddate}}
+            </view>
+            <view class="panicBuy color999999 font24" wx:if="{{panicBuy}}">总限量：{{item.totalamount}}
+              已购：{{item.havebuyamount}}
+            </view>
+            <view class="price_cont" wx:if="{{panicBuy}}">
+              <view class="price" wx:if="{{item.scaleflag}}">
+                <view class="actual_price colorfa6400">￥{{item.panicprice / 2}}/斤</view>
+                <del class="color999999 font22" wx:if="{{item.panicprice !== item.saleprice}}">￥{{item.saleprice /
+                  2}}/斤
+                </del>
+              </view>
+              <view class="price" wx:else>
+                <view class="actual_price colorfa6400">￥{{item.panicprice}}</view>
+                <del class="color999999 font22" wx:if="{{item.panicprice !== item.saleprice}}">￥{{item.saleprice}}</del>
+              </view>
+              <view class="cart">
+                <view class="cart_img" wx:if="{{!item.flag}}">
+                  <addCart id="addCart" catchtap="addCart" data-goods="{{item}}" panicBuy="{{panicBuy}}" bind:getCartCount="getCartCount"></addCart>
+                </view>
+              </view>
+            </view>
+            <view class="price_cont" wx:else>
+              <view class="price" wx:if="{{item.scaleflag}}">
+                <view class="actual_price colorfa6400">￥{{item.Highpprice / 2}}/斤</view>
+                <del class="color999999 font22" wx:if="{{item.Highoprice !== item.Highpprice}}">￥{{item.Highoprice /
+                  2}}/斤
+                </del>
+              </view>
+              <view class="price" wx:else>
+                <view class="actual_price colorfa6400">￥{{item.Highpprice}}</view>
+                <del class="color999999 font22" wx:if="{{item.Highoprice !== item.Highpprice}}">￥{{item.Highoprice}}
+                </del>
+              </view>
+              <view class="cart">
+                <view class="cart_img">
+                  <addCart id="addCart" catchtap="addCart" data-goods="{{item}}"
+                           bind:getCartCount="getCartCount"></addCart>
+                </view>
+              </view>
+            </view>
+          </view>
+        </navigator>
+      </block>
+      <view class="nodata_cont" wx:if="{{!goodsList.length && getFlag}}">
+        <view class="nodata overflow">
+          <image src="/lib/images/goodsNodata.png"></image>
+        </view>
+        <view class="color999999 tc">暂无相关商品～</view>
+      </view>
+    </view>
+  </view>
+  <!-- 商品列表 end -->
+  <!-- 购物车 start -->
+  <navigator class="tocart bg000000 border_r500" hover-class="none" url="/pages/cart2/cart2">
+    <image src="/lib/images/toCart.png" class="tocart_img border_r500 overflow"></image>
+    <view class="cart_count colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{cartCount}}">{{cartCount}}
+    </view>
+  </navigator>
+  <!-- 购物车 end -->
+  <!-- dialog start -->
+  <view class="dialog_cont color999999 font28 z_index_99999" wx:if="{{dialogFlag}}">
+    <view class="dialog border_r20 bgffffff ellipsis">
+      <view class="dialog_title font32 font_blod color333333">{{dialogTitle}}</view>
+      <view class="dialog_section">
+        <view class="dialog_section_tit">单价：</view>
+        <view class="dialog_section_cont color333333">{{dialogPrice/2}}元/斤</view>
+      </view>
+      <view class="dialog_section">
+        <view class="dialog_section_tit">斤数(500g)：</view>
+        <view class="dialog_section_cont color333333">
+          <input class="dialog_input bge7e7e7 border_r500" type="number" placeholder="请输入斤数" value="{{dialogJin}}"
+                 bindinput="setDialogJin"></input>
+        </view>
+      </view>
+      <view class="dialog_section">
+        <view class="dialog_section_tit">两数(50g)：</view>
+        <view class="dialog_section_cont color333333">
+          <input class="dialog_input bge7e7e7 border_r500" type="number" placeholder="请输入两数" value="{{dialogLiang}}"
+                 bindinput="setDialogLiang"></input>
+        </view>
+      </view>
+      <view class="dialog_section">
+        <view class="dialog_section_tit">重量相当于：</view>
+        <view class="dialog_section_cont color333333">{{dialogCount}}kg</view>
+      </view>
+      <view class="dialog_section">
+        <view class="dialog_section_tit">大致金额：</view>
+        <view class="dialog_section_cont color333333">
+          <text class="colorf6400">{{dialogTotalMoney}}</text>
+          <text>元</text>
+        </view>
+      </view>
+      <view class="dialog_btn">
+        <view class="dialog_cancel border_r500 bgffffff tc" bindtap="dialogClose">取消</view>
+        <view class="dialog_confirm colorffffff border_r500 bg71d793 tc" bindtap="dialogConfirm">确认</view>
+      </view>
+    </view>
+  </view>
+  <!-- dialog end -->
 </view>

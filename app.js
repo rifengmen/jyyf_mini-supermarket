@@ -27,13 +27,11 @@ App({
 
   // 全局变量
   globalData: {
-    // 商品
-    barcode:null,
     // 游客openid
     defaultOpenid: "WX19000101000000000",
     // baseUrl
-    // baseUrl: 'http://192.168.29.100:8088/simple-eshop/',
-    baseUrl: 'https://www.91jyrj.com/eshop/',
+    baseUrl: 'http://192.168.29.100:8088/simple-eshop/',
+    // baseUrl: 'https://www.91jyrj.com/eshop/',
     // baseUrl: 'https://www.jwkgou.com:8443/simple-eshop/',
     // openid
     openid: '',
@@ -43,10 +41,6 @@ App({
     sessionId: '',
     // 搜索内容
     search_val: '',
-    // 扫码次数
-    codecount: 1,
-    // 会员类型
-    viptype: '',
     // 用户id
     userid: '',
     // 用户code
@@ -82,11 +76,11 @@ App({
     // 商家code
     shopcode: '',
     // 商家图标
-    shoplogo: '../../lib/images/logo.jpg',
+    shoplogo: '/lib/images/logo.jpg',
     // app首页图
-    loadingimg: '../../img/loading.jpg',
+    loadingimg: '/lib/images/loading.jpg',
     // 联系我们
-    lianxiurl: 'https://www.91jyrj.com/eshop/upload/text/front/lianxinus.html',
+    webUrl: 'https://www.91jyrj.com/eshop/upload/text/front/lianxinus.html',
     // app标题
     apptitle: '嘉元o2o'
   },
@@ -123,7 +117,7 @@ App({
    }
  },
 
-  //  是否登录
+  //  是否注册
   memcodeflag () {
     let self = this
     let memcode = self.globalData.memcode

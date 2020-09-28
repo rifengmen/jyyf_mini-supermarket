@@ -1,4 +1,4 @@
-// pages/tickDetail/tickDetail.js
+// pages/webUrl/webUrl.js
 const app = getApp()
 const request = require("../../utils/request")
 const toast = require("../../utils/toast")
@@ -9,22 +9,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // tickid
-    tickid: '',
-    // 电子券详情
-    tickDetail: '',
+    // 联系我们
+    webUrl: app.globalData.webUrl
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let self = this
-    self.setData({
-      tickid: options.tickid,
-    })
-    // 获取电子券详情
-    self.getTickDetail()
+
   },
 
   /**
@@ -74,25 +67,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-
-  // 获取电子券详情
-  getTickDetail () {
-    let self = this
-    let data = {
-      tickid: self.data.tickid,
-    }
-    request.http('mem/member.do?method=getCouponDtl', data).then(result => {
-      let res = result.data
-      if (res.flag === 1) {
-        self.setData({
-          tickDetail: res.data,
-        })
-      } else {
-        toast.toast(res.message)
-      }
-    }).catch(error => {
-      toast.toast(error.error)
-    })
-  },
+  }
 })

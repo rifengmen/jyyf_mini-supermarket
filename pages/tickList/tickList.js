@@ -12,7 +12,7 @@ Page({
   data: {
     // 请求开关
     getFlag: false,
-    // 优惠券列表
+    // 电子券列表
     tickList: [],
     // 从哪里来
     from: '',
@@ -35,19 +35,19 @@ Page({
     // 设置title
     let title = ''
     if (self.data.from === 'editorOrder') {
-      title = '选择优惠券'
-      // 选择优惠券页面
+      title = '选择电子券'
+      // 选择电子券页面
       self.getEditorOrder()
     } else if (self.data.from === 'userInfo') {
-      title = '我的优惠券'
-      // 我的优惠券页面
+      title = '我的电子券'
+      // 我的电子券页面
       self.getUserInfo()
     } else if (self.data.from === 'auto') {
       title = '领券中心'
       // 领券中心页面
       self.getAuto()
     } else {
-      title = '优惠券'
+      title = '电子券'
     }
     wx.setNavigationBarTitle({
       title: title,
@@ -104,7 +104,7 @@ Page({
 
   },
 
-  // 选择优惠券页面
+  // 选择电子券页面
   getEditorOrder () {
     let self = this
     let data = {
@@ -112,16 +112,16 @@ Page({
       Totalmoney: parseFloat(self.data.Totalmoney),
     }
     let url = 'bill/pay.do?method=payMoneytick'
-    // 获取优惠券列表
+    // 获取电子券列表
     self.getTickList(url, data)
   },
 
-  // 我的优惠券页面
+  // 我的电子券页面
   getUserInfo () {
     let self = this
     let data = {}
     let url = 'mem/member.do?method=listCoupon'
-    // 获取优惠券列表
+    // 获取电子券列表
     self.getTickList(url, data)
   },
 
@@ -130,11 +130,11 @@ Page({
     let self = this
     let data = {}
     let url = 'mem/member.do?method=listCouponForGet'
-    // 获取优惠券列表
+    // 获取电子券列表
     self.getTickList(url, data)
   },
 
-  // 获取优惠券列表
+  // 获取电子券列表
   getTickList (url, data) {
     let self = this
     wx.showLoading({
@@ -201,7 +201,7 @@ Page({
     return days
   },
 
-  // 去优惠券详情
+  // 去电子券详情
   toTickDetail (e) {
     let self = this
     let tickid = e.currentTarget.dataset.tickid
