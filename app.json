@@ -57,6 +57,16 @@
     "pages/roomplayList/roomplayList",
     "pages/webUrl/webUrl"
   ],
+  "subpackages": [
+    {
+      "root": "autoModule",
+      "name": "autoModule",
+      "pages": [
+        "pages/cat",
+        "pages/dog"
+      ]
+    }
+  ],
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#ffffff",

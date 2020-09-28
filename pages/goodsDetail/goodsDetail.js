@@ -217,8 +217,6 @@ Page({
           goodsDetail: goodsDetail,
           evaluation: evaluation
         })
-        // 渲染富文本内容
-        self.setDescribe()
       } else {
         toast.toast(res.message)
       }

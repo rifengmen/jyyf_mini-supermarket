@@ -15,6 +15,8 @@ Page({
     search_val: '',
     // 通知列表
     noticeList: [],
+    // bannerFlag,banner显示开关
+    bannerFlag: false,
     // banner图 图片
     bannerList: [],
     // 轮播点儿下标
@@ -94,6 +96,9 @@ Page({
    */
   onShow: function () {
     let self = this
+    self.setData({
+      bannerFlag: true,
+    })
      // 更新购物车数量
     self.getCartCount()
   },
@@ -103,6 +108,9 @@ Page({
    */
   onHide: function () {
     let self = this
+    self.setData({
+      bannerFlag: false,
+    })
     // 弹窗关闭
     self.dialogClose()
   },

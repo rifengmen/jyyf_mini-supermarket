@@ -12,7 +12,7 @@
           </view>
           <view class="item_desc">
             <view class="item_name ellipsis2">{{item.Name}}</view>
-            <view class="panicBuy color999999 font24" wx:if="{{panicBuy}}">抢购时间：{{item.startdate}} - {{item.enddate}}
+            <view class="panicBuy color999999 font24" wx:if="{{panicBuy}}">{{item.startdate}} - {{item.enddate}}
             </view>
             <view class="panicBuy color999999 font24" wx:if="{{panicBuy}}">总限量：{{item.totalamount}}
               已购：{{item.havebuyamount}}

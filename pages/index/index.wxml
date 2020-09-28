@@ -27,13 +27,13 @@
 			</view>
 			<!-- 定位 搜索 end -->
 			<!-- banner start -->
-			<view class="banner border_r10 overflow bgffffff">
+			<view class="banner border_r10 overflow bgffffff" wx:if="{{bannerFlag}}">
 				<swiper class="banner_swiper" indicator-color="#ffffff" indicator-active-color="#71d793" autoplay="true" circular="true" interval="4000" duration="500" current="{{swiperCurrent}}" bindchange="swiperChange">
 					<swiper-item wx:for="{{bannerList}}" wx:key="index">
-						<image src="{{baseUrl + item.Imageurl}}" class="swiper_item border_r10" lazy-load="true" bindtap="toBannerDetail" data-id="{{item.ImageID}}" mode="aspectFit"></image>
+						<image src="{{baseUrl + item.Imageurl}}" class="swiper_item border_r10" lazy-load="true" bindtap="toBannerDetail" data-id="{{item.ImageID}}"></image>
 					</swiper-item>
 				</swiper>
-				<view class="dots">
+				<view class="dots" wx:if="{{bannerList.length > 1}}">
 					<block wx:for="{{bannerList}}" wx:key="index">
 						<view class="dot {{index === swiperCurrent ? 'active bg71d793' : 'bgffffff'}} border_r500"></view>
 					</block>
@@ -88,7 +88,7 @@
 	<!-- 海报区 start -->
 	<view class="poster overflow">
 		<view class="poster_img fl overflow" wx:for="{{posterList}}" wx:key="index" bindtap="toBannerDetail" data-id="{{item.ImageID}}">
-			<image src="{{baseUrl + item.Imageurl}}" mode="aspectFit"></image>
+			<image src="{{baseUrl + item.Imageurl}}"></image>
 		</view>
 	</view>
 	<!-- 海报区 end -->
@@ -229,7 +229,7 @@
 			<!-- 标题 start -->
 			<navigator class="recommend_tit" hover-class="none" url="{{'/pages/goodsList/goodsList?cateid=' + item.Id + '&title=' + item.storecategoryname}}">
 				<view class="tit_img overflow" wx:if="{{item.showway === 1}}">
-					<image src="{{baseUrl + item.ico}}" mode="aspectFit"></image>
+					<image src="{{baseUrl + item.ico}}"></image>
 				</view>
 				<view class='tit_text font32 font_blod' wx:if="{{item.showway === 2}}">{{item.storecategoryname}}</view>
 			</navigator>

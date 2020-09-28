@@ -76,12 +76,6 @@ Page({
       // 获取用户信息
       self.login()
     }
-    // 获取电子券数量
-    self.getTickNum()
-    // 获取卡余额
-    self.getCardInfo()
-    // 获取积分
-    self.getScore()
   },
 
   /**
@@ -197,6 +191,12 @@ Page({
             memcode: memcode
           })
         }
+        // 获取电子券数量
+        self.getTickNum()
+        // 获取卡余额
+        self.getCardInfo()
+        // 获取积分
+        self.getScore()
         // 判断是否授权
         if (self.data.openidType) {
           // 更新购物车

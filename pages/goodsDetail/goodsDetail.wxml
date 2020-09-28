@@ -91,6 +91,9 @@
 		</view>
 	</view>
 	<!-- 详情 end -->
+	<!-- 占位 start -->
+	<!--<view class="zhanwei"></view>-->
+	<!-- 占位 end -->
 	<!-- 导航 加购物车 start -->
 	<view class="nav_cart bgffffff">
 		<view class="nav">

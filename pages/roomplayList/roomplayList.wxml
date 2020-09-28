@@ -1,2 +1,5 @@
 <!--pages/roomplayList/roomplayList.wxml-->
-<text>pages/roomplayList/roomplayList.wxml</text>
+<view class="roomlist" catchtap='toroom' wx:for="{{roomplayList}}" wx:key="index" wx:for-item="item" data-index='{{index}}' >
+  <image class="img_item" src="{{item.cover_img}}"></image>
+  <view class="item_info">{{item.name}} </view>
+</view>

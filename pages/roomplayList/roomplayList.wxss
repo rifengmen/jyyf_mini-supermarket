@@ -1,1 +1,33 @@
 /* pages/roomplayList/roomplayList.wxss */
+.roomlist{
+  width: 50%;
+  display: inline-block;
+  /* flex-direction: row; */
+  /* justify-content: space-between; */
+  /* flex-wrap: wrap; */
+  
+}
+
+.room{
+  width: 48.5%;
+  margin: 2px;
+  vertical-align: top;
+  background-color: #ffffff;
+  font-size: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+/* 单个图片容器的样式 */
+.img_item {
+  width: 98%;
+  margin: 2px;
+  display: inline-block;
+}
+.item_info{
+  border-top:1px dashed red;
+  margin-top: -70rpx;
+  font-size: 24rpx;
+  color: #ffffff;
+  margin-left: 30rpx;
+}

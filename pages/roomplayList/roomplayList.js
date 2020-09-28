@@ -1,18 +1,26 @@
 // pages/roomplayList/roomplayList.js
+const app = getApp()
+const request = require("../../utils/request")
+const toast = require("../../utils/toast")
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    curStart: 0,
+    maxRooms: 12,
+    roomplayList: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let self = this
+    // 获取房间列表
+    self.getRoomplayList()
   },
 
   /**
@@ -62,5 +70,27 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  // 获取房间列表
+  getRoomplayList () {
+    let self = this
+    let newstart = self.data.curStart + self.data.roomplayList.length
+    let data = {
+      start: newstart,
+      limit: self.data.maxRooms
+    }
+    request.http('miniLiveInfo.do?method=listLiveInfo', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          roomplayList: res.data
+        })
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
 })
