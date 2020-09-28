@@ -1,5 +1,4 @@
 /* pages/goodsDetail/goodsDetail.wxss */
-/*@import "/wxParse/wxParse.wxss";*/
 @import "/pages/template/template.wxss";
 .banner {
   width: 100%;

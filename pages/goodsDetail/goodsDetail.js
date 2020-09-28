@@ -2,7 +2,6 @@
 const app = getApp()
 const request = require("../../utils/request")
 const toast = require("../../utils/toast")
-const WxParse = require('../../wxParse/wxParse')
 
 Page({
 
@@ -237,7 +236,6 @@ Page({
     self.setData({
       describe: describe
     })
-    // WxParse.wxParse('describe', 'html', describe, self, 5)
   },
 
   // 获取商品评价列表

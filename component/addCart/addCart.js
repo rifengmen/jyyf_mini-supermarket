@@ -63,7 +63,7 @@ Component({
       }
       // 验证是否绑定手机号码
       if (!app.memcodeflag()) {
-        wx.navigateTo({
+        wx.switchTab({
           url: '/pages/userInfo/userInfo',
         })
         return false

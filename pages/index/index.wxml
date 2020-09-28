@@ -30,7 +30,7 @@
 			<view class="banner border_r10 overflow bgffffff">
 				<swiper class="banner_swiper" indicator-color="#ffffff" indicator-active-color="#71d793" autoplay="true" circular="true" interval="4000" duration="500" current="{{swiperCurrent}}" bindchange="swiperChange">
 					<swiper-item wx:for="{{bannerList}}" wx:key="index">
-						<image src="{{baseUrl + item.Imageurl}}" class="swiper_item" lazy-load="true" bindtap="toBannerDetail" data-id="{{item.ImageID}}" mode="aspectFit"></image>
+						<image src="{{baseUrl + item.Imageurl}}" class="swiper_item border_r10" lazy-load="true" bindtap="toBannerDetail" data-id="{{item.ImageID}}" mode="aspectFit"></image>
 					</swiper-item>
 				</swiper>
 				<view class="dots">
@@ -236,7 +236,7 @@
 			<!-- 标题 end -->
 			<!-- 商品列表 start -->
 			<view class='goods_list1'>
-				<navigator class="goods_item1 border_r10 overflow" hover-class="none" wx:for-item="goods" wx:for-index="gindex" wx:for="{{item.gdscodelist}}" wx:key="gindex" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + goods.Gdscode + '&title=' + goods.Name}}">
+				<navigator class="goods_item1 border_r10 overflow" hover-class="none" wx:for-item="goods" wx:for-index="gindex" wx:for="{{item.gdscodelist}}" wx:key="gindex" url="/pages/goodsDetail/goodsDetail?Gdscode={{goods.Gdscode}}&title={{goods.Name}}&panicBuy=&panicbuycode=">
 					<view class="item_img overflow">
 						<image src="{{baseUrl + goods.Defaultimage}}" mode="aspectFit" lazy-load="true"></image>
 					</view>

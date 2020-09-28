@@ -1,5 +1,4 @@
 <!--pages/goodsDetail/goodsDetail.wxml-->
-<!--<import src="../../wxParse/wxParse.wxml" />-->
 <import src="/pages/template/template.wxml" />
 <view class="container color333333 font28 bgf0f0f0" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
 	<!-- banner start -->
@@ -88,7 +87,6 @@
 	<!-- 详情 start -->
 	<view class="goods_desc3 bgffffff">
 		<view class="" wx:if="{{describe}}">
-			<!--<template is="wxParse" data="{{wxParseData: describe.nodes}}" />-->
 			<rich-text class="" nodes="{{describe}}"></rich-text>
 		</view>
 	</view>

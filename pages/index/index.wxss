@@ -66,8 +66,9 @@
 /* 搜索 end */
 /* banner start */
 .banner {
+  width: 700rpx;
   position: relative;
-  margin-top: 10rpx;
+  margin: 10rpx auto 0 auto;
 }
 swiper.banner_swiper {
   width: 100%;
@@ -145,13 +146,13 @@ swiper.banner_swiper {
 /* 自定义功能区 end */
 /* 海报区 start */
 .poster {
-  width: calc(100% - 48rpx);
+  width: calc(100% - 50rpx);
   height: auto;
   margin: 0 auto;
 }
 .poster_img {
   width: 50%;
-  height: 351rpx;
+  height: 350rpx;
 }
 .poster_img image {
   width: 100%;
@@ -162,7 +163,7 @@ swiper.banner_swiper {
 .notice_cont {
   width: calc(100% - 88rpx);
   height: 70rpx;
-  margin: 0 auto;
+  margin: 0 auto 24rpx auto;
   padding: 0 20rpx;
   display: flex;
   justify-content: space-between;
