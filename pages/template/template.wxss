@@ -110,6 +110,9 @@
   padding: 10rpx 24rpx;
   margin-bottom: 20rpx;
 }
+.comment_conts {
+  margin-bottom: 110rpx;
+}
 .comment_cont .tit {
   width: 100%;
   height: 50rpx;

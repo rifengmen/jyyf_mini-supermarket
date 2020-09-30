@@ -217,8 +217,6 @@ Page({
           goodsDetail: goodsDetail,
           evaluation: evaluation
         })
-      } else {
-        toast.toast(res.message)
       }
     }).catch(error => {
       toast.toast(error.error)
@@ -230,7 +228,9 @@ Page({
     let self = this
     let describe = self.data.goodsDetail.describe
     let baseUrl = self.data.baseUrl
-    describe = describe.replace(/upload\/images/g, (baseUrl + 'upload/images')).replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:block;float:left;margin: 0 auto"')
+    if (describe) {
+      describe = describe.replace(/upload\/images/g, (baseUrl + 'upload/images')).replace(/\<img/g, '<img style="max-width:100%;height:auto;display:block;float:left;margin: 0 auto"')
+    }
     self.setData({
       describe: describe
     })

@@ -1,0 +1,23 @@
+/* component/scanDialog/scanDialog.wxss */
+.goodsInfo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, .7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.goodsInfo_cont {
+  padding: 0 24rpx;
+}
+.goodsInfo_cont > view {
+  margin-bottom: 20rpx;
+}
+.goodsInfo_name {
+  width: 100%;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}

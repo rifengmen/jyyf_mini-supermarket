@@ -1,2 +1,45 @@
 <!--pages/scan/editorOrder/editorOrder.wxml-->
-<text>pages/scan/editorOrder/editorOrder.wxml</text>
+<view class="container color333333 font28 bgf0f0f0">
+  <!-- 订单信息 start -->
+  <view class="order_section bgffffff">
+    <view class="orderdesc">
+      <view>门店名称</view>
+      <view class="font24 color666666">{{deptname}}</view>
+    </view>
+    <view class="orderdesc">
+      <view>门店编码</view>
+      <view class="font24 color666666">{{deptcode}}</view>
+    </view>
+    <view class="orderdesc">
+      <view>订单编号</view>
+      <view class="font24 color666666">{{flowno}}</view>
+    </view>
+    <view class="orderdesc">
+      <view>订单金额</view>
+      <view class="font24 color666666" wx:if="{{saomaorderDetail}}">{{saomaorderDetail.totalMoney}}</view>
+    </view>
+  </view>
+  <!-- 订单信息 end -->
+  <!-- 支付方式 start -->
+  <view class="order_sections paymode_img bgffffff">
+    <view class="">支付方式</view>
+    <view class="btn" bindtap="radioChange">
+      <radio id="wechat" value="" checked="{{payFlag}}"></radio>
+      <label class="font24" for="wechat">微信</label>
+    </view>
+    <view class="btn" bindtap="radioChange">
+      <radio id="card" value="" checked="{{!payFlag}}"></radio>
+      <label class="font24" for="card">储值卡</label>
+    </view>
+  </view>
+  <!-- 支付方式 end -->
+  <!-- 支付 start -->
+  <view class="order_money bgffffff">
+    <view class="order_money_totalMoney font24 ellipsis">实付：<span class="colorf84242 font34" wx:if="{{saomaorderDetail}}">￥{{saomaorderDetail.totalMoney}}</span></view>
+    <view class="pay colorffffff bgff6400" bindtap="isSetPasswordShow">立即支付</view>
+  </view>
+  <!-- 支付 end -->
+  <!-- 密码弹框 start -->
+  
+  <!-- 密码弹框 end -->
+</view>

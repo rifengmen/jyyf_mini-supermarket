@@ -74,9 +74,9 @@
 	</view>
 	<!-- 销量 库存 好评 end -->
 	<!-- 评价 start -->
-	<view class="comment_cont bgffffff">
+	<view class="comment_cont {{describe ? '' : 'comment_conts'}} bgffffff">
 		<view class="tit">
-			<view class="font_blod">商品评价({{goodsDetail.EvaluationTC}})</view>
+			<view class="font_blod">商品评价{{goodsDetail.EvaluationTC ? '(' + goodsDetail.EvaluationTC + ')' : ''}}</view>
 			<navigator class="more" hover-class="none" wx:if="{{goodsDetail.EvaluationTC}}" url="/pages/autoModule/commentList/commentList?title=商品评价&from=goodsDetail&gdscode={{Gdscode}}">查看全部 > </navigator>
 		</view>
 		<view class="comment_list">

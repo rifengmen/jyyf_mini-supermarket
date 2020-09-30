@@ -11,7 +11,7 @@
 					<view class="gps_img overflow">
 						<image src="/lib/images/gps.png"></image>
 					</view>
-					<text class="font32 colorffffff ellipsis">{{deptname}}</text>
+					<text class="font32 colorffffff ellipsis">{{deptname}} > </text>
 				</navigator>
 				<!-- 定位 end -->
 				<!-- 搜索 start -->
@@ -94,15 +94,17 @@
 	<!-- 海报区 end -->
 	<!-- 专区 start -->
 	<view class="zone overflow">
-		<navigator url="{{'/pages/goodsList/goodsList?cateid=' + item.Id + '&title=' + item.storecategoryname}}" class="zone_item border_r10 bgfbd2af fl" wx:for="{{hotList}}" wx:key="index">
-			<view class="zone_itemtit">
-				<view class="zone_itemname colorfa6400 font32 font_blod ellipsis">{{item.storecategoryname}}</view>
-				<view class="tozone border_r500 colorffffff font24 bgd17537 tc">去看看</view>
-			</view>
-			<view class="zone_itemimg border_r500 overflow bgffffff">
-				<image src="{{baseUrl + item.ico}}" mode="aspectFit"></image>
-			</view>
-		</navigator>
+		<block wx:for="{{hotList}}" wx:key="index">
+			<navigator class="zone_item border_r10 bgfbd2af fl" hover-class="none" url="{{'/pages/goodsList/goodsList?cateid=' + item.Id + '&title=' + item.storecategoryname}}">
+				<view class="zone_itemtit">
+					<view class="zone_itemname colorfa6400 font32 font_blod ellipsis">{{item.storecategoryname}}</view>
+					<view class="tozone border_r500 colorffffff font24 bgd17537 tc">去看看</view>
+				</view>
+				<view class="zone_itemimg border_r500 overflow bgffffff">
+					<image src="{{baseUrl + item.ico}}" mode="aspectFit"></image>
+				</view>
+			</navigator>
+		</block>
 	</view>
 	<!-- 专区 end -->
 	<!-- 限时抢购 start -->

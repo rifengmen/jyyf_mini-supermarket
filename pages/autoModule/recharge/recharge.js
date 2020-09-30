@@ -194,23 +194,15 @@ Page({
   // 微信支付
   wechatPay (wechatstr) {
     let self = this
-    let appid = res.data.data.beecloud.miniPayStr.appID;
-    let timeStamp = res.data.data.beecloud.miniPayStr.timeStamp;
-    let nonceStr = res.data.data.beecloud.miniPayStr.nonceStr;
-    let package1 = res.data.data.beecloud.miniPayStr.package;
-    let signType = res.data.data.beecloud.miniPayStr.signType;
-    let paySign = res.data.data.beecloud.miniPayStr.paySign;
     wx.requestPayment({
-      appId: wechatstr.appID,
+      appId: wechatstr.appId,
       timeStamp: wechatstr.timeStamp,
       nonceStr: wechatstr.nonceStr,
       package: wechatstr.package,
       signType: wechatstr.signType,
       paySign: wechatstr.paySign,
       success: function (res) {
-        toast.toast('充值成功')
-        // 获取卡余额
-        self.getCardInfo()
+        toast.toast('充值成功，充值金额五分钟内到账')
       },
       fail: function (res) {
         toast.toast('充值失败')

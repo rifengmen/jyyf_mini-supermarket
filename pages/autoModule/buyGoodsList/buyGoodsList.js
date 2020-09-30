@@ -1,4 +1,4 @@
-// pages/userInfo/complaintList/complaintList.js
+// pages/autoModule/buyGoodsList/buyGoodsList.js
 const app = getApp()
 const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
@@ -9,14 +9,14 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 基础路径
+    baseUrl: app.globalData.baseUrl,
     // 请求开关
     getFlag: false,
-    // 类别,1:我要投诉；0:商品建议
-    type: 0,
-    // title
-    title: '',
-    // 投诉列表
-    complaintList: [],
+    // 购买商品列表
+    buyGoodsList: [],
+    // 查询开始时间
+    startdate: '',
     // 页码
     page: 1,
     // 每页条数
@@ -29,16 +29,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let self = this
-    self.setData({
-      type: parseFloat(options.type),
-      title: options.title
-    })
-    wx.setNavigationBarTitle({
-      title: options.title
-    })
-    // 获取投诉列表
-    self.getComplaintList()
+
   },
 
   /**
@@ -76,10 +67,10 @@ Page({
     let self = this
     self.setData({
       page: 1,
-      complaintList: [],
+      buyGoodsList: [],
     })
-    // 获取投诉列表
-    self.getComplaintList()
+    // 获取购买商品列表
+    self.getBuyGoodsList()
     // 关闭下拉刷新
     wx.stopPullDownRefresh()
   },
@@ -101,8 +92,8 @@ Page({
       toast.toast('暂无更多')
       return false
     }
-    // 获取投诉列表
-    self.getComplaintList()
+    // 获取购买商品列表
+    self.getBuyGoodsList()
   },
 
   /**
@@ -112,13 +103,26 @@ Page({
 
   },
 
-  // 获取投诉列表
-  getComplaintList () {
+  // 设置查询开始日期
+  setStartdate (e) {
+    let self = this
+    self.setData({
+      startdate: e.detail,
+      page: 1,
+      buyGoodsList: [],
+    })
+    // 获取购买商品列表
+    self.getBuyGoodsList()
+  },
+
+  // 获取购买商品列表
+  getBuyGoodsList () {
     let self = this
     let data = {
-      type: self.data.type,
-      page: self.data.page,
-      pageSize: self.data.count
+      Cardnum: app.globalData.memcode,
+      Page: self.data.page,
+      pageSize: self.data.count,
+      Startday: self.data.startdate,
     }
     wx.showLoading({
       title: '正在加载',
@@ -128,17 +132,12 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('system/suggestion.do?method=listSuggestion', data).then(result => {
+    request.http('mem/member.do?method=listMemberConsumGdscode', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        let complaintList = self.data.complaintList
-        complaintList.push(...res.data)
         self.setData({
-          complaintList: complaintList,
-          rowCount: res.rowCount
+          buyGoodsList: res.data
         })
-      } else {
-        toast.toast(res.message)
       }
       wx.hideLoading()
       // 设置请求开关

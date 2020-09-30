@@ -1,0 +1,15 @@
+<!--component/scanDialog/scanDialog.wxml-->
+<view class="goodsInfo" catchtouchmove="ture">
+  <view class="goodsInfo_cont bgffffff border_r20">
+    <view class="goodsInfo_name font32">{{goodsInfo.productName}}</view>
+    <view class="">{{goodsInfo.barcode}}</view>
+    <view class="font32 font_blod colorf84242">￥{{goodsInfo.actualSaleMoney}}</view>
+    <del class="font26 color999999" wx:if="{{goodsInfo.actualSaleMoney !== goodsInfo.saleMoney}}">
+      ￥{{goodsInfo.saleMoney}}
+    </del>
+    <view class="btn_cont">
+      <view class="btn">取消</view>
+      <view class="btn" bindtap="addSaomacar">确认</view>
+    </view>
+  </view>
+</view>

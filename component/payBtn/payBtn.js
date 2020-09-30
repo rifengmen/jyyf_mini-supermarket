@@ -130,7 +130,7 @@ Component({
             })
           } else if (paymode === 7) {
             // 微信支付
-            let payStr = res.data.beecloud.payStr
+            let payStr = res.data.beecloud.miniPayStr
             self.setData({
               payStr: payStr,
             })
@@ -152,8 +152,7 @@ Component({
     wechatPayment () {
       let self = this
       let payStr = self.data.payStr
-      wx.requestPayment(
-        {
+      wx.requestPayment({
           appId: payStr.appID,
           timeStamp: payStr.timeStamp,
           nonceStr: payStr.nonceStr,

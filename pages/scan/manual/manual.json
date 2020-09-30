@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "scanDialog": "/component/scanDialog/scanDialog"
+  },
+  "navigationBarTitleText": "手动输入条形码"
 }

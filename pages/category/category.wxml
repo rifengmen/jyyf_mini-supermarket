@@ -1,7 +1,7 @@
 <!--pages/category/category.wxml-->
 <view class="container color333333 font28">
 	<!-- 一级分类 start -->
-	<view class="level1 bgffffff border_bf0f0f0">
+	<view class="level1 bgffffff border_bf0f0f0 z_index_1">
 		<scroll-view class="cate_list" scroll-x enable-flex="true">
 			<view class="cate_item" wx:for="{{level1}}" wx:key="index" data-classid="{{item.classid}}" data-index="{{index}}" bindtap="setLevel1ActiveIndex">
 				<view class="cate_img {{level1ActiveIndex === index ? 'active' : ''}} border_r500 overflow">

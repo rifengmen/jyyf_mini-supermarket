@@ -82,6 +82,21 @@ Page({
     }
     request.http('miniLiveInfo.do?method=listLiveInfo', data).then(result => {
       let res = result.data
+      // let roomplayList = [
+      //   {name: '测试房间000', cover_img: '/lib/images/ceshi000.png', roomid: 999999000},
+      //   {name: '测试房间001', cover_img: '/lib/images/ceshi001.png', roomid: 999999001},
+      //   {name: '测试房间002', cover_img: '/lib/images/ceshi002.png', roomid: 999999002},
+      //   {name: '测试房间003', cover_img: '/lib/images/ceshi003.png', roomid: 999999003},
+      //   {name: '测试房间004', cover_img: '/lib/images/ceshi004.png', roomid: 999999004},
+      //   {name: '测试房间000', cover_img: '/lib/images/ceshi000.png', roomid: 999999000},
+      //   {name: '测试房间001', cover_img: '/lib/images/ceshi001.png', roomid: 999999001},
+      //   {name: '测试房间002', cover_img: '/lib/images/ceshi002.png', roomid: 999999002},
+      //   {name: '测试房间003', cover_img: '/lib/images/ceshi003.png', roomid: 999999003},
+      //   {name: '测试房间004', cover_img: '/lib/images/ceshi004.png', roomid: 999999004},
+      // ]
+      // self.setData({
+      //   roomplayList: roomplayList
+      // })
       if (res.flag === 1) {
         self.setData({
           roomplayList: res.data
@@ -91,6 +106,16 @@ Page({
       }
     }).catch(error => {
       toast.toast(error.error)
+    })
+  },
+
+  // 进房间
+  toRoom (e) {
+    let self = this
+    let roomid = e.currentTarget.dataset.roomid
+    let customParams = encodeURIComponent(JSON.stringify({ path: 'pages/login/login', pid: 1 }))
+    wx.navigateTo({
+      url: "plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=" + roomid + "&custom_params=${customParams}"
     })
   },
 })

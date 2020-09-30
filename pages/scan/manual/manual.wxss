@@ -1,1 +1,2 @@
 /* pages/scan/manual/manual.wxss */
+@import "/lib/style/scan.wxss";

@@ -32,6 +32,7 @@ App({
     // baseUrl
     // baseUrl: 'http://192.168.29.100:8088/simple-eshop/',
     baseUrl: 'https://www.91jyrj.com/eshop/',
+    // baseUrl: 'http://192.168.1.22:8088/eshop/',
     // baseUrl: 'https://www.jwkgou.com:8443/simple-eshop/',
     // openid
     openid: '',
@@ -68,8 +69,11 @@ App({
     addressId: '',
     // 地址详情(编辑地址用)
     addressDetail: '',
-    // level1 分类列表一级分类
-    level1: [],
+    // 扫码购
+    // 扫码购店铺
+    scanShopInfo: '',
+    // 扫码购购物车
+    scanCart: [],
 
 
 

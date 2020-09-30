@@ -54,6 +54,7 @@
     "pages/autoModule/recharge/recharge",
     "pages/autoModule/addComment/addComment",
     "pages/autoModule/commentList/commentList",
+    "pages/autoModule/buyGoodsList/buyGoodsList",
     "pages/roomplayList/roomplayList",
     "pages/webUrl/webUrl"
   ],

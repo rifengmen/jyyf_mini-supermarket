@@ -1,18 +1,32 @@
 // pages/scan/manual/manual.js
+const app = getApp()
+const request = require("../../../utils/request")
+const toast = require("../../../utils/toast")
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    // 商品条码
+    goodscode: '',
+    // 商品信息
+    goodsInfo: '',
+    // 商品信息弹框开关
+    goodsInfoFlag: false,
+    // 店铺信息
+    scanShopInfo: '',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let self = this
+    self.setData({
+      scanShopInfo: app.globalData.scanShopInfo
+    })
   },
 
   /**
@@ -62,5 +76,64 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  // 商品条码
+  setGoodscode (e) {
+    let self = this
+    self.setData({
+      goodscode: e.detail.value
+    })
+  },
+
+  // 清除商品条码
+  clearGoodscode () {
+    let self = this
+    self.setData({
+      goodscode: ''
+    })
+  },
+
+  // 获取商品信息
+  getGoodsInfo () {
+    let self = this
+    let data = {
+      barcode: self.data.goodscode,
+      deptcode: self.data.scanShopInfo.deptcode
+    }
+    request.http('invest/microFlow.do?method=getProductDetailsByBarcode', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          goodsInfo: res.data,
+          goodsInfoFlag: true,
+        })
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 添加商品到购物车
+  addScancart () {
+    let self = this
+    let scanCart = app.globalData.scanCart
+    scanCart.push(...self.data.goodsInfo)
+    app.globalData.scanCart = scanCart
+    self.setData({
+      scanCart: scanCart,
+    })
+    // 计算商品总价
+    self.setTotalmoney()
+  },
+
+  // 关闭购物车弹窗
+  cancel () {
+    let self = this
+    self.setData({
+      goodsInfoFlag: false,
+    })
+  },
 })

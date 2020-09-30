@@ -116,6 +116,14 @@ Page({
       toast.toast('暂无更多')
       return false
     }
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
+    // 设置请求开关
+    self.setData({
+      getFlag: false
+    })
     // 获取商品列表
     self.getGoodsList()
   },
@@ -175,6 +183,7 @@ Page({
           // 获取商品列表
         self.getGoodsList()
         } else {
+          wx.hideLoading()
           // 设置请求开关
           self.setData({
             getFlag: true
@@ -183,7 +192,6 @@ Page({
       } else {
         toast.toast(res.message)
       }
-      wx.hideLoading()
     }).catch(error => {
       toast.toast(error.error)
     })
@@ -203,7 +211,6 @@ Page({
       HotCategoryflag: self.data.hotCategoryflag,
     }
     request.http('info/goods.do?method=getProductListByCate', data).then(result => {
-      wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         let goodsList = self.data.goodsList
@@ -215,6 +222,7 @@ Page({
       } else {
         toast.toast(res.message)
       }
+      wx.hideLoading()
       // 设置请求开关
       self.setData({
         getFlag: true

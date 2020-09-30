@@ -1,1 +1,2 @@
 /* pages/scan/orderDetail/orderDetail.wxss */
+@import "/lib/style/scan.wxss";

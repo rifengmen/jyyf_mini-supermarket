@@ -100,7 +100,7 @@ swiper.banner_swiper {
   width: 100%;
   /*height: 90rpx;*/
   /* margin-top: 20rpx; */
-  padding-bottom: 110rpx;
+  margin-bottom: 110rpx;
 }
 /*.zhanwei {*/
   /*width: 100%;*/

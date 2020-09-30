@@ -9,7 +9,7 @@
 			<view class="nick_name">
 				<view class="name font32 font_blod" wx:if="{{!openidType}}" bindtap="isAuthor">游客，请授权登录</view>
 				<view class="name font32 font_blod" wx:else>{{memname}}</view>
-				<navigator class="navs" hover-class="none" url="/pages/register/register" wx:if="{{openidType && !memcode}}">访客，点击此处绑定手机，注册/登录</navigator>
+				<navigator class="navs toregister color71d793" hover-class="none" url="/pages/register/register" wx:if="{{openidType && !memcode}}">点此绑定手机，注册/登录</navigator>
 				<navigator class="navs colorffffff font24 bg71d793 tc border_r500" hover-class="none" url="/pages/userInfo/payPassword/payPassword" wx:if="{{memcode}}">会员卡 > </navigator>
 			</view>
 			<navigator class="my_code" hover-class="none" url="/pages/userInfo/myCode/myCode">
@@ -81,13 +81,13 @@
 			<view class="font_blod">其他</view>
 		</view>
 		<view class="cont overflow">
-			<navigator class="item fl" hover-class="none" open-type="switchTab" url="/pages/scan/scan">
+			<navigator class="item fl" hover-class="none" url="/pages/scan/scan">
 				<view class="img">
 					<image src="/lib/images/userScan.png"></image>
 				</view>
 				<view class="name font24">扫码购</view>
 			</navigator>
-			<navigator class="item fl" hover-class="none" url="/pages/userInfo/scanOrder/scanOrder">
+			<navigator class="item fl" hover-class="none" url="/pages/scan/orderList/orderList">
 				<view class="img">
 					<image src="/lib/images/scanOrder.png"></image>
 				</view>

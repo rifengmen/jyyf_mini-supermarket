@@ -21,7 +21,7 @@
 	</view>
 	<!-- 手机号码 end -->
 	<!-- 图片验证码 start -->
-	<view class='line imgcode'>
+	<view class='line imgcode border_be5e5e5'>
 		<view class="line_img">
 			<image src="/lib/images/imgcode.png"></image>
 		</view>
@@ -34,7 +34,7 @@
 	</view>
 	<!-- 图片验证码 end -->
 	<!-- 验证码 start -->
-	<view class='line code'>
+	<view class='line code border_be5e5e5'>
 		<view class="line_img">
 			<image src="/lib/images/code.png"></image>
 		</view>

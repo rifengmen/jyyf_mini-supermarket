@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "startdate": "/component/startdate/startdate"
+  },
+  "navigationBarTitleText": "购物评价"
+}

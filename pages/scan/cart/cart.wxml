@@ -1,2 +1,68 @@
 <!--pages/scan/cart/cart.wxml-->
-<text>pages/scan/cart/cart.wxml</text>
+<view class="container color333333 font28 bgf0f0f0">
+  <!-- 购物车 start -->
+  <view class="cart_cont">
+    <view class="cartlist">
+      <!-- 购物车列表 start -->
+      <view class="goodslist overflow">
+        <block wx:if="{{scanCart.length}}" wx:for="{{scanCart}}" wx:key="index">
+          <!-- 商品简介 start -->
+          <view class="goods_item2 bgffffff border_be5e5e5">
+            <view class="item_desc">
+              <view class="item_name ellipsis2">{{item.productName}}</view>
+              <view class="price_cont">
+                <view class="price">
+                  <view class="actual_price colorfa6400">￥{{item.actualSaleMoney}}</view>
+                  <del class="color999999 font22" wx:if="{{item.actualSaleMoney !== item.saleMoney}}">
+                    ￥{{item.saleMoney}}</del>
+                </view>
+                <view class="cart">
+                  <view class="cart_img" wx:if="{{item.scalageFlag}}">×1</view>
+                  <view class="cart_img" wx:else>×{{item.quantity}}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <!-- 商品简介 end -->
+        </block>
+         <!--无信息提示 start -->
+        <view class="nodata_cont" wx:if="{{!scanCart.length}}">
+          <view class="nodata overflow">
+            <image src="/lib/images/cartNodata.png"></image>
+          </view>
+          <view class="color999999 tc">您的购物车空空如也快去购物吧～</view>
+        </view>
+        <!-- 无信息提示 end -->
+      </view>
+      <!-- 购物车列表 end -->
+      <!-- 结算信息 start -->
+      <view class="pay_cont bgeeeeee">
+        <view class="scan_manual">
+          <view class="scan_img_up bgffffff border_r500 z_index_-1"></view>
+          <view class="manual bgffffff border_r500">
+            <text class="font24">扫不出来，试试</text>
+            <navigator class="font24 colorff6400" hover-class="none" url="/pages/scan/manual/manual">手动输入条形码</navigator>
+          </view>
+        </view>
+        <view class="pay_des bgffffff">
+          <view class="scan_img_down bg71d793 border_r500" bindtap="scangoodscode">
+            <image src="/lib/images/scanbuy.png" mode="aspectFit"></image>
+          </view>
+          <view class="cart_nums">
+            <text class="font24 color666666">合计：</text>
+            <text class="colorf86442 font32">￥{{totalmoney}}</text>
+          </view>
+          <view class="settlement colorffffff bg71d793 tc" bindtap="setTlement">结算（{{saomacar.length || 0}}）
+          </view>
+        </view>
+      </view>
+      <!-- 结算信息 end -->
+    </view>
+  </view>
+  <!-- 购物车 end -->
+  <!-- 商品信息弹窗 start-->
+  <view class="scanDialog" wx:if="{{goodsInfoFlag}}">
+    <scanDialog goodsInfo="{{goodsInfo}}" bind:addScancart="addScancart" bind:cancel="cancel"></scanDialog>
+  </view>
+  <!-- 商品信息弹窗 end-->
+</view>

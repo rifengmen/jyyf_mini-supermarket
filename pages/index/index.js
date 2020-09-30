@@ -247,6 +247,12 @@ Page({
             url: '/pages/goodsList/goodsList?Datatype=' + '2' + '&title=' + '会员特价',
           })
           break;
+        case 6:
+          // 扫码购
+          wx.navigateTo({
+            url: '/pages/scan/scan',
+          })
+          break;
         case 7:
           // 特价商品
           wx.navigateTo({
@@ -254,9 +260,9 @@ Page({
           })
           break;
         case 8:
-          // 投诉建议
+          // 商品建议
           wx.navigateTo({
-            url: '/pages/userInfo/complaintList/complaintList',
+            url: '/pages/userInfo/complaintList/complaintList?type=0&title=商品建议',
           })
           break;
         case 9:
@@ -301,7 +307,7 @@ Page({
         case 16:
           // 购物评价
           wx.navigateTo({
-            url: '/pages/autoModule/commentList/commentList?title=我的评价&from=auto',
+            url: '/pages/autoModule/buyGoodsList/buyGoodsList',
           })
           break;
         case 17:
@@ -320,6 +326,18 @@ Page({
           // 积分抽奖
           wx.navigateTo({
             url: '/pages/autoModule/lottery/lottery',
+          })
+          break;
+        case 20:
+          // 在线充值
+          wx.navigateTo({
+            url: '/pages/autoModule/recharge/recharge',
+          })
+          break;
+        case 21:
+          // 分类商品列表
+          wx.navigateTo({
+            url: '/pages/goodsList/goodsList?classCode=' + res.data.linkcode + '&title=' + '商品列表'
           })
           break;
         default:
