@@ -222,5 +222,18 @@ Page({
     }).catch(error => {
       toast.toast(error.error)
     })
-  }
+  },
+
+  // 显示地图
+  showMap (e) {
+    let self = this
+    let shop = e.currentTarget.dataset.shop
+    wx.openLocation({
+      longitude: shop.Longitude,
+      latitude: shop.Latitude,
+      scale: 18,
+      name: shop.deptname,
+      address: shop.Contact,
+    })
+  },
 })

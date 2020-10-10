@@ -72,8 +72,20 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    // 支付
-    pay () {
+    // 是否显示密码弹框
+    isSetPasswordShow () {
+      let self = this
+      if (self.data.from === 'card' || self.data.scoreFlag || self.data.tick) {
+        // 设置密码弹框开关
+        self.triggerEvent('setPasswordFlag')
+        return false
+      }
+      // 设置支付信息
+      self.setPaylist()
+    },
+
+    // 设置支付信息
+    setPaylist () {
       let self = this
       let globalData = getApp().globalData
       let paymode = ''
@@ -82,9 +94,11 @@ Component({
       } else if (self.data.from === 'wechat') {
         paymode = 7
       }
+      self.setData({
+        paymode: paymode
+      })
       let tick = self.data.tick
       let score = self.data.score
-      let orderDetail = self.data.orderDetail
       // 组合支付方式列表
       let paylist = [
         {paymode: paymode, paymoney: self.data.payMoney},
@@ -109,32 +123,44 @@ Component({
         let paydesc = {score: score.useScore, paymoney: score.Money, memcode: globalData.memcode, paymode: 5}
         paylist.push(paydesc)
       }
+      self.setData({
+        paylist: paylist
+      })
+      // 立即支付
+      self.pay()
+    },
+
+    // 立即支付
+    pay () {
+      let self = this
+      let globalData = getApp().globalData
+      let paymode = self.data.paymode
       let data = {
         Sendid: globalData.addressId || 0,
         Usernote: self.data.remark,
         Memcode: globalData.memcode,
-        paylist: paylist,
+        paylist: self.data.paylist,
         channel: "WX_MINI",
         freight: self.data.freight,
         receiver: globalData.address.username,
         receiverphone: globalData.address.phone,
         Cpassword: self.data.password,
-        Tradeno: orderDetail.tradeno
+        Tradeno: self.data.orderDetail.tradeno
       }
       request.http('mem/member.do?method=ordercommit', data).then(result => {
         let res = result.data
         if (res.flag === 1) {
-          if (paymode === 3) {
-            wx.redirectTo({
-              url: '/pages/payEnd/payEnd?text=支付成功&type=1',
-            })
-          } else if (paymode === 7) {
+          if (res.data.beecloud.miniPayStr) {
             // 微信支付
             let payStr = res.data.beecloud.miniPayStr
             self.setData({
               payStr: payStr,
             })
             self.wechatPayment()
+          } else {
+            wx.redirectTo({
+              url: '/pages/payEnd/payEnd?text=支付成功&type=1',
+            })
           }
         } else {
           toast.toast(res.message)

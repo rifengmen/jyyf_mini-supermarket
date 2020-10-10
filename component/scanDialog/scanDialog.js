@@ -31,7 +31,7 @@ Component({
     // confirm确认
     confirm () {
       let self = this
-      self.triggerEvent('addScanCart')
+      self.triggerEvent('addScancart')
     },
 
     // cancel取消

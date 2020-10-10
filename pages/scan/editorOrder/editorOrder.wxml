@@ -35,11 +35,13 @@
   <!-- 支付方式 end -->
   <!-- 支付 start -->
   <view class="order_money bgffffff">
-    <view class="order_money_totalMoney font24 ellipsis">实付：<span class="colorf84242 font34" wx:if="{{saomaorderDetail}}">￥{{saomaorderDetail.totalMoney}}</span></view>
-    <view class="pay colorffffff bgff6400" bindtap="isSetPasswordShow">立即支付</view>
+    <view class="order_money_totalMoney font24 ellipsis">实付：<span class="colorfa6400 font34" wx:if="{{saomaorderDetail}}">￥{{saomaorderDetail.totalMoney}}</span></view>
+    <view class="pay colorffffff bg71d793" bindtap="isSetPasswordShow">立即支付</view>
   </view>
   <!-- 支付 end -->
-  <!-- 密码弹框 start -->
-  
-  <!-- 密码弹框 end -->
+  <!-- 密码组件 start -->
+  <view wx:if="{{passwordFlag}}">
+    <password id="password" bind:getPassword="getPassword" bind:setPasswordFlag="setPasswordFlag"></password>
+  </view>
+  <!-- 密码组件 end -->
 </view>

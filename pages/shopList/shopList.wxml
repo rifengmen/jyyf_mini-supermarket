@@ -19,9 +19,15 @@
 				</view>
 			</view>
 			<view class="shopdes color999999 font24">
-				<text>电话：{{item.Phone || '暂无电话'}}</text>
-				<text>营业时间：{{item.BusinessHours}}</text>
+				<view class="desc">
+					<view>电话：{{item.Phone || '暂无电话'}}</view>
+					<view>营业时间：{{item.BusinessHours}}</view>
+				</view>
+				<view class="mapimg border_a71d793 border_r10" catchtap="showMap" data-shop="{{item}}">
+					<image class="" src="/lib/images/mapimg.png"></image>
+				</view>
 			</view>
+			<!--<map class="item_map" longitude="{{item.Longitude}}" latitude="{{item.Latitude}}" scale="14"></map>-->
 		</view>
 	</scroll-view>
 </view>

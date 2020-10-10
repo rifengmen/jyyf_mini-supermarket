@@ -59,7 +59,8 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    let self = this
+    app.globalData.scanCart = []
   },
 
   /**
@@ -133,8 +134,12 @@ Page({
 
   // 设置门店
   bindPickerChange (e) {
-    console.log(e, 'picker');
     let self = this
+    let scanCart = app.globalData.scanCart
+    if (scanCart.length) {
+      toast.toast('购物车存在商品，请重新进入扫码购！')
+      return false
+    }
     self.setData({
       shopIndex: e.detail.value,
       scanShopInfo: self.data.scanShopList[e.detail.value],

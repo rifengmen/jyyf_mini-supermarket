@@ -136,17 +136,6 @@ Page({
     })
   },
 
-  // 获取子组件支付密码
-  getPassword (e) {
-    let self = this
-    self.setData({
-      password: e.detail,
-      passwordFlag: false,
-    })
-    // 获取付款码
-    self.getPayCode()
-  },
-
   // 设置code类型
   setCodeType (e) {
     let self = this
@@ -185,5 +174,16 @@ Page({
         codeType: false,
       })
     }
+  },
+
+  // 获取子组件支付密码
+  getPassword (e) {
+    let self = this
+    self.setData({
+      password: e.detail,
+      passwordFlag: false,
+    })
+    // 获取付款码
+    self.getPayCode()
   },
 })

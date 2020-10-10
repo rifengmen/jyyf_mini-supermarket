@@ -17,7 +17,7 @@
   </view>
   <!-- 商品信息弹窗 start-->
   <view class="scanDialog" wx:if="{{goodsInfoFlag}}">
-    <scanDialog goodsInfo="{{goodsInfo}}" bind:addScancart="addScancart" bind:cancel="cancel"></scanDialog>
+    <scanDialog id="scanDialog" goodsInfo="{{goodsInfo}}" bind:addScancart="addScancart" bind:cancel="cancel"></scanDialog>
   </view>
   <!-- 商品信息弹窗 end-->
 </view>

@@ -97,6 +97,16 @@ Page({
   // 获取商品信息
   getGoodsInfo () {
     let self = this
+    // 验证条码不为空
+    if (!self.data.goodscode) {
+      toast.toast('请输入商品条码！')
+      return false
+    }
+    // 验证店铺不为空
+    if (!self.data.scanShopInfo) {
+      toast.toast('请选择店铺！')
+      return false
+    }
     let data = {
       barcode: self.data.goodscode,
       deptcode: self.data.scanShopInfo.deptcode
@@ -120,13 +130,10 @@ Page({
   addScancart () {
     let self = this
     let scanCart = app.globalData.scanCart
-    scanCart.push(...self.data.goodsInfo)
+    scanCart.push(self.data.goodsInfo)
     app.globalData.scanCart = scanCart
-    self.setData({
-      scanCart: scanCart,
-    })
-    // 计算商品总价
-    self.setTotalmoney()
+    // 关闭购物车弹窗
+    self.cancel()
   },
 
   // 关闭购物车弹窗

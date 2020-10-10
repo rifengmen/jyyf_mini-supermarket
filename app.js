@@ -31,8 +31,8 @@ App({
     defaultOpenid: "WX19000101000000000",
     // baseUrl
     // baseUrl: 'http://192.168.29.100:8088/simple-eshop/',
-    baseUrl: 'https://www.91jyrj.com/eshop/',
-    // baseUrl: 'http://192.168.1.22:8088/eshop/',
+    // baseUrl: 'https://www.91jyrj.com/eshop/',
+    baseUrl: 'http://192.168.1.22:8088/eshop/',
     // baseUrl: 'https://www.jwkgou.com:8443/simple-eshop/',
     // openid
     openid: '',

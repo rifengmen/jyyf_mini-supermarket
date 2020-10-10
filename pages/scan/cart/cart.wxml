@@ -41,7 +41,7 @@
           <view class="scan_img_up bgffffff border_r500 z_index_-1"></view>
           <view class="manual bgffffff border_r500">
             <text class="font24">扫不出来，试试</text>
-            <navigator class="font24 colorff6400" hover-class="none" url="/pages/scan/manual/manual">手动输入条形码</navigator>
+            <navigator class="font24 colorfa6400" hover-class="none" url="/pages/scan/manual/manual">手动输入条形码</navigator>
           </view>
         </view>
         <view class="pay_des bgffffff">
@@ -50,9 +50,9 @@
           </view>
           <view class="cart_nums">
             <text class="font24 color666666">合计：</text>
-            <text class="colorf86442 font32">￥{{totalmoney}}</text>
+            <text class="colorfa6400 font32">￥{{totalmoney}}</text>
           </view>
-          <view class="settlement colorffffff bg71d793 tc" bindtap="setTlement">结算（{{saomacar.length || 0}}）
+          <view class="settlement colorffffff bg71d793 tc" bindtap="setTlement">结算（{{scanCart.length || 0}}）
           </view>
         </view>
       </view>
@@ -62,7 +62,7 @@
   <!-- 购物车 end -->
   <!-- 商品信息弹窗 start-->
   <view class="scanDialog" wx:if="{{goodsInfoFlag}}">
-    <scanDialog goodsInfo="{{goodsInfo}}" bind:addScancart="addScancart" bind:cancel="cancel"></scanDialog>
+    <scanDialog id="scanDialog" goodsInfo="{{goodsInfo}}" bind:addScancart="addScancart" bind:cancel="cancel"></scanDialog>
   </view>
   <!-- 商品信息弹窗 end-->
 </view>

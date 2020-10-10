@@ -59,6 +59,8 @@ Page({
     self.setData({
       scanCart: app.globalData.scanCart,
     })
+    // 计算商品总价
+    self.setTotalmoney()
   },
 
   /**
@@ -143,13 +145,15 @@ Page({
   addScancart () {
     let self = this
     let scanCart = app.globalData.scanCart
-    scanCart.push(...self.data.goodsInfo)
+    scanCart.push(self.data.goodsInfo)
     app.globalData.scanCart = scanCart
     self.setData({
       scanCart: scanCart,
     })
     // 计算商品总价
     self.setTotalmoney()
+    // 关闭购物车弹窗
+    self.cancel()
   },
 
   // 关闭购物车弹窗
@@ -176,9 +180,6 @@ Page({
 
   // 结算
   setTlement () {
-    wx.navigateTo({
-      url: '/pages/scan/editorOrder/editorOrder?flowno=453453864863456786785&deptcode=123456789&deptname=店铺名称'
-    })
     let self = this
     if (!self.data.scanCart.length) {
       toast.toast('请添加商品')

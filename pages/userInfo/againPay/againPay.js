@@ -33,10 +33,6 @@ Page({
     password: '',
     // 卡支付密码弹框
     passwordFlag: false,
-    // 密码
-    pd: [{password: ''}, {password: ''}, {password: ''}, {password: ''}, {password: ''}, {password: ''},],
-    // focusFlag input框获取焦点开关
-    focusFlag: false,
     // 点击的按钮
     frombtn: '',
   },
@@ -105,6 +101,9 @@ Page({
   onShareAppMessage: function () {
 
   },
+
+  // stops 阻止冒泡
+  stops () {},
 
   // 获取订单详情
   getOrderDetail () {
@@ -214,96 +213,43 @@ Page({
       frombtn: from,
     })
     // 获取支付按钮
+    let cardBtn = self.selectComponent('#cardBtn')
     let wechatBtn = self.selectComponent('#wechatBtn')
-    if (from === 'card' || self.data.scoreFlag || self.data.tick) {
-      self.setData({
-        passwordFlag: true,
-      })
-      return false
+    if (from === 'card') {
+      // 设置支付信息
+      cardBtn.isSetPasswordShow()
+    } else if (from === 'wechat') {
+      // 设置支付信息
+      wechatBtn.isSetPasswordShow()
     }
-    // 支付
-    wechatBtn.pay()
   },
 
   // 设置密码弹框开关
   setPasswordFlag () {
     let self = this
     self.setData({
-      passwordFlag: !self.data.passwordFlag,
-      password: '',
-      pd: [{password: ''}, {password: ''}, {password: ''}, {password: ''}, {password: ''}, {password: ''},],
+      passwordFlag: !self.data.passwordFlag
     })
   },
 
-  // stops 阻止冒泡
-  stops () {},
-
-  // input框获取焦点
-  focusInput () {
+  // 获取子组件支付密码
+  getPassword (e) {
     let self = this
-    self.setData({
-      focusFlag: !self.data.focusFlag,
-    })
-  },
-
-  // input框失去焦点
-  blurInput () {
-    let self = this
-    self.setData({
-      focusFlag: false,
-    })
-  },
-
-  // 设置密码
-  setPassword (e) {
-    let self = this
-    let _password = e.detail.value
-    self.setData({
-      password: _password,
-    })
-    _password = _password.split('')
-    if (_password.length) {
-      let pd = self.data.pd
-      for (let i = 0; i < 6; i++) {
-        if (_password[i]) {
-          pd[i].password = '*'
-          self.setData({
-            pd: pd
-          })
-        } else {
-          pd[i].password = ''
-          self.setData({
-            pd: pd
-          })
-        }
-      }
-    } else {
-      self.setData({
-        pd: [{password: ''}, {password: ''}, {password: ''}, {password: ''}, {password: ''}, {password: ''},],
-      })
-    }
-  },
-
-  // 密码框确认
-  confirmBtn () {
-    let self = this
+    let from = self.data.frombtn
     // 获取支付按钮
     let cardBtn = self.selectComponent('#cardBtn')
     let wechatBtn = self.selectComponent('#wechatBtn')
-    let password = self.data.password
-    let from = self.data.frombtn
-    if (password.length < 6) {
-      toast.toast('请输入支付密码')
-      return false
-    }
+    self.setData({
+      password: e.detail,
+      passwordFlag: false,
+    })
     if (from === 'card') {
-      // 支付
-      cardBtn.pay()
+      // 设置支付信息
+      cardBtn.setPaylist()
     } else if (from === 'wechat') {
-      // 支付
-      wechatBtn.pay()
+      // 设置支付信息
+      wechatBtn.setPaylist()
     }
-
   },
 
 })
