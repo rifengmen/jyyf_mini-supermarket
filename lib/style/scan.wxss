@@ -260,9 +260,6 @@
   justify-content: flex-start;
   align-items: center;
 }
-.orderdesc:first-child {
-  border: unset;
-}
 .orderdesc > view:first-child {
   width: 150rpx;
 }
@@ -275,6 +272,12 @@
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
+}
+.group {
+  width: calc(100% - 200rpx);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 .order_money {
   width: 100%;
@@ -302,22 +305,20 @@
 }
 /* 结算页样式 end */
 /* 订单列表样式 start */
-.orderlist {
-  width: calc(100% - 48rpx);
-  min-height: 100%;
-  padding: 0 24rpx;
-}
 .order_list {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
 }
 .order_item {
-  width: 100%;
+  width: calc(100% - 48rpx);
   height: 170rpx;
-  padding: 20rpx 0;
+  padding: 20rpx 24rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.order_item:last-child {
+  border-bottom:  unset;
 }
 .order_item_desc {
   width: 440rpx;
@@ -334,14 +335,17 @@
   flex-flow: column;
   align-items: flex-end;
 }
-.pay_btn > view {
+.item_btn {
+  width: 100%;
+}
+.pay_btn {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.cancel_btn > view {
+.cancel_btn {
   width: 100%;
   height: 100%;
   display: flex;
@@ -352,11 +356,7 @@
 /* 订单详情样式 start */
 .order_cont {
   width: 100%;
-  min-height: calc(100% - 20rpx);
-}
-.orderdetail_section {
-  width: 100%;
-  padding: 30rpx 0;
+  height: 100%;
 }
 .order_goods {
   width: 100%;

@@ -155,6 +155,7 @@ Page({
     let data = {
       Starttime: self.data.startdate,
       Page: self.data.page,
+      pageSize: self.data.count,
       statusType: self.data.statusType,
     }
     request.http('bill/order.do?method=listMyOrder', data).then(result => {

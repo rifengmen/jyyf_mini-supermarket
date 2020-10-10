@@ -9,6 +9,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 查询开始日期
+    startdate: '',
     // 扫码购订单列表
     orderList: [],
     // 请求开关
@@ -26,8 +28,6 @@ Page({
    */
   onLoad: function (options) {
     let self= this
-    // 获取扫码购订单列表
-    self.getOrderList()
   },
 
   /**
@@ -101,6 +101,18 @@ Page({
 
   },
 
+  // 设置查询开始日期
+  setStartdate (e) {
+    let self = this
+    self.setData({
+      startdate: e.detail,
+      page: 1,
+      orderList: [],
+    })
+    // 获取订单列表
+    self.getOrderList()
+  },
+
   // 获取扫码购订单列表
   getOrderList () {
     let self = this
@@ -113,7 +125,9 @@ Page({
       getFlag: false
     })
     let data = {
+      startDate: self.data.startdate,
       Page: self.data.page,
+      pageSize: self.data.count,
     }
     request.http('invest/microFlow.do?method=listMicroFlow', data).then(result => {
       let res = result.data

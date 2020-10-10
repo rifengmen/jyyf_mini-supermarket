@@ -44,7 +44,7 @@
           <navigator class="" hover-class="none" url="/pages/scan/editorOrder/editorOrder?flowno={{flowno}}&deptcode={{deptcode}}&deptname={{deptname}}">付款</navigator>
         </view>
         <view class="cancel_btn border_r4 bgffffff color666666 border_a979797" wx:if="{{orderDetail.cancelFlag}}">
-          <scanCancelBtn flowno="{{flowno}}" deptcode="{{deptcode}}"></scanCancelBtn>
+          <scanCancelBtn flowno="{{flowno}}" deptcode="{{deptcode}}" bindtap="cancelBtn"></scanCancelBtn>
         </view>
       </view>
     </view>
@@ -53,11 +53,11 @@
     <view class="order_section bgffffff">
       <view class="orderdesc">
         <view>订单编号</view>
-        <view class="font24 color666666">{{saomaorderDetail.flowno}}</view>
+        <view class="font24 color666666">{{orderDetail.flowno}}</view>
       </view>
       <view class="orderdesc">
         <view>下单时间</view>
-        <view class="font24 color666666">{{saomaorderDetail.saletime}}</view>
+        <view class="font24 color666666">{{orderDetail.saletime}}</view>
       </view>
       <view class="orderdesc" wx:if="{{!orderDetail.payFLag}}">
         <view>付款方式</view>

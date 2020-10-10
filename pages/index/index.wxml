@@ -52,7 +52,7 @@
 						<view class="cate_img border_r500 overflow">
 							<image src="{{baseUrl + item.picturename}}"></image>
 						</view>
-						<view class="cate_name tc">{{item.modulename}}</view>
+						<view class="cate_name font22 tc">{{item.modulename}}</view>
 					</view>
 				</view>
 			</scroll-view>
@@ -64,7 +64,7 @@
 						<view class="cate_img border_r500 overflow">
 							<image src="{{baseUrl + item.picturename}}"></image>
 						</view>
-						<view class="cate_name tc">{{item.modulename}}</view>
+						<view class="cate_name font22 tc">{{item.modulename}}</view>
 					</view>
 				</view>
 				<view class="auto_up">
@@ -72,7 +72,7 @@
 						<view class="cate_img border_r500 overflow">
 							<image src="{{baseUrl + item.picturename}}"></image>
 						</view>
-						<text class="cate_name ellipsis">{{item.modulename}}</text>
+						<view class="cate_name font22 tc">{{item.modulename}}</view>
 					</view>
 				</view>
 			</scroll-view>
@@ -84,7 +84,7 @@
 						<view class="cate_img border_r500 overflow">
 							<image src="{{baseUrl + item.picturename}}"></image>
 						</view>
-						<view class="cate_name tc">{{item.modulename}}</view>
+						<view class="cate_name font22 tc">{{item.modulename}}</view>
 					</view>
 				</view>
 				<view class="auto_up">
@@ -92,7 +92,7 @@
 						<view class="cate_img border_r500 overflow">
 							<image src="{{baseUrl + item.picturename}}"></image>
 						</view>
-						<text class="cate_name ellipsis">{{item.modulename}}</text>
+						<view class="cate_name font22 tc">{{item.modulename}}</view>
 					</view>
 				</view>
 			</scroll-view>

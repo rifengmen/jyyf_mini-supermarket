@@ -22,12 +22,18 @@ Page({
     deptname: '',
     // 订单详情
     scanOrderDetail: '',
+    // 订单金额
+    totalMoney: '',
     // 支付方式列表
     paymodeList: [],
     // 支付信息
     paylist: [],
     // 支付方式
     paymode: 7,
+    // 储值卡支付方式开关
+    paymode3Flag: false,
+    // 微信支付方式开关
+    paymode7Flag: false,
   },
 
   /**
@@ -106,7 +112,8 @@ Page({
       let res = result.data
       if (res.flag === 1) {
         self.setData({
-          sacnOrderDetail: res.data
+          sacnOrderDetail: res.data,
+          totalMoney: res.data.totalMoney,
         })
       } else {
         toast.toast(res.message)
@@ -117,11 +124,18 @@ Page({
   },
 
   // 切换支付方式
-  radioChange () {
+  radioChange (e) {
     let self = this
-    let paymode = self.data.payFlag ? 3 : 7
+    let paymode = parseFloat(e.detail.value)
+    let payFlag = true
+    if (paymode === 3) {
+      payFlag = false
+    } else if (paymode === 7) {
+      payFlag = true
+    }
+    // let paymode = self.data.payFlag ? 3 : 7
     self.setData({
-      payFlag: !self.data.payFlag,
+      payFlag: payFlag,
       paymode: paymode
     })
   },
@@ -136,8 +150,11 @@ Page({
     request.http('invest/microFlow.do?method=getMicroFlowPayMoney', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let paymodeList = res.data
         self.setData({
-          paymodeList: res.data
+          paymodeList: paymodeList,
+          paymode3Flag: (paymodeList.filter(item => item.paymodeid === 3).length ? true : false),
+          paymode7Flag: (paymodeList.filter(item => item.paymodeid === 7).length ? true : false),
         })
       } else {
         toast.toast(res.message)
@@ -167,9 +184,10 @@ Page({
     let tick = self.data.tick
     let score = self.data.score
     let orderDetail = self.data.orderDetail
+    let totalMoney = self.data.totalMoney
     // 组合支付方式列表
     let paylist = [
-      {paymode: paymode, paymoney: self.data.orderDetail.totalMoney},
+      {paymode: paymode, paymoney: totalMoney},
     ]
     // 电子券
     if (tick) {
@@ -203,13 +221,13 @@ Page({
     let self = this
     let paymode = self.data.paymode
     let data = {
-      lowno: self.data.flowno,
-      payPassword: self.data.payPassword,
+      flowno: self.data.flowno,
+      payPassword: self.data.password,
       channel: 'WX_MINI',
       payList: self.data.paylist,
       shopCode: self.data.deptcode
     }
-    request.http('mem/member.do?method=ordercommit', data).then(result => {
+    request.http('invest/microFlow.do?method=microFlowToPay', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         if (paymode === 3) {

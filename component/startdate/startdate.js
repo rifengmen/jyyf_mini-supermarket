@@ -53,7 +53,8 @@ Component({
         } else {
           month = month - 1;
         }
-        let startdate = year + '/' + month + '/' + day + ' ' + '00:0:00'
+        // let startdate = year + '/' + month + '/' + day + ' ' + '00:0:00'
+        let startdate = year + '/' + month + '/' + day
         self.setData({
           startdate: startdate
         })
@@ -64,8 +65,9 @@ Component({
     // 修改时间
     dateChange (e) {
       let self = this
+      let startdate = e.detail.value
       self.setData({
-        startdate: e.detail.value
+        startdate: startdate
       })
       // 设置开始时间
       self.setStartdate()

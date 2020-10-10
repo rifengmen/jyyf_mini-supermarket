@@ -156,7 +156,7 @@ swiper.banner_swiper {
 .poster {
   width: calc(100% - 50rpx);
   height: auto;
-  margin: 0 auto;
+  margin: 0 auto 24rpx auto;
 }
 .poster_img {
   width: 50%;

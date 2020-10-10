@@ -11,7 +11,6 @@ Page({
   data: {
     // 店铺信息
     deptcode: '',
-    deptname: '',
     // 流水号
     flowno: '',
     // 扫码购订单详情
@@ -27,7 +26,6 @@ Page({
     let self = this
     self.setData({
       deptcode: options.deptcode,
-      deptname: options.deptname,
       flowno: options.flowno,
     })
     // 获取扫码购订单详情
@@ -87,8 +85,8 @@ Page({
   getOrderDetail () {
     let self = this
     let data = {
-      flowno: this.flowno,
-      deptcode: this.deptcode
+      flowno: self.data.flowno,
+      deptcode: self.data.deptcode
     }
     request.http('invest/microFlow.do?method=listMicroFlowDtl', data).then(result => {
       let res = result.data
@@ -103,5 +101,12 @@ Page({
     }).catch(error => {
       toast.toast(error.error)
     })
+  },
+
+  // 取消按钮
+  cancelBtn () {
+    let self = this
+    let scanCancelBtn = self.selectComponent('#scanCancelBtn')
+    scanCancelBtn.isCancel()
   },
 })
