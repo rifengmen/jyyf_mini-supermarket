@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "scanCancelBtn": "/component/scanCancelBtn/scanCancelBtn"
+  },
   "navigationBarTitleText": "订单列表",
   "enablePullDownRefresh": true,
   "onReachBottomDistance": 50

@@ -189,7 +189,7 @@ Page({
       productList: self.data.scanCart,
       deptcode: self.data.scanShopInfo.deptcode
     }
-    request.http('invest/microFlow/saveFlow', data).then(result => {
+    request.http('invest/microFlow.do?method=saveFlow', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

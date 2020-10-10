@@ -2,7 +2,7 @@
 <view class="container color333333 font28 bgf0f0f0">
   <!-- 订单列表 start -->
   <view class="order_list">
-    <block wx:for="{{scanOrderList}}" wx:key="index">
+    <block wx:for="{{orderList}}" wx:key="index">
       <navigator class="order_item bgffffff" hover-class="none" url="/pages/scan/orderDetail/orderDetail?flowno={{item.flowno}}&deptcode={{item.shopCode}}">
         <view class="order_item_desc">
           <view class="font32 font_blod">{{item.shopName}}</view>
@@ -17,13 +17,13 @@
               <navigator class="" hover-class="none" url="/pages/scan/editorOrder/editorOrder?flowno={{item.flowno}}&deptcode={{item.shopCode}}&deptname={{item.shopName}}">付款</navigator>
             </view>
             <view class="cancel_btn border_r4 bgffffff color666666 borderc7c7c7" wx:if="{{item.cancelFlag}}">
-              取消
+              <scanCancelBtn id="scanCancelBtn" flowno="{{item.flowno}}" catchtap="cancelBtn">取消</scanCancelBtn>
             </view>
           </view>
         </view>
       </navigator>
     </block>
-    <view class="nodata_cont" wx:if="{{!scanOrderList.length && getFlag}}">
+    <view class="nodata_cont" wx:if="{{!orderList.length && getFlag}}">
       <view class="nodata overflow">
         <image src="/lib/images/orderNodata.png"></image>
       </view>

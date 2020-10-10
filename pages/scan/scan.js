@@ -136,15 +136,18 @@ Page({
   bindPickerChange (e) {
     let self = this
     let scanCart = app.globalData.scanCart
-    if (scanCart.length) {
+    let shopIndex = e.detail.value
+    let old_scanShopInfo = app.globalData.scanShopInfo
+    let new_scanShopInfo = self.data.scanShopList[shopIndex]
+    if (scanCart.length && old_scanShopInfo.deptcode !== new_scanShopInfo.deptcode) {
       toast.toast('购物车存在商品，请重新进入扫码购！')
       return false
     }
     self.setData({
-      shopIndex: e.detail.value,
-      scanShopInfo: self.data.scanShopList[e.detail.value],
+      shopIndex: shopIndex,
+      scanShopInfo: new_scanShopInfo,
     })
-    app.globalData.scanShopInfo = self.data.scanShopInfo
+    app.globalData.scanShopInfo = new_scanShopInfo
   },
 
   // 去出场码页面
@@ -153,7 +156,7 @@ Page({
     let data = {
       deptcode: self.data.deptcode
     }
-    request.http('invest/microFlow/getFlowno', data).then(result => {
+    request.http('invest/microFlow.do?method=getFlowno', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         wx.navigateTo({

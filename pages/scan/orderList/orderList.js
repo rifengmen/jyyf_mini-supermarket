@@ -10,7 +10,7 @@ Page({
    */
   data: {
     // 扫码购订单列表
-    scanOrderList: [],
+    orderList: [],
     // 请求开关
     getFlag: false,
     // 页数
@@ -27,7 +27,7 @@ Page({
   onLoad: function (options) {
     let self= this
     // 获取扫码购订单列表
-    self.getScanOrderList()
+    self.getOrderList()
   },
 
   /**
@@ -65,10 +65,10 @@ Page({
     let self = this
     self.setData({
       page: 1,
-      scanOrderList: [],
+      orderList: [],
     })
     // 获取扫码购订单列表
-    self.getScanOrderList()
+    self.getOrderList()
     // 关闭下拉刷新
     wx.stopPullDownRefresh()
   },
@@ -91,7 +91,7 @@ Page({
       return false
     }
     // 获取扫码购订单列表
-    self.getScanOrderList()
+    self.getOrderList()
   },
 
   /**
@@ -102,7 +102,7 @@ Page({
   },
 
   // 获取扫码购订单列表
-  getScanOrderList () {
+  getOrderList () {
     let self = this
     wx.showLoading({
       title: '正在加载',
@@ -115,13 +115,13 @@ Page({
     let data = {
       Page: self.data.page,
     }
-    request.http('', data).then(result => {
+    request.http('invest/microFlow.do?method=listMicroFlow', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        let scanOrderList = self.data.scanOrderList
-        scanOrderList.push(...res.data)
+        let orderList = self.data.orderList
+        orderList.push(...res.data)
         self.setData({
-          scanOrderList: scanOrderList,
+          orderList: orderList,
           rowCount: res.rowCount
         })
       } else {
@@ -135,5 +135,12 @@ Page({
     }).catch(error => {
       toast.toast(error.error)
     })
+  },
+
+  // 取消按钮
+  cancelBtn () {
+    let self = this
+    let scanCancelBtn = self.selectComponent('#scanCancelBtn')
+    scanCancelBtn.isCancel()
   },
 })

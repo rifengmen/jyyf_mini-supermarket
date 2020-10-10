@@ -102,7 +102,7 @@ Page({
       flowno: self.data.flowno,
       deptcode: self.data.deptcode
     }
-    request.http('invest/microFlow/listMicroFlowDtl', data).then(result => {
+    request.http('invest/microFlow.do?method=listMicroFlowDtl', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -133,7 +133,7 @@ Page({
       flowno: self.data.flowno,
       shopCode: self.data.deptcode
     }
-    request.http('invest/microFlow/getMicroFlowPayMoney', data).then(result => {
+    request.http('invest/microFlow.do?method=getMicroFlowPayMoney', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
