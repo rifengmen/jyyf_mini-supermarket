@@ -1,5 +1,6 @@
 // app.js
 const request = require('./utils/request.js')
+const toast = require('./utils/toast.js')
 
 App({
   onLaunch: function () {
@@ -30,9 +31,10 @@ App({
     // 游客openid
     defaultOpenid: "WX19000101000000000",
     // baseUrl
-    // baseUrl: 'http://192.168.29.100:8088/simple-eshop/',
+    // baseUrl: 'http://192.168.29.118:8089/eshop/',
     baseUrl: 'https://www.91jyrj.com/eshop/',
     // baseUrl: 'http://192.168.1.22:8089/eshop/',
+    // baseUrl: 'http://192.168.1.106:8089/eshop/',
     // baseUrl: 'https://www.jwkgou.com:8443/simple-eshop/',
     // openid
     openid: '',
@@ -87,26 +89,6 @@ App({
     webUrl: 'https://www.91jyrj.com/eshop/upload/text/front/lianxinus.html',
     // app标题
     apptitle: '嘉元o2o'
-  },
-
-  // onHide:function(){
-  //   var tuichu = wx.getStorageSync('tuichu');
-  //   if (tuichu === '123') {
-  //     return false
-  //   }
-  // },
-
-  // 扫码次数
-  count (arr, str) {
-    let self= this
-    let codecount = self.globalData.codecount
-    arr.forEach(val => {
-      if (str.substring(0, 2) === val.striperbarpre && str.length === val.length && codecount === 2) {
-        return true
-      } else {
-        return false
-      }
-    })
   },
 
   // 是否授权

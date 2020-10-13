@@ -12,13 +12,6 @@
     "pages/message/messageList/messageList",
     "pages/message/detail/detail",
     "pages/category/category",
-    "pages/scan/scan",
-    "pages/scan/manual/manual",
-    "pages/scan/cart/cart",
-    "pages/scan/editorOrder/editorOrder",
-    "pages/scan/orderList/orderList",
-    "pages/scan/orderDetail/orderDetail",
-    "pages/scan/bar/bar",
     "pages/cart/cart",
     "pages/cart2/cart2",
     "pages/shopBag/shopBag",
@@ -65,6 +58,19 @@
       "pages": [
         "pages/cat",
         "pages/dog"
+      ]
+    },
+    {
+      "root": "scan",
+      "name": "scan",
+      "pages": [
+        "pages/scan/scan",
+        "pages/manual/manual",
+        "pages/cart/cart",
+        "pages/editorOrder/editorOrder",
+        "pages/orderList/orderList",
+        "pages/orderDetail/orderDetail",
+        "pages/bar/bar"
       ]
     }
   ],

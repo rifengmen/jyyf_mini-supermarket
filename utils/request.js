@@ -3,12 +3,6 @@
  * 网络请求相关操作
  */
 require("../app.js")
-//接口地址
-// console.log(getApp(), '111')
-// 正式地址
-// const _api = getApp().globalData.baseUrl
-// 开发地址
-// const _api = ''
 
 const http = (url, data, method = 'GET') => {
   let app = getApp()

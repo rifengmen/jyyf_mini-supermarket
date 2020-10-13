@@ -14,6 +14,7 @@
   width: 540rpx;
   height: 470rpx;
   padding: 40rpx;
+  margin-top: -40%;
 }
 .dialog_cont .dialog_title {
   width: 100%;

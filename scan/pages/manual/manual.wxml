@@ -1,4 +1,4 @@
-<!--pages/scan/manual/manual.wxml-->
+<!--scan/pages/manual/manual.wxml-->
 <view class="container color333333 font28 bgffffff">
   <view class="manual_cont">
     <view class="manual_input">

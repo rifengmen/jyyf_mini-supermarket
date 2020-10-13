@@ -1,2 +1,2 @@
-/* pages/scan/scan.wxss */
+/* scan/pages/bar/bar.wxss */
 @import "/lib/style/scan.wxss";

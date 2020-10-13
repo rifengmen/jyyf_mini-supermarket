@@ -56,6 +56,7 @@ Component({
       let url = ''
       // 验证是否授权
       if (!app.authorFlag()) {
+        toast.toast('请授权')
         wx.navigateTo({
           url: '/pages/author/author',
         })
@@ -63,6 +64,7 @@ Component({
       }
       // 验证是否绑定手机号码
       if (!app.memcodeflag()) {
+        toast.toast('请绑定手机号码')
         wx.switchTab({
           url: '/pages/userInfo/userInfo',
         })
@@ -90,31 +92,5 @@ Component({
         toast.toast(error.error)
       })
     },
-
-    // 更新购物车数量
-    // getCartCount () {
-    //   let self = this
-    //   let data = {}
-    //   request.http('bill/shoppingcar.do?method=getCarProductCount', data).then  (result => {
-    //     let res = result.data
-    //     if (res.flag === 1) {
-    //       self.triggerEvent('getCartCount')
-    //       // if (res.data.data) {
-    //       //   wx.setTabBarBadge({
-    //       //     index: 2,
-    //       //     text: (res.data.data).toString()
-    //       //   })
-    //       // } else {
-    //       //   wx.removeTabBarBadge({
-    //       //     index: 2
-    //       //   })
-    //       // }
-    //     } else {
-    //       toast.toast(res.message)
-    //     }
-    //   }).catch(error => {
-    //     toast.toast(error.error)
-    //   })
-    // },
   }
 })

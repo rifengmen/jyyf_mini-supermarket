@@ -247,6 +247,7 @@
 .order_section {
   width: calc(100% - 48rpx);
   height: auto;
+  margin-bottom: 24rpx;
   padding: 30rpx 24rpx;
   display: flex;
   justify-content: space-between;
@@ -267,7 +268,6 @@
   width: calc(100% - 48rpx);
   height: auto;
   padding: 30rpx 24rpx;
-  margin-top: 20rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -337,20 +337,25 @@
 }
 .item_btn {
   width: 100%;
+  height: 60rpx;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 .pay_btn {
-  width: 100%;
+  width: 45%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .cancel_btn {
-  width: 100%;
+  width: 45%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 10%;
 }
 /* 订单列表样式 end */
 /* 订单详情样式 start */
@@ -388,7 +393,7 @@
 /* 出场码样式 start */
 .online {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -398,19 +403,34 @@
   width: 650rpx;
   min-height: 310rpx;
   max-height: 820rpx;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 .online_tit {
   width: 100%;
   height: 46rpx;
   line-height: 46rpx;
+  position: relative;
+}
+.online_tit image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.online_tit .tit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 .online_bar {
   width: 590rpx;
   height: 140rpx;
   margin: 40rpx auto;
 }
-.online_img img {
+.online_img image {
   width: 100%;
   height: 100%;
 }
@@ -422,7 +442,7 @@
   align-items: center;
   padding: 6rpx 0;
 }
-.online_age img {
+.online_age image {
   width: 30rpx;
   height: 30rpx;
   margin-right: 20rpx;
@@ -448,17 +468,5 @@
   width: calc(100% - 76rpx);
   height: calc(100% - 100rpx);
   padding: 0 38rpx;
-  overflow-y: scroll;
-}
-.online_detail .goods_li {
-  margin: 0;
-}
-.online_detail .goods_li:last-child {
-  border-bottom: none;
-}
-.online_detail .goods_item {
-  width: 100%;
-  margin: 0;
-  padding: 0;
 }
 /* 出场码样式 end */

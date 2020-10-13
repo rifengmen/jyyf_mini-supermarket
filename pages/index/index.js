@@ -250,7 +250,7 @@ Page({
         case 6:
           // 扫码购
           wx.navigateTo({
-            url: '/pages/scan/scan',
+            url: '/scan/pages/scan/scan',
           })
           break;
         case 7:

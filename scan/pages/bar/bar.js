@@ -1,4 +1,4 @@
-// pages/scan/orderDetail/orderDetail.js
+// scan/pages/bar/bar.js
 const app = getApp()
 const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
@@ -9,14 +9,21 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // baseUrl基础路径
+    baseUrl: app.globalData.baseUrl,
+    // 出场码显示开关
+    flag: true,
+    // 条码
+    barimg: '',
     // 店铺信息
     deptcode: '',
-    // 流水号
+    deptname: '',
+    // 订单flowno
     flowno: '',
-    // 扫码购订单详情
+    // 订单详情
     orderDetail: '',
     // 订单商品列表
-    goodsList: '',
+    goodsList: ''
   },
 
   /**
@@ -25,10 +32,15 @@ Page({
   onLoad: function (options) {
     let self = this
     self.setData({
-      deptcode: options.deptcode,
+      // 条码
+      barimg: options.barimg,
+      // 店铺信息
+      deptcode: app.globalData.scanShopInfo.deptcode,
+      deptname: app.globalData.scanShopInfo.deptname,
+      // 订单flowno
       flowno: options.flowno,
     })
-    // 获取扫码购订单详情
+    // 获取订单详情
     self.getOrderDetail()
   },
 
@@ -81,7 +93,15 @@ Page({
 
   },
 
-  // 获取扫码购订单详情
+  // 切换出场码和详情
+  toggleFlag () {
+    let self = this
+    self.setData({
+      flag: !self.data.flag
+    })
+  },
+
+  // 获取订单详情
   getOrderDetail () {
     let self = this
     let data = {
@@ -103,10 +123,8 @@ Page({
     })
   },
 
-  // 取消按钮
-  cancelBtn () {
-    let self = this
-    let scanCancelBtn = self.selectComponent('#scanCancelBtn')
-    scanCancelBtn.isCancel()
-  },
+  // 关闭出场码
+  closeBar () {
+    wx.navigateBack()
+  }
 })

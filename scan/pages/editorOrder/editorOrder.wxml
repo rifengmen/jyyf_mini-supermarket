@@ -1,4 +1,4 @@
-<!--pages/scan/editorOrder/editorOrder.wxml-->
+<!--scan/pages/editorOrder/editorOrder.wxml-->
 <view class="container color333333 font28 bgf0f0f0">
   <!-- 订单信息 start -->
   <view class="order_section bgffffff">

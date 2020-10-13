@@ -57,7 +57,7 @@ Component({
         let res = result.data
         if (res.flag === 1) {
           toast.toast('取消成功!')
-          if (self.route === 'pages/scan/orderList/orderList') {
+          if (self.route === '/scan/pages/orderList/orderList') {
             // 页面重载
             self.onLoad()
             return false

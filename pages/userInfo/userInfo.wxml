@@ -81,13 +81,13 @@
 			<view class="font_blod">其他</view>
 		</view>
 		<view class="cont overflow">
-			<navigator class="item fl" hover-class="none" url="/pages/scan/scan">
+			<navigator class="item fl" hover-class="none" url="/scan/pages/scan/scan">
 				<view class="img">
 					<image src="/lib/images/userScan.png"></image>
 				</view>
 				<view class="name font24">扫码购</view>
 			</navigator>
-			<navigator class="item fl" hover-class="none" url="/pages/scan/orderList/orderList">
+			<navigator class="item fl" hover-class="none" url="/scan/pages/orderList/orderList">
 				<view class="img">
 					<image src="/lib/images/scanOrder.png"></image>
 				</view>

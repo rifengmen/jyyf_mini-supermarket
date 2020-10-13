@@ -12,8 +12,8 @@
 }
 .goodsInfo_cont {
   width: 540rpx;
-  /*height: 470rpx;*/
   padding: 40rpx;
+  margin-top: -40%;
 }
 .goodsInfo_cont .goods_section {
   width: 100%;

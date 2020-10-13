@@ -1,4 +1,4 @@
-// pages/scan/manual/manual.js
+// scan/pages/manual/manual.js
 const app = getApp()
 const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")

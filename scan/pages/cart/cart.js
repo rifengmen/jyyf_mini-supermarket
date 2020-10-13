@@ -1,4 +1,4 @@
-// pages/scan/cart/cart.js
+// scan/pages/cart/cart.js
 const app = getApp()
 const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
@@ -198,7 +198,7 @@ Page({
         })
         app.globalData.scanCart = []
         wx.navigateTo({
-          url: '/pages/scan/editorOrder/editorOrder?flowno=' + self.data.flowno + '&deptcode=' + self.data.scanShopInfo.deptcode + '&deptname=' + self.data.scanShopInfo.deptname
+          url: '/scan/pages/editorOrder/editorOrder?flowno=' + self.data.flowno + '&deptcode=' + self.data.scanShopInfo.deptcode + '&deptname=' + self.data.scanShopInfo.deptname
         })
       } else {
         toast.toast(res.message)

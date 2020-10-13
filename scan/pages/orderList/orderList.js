@@ -1,4 +1,4 @@
-// pages/scan/orderList/orderList.js
+// scan/pages/orderList/orderList.js
 const app = getApp()
 const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
@@ -152,9 +152,10 @@ Page({
   },
 
   // 取消按钮
-  cancelBtn () {
+  cancelBtn (e) {
     let self = this
-    let scanCancelBtn = self.selectComponent('#scanCancelBtn')
+    let id = '#scanCancelBtn' + e.currentTarget.dataset.index
+    let scanCancelBtn = self.selectComponent(id)
     scanCancelBtn.isCancel()
   },
 })

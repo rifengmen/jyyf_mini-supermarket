@@ -1,4 +1,4 @@
-<!--pages/scan/cart/cart.wxml-->
+<!--scan/pages/cart/cart.wxml-->
 <view class="container color333333 font28 bgf0f0f0">
   <!-- 购物车 start -->
   <view class="cart_cont">
@@ -41,7 +41,7 @@
           <view class="scan_img_up bgffffff border_r500 z_index_-1"></view>
           <view class="manual bgffffff border_r500">
             <text class="font24">扫不出来，试试</text>
-            <navigator class="font24 colorfa6400" hover-class="none" url="/pages/scan/manual/manual">手动输入条形码</navigator>
+            <navigator class="font24 colorfa6400" hover-class="none" url="/scan/pages/manual/manual">手动输入条形码</navigator>
           </view>
         </view>
         <view class="pay_des bgffffff">

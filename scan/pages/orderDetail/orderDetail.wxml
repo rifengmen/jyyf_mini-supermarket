@@ -1,4 +1,4 @@
-<!--pages/scan/orderDetail/orderDetail.wxml-->
+<!--scan/pages/orderDetail/orderDetail.wxml-->
 <view class="container color333333 font28 bgf0f0f0">
   <!-- 订单内容 start -->
   <view class="order_cont" wx:if="{{orderDetail}}">
@@ -13,16 +13,17 @@
         <!-- 商品列表 start -->
         <view class="goodsList">
           <!-- 商品简介 start -->
-          <view wx:for="{{goodsList}}" wx:key="index" class="goods_li">
-            <view class="goods_item bgffffff ellipsis">
-              <view class="goods_item_cont">
-                <view class="goods_item_name ellipsis font26">{{item.goodsName}}</view>
-                <view class="goods_item_editnum">
-                  <view class="goods_item_price goods_item_prices">
-                    <view class="ellipsis font30 font_blod colorfa6400">￥{{item.actualPrice}}</view>
-                    <del class="color999999 font24 ellipsis" wx:if="{{item.actualPrice !== item.salePrice}}">￥{{item.salePrice}}</del>
-                  </view>
-                  <view class="font30 color999999">x <text class="">{{item.saleAmount}}</text></view>
+          <view class="goods_item2 bgffffff border_be5e5e5" wx:for="{{goodsList}}" wx:key="index">
+            <view class="item_desc">
+              <view class="item_name ellipsis2">{{item.goodsName}}</view>
+              <view class="price_cont">
+                <view class="price">
+                  <view class="actual_price colorfa6400">￥{{item.actualPrice}}</view>
+                  <del class="color999999 font22" wx:if="{{item.actualPrice !== item.salePrice}}">
+                    ￥{{item.salePrice}}</del>
+                </view>
+                <view class="cart">
+                  <view class="cart_img">×{{item.saleAmount}}</view>
                 </view>
               </view>
             </view>
@@ -40,11 +41,11 @@
         <view class="colorfa6400 font_blod">￥{{orderDetail.totalMoney}}</view>
       </view>
       <view class="item_btn" wx:if="{{orderDetail.payFLag || orderDetail.cancelFlag}}">
-        <view class="pay_btn border_r4 bgff6400 colorffffff borderff6400" wx:if="{{orderDetail.payFLag}}">
-          <navigator class="" hover-class="none" url="/pages/scan/editorOrder/editorOrder?flowno={{flowno}}&deptcode={{deptcode}}&deptname={{deptname}}">付款</navigator>
+        <view class="pay_btn border_r4 bg71d793 colorffffff border_a71d793" wx:if="{{orderDetail.payFLag}}">
+          <navigator class="" hover-class="none" url="/scan/pages/editorOrder/editorOrder?flowno={{flowno}}&deptcode={{deptcode}}&deptname={{deptname}}">付款</navigator>
         </view>
-        <view class="cancel_btn border_r4 bgffffff color666666 border_a979797" wx:if="{{orderDetail.cancelFlag}}">
-          <scanCancelBtn flowno="{{flowno}}" deptcode="{{deptcode}}" bindtap="cancelBtn"></scanCancelBtn>
+        <view class="cancel_btn border_r4 bgffffff color666666 border_a979797" wx:if="{{orderDetail.cancelFlag}}" bindtap="cancelBtn">
+          <scanCancelBtn id="scanCancelBtn" flowno="{{flowno}}" deptcode="{{deptcode}}"></scanCancelBtn>
         </view>
       </view>
     </view>
@@ -61,8 +62,8 @@
       </view>
       <view class="orderdesc" wx:if="{{!orderDetail.payFLag}}">
         <view>付款方式</view>
-        <view class="pay_img tl color666666">{{orderDetail.payList[0].payModeName}}</view>
         <view class="pay_img color666666" wx:if="{{orderDetail.payMoney === 0}}">无</view>
+        <view class="pay_img tl color666666" wx:else>{{orderDetail.payList[0].payModeName}}</view>
       </view>
     </view>
     <!-- 订单信息 end -->

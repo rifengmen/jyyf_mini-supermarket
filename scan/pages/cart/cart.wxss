@@ -1,6 +1,6 @@
-/* pages/scan/orderList/orderList.wxss */
+/* scan/pages/cart/cart.wxss */
 @import "/lib/style/scan.wxss";
 .nodata_cont {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 196rpx);
 }
