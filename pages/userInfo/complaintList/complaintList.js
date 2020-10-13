@@ -128,7 +128,7 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('system/suggestion.do?method=listSuggestion', data).then(result => {
+    request.http('system/suggestion.do?method=listSuggestion', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         let complaintList = self.data.complaintList

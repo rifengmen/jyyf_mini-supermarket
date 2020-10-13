@@ -108,7 +108,7 @@ Page({
     self.setData({
       flag: false
     })
-    request.http('system/suggestion.do?method=addSuggestion', data).then(result => {
+    request.http('system/suggestion.do?method=addSuggestion', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         wx.navigateBack()

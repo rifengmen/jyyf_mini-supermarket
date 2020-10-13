@@ -100,7 +100,7 @@ Page({
     let data = {
       code: app.globalData.memcode,
     }
-    request.http('system/customlogin.do?method=myCard', data).then(result => {
+    request.http('system/customlogin.do?method=myCard', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -121,7 +121,7 @@ Page({
     let data = {
       Cpassword: self.data.password
     }
-    request.http('mem/member.do?method=createPayMoneyStr180414', data).then(result => {
+    request.http('mem/member.do?method=createPayMoneyStr180414', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

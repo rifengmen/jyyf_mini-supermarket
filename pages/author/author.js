@@ -143,7 +143,7 @@ Page({
     let data = {
       code: self.data.code
     }
-    request.http('system/customlogin.do?method=getOpenID', data).then(result => {
+    request.http('system/customlogin.do?method=getOpenID', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         app.globalData.openid = res.data.openid

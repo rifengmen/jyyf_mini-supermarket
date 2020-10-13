@@ -1,0 +1,36 @@
+<!--autoModule/pages/lottery/lottery.wxml-->
+<view class="container color333333 font28 bge42837">
+	<view class="lottery_bg bge42837">
+		<view class="lottery_img">
+			<image src="/lib/images/lotteryBg.png"></image>
+		</view>
+		<view class="lottery">
+			<view class="lottery_cont border_r500 overflow">
+				<image class="lottery_bg2" src="/lib/images/lotteryBg2.png" mode="aspectFit"></image>
+				<view class="lottery_turn overflow">
+					<view class="turn_text tc overflow" animation="{{animationData}}">
+						<block wx:for="{{prizeList}}"
+									 wx:key="index">
+							<view
+									class="text_item"
+									style="{{'transform: rotate(-' + item.angle + 'deg)'}}"
+							>{{item.prizename}}</view>
+						</block>
+						<block wx:for="{{prizeList}}"
+									 wx:key="index">
+							<view
+									class="text_decollator border_affffff"
+									style="{{'transform: rotate(-' + item.decollatorAngle + 'deg); transform-origin: left bottom'}}"
+							></view>
+						</block>
+					</view>
+				</view>
+				<image class="turn_btn" src="/lib/images/turnBtn.png" bindtap="getCentPrize"></image>
+			</view>
+			<view class="score colorffffff font36 tc">剩余积分{{score.Score}}</view>
+			<view class="use_score colorffffff tc">每次抽奖需要{{prizeUseCent}}积分</view>
+			<navigator class="toLotteryList color71d793 font_blod bgffffff border_r500 tc" hover-class="none" url="/autoModule/pages/lotteryList/lotteryList">中奖记录
+			</navigator>
+		</view>
+	</view>
+</view>

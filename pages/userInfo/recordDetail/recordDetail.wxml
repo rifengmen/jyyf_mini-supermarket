@@ -14,7 +14,7 @@
             </view>
           </view>
           <view class="add_count tr">
-            <navigator class="add colorffffff bg71d793 border_r4 tc" hover-class="none" url="/pages/autoModule/addComment/addComment?Gdscode={{item.Gdscode}}&Gdsname={{item.Productname}}">去评价</navigator>
+            <navigator class="add colorffffff bg71d793 border_r4 tc" hover-class="none" url="/autoModule/pages/addComment/addComment?Gdscode={{item.Gdscode}}&Gdsname={{item.Productname}}">去评价</navigator>
             <view class="count">×{{item.Salecount}}</view>
           </view>
         </view>

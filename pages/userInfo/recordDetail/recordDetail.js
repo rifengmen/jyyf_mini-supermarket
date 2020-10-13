@@ -89,7 +89,7 @@ Page({
       Flowno: self.data.flowno,
       Deptcode: self.data.deptcode
     }
-    request.http('mem/member.do?method=listDetails', data).then(result => {
+    request.http('mem/member.do?method=listDetails', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

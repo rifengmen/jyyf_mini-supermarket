@@ -402,8 +402,7 @@
 .online_cont {
   width: 650rpx;
   min-height: 310rpx;
-  max-height: 820rpx;
-  /*overflow: hidden;*/
+  /*max-height: 820rpx;*/
 }
 .online_tit {
   width: 100%;
@@ -466,7 +465,16 @@
 }
 .online_detail {
   width: calc(100% - 76rpx);
-  height: calc(100% - 100rpx);
+  max-height: 720rpx;
   padding: 0 38rpx;
+  overflow-y: scroll;
 }
 /* 出场码样式 end */
+/* 商品列表样式 start */
+.goods_item2 {
+  min-height: unset;
+}
+.goods_item2 .item_desc {
+  min-height: unset;
+}
+/* 商品列表样式 end */

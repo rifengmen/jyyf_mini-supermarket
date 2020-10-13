@@ -111,7 +111,7 @@ Page({
       barcode: self.data.goodscode,
       deptcode: self.data.scanShopInfo.deptcode
     }
-    request.http('invest/microFlow.do?method=getProductDetailsByBarcode', data).then(result => {
+    request.http('invest/microFlow.do?method=getProductDetailsByBarcode', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

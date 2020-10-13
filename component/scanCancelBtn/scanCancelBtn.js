@@ -53,7 +53,7 @@ Component({
         flowno: self.data.flowno,
         deptcode: self.data.deptcode
       }
-      request.http('invest/microFlow.do?method=cancelSaleOrder', data).then(result => {
+      request.http('invest/microFlow.do?method=cancelSaleOrder', data, 'POST').then(result => {
         let res = result.data
         if (res.flag === 1) {
           toast.toast('取消成功!')

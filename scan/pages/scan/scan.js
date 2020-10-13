@@ -119,7 +119,7 @@ Page({
       Longitude: self.data.longitude,
       Latitude: self.data.latitude,
     }
-    request.http('invest/microFlow.do?method=listDeptInfo', data).then(result => {
+    request.http('invest/microFlow.do?method=listDeptInfo', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         if (!res.data.length) {
@@ -164,7 +164,7 @@ Page({
     let data = {
       deptcode: self.data.scanShopInfo.deptcode
     }
-    request.http('invest/microFlow.do?method=getFlowno', data).then(result => {
+    request.http('invest/microFlow.do?method=getFlowno', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         wx.navigateTo({

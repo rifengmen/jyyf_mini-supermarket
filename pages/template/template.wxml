@@ -7,7 +7,7 @@
         <view class="name font32" wx:if="{{type === 'score'}}">账户积分(分)</view>
         <view class="num font70">{{cardData || 0}}</view>
       </view>
-      <navigator class="toRecharge bg329e56" hover-class="none" url="/pages/autoModule/recharge/recharge" wx:if="{{type === 'balance'}}">
+      <navigator class="toRecharge bg329e56" hover-class="none" url="/autoModule/pages/recharge/recharge" wx:if="{{type === 'balance'}}">
         <image src="/lib/images/toRecharge.png"></image>
         <text>充值 ></text>
       </navigator>

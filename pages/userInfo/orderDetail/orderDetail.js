@@ -95,7 +95,7 @@ Page({
     let data = {
       orderNum: self.data.tradeno
     }
-    request.http('bill/order.do?method=listOrderDetails', data).then(result => {
+    request.http('bill/order.do?method=listOrderDetails', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         let PayDetail = res.data.PayDetail

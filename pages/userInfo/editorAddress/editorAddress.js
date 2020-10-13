@@ -122,7 +122,7 @@ Page({
     let self = this
     let address = self.data.address
     let data = {}
-    request.http('front/area.do?method=listOneArea', data).then(result => {
+    request.http('front/area.do?method=listOneArea', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         let listOneArea = self.data.listOneArea
@@ -158,7 +158,7 @@ Page({
     let data = {
       areaid: areaid,
     }
-    request.http('front/area.do?method=listSubArea', data).then(result => {
+    request.http('front/area.do?method=listSubArea', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         let listSubArea = self.data.listSubArea
@@ -306,7 +306,7 @@ Page({
       mapaddress: self.data.gpsAddress,
       maptype: 'TX',
     }
-    request.http('system/myuser.do?method=saveAddress', data).then(result => {
+    request.http('system/myuser.do?method=saveAddress', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         toast.toast(res.message)
@@ -332,7 +332,7 @@ Page({
      success (res) {
        // 确认按钮执行
        if (res.confirm) {
-         request.http('system/myuser.do?method=delAddress', data).then(result => {
+         request.http('system/myuser.do?method=delAddress', data, 'POST').then(result => {
             let res = result.data
             if (res.flag === 1) {
               wx.navigateBack()

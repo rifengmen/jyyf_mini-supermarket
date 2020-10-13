@@ -49,7 +49,7 @@ Component({
         tickgdscode: tick.tickgdscode,
         noPayMoney: self.data.Totalmoney,
       }
-      request.http('mem/member.do?method=payTicketCheck', data).then(result => {
+      request.http('mem/member.do?method=payTicketCheck', data, 'POST').then(result => {
         let res = result.data
         if (res.flag === 1) {
           if (tick.tickettype === 1) {

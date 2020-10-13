@@ -33,7 +33,7 @@ Component({
       let data = {
         tickid: tickid,
       }
-      request.http('mem/member.do?method=panicCoupon', data).then(result => {
+      request.http('mem/member.do?method=panicCoupon', data, 'POST').then(result => {
         let res = result.data
         toast.toast(res.message)
       }).catch(error => {

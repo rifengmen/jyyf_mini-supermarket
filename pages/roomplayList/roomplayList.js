@@ -80,7 +80,7 @@ Page({
       start: newstart,
       limit: self.data.maxRooms
     }
-    request.http('miniLiveInfo.do?method=listLiveInfo', data).then(result => {
+    request.http('miniLiveInfo.do?method=listLiveInfo', data, 'POST').then(result => {
       let res = result.data
       // let roomplayList = [
       //   {name: '测试房间000', cover_img: '/lib/images/ceshi000.png', roomid: 999999000},

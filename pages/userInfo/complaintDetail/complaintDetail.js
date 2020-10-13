@@ -94,7 +94,7 @@ Page({
     let data = {
       id: self.data.id,
     }
-    request.http('system/suggestion.do?method=listSuggestionDtl', data).then(result => {
+    request.http('system/suggestion.do?method=listSuggestionDtl', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

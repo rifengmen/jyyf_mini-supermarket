@@ -119,7 +119,7 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('info/InformationController.do?method=listNotice', data).then(result => {
+    request.http('info/InformationController.do?method=listNotice', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         let noticeList = res.data

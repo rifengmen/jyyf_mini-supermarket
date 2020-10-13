@@ -137,7 +137,7 @@ Page({
       // 团秒标志，0：否；1：是 ；2：小程序自动登录
       tmFlag: 2
     }
-    request.http('system/customlogin.do?method=login', data).then(result => {
+    request.http('system/customlogin.do?method=login', data, 'POST').then(result => {
       let res = result.data
       if(res.flag === 1){
         // cookie
@@ -220,7 +220,7 @@ Page({
   getTickNum () {
     let self = this
     let data = {}
-    request.http('mem/member.do?method=listCoupon', data).then(result => {
+    request.http('mem/member.do?method=listCoupon', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -236,7 +236,7 @@ Page({
   getCardInfo () {
     let self = this
     let data = {}
-    request.http('mem/card.do?method=getMyCardInfo', data).then(result => {
+    request.http('mem/card.do?method=getMyCardInfo', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -255,7 +255,7 @@ Page({
       memcode: app.globalData.memcode,
       startdate: utils.formatTime(new Date())
     }
-    request.http('mem/card.do?method=listScoreDtl', data).then(result => {
+    request.http('mem/card.do?method=listScoreDtl', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -271,7 +271,7 @@ Page({
   getCartCount () {
     let self = this
     let data = {}
-    request.http('bill/shoppingcar.do?method=getCarProductCount', data).then(result => {
+    request.http('bill/shoppingcar.do?method=getCarProductCount', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         if (res.data.data) {

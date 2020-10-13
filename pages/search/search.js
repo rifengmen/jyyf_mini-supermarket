@@ -89,7 +89,7 @@ Page({
   getHistoryList () {
     let self = this
     let data = {}
-    request.http('', data).then(result => {
+    request.http('', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -130,7 +130,7 @@ Page({
       barcode: '',
       Scode: '',
     }
-    request.http('info/goods.do?method=getProductListByshortcode', data).then(result => {
+    request.http('info/goods.do?method=getProductListByshortcode', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         wx.hideLoading()

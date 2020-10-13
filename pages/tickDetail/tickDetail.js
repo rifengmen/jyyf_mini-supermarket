@@ -82,7 +82,7 @@ Page({
     let data = {
       tickid: self.data.tickid,
     }
-    request.http('mem/member.do?method=getCouponDtl', data).then(result => {
+    request.http('mem/member.do?method=getCouponDtl', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

@@ -77,7 +77,7 @@
 	<view class="comment_cont {{describe ? '' : 'comment_conts'}} bgffffff">
 		<view class="tit">
 			<view class="font_blod">商品评价{{goodsDetail.EvaluationTC ? '(' + goodsDetail.EvaluationTC + ')' : ''}}</view>
-			<navigator class="more" hover-class="none" wx:if="{{goodsDetail.EvaluationTC}}" url="/pages/autoModule/commentList/commentList?title=商品评价&from=goodsDetail&gdscode={{Gdscode}}">查看全部 > </navigator>
+			<navigator class="more" hover-class="none" wx:if="{{goodsDetail.EvaluationTC}}" url="/autoModule/pages/commentList/commentList?title=商品评价&from=goodsDetail&gdscode={{Gdscode}}">查看全部 > </navigator>
 		</view>
 		<view class="comment_list">
 			<template is="comment" data="{{commentList}}"></template>

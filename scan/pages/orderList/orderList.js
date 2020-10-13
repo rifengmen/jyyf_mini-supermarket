@@ -129,7 +129,7 @@ Page({
       Page: self.data.page,
       pageSize: self.data.count,
     }
-    request.http('invest/microFlow.do?method=listMicroFlow', data).then(result => {
+    request.http('invest/microFlow.do?method=listMicroFlow', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         let orderList = self.data.orderList

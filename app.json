@@ -40,14 +40,6 @@
     "pages/userInfo/userDetail/userDetail",
     "pages/userInfo/about/about",
     "pages/userInfo/remove/remove",
-    "pages/autoModule/nearby/nearby",
-    "pages/autoModule/poster/poster",
-    "pages/autoModule/lottery/lottery",
-    "pages/autoModule/lotteryList/lotteryList",
-    "pages/autoModule/recharge/recharge",
-    "pages/autoModule/addComment/addComment",
-    "pages/autoModule/commentList/commentList",
-    "pages/autoModule/buyGoodsList/buyGoodsList",
     "pages/roomplayList/roomplayList",
     "pages/webUrl/webUrl"
   ],
@@ -56,8 +48,14 @@
       "root": "autoModule",
       "name": "autoModule",
       "pages": [
-        "pages/cat",
-        "pages/dog"
+        "pages/nearby/nearby",
+        "pages/poster/poster",
+        "pages/lottery/lottery",
+        "pages/lotteryList/lotteryList",
+        "pages/recharge/recharge",
+        "pages/addComment/addComment",
+        "pages/commentList/commentList",
+        "pages/buyGoodsList/buyGoodsList"
       ]
     },
     {

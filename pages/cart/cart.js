@@ -140,7 +140,7 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('bill/shoppingcar.do?method=listMyCar', data).then(result => {
+    request.http('bill/shoppingcar.do?method=listMyCar', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         let cartList = res.data.carList
@@ -411,7 +411,7 @@ Page({
         val.buyAMT = data.Count
       }
     })
-    request.http('bill/shoppingcar.do?method=updateIntoCar', data).then(result => {
+    request.http('bill/shoppingcar.do?method=updateIntoCar', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         let countData = {
@@ -450,7 +450,7 @@ Page({
         getFlag: true
       })
     }
-    request.http('bill/shoppingcar.do?method=delCars', data).then(result => {
+    request.http('bill/shoppingcar.do?method=delCars', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         let countData = {
@@ -493,7 +493,7 @@ Page({
   getCartCount() {
     let self = this
     let data = {}
-    request.http('bill/shoppingcar.do?method=getCarProductCount', data).then(result => {
+    request.http('bill/shoppingcar.do?method=getCarProductCount', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

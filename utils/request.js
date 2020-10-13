@@ -4,16 +4,20 @@
  */
 require("../app.js")
 
-const http = (url, data, method = 'GET') => {
+const http = (url, data, method = 'POST') => {
   let app = getApp()
   let globalData = app.globalData
+  let ContentType = 'application/x-www-form-urlencoded'
+  if (method === 'GET') {
+    ContentType = 'text/html'
+  }
   return new Promise(function (resolve, reject) {
     wx.request({
       url: `${globalData.baseUrl}${url}`,
       method: method,
       data: {'requestData': JSON.stringify(data)},
       header: {
-        "Content-Type": "text/html",
+        "Content-Type": ContentType,
         "Cookie": globalData.sessionId,
       },
       success: function (res) {

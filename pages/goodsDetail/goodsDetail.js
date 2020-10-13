@@ -199,7 +199,7 @@ Page({
     if (!self.data.panicBuy) {
       return false
     }
-    request.http('info/goods.do?method=getProductDetails', data).then(result => {
+    request.http('info/goods.do?method=getProductDetails', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         let goodsDetail = self.data.goodsDetail
@@ -243,7 +243,7 @@ Page({
       gdscode: self.data.Gdscode,
       EType: self.data.EType,
     }
-    request.http('bill/evaluation.do?method=getProductEvaluation', data).then(result => {
+    request.http('bill/evaluation.do?method=getProductEvaluation', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         if (res.data.length) {
@@ -281,7 +281,7 @@ Page({
       Otype: Otype,
       Gdsinf: [{'gdscode': self.data.Gdscode}],
     }
-    request.http('info/goods.do?method=addAlwaysBuyProduct', data).then(result => {
+    request.http('info/goods.do?method=addAlwaysBuyProduct', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         goodsDetail.alwaysbuyflag = !goodsDetail.alwaysbuyflag
@@ -396,7 +396,7 @@ Page({
   getCartCount () {
     let self = this
     let data = {}
-    request.http('bill/shoppingcar.do?method=getCarProductCount', data).then(result => {
+    request.http('bill/shoppingcar.do?method=getCarProductCount', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

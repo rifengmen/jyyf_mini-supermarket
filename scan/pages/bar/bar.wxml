@@ -21,25 +21,27 @@
   <view class="online bg373947" wx:else>
     <view class="online_cont bgffffff border_r8">
       <view class="online_detailtit font32 font_blod bgcecece">订单详情</view>
-      <scroll-view class="online_detail" scroll-y="true">
+      <view class="online_detail">
         <!-- 商品简介 start -->
-        <view class="goods_item2 bgffffff border_be5e5e5" wx:for="{{goodsList}}" wx:key="index">
-          <view class="item_desc">
-            <view class="item_name ellipsis2">{{item.goodsName}}</view>
-            <view class="price_cont">
-              <view class="price">
-                <view class="actual_price colorfa6400">￥{{item.actualPrice}}</view>
-                <del class="color999999 font22" wx:if="{{item.actualPrice !== item.salePrice}}">
-                  ￥{{item.salePrice}}</del>
-              </view>
-              <view class="cart">
-                <view class="cart_img tr">×{{item.saleAmount}}</view>
+        <view>
+          <view class="goods_item2 bgffffff border_be5e5e5" wx:for="{{goodsList}}" wx:key="index">
+            <view class="item_desc">
+              <view class="item_name ellipsis2">{{item.goodsName}}</view>
+              <view class="price_cont">
+                <view class="price">
+                  <view class="actual_price colorfa6400">￥{{item.actualPrice}}</view>
+                  <del class="color999999 font22" wx:if="{{item.actualPrice !== item.salePrice}}">
+                    ￥{{item.salePrice}}</del>
+                </view>
+                <view class="cart">
+                  <view class="cart_img tr">×{{item.saleAmount}}</view>
+                </view>
               </view>
             </view>
           </view>
         </view>
         <!-- 商品简介 end -->
-      </scroll-view>
+      </view>
     </view>
     <view class="online_btn">
       <view class="online_vip colorffffff border_a71d793 bg71d793 border_r4 tc" bindtap="toggleFlag">出场码</view>

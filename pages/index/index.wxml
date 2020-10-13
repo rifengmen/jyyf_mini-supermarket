@@ -150,7 +150,7 @@
 			<text class="colorffffff font32 font_blod">限时抢购</text>
 		</view>
 		<view class="goods_list1 overflow">
-			<swiper class="timeslimit_swiper" autoplay="true" circular="true" interval="8000" display-multiple-items="3">
+			<swiper class="timeslimit_swiper" autoplay="true" circular="true" interval="5000" display-multiple-items="3">
 				<swiper-item>
 					<view class="goods_item1 border_r10 overflow bgffffff">
 						<view class="item_img overflow">

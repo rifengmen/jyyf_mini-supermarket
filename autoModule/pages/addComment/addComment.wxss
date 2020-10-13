@@ -1,0 +1,30 @@
+/* autoModule/pages/addComment/addComment.wxss */
+.type {
+  width: calc(100% - 48rpx);
+  height: 40rpx;
+  margin-bottom: 20rpx;
+  padding: 24rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.type .tit {
+  margin-right: 60rpx;
+}
+.type_item {
+  width: 128rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  margin-right: 20rpx;
+}
+.content {
+  width: calc(100% - 48rpx);
+  height: 300rpx;
+  margin: 0 auto;
+}
+.btn {
+  width: calc(100% - 60rpx);
+  height: 80rpx;
+  line-height: 80rpx;
+  margin: 200rpx auto 0 auto;
+}

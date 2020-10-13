@@ -147,7 +147,7 @@ Component({
         Cpassword: self.data.password,
         Tradeno: self.data.orderDetail.tradeno
       }
-      request.http('mem/member.do?method=ordercommit', data).then(result => {
+      request.http('mem/member.do?method=ordercommit', data, 'POST').then(result => {
         let res = result.data
         if (res.flag === 1) {
           if (res.data.beecloud.miniPayStr) {

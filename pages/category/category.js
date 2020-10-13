@@ -139,7 +139,7 @@ Page({
   getLevel1 () {
     let self = this
     let data = {}
-    request.http('system/goodsclass.do?method=listClass', data).then(result => {
+    request.http('system/goodsclass.do?method=listClass', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -173,7 +173,7 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('system/goodsclass.do?method=listSubClass', data).then(result => {
+    request.http('system/goodsclass.do?method=listSubClass', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -210,7 +210,7 @@ Page({
       sorttype: self.data.sorttype,
       HotCategoryflag: self.data.hotCategoryflag,
     }
-    request.http('info/goods.do?method=getProductListByCate', data).then(result => {
+    request.http('info/goods.do?method=getProductListByCate', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         let goodsList = self.data.goodsList
@@ -355,7 +355,7 @@ Page({
   getCartCount () {
     let self = this
     let data = {}
-    request.http('bill/shoppingcar.do?method=getCarProductCount', data).then(result => {
+    request.http('bill/shoppingcar.do?method=getCarProductCount', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         if (res.data.data) {

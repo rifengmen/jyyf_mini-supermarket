@@ -141,7 +141,7 @@ Page({
   getOrderDetail () {
     let self = this
     let data = {}
-    request.http('bill/shoppingcar.do?method=buyend', data).then(result => {
+    request.http('bill/shoppingcar.do?method=buyend', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         let orderDetail = res.data
@@ -188,7 +188,7 @@ Page({
       scoreFlag: false,
       useScoreMoney: 0,
     })
-    request.http('bill/pay.do?method=payMoneyjf', data).then(result => {
+    request.http('bill/pay.do?method=payMoneyjf', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -223,7 +223,7 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('bill/shoppingcar.do?method=listMyCar', data).then(result => {
+    request.http('bill/shoppingcar.do?method=listMyCar', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -245,7 +245,7 @@ Page({
       let data = {
         addressid: addressId,
       }
-      request.http('system/myuser.do?method=listAddressInfo', data).then(result => {
+      request.http('system/myuser.do?method=listAddressInfo', data, 'POST').then(result => {
         let res = result.data
         if (res.flag === 1) {
           let address = res.data[0]
@@ -271,7 +271,7 @@ Page({
       Paymode: 0,
       Actmoney: self.data.orderDetail.actmoney,
     }
-    request.http('bill/shoppingcar.do?method=getFreight', data).then(result => {
+    request.http('bill/shoppingcar.do?method=getFreight', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

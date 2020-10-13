@@ -155,7 +155,7 @@ Page({
       // 卡冲值参数为1，其它是0
       cardflag: 0
     }
-    request.http('system/slide.do?method=listShopHomeSlide', data).then(result => {
+    request.http('system/slide.do?method=listShopHomeSlide', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -197,7 +197,7 @@ Page({
     let data = {
       version: end
     }
-    request.http('system/customlogin.do?method=getModulePictureList', data).then(result => {
+    request.http('system/customlogin.do?method=getModulePictureList', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -289,7 +289,7 @@ Page({
         case 13:
           // 周边看看
           wx.navigateTo({
-            url: '/pages/autoModule/nearby/nearby',
+            url: '/autoModule/pages/nearby/nearby',
           })
           break;
         case 14:
@@ -307,7 +307,7 @@ Page({
         case 16:
           // 购物评价
           wx.navigateTo({
-            url: '/pages/autoModule/buyGoodsList/buyGoodsList',
+            url: '/autoModule/pages/buyGoodsList/buyGoodsList',
           })
           break;
         case 17:
@@ -325,13 +325,13 @@ Page({
         case 19:
           // 积分抽奖
           wx.navigateTo({
-            url: '/pages/autoModule/lottery/lottery',
+            url: '/autoModule/pages/lottery/lottery',
           })
           break;
         case 20:
           // 在线充值
           wx.navigateTo({
-            url: '/pages/autoModule/recharge/recharge',
+            url: '/autoModule/pages/recharge/recharge',
           })
           break;
         case 21:
@@ -392,7 +392,7 @@ Page({
     let data = {
       Listtype: 2
     }
-    request.http('info/InformationController.do?method=listNotice', data).then(result => {
+    request.http('info/InformationController.do?method=listNotice', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -413,7 +413,7 @@ Page({
       // 卡冲值参数为1，其它是0
       cardflag: 0
     }
-    request.http('system/slide.do?method=listShopHomeSlide1', data).then(result => {
+    request.http('system/slide.do?method=listShopHomeSlide1', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -431,7 +431,7 @@ Page({
   getTheme () {
     let self = this
     let data = {}
-    request.http('info/Category.do?method=getTheme', data).then(result => {
+    request.http('info/Category.do?method=getTheme', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         if (res.data.length) {
@@ -451,7 +451,7 @@ Page({
   getHotList () {
     let self = this
     let data = {}
-    request.http('info/Category.do?method=listHot180414', data).then(result => {
+    request.http('info/Category.do?method=listHot180414', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -472,7 +472,7 @@ Page({
     let data = {
       ImageID: id
     }
-    request.http('system/slide.do?method=getLinkForSlide', data).then(result => {
+    request.http('system/slide.do?method=getLinkForSlide', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         let linktype = res.data.linktype
@@ -494,11 +494,11 @@ Page({
           })
         } else if (linktype === 5) { // 充值中心
           wx.navigateTo({
-            url: '/pages/autoModule/recharge/recharge',
+            url: '/autoModule/pages/recharge/recharge',
           })
         } else if (linktype === 6) { // 积分抽奖
           wx.navigateTo({
-            url: '/pages/autoModule/lottery/lottery',
+            url: '/autoModule/pages/lottery/lottery',
           })
         } else if (linktype === 7) { // 领券中心
           wx.navigateTo({
@@ -614,7 +614,7 @@ Page({
   getCartCount () {
     let self = this
     let data = {}
-    request.http('bill/shoppingcar.do?method=getCarProductCount', data).then(result => {
+    request.http('bill/shoppingcar.do?method=getCarProductCount', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         if (res.data.data) {

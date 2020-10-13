@@ -82,7 +82,7 @@ Page({
       memcode: app.globalData.memcode,
       startdate: e.detail
     }
-    request.http('mem/card.do?method=listMoneyCardDtl', data).then(result => {
+    request.http('mem/card.do?method=listMoneyCardDtl', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         let datas = res.data

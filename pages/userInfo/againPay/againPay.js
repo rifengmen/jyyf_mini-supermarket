@@ -111,7 +111,7 @@ Page({
     let data = {
       Tradeno: self.data.tradeno
     }
-    request.http('bill/shoppingcar.do?method=buyend', data).then(result => {
+    request.http('bill/shoppingcar.do?method=buyend', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         let orderDetail = res.data
@@ -145,7 +145,7 @@ Page({
       scoreFlag: false,
       useScoreMoney: 0,
     })
-    request.http('bill/pay.do?method=payMoneyjf', data).then(result => {
+    request.http('bill/pay.do?method=payMoneyjf', data, 'POST').then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
