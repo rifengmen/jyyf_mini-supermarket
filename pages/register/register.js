@@ -143,11 +143,11 @@ Page({
   // 倒计时
   countDown () {
     let self = this
-    let usercode = self.data.usercode
+    let mobile = self.data.mobile
     let imgcode = self.data.imgcode
     let countdownnum = app.globalData.countdownnum
     // 验证手机号
-    if (!usercode) {
+    if (!mobile) {
       toast.toast('请填写手机号!')
       return false
     }
@@ -180,13 +180,13 @@ Page({
   // 获取短信验证码
   getCheckCode () {
     let self = this
-    let usercode = self.data.usercode
+    let mobile = self.data.mobile
     let imgcode = self.data.imgcode
     if (!self.data.numflag) {
       return false
     }
     let data = {
-      mobile: usercode,
+      mobile: mobile,
       mobilecode: imgcode
     }
     request.http('system/customlogin.do?method=getCheckCode180126', data).then(result => {
