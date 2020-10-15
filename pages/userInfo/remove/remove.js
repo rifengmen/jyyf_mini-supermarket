@@ -89,7 +89,7 @@ Page({
     let data = {
       wxID: app.globalData.openid
     }
-    request.http('system/customlogin.do?method=unBindOpenID', data, 'POST').then(result => {
+    request.http('system/customlogin.do?method=unBindOpenID', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         wx.reLaunch({

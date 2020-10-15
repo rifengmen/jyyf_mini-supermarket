@@ -6,7 +6,8 @@
         <input type="number" value="{{goodscode}}" bindinput="setGoodscode" placeholder="请输入商品条码" />
         <view class="clear_btn color71d793 font34 bgffffff border_r500" wx:if="{{goodscode}}" bindtap="clearGoodscode">×</view>
       </view>
-      <view class="manual_btn border_r4 bg71d793 colorffffff" bindtap="getGoodsInfo">确认</view>
+      <view class="manual_btn border_r4 bg71d793 colorffffff" bindtap="getGoodsInfo" wx:if="{{scanType}}">确认</view>
+      <view class="manual_btn border_r4 bg71d793 colorffffff" bindtap="getGoodsInfo" wx:else>确认</view>
     </view>
     <view class="manual_des">
       <view class="manual_img">
@@ -17,7 +18,7 @@
   </view>
   <!-- 商品信息弹窗 start-->
   <view class="scanDialog" wx:if="{{goodsInfoFlag}}">
-    <scanDialog id="scanDialog" goodsInfo="{{goodsInfo}}" bind:addScancart="addScancart" bind:cancel="cancel"></scanDialog>
+    <scanDialog id="scanDialog" goodsInfo="{{goodsInfo}}" bind:addScancart="addScancart" bind:cancel="cancel" bind:addGoOn="addGoOn" bind:addBack="addBack"></scanDialog>
   </view>
   <!-- 商品信息弹窗 end-->
 </view>

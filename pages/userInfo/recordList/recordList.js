@@ -128,7 +128,7 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('mem/member.do?method=listMemberConsum', data, 'POST').then(result => {
+    request.http('mem/member.do?method=listMemberConsum', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let recordList = self.data.recordList

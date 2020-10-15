@@ -1,4 +1,9 @@
 // component/startdate/startdate.js
+require('../../app.js')
+const app = getApp()
+const request = require('../../utils/request.js')
+const toast = require('../../utils/toast.js')
+
 Component({
   /**
    * 组件的属性列表

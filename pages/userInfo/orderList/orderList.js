@@ -158,7 +158,7 @@ Page({
       pageSize: self.data.count,
       statusType: self.data.statusType,
     }
-    request.http('bill/order.do?method=listMyOrder', data, 'POST').then(result => {
+    request.http('bill/order.do?method=listMyOrder', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let orderList = self.data.orderList

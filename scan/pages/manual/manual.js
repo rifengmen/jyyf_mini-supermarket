@@ -17,6 +17,8 @@ Page({
     goodsInfoFlag: false,
     // 店铺信息
     scanShopInfo: '',
+    // 扫码购类型，0：共用线上购物车；1：本地独立购物车
+    scanType: app.globalData.scanType,
   },
 
   /**
@@ -97,21 +99,28 @@ Page({
   // 获取商品信息
   getGoodsInfo () {
     let self = this
-    // 验证条码不为空
-    if (!self.data.goodscode) {
-      toast.toast('请输入商品条码！')
-      return false
-    }
-    // 验证店铺不为空
-    if (!self.data.scanShopInfo) {
-      toast.toast('请选择店铺！')
-      return false
-    }
     let data = {
       barcode: self.data.goodscode,
-      deptcode: self.data.scanShopInfo.deptcode
     }
-    request.http('invest/microFlow.do?method=getProductDetailsByBarcode', data, 'POST').then(result => {
+    let url = 'info/goods.do?method=getProductDetailsByBarcode'
+    if (self.data.scanType) {
+      // 验证条码不为空
+      if (!self.data.goodscode) {
+        toast.toast('请输入商品条码！')
+        return false
+      }
+      // 验证店铺不为空
+      if (!self.data.scanShopInfo) {
+        toast.toast('请选择店铺！')
+        return false
+      }
+      data = {
+        barcode: self.data.goodscode,
+        deptcode: self.data.scanShopInfo.deptcode
+      }
+      url = 'invest/microFlow.do?method=getProductDetailsByBarcode'
+    }
+    request.http(url, data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -141,6 +150,56 @@ Page({
     let self = this
     self.setData({
       goodsInfoFlag: false,
+    })
+  },
+
+  // 加入返回
+  addBack () {
+    let self = this
+    // 加入购物车
+    self.addCart()
+    // 关闭购物车弹窗
+    self.cancel()
+  },
+
+  // 加入继续
+  addGoOn () {
+    let self = this
+    // 加入购物车
+    self.addCart('goOn')
+    // 关闭购物车弹窗
+    self.cancel()
+  },
+
+  // 加入购物车
+  addCart (e) {
+    let self = this
+    let goodsInfo = self.data.goodsInfo
+    let data = {
+      Userid: app.globalData.userid,
+      Gdscode: goodsInfo.gdscode,
+      barflag: 1,
+      inputbarcode: goodsInfo.inputbarcode,
+    }
+    // isstripercode是否称签商品
+    if (goodsInfo.isstripercode) {
+      data.Actualmoney = goodsInfo.actualmoney
+      data.Buyprice = goodsInfo.saleprice
+      data.Count = goodsInfo.saleamount
+    } else {
+      data.Actualmoney = goodsInfo.preferential
+      data.Buyprice = goodsInfo.preferential
+      data.Count = 1
+    }
+    request.http('bill/shoppingcar.do?method=inputIntoCar', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
     })
   },
 })

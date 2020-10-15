@@ -1,5 +1,6 @@
 // component/payBtn/payBtn.js
 require('../../app.js')
+const app = getApp()
 const request = require('../../utils/request.js')
 const toast = require('../../utils/toast.js')
 
@@ -87,7 +88,7 @@ Component({
     // 设置支付信息
     setPaylist () {
       let self = this
-      let globalData = getApp().globalData
+      let globalData = app.globalData
       let paymode = ''
       if (self.data.from === 'card') {
         paymode = 3
@@ -133,7 +134,7 @@ Component({
     // 立即支付
     pay () {
       let self = this
-      let globalData = getApp().globalData
+      let globalData = app.globalData
       let paymode = self.data.paymode
       let data = {
         Sendid: globalData.addressId || 0,
@@ -147,7 +148,7 @@ Component({
         Cpassword: self.data.password,
         Tradeno: self.data.orderDetail.tradeno
       }
-      request.http('mem/member.do?method=ordercommit', data, 'POST').then(result => {
+      request.http('mem/member.do?method=ordercommit', data).then(result => {
         let res = result.data
         if (res.flag === 1) {
           if (res.data.beecloud.miniPayStr) {

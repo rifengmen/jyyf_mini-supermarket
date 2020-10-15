@@ -142,7 +142,7 @@
 	</view>
 	<!-- 专区 end -->
 	<!-- 限时抢购 start -->
-	<view class="timeslimit border_r10 bgf68e74_linear">
+	<view class="timeslimit border_r10 bgf68e74_linear" wx:if="{{goodsList.length}}">
 		<view class="tit">
 			<view class="tit_img overflow">
 				<image src="/lib/images/timeslimit.png" mode="aspectFit"></image>
@@ -151,108 +151,25 @@
 		</view>
 		<view class="goods_list1 overflow">
 			<swiper class="timeslimit_swiper" autoplay="true" circular="true" interval="5000" display-multiple-items="3">
-				<swiper-item>
-					<view class="goods_item1 border_r10 overflow bgffffff">
-						<view class="item_img overflow">
-							<image src="/lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
-						</view>
-						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="color999999 font20">￥30.00</del>
+				<block wx:for="{{goodsList}}" wx:key="index">
+					<swiper-item>
+						<navigator class="goods_item1 border_r10 overflow bgffffff" hover-class="none" url="/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&title={{item.Name}}&panicBuy=panicBuy&panicbuycode={{item.panicbuycode}}">
+							<view class="item_img overflow">
+								<image src="{{baseUrl + item.Defaultimage}}" mode="aspectFit" lazy-load="true"></image>
 							</view>
-							<view class="cart overflow">
-								<image src="/lib/images/addcart.png"></image>
+							<view class="item_name ellipsis">{{item.Name}}</view>
+							<view class="price_cont">
+								<view class="price">
+									<view class="actual_price colorfa6400 font26">￥{{item.panicprice}}</view>
+									<del class="color999999 font20">￥{{item.saleprice}}</del>
+								</view>
+								<view class="cart">
+									<addCart id="panicBuyaddCart" catchtap="addCart" data-goods="{{item}}" panicBuy="panicBuy" data-from="panicBuy" bind:getCartCount="getCartCount"></addCart>
+								</view>
 							</view>
-						</view>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="goods_item1 border_r10 overflow bgffffff">
-						<view class="item_img overflow">
-							<image src="/lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
-						</view>
-						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="color999999 font20">￥30.00</del>
-							</view>
-							<view class="cart overflow">
-								<image src="/lib/images/addcart.png"></image>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="goods_item1 border_r10 overflow bgffffff">
-						<view class="item_img overflow">
-							<image src="/lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
-						</view>
-						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="color999999 font20">￥30.00</del>
-							</view>
-							<view class="cart overflow">
-								<image src="/lib/images/addcart.png"></image>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="goods_item1 border_r10 overflow bgffffff">
-						<view class="item_img overflow">
-							<image src="/lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
-						</view>
-						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="color999999 font20">￥30.00</del>
-							</view>
-							<view class="cart overflow">
-								<image src="/lib/images/addcart.png"></image>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="goods_item1 border_r10 overflow bgffffff">
-						<view class="item_img overflow">
-							<image src="/lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
-						</view>
-						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="color999999 font20">￥30.00</del>
-							</view>
-							<view class="cart overflow">
-								<image src="/lib/images/addcart.png"></image>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="goods_item1 border_r10 overflow bgffffff">
-						<view class="item_img overflow">
-							<image src="/lib/images/ceshi002.png" mode="aspectFit" lazy-load="true"></image>
-						</view>
-						<view class="item_name ellipsis">丑橘丑橘丑橘丑橘丑橘丑橘</view>
-						<view class="price_cont">
-							<view class="price">
-								<view class="actual_price colorfa6400 font26">￥20.00</view>
-								<del class="color999999 font20">￥30.00</del>
-							</view>
-							<view class="cart overflow">
-								<image src="/lib/images/addcart.png"></image>
-							</view>
-						</view>
-					</view>
-				</swiper-item>
+						</navigator>
+					</swiper-item>
+				</block>
 			</swiper>
 		</view>
 		<!-- 限时抢购 end -->
@@ -307,13 +224,13 @@
 			<view class="dialog_section">
 				<view class="dialog_section_tit">斤数(500g)：</view>
 				<view class="dialog_section_cont color333333">
-					<input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入斤数" value="{{dialogJin}}" bindinput="setDialogJin"></input>
+					<input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入斤数" value="{{dialogJin}}" bindinput="setDialogJin"/>
 				</view>
 			</view>
 			<view class="dialog_section">
 				<view class="dialog_section_tit">两数(50g)：</view>
 				<view class="dialog_section_cont color333333">
-					<input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入两数" value="{{dialogLiang}}" bindinput="setDialogLiang"></input>
+					<input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入两数" value="{{dialogLiang}}" bindinput="setDialogLiang"/>
 				</view>
 			</view>
 			<view class="dialog_section">

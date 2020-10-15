@@ -108,7 +108,7 @@ Page({
       flowno: self.data.flowno,
       deptcode: self.data.deptcode
     }
-    request.http('invest/microFlow.do?method=listMicroFlowDtl', data, 'POST').then(result => {
+    request.http('invest/microFlow.do?method=listMicroFlowDtl', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -147,7 +147,7 @@ Page({
       flowno: self.data.flowno,
       shopCode: self.data.deptcode
     }
-    request.http('invest/microFlow.do?method=getMicroFlowPayMoney', data, 'POST').then(result => {
+    request.http('invest/microFlow.do?method=getMicroFlowPayMoney', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let paymodeList = res.data
@@ -227,7 +227,7 @@ Page({
       payList: self.data.paylist,
       shopCode: self.data.deptcode
     }
-    request.http('invest/microFlow.do?method=microFlowToPay', data, 'POST').then(result => {
+    request.http('invest/microFlow.do?method=microFlowToPay', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         if (paymode === 3) {

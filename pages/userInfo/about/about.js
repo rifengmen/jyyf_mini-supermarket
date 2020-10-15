@@ -81,7 +81,7 @@ Page({
     let data = {
       UserCode: app.globalData.memcode
     }
-    request.http('appversion.do?method=appAbout', data, 'POST').then(result => {
+    request.http('appversion.do?method=appAbout', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

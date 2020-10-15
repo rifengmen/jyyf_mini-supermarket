@@ -2,7 +2,7 @@
 <view class="container color333333 font28 bgf0f0f0">
   <view class="record">
     <!-- 商品列表 start -->
-    <view class="goods_cont bgffffff">
+    <view class="record_goods_cont bgffffff">
       <view class="tit font32 font_blod">商品清单</view>
       <block wx:for="{{recordDetail}}" wx:key="index">
         <view class="item border_be5e5e5">

@@ -13,7 +13,7 @@
             <view class="">{{item.username + '  ' + item.phone}}</view>
             <view class="tag colorffffff font24 bg71d793 border_r500 tc" wx:if="{{item.isdefault}}">默认</view>
           </view>
-          <view class="color666666 font24">{{item.parentAreaName + '  ' + item.areaname + '  ' + item.address}}</view>
+          <view class="color666666 font24">{{(item.mapaddress || '') + item.address}}</view>
         </view>
         <view class="item_editor" catchtap="toEditorAddress" data-address="{{item}}">
           <view class="editor">

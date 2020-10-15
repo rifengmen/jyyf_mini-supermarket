@@ -95,7 +95,7 @@ Page({
       // 卡冲值参数为1，其它是0
       cardflag: 1
     }
-    request.http('system/slide.do?method=listShopHomeSlide', data, 'POST').then(result => {
+    request.http('system/slide.do?method=listShopHomeSlide', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -121,7 +121,7 @@ Page({
   getCardInfo () {
     let self = this
     let data = {}
-    request.http('mem/card.do?method=getMyCardInfo', data, 'POST').then(result => {
+    request.http('mem/card.do?method=getMyCardInfo', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -155,7 +155,7 @@ Page({
       toMoney: money,
       moneyType: "add"
     }
-    request.http('mem/member.do?method=reChargeToPay', data, 'POST').then(result => {
+    request.http('mem/member.do?method=reChargeToPay', data).then(result => {
       let res = result .data
       if (res.flag === 1) {
         // 调用微信支付
@@ -178,7 +178,7 @@ Page({
       paymoney: datas.paymoney,
       channel: "WX_MINI"
     }
-    request.http('mem/member.do?method=reChargePay', data, 'POST').then(result => {
+    request.http('mem/member.do?method=reChargePay', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         // 微信支付

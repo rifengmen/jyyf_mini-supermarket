@@ -1,5 +1,6 @@
 // component/addCart/addCart.js
 require('../../app.js')
+const app = getApp()
 const request = require('../../utils/request.js')
 const toast = require('../../utils/toast.js')
 
@@ -25,7 +26,7 @@ Component({
    */
   data: {
     // 用户id
-    userid: getApp().globalData.userid,
+    userid: app.globalData.userid,
     // 商品数量
     count: 1,
     // 商品code
@@ -43,7 +44,6 @@ Component({
     // 加入购物车
     addCart (goods) {
       let self = this
-      let app = getApp()
       let data = {
         Userid: app.globalData.userid,
         Gdscode: goods.Gdscode,

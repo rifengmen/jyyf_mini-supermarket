@@ -132,7 +132,7 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('mem/member.do?method=listMemberConsumGdscode', data, 'POST').then(result => {
+    request.http('mem/member.do?method=listMemberConsumGdscode', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

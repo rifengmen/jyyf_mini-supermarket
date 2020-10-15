@@ -118,7 +118,7 @@ Page({
       Latitude: latitude,
       deptType: 1
     }
-    request.http('system/dept.do?method=listDeptInfo', data, 'POST').then(result => {
+    request.http('system/dept.do?method=listDeptInfo', data).then(result => {
       wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
@@ -144,7 +144,7 @@ Page({
       userid: userid,
       Deptcode: deptcode
     }
-    request.http('system/dept.do?method=changeDept', data, 'POST').then(result => {
+    request.http('system/dept.do?method=changeDept', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         app.globalData.deptname = deptname
@@ -169,7 +169,7 @@ Page({
     let data = {
       deptcode: deptcode
     }
-    request.http('system/dept.do?method=setDefaultFlag', data, 'POST').then(result => {
+    request.http('system/dept.do?method=setDefaultFlag', data).then(result => {
       let res = result.data
       // 更新页面默认按钮
       if (res.flag === 1) {
@@ -205,7 +205,7 @@ Page({
     let data = {
       deptcode: deptcode
     }
-    request.http('system/dept.do?method=cancelDefaultFlag', data, 'POST').then(result => {
+    request.http('system/dept.do?method=cancelDefaultFlag', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         // 更新页面默认按钮

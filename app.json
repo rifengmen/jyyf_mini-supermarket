@@ -14,7 +14,7 @@
     "pages/category/category",
     "pages/cart/cart",
     "pages/cart2/cart2",
-    "pages/shopBag/shopBag",
+    "pages/scan/scan",
     "pages/editorOrder/editorOrder",
     "pages/tickList/tickList",
     "pages/tickDetail/tickDetail",
@@ -65,6 +65,7 @@
         "pages/scan/scan",
         "pages/manual/manual",
         "pages/cart/cart",
+        "pages/shopBag/shopBag",
         "pages/editorOrder/editorOrder",
         "pages/orderList/orderList",
         "pages/orderDetail/orderDetail",
@@ -91,6 +92,12 @@
         "iconPath": "./lib/images/category.png",
         "selectedIconPath": "./lib/images/categoryActive.png",
         "text": "分类"
+      },
+      {
+        "pagePath": "pages/scan/scan",
+        "iconPath": "./lib/images/scan.png",
+        "selectedIconPath": "./lib/images/scanActive.png",
+        "text": "扫码购"
       },
       {
         "pagePath": "pages/cart/cart",

@@ -81,7 +81,7 @@ Page({
       Latitude: app.globalData.latitude,
       deptType: 3,
     }
-    request.http('system/dept.do?method=listDeptInfo', data, 'POST').then(result => {
+    request.http('system/dept.do?method=listDeptInfo', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

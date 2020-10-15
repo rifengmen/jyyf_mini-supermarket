@@ -73,13 +73,13 @@
 			<view class="dialog_section">
 				<view class="dialog_section_tit">斤数(500g)：</view>
 				<view class="dialog_section_cont color333333">
-					<input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入斤数" value="{{dialogJin}}" bindinput="setDialogJin"></input>
+					<input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入斤数" value="{{dialogJin}}" bindinput="setDialogJin"/>
 				</view>
 			</view>
 			<view class="dialog_section">
 				<view class="dialog_section_tit">两数(50g)：</view>
 				<view class="dialog_section_cont color333333">
-					<input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入两数" value="{{dialogLiang}}" bindinput="setDialogLiang"></input>
+					<input class="dialog_input bg999999 border_r500" type="number" placeholder="请输入两数" value="{{dialogLiang}}" bindinput="setDialogLiang"/>
 				</view>
 			</view>
 			<view class="dialog_section">

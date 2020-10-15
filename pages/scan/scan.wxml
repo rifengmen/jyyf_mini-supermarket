@@ -1,0 +1,84 @@
+<!--pages/scan/scan.wxml-->
+<view class="container color333333 font28 bgf0f0f0">
+  <view class="scan_cont">
+    <!-- 扫码购步骤 start -->
+    <view class="step bgffffff border_r12">
+      <view class="deptname" wx:if="{{scanType}}">
+        <view class="shop overflow">
+          <image src="/lib/images/shop.png" mode="aspectFit"></image>
+        </view>
+        <view class="name font32 font_blod ellipsis">
+          <picker class="picker" bindchange="bindPickerChange" value="{{shopIndex}}" range="{{scanShopList}}" range-key="deptname">{{scanShopList[shopIndex].deptname}} > </picker>
+        </view>
+      </view>
+      <view class="step_tit tc">- 扫码购步骤 -</view>
+      <view class="step_img">
+        <image class="" src="/lib/images/scanStep.png"></image>
+      </view>
+    </view>
+    <!-- 扫码购步骤 end -->
+    <!-- 本地独立购物车 start -->
+    <view class="scan bgffffff border_r12" wx:if="{{scanType}}">
+      <!-- 扫码按钮 start -->
+      <navigator class="scancart_btn bg71d793 border_r500" hover-class="none" url="/scan/pages/cart/cart?type=1">
+        <view class="scan_img">
+          <image src="/lib/images/scanbuy.png"></image>
+        </view>
+        <view class="font32 colorffffff">扫商品</view>
+      </navigator>
+      <!-- 扫码按钮 end -->
+      <!-- 底部导航 start-->
+      <view class="scan_nav border_r12">
+        <!-- 购物车 start -->
+        <navigator class="nav" hover-class="none" url="/scan/pages/cart/cart?type=2">
+          <view class="nav_img">
+            <image src="/lib/images/scanCart.png"></image>
+          </view>
+          <view class="font32">购物车</view>
+        </navigator>
+        <!-- 购物车 end -->
+        <!-- 订单 start -->
+        <navigator class="nav" hover-class="none" url="/scan/pages/orderList/orderList">
+          <view class="nav_img">
+            <image src="/lib/images/scanOrder2.png"></image>
+          </view>
+          <view class="font32">订单</view>
+        </navigator>
+        <!-- 订单 end -->
+        <!-- 出场码 start -->
+        <view class="nav" bindtap="toBar">
+          <view class="nav_img">
+            <image src="/lib/images/scanBar.png"></image>
+          </view>
+          <view class="font32">出场码</view>
+        </view>
+        <!-- 出场码 end -->
+      </view>
+      <!-- 底部导航 end-->
+    </view>
+    <!-- 本地独立购物车 end -->
+    <!-- 共用线上购物车 start -->
+    <view class="scan bgffffff border_r12" wx:else>
+      <!-- 扫码按钮 start -->
+      <view class="scancart_btn bg71d793 border_r500" bindtap="scangoodscode">
+        <view class="scan_img">
+          <image src="/lib/images/scanbuy.png"></image>
+        </view>
+        <view class="font32 colorffffff">扫商品</view>
+      </view>
+      <!-- 扫码按钮 end -->
+      <!-- 手动输入条形码 start -->
+      <view class="manual bgffffff border_r500">
+        <text class="font24">扫不出来，试试</text>
+        <navigator class="font24 colorfa6400" hover-class="none" url="/scan/pages/manual/manual">手动输入条形码</navigator>
+      </view>
+      <!-- 手动输入条形码 end -->
+    </view>
+    <!-- 共用线上购物车 end -->
+  </view>
+  <!-- 商品信息弹窗 start-->
+  <view class="scanDialog" wx:if="{{goodsInfoFlag}}">
+    <scanDialog id="scanDialog" goodsInfo="{{goodsInfo}}" bind:addGoOn="addGoOn" bind:addBack="addBack" bind:cancel="cancel"></scanDialog>
+  </view>
+  <!-- 商品信息弹窗 end-->
+</view>

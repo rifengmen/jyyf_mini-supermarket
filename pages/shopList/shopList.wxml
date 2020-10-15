@@ -23,7 +23,7 @@
 					<view>电话：{{item.Phone || '暂无电话'}}</view>
 					<view>营业时间：{{item.BusinessHours}}</view>
 				</view>
-				<view class="mapimg border_a71d793 border_r10" catchtap="showMap" data-shop="{{item}}">
+				<view class="mapimg border_a71d793 border_r10" catchtap="showMap" data-shop="{{item}}" wx:if="{{item.Longitude || item.Latitude}}">
 					<image class="" src="/lib/images/mapimg.png"></image>
 				</view>
 			</view>

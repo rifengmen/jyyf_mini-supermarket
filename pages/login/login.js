@@ -126,7 +126,7 @@ Page({
     let data = {
       code: self.data.code
     }
-    request.http('system/customlogin.do?method=getOpenID', data, 'POST').then(result => {
+    request.http('system/customlogin.do?method=getOpenID', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         app.globalData.openid = res.data.openid
@@ -154,7 +154,7 @@ Page({
       // 团秒标志，0：否；1：是 ；2：小程序自动登录
       tmFlag: 2
     }
-    request.http('system/customlogin.do?method=login', data, 'POST').then(result => {
+    request.http('system/customlogin.do?method=login', data).then(result => {
       let res = result.data
       if(res.flag === 1){
         // cookie

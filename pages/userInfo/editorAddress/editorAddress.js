@@ -9,24 +9,28 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 纬度
+    latitude: 0,
+    // 经度
+    longitude: 0,
     // 地址id
     id: '',
     // 来自哪儿
     from: '',
     // 地址详情
     address: '',
-    // 区域
-    listOneArea: [
-      {areaname: '请选择区域',}
-    ],
-    // 选中区域下标
-    listOneAreaIndex: 0,
-    // 街道
-    listSubArea: [
-      {areaname: '请选择街道',}
-    ],
-    // 选中街道下标
-    listSubAreaIndex: 0,
+    // // 区域
+    // listOneArea: [
+    //   {areaname: '请选择区域',}
+    // ],
+    // // 选中区域下标
+    // listOneAreaIndex: 0,
+    // // 街道
+    // listSubArea: [
+    //   {areaname: '请选择街道',}
+    // ],
+    // // 选中街道下标
+    // listSubAreaIndex: 0,
     // 名字
     addressUsername: '',
     // 手机号
@@ -35,12 +39,10 @@ Page({
     addressAreaid: '',
     // 定位
     gps: '',
-    //  定位信息
-    gpsAddress: '',
+    //  地图信息
+    mapaddress: '',
     // 详细地址
     addressAddress: '',
-    // 默认地址
-    addressIsdefault: 0,
   },
 
   /**
@@ -60,7 +62,7 @@ Page({
         addressPhone: address.phone,
         addressAreaid: address.areaid,
         addressAddress: address.address,
-        addressIsdefault: address.isdefault,
+        mapaddress: address.mapaddress
       })
     }
   },
@@ -77,8 +79,8 @@ Page({
    */
   onShow: function () {
     let self = this
-    // 获取区域
-    self.getListOneArea()
+    // // 获取区域
+    // self.getListOneArea()
   },
 
   /**
@@ -117,73 +119,73 @@ Page({
 
   },
 
-  // 获取区域
-  getListOneArea () {
-    let self = this
-    let address = self.data.address
-    let data = {}
-    request.http('front/area.do?method=listOneArea', data, 'POST').then(result => {
-      let res = result.data
-      if (res.flag === 1) {
-        let listOneArea = self.data.listOneArea
-        listOneArea.push(...res.data)
-        self.setData({
-          listOneArea: listOneArea,
-        })
-        if (address) {
-          let _index
-          listOneArea.forEach((item, index) => {
-            if (item.areaid === address.parentAreaid) {
-              _index = index
-            }
-          })
-          self.setData({
-            listOneAreaIndex: _index,
-          })
-          // 获取街道
-          self.getListSubArea(address.parentAreaid)
-        }
-      } else {
-        toast.toast(res.message)
-      }
-    }).catch(error => {
-      toast.toast(error.error)
-    })
-  },
-
-  // 获取街道
-  getListSubArea (areaid) {
-    let self = this
-    let address = self.data.address
-    let data = {
-      areaid: areaid,
-    }
-    request.http('front/area.do?method=listSubArea', data, 'POST').then(result => {
-      let res = result.data
-      if (res.flag === 1) {
-        let listSubArea = self.data.listSubArea
-        listSubArea.push(...res.data)
-        self.setData({
-          listSubArea: listSubArea
-        })
-        if (address) {
-          let _index
-          listSubArea.forEach((item, index) => {
-            if (item.areaid === address.areaid) {
-              _index = index
-            }
-          })
-          self.setData({
-            listSubAreaIndex: _index,
-          })
-        }
-      } else {
-        toast.toast(res.message)
-      }
-    }).catch(error => {
-      toast.toast(error.error)
-    })
-  },
+  // // 获取区域
+  // getListOneArea () {
+  //   let self = this
+  //   let address = self.data.address
+  //   let data = {}
+  //   request.http('front/area.do?method=listOneArea', data).then(result => {
+  //     let res = result.data
+  //     if (res.flag === 1) {
+  //       let listOneArea = self.data.listOneArea
+  //       listOneArea.push(...res.data)
+  //       self.setData({
+  //         listOneArea: listOneArea,
+  //       })
+  //       if (address) {
+  //         let _index
+  //         listOneArea.forEach((item, index) => {
+  //           if (item.areaid === address.parentAreaid) {
+  //             _index = index
+  //           }
+  //         })
+  //         self.setData({
+  //           listOneAreaIndex: _index,
+  //         })
+  //         // 获取街道
+  //         self.getListSubArea(address.parentAreaid)
+  //       }
+  //     } else {
+  //       toast.toast(res.message)
+  //     }
+  //   }).catch(error => {
+  //     toast.toast(error.error)
+  //   })
+  // },
+  //
+  // // 获取街道
+  // getListSubArea (areaid) {
+  //   let self = this
+  //   let address = self.data.address
+  //   let data = {
+  //     areaid: areaid,
+  //   }
+  //   request.http('front/area.do?method=listSubArea', data).then(result => {
+  //     let res = result.data
+  //     if (res.flag === 1) {
+  //       let listSubArea = self.data.listSubArea
+  //       listSubArea.push(...res.data)
+  //       self.setData({
+  //         listSubArea: listSubArea
+  //       })
+  //       if (address) {
+  //         let _index
+  //         listSubArea.forEach((item, index) => {
+  //           if (item.areaid === address.areaid) {
+  //             _index = index
+  //           }
+  //         })
+  //         self.setData({
+  //           listSubAreaIndex: _index,
+  //         })
+  //       }
+  //     } else {
+  //       toast.toast(res.message)
+  //     }
+  //   }).catch(error => {
+  //     toast.toast(error.error)
+  //   })
+  // },
 
   // 设置名字
   setUsername (e) {
@@ -201,41 +203,61 @@ Page({
     })
   },
 
-  // 区域变更
-  listOneAreaChange (e) {
+  // // 区域变更
+  // listOneAreaChange (e) {
+  //   let self = this
+  //   let listOneArea = self.data.listOneArea
+  //   let listOneAreaIndex = e.detail.value
+  //   let areaid = listOneArea[listOneAreaIndex].areaid
+  //   self.setData({
+  //     listOneAreaIndex: listOneAreaIndex,
+  //   })
+  //   // 获取街道
+  //   self.getListSubArea(areaid)
+  // },
+  //
+  // // 街道变更
+  // listSubAreaChange (e) {
+  //   let self = this
+  //   let listSubArea = self.data.listSubArea
+  //   let listSubAreaIndex = e.detail.value
+  //   let areaid = listSubArea[listSubAreaIndex].areaid
+  //   self.setData({
+  //     listSubAreaIndex: listSubAreaIndex,
+  //     addressAreaid: areaid,
+  //   })
+  // },
+
+  // 获取当前位置
+  getGps () {
     let self = this
-    let listOneArea = self.data.listOneArea
-    let listOneAreaIndex = e.detail.value
-    let areaid = listOneArea[listOneAreaIndex].areaid
-    self.setData({
-      listOneAreaIndex: listOneAreaIndex,
+    wx.getLocation({
+      type: 'gcj02',
+      success (res) {
+        self.setData({
+          latitude: res.latitude,
+          longitude: res.longitude
+        })
+      },
+      complete () {
+        // 打开地图
+        self.chooseLocation()
+      },
     })
-    // 获取街道
-    self.getListSubArea(areaid)
   },
 
-  // 街道变更
-  listSubAreaChange (e) {
-    let self = this
-    let listSubArea = self.data.listSubArea
-    let listSubAreaIndex = e.detail.value
-    let areaid = listSubArea[listSubAreaIndex].areaid
-    self.setData({
-      listSubAreaIndex: listSubAreaIndex,
-      addressAreaid: areaid,
-    })
-  },
-
-  // 设置地图位置
-  setGps () {
+  // 打开地图
+  chooseLocation () {
     let self = this
     wx.chooseLocation({
-        success (res) {
-          self.setData({
-            gps: res,
-            gpsAddress: res.address + res.name
-          })
-        }
+      latitude: self.data.latitude,
+      longitude: self.data.longitude,
+      success (res) {
+        self.setData({
+          gps: res,
+          mapaddress: res.address + res.name
+        })
+      }
     })
   },
 
@@ -245,21 +267,6 @@ Page({
     self.setData({
       addressAddress: e.detail.value
     })
-  },
-
-  // 设置/取消默认地址
-  setIsdefault (e) {
-    let self = this
-    let isdefault = e.detail.value
-    if (isdefault) {
-      self.setData({
-        addressIsdefault: 1,
-      })
-    } else {
-      self.setData({
-        addressIsdefault: 0,
-      })
-    }
   },
 
   // 保存
@@ -276,20 +283,20 @@ Page({
       return false
     }
     // 验证定位
-    if (!self.data.gpsAddress) {
+    if (!self.data.mapaddress) {
       toast.toast('请选择收货地址')
       return false
     }
-    // 验证区域
-    if (!self.data.listOneAreaIndex) {
-      toast.toast('请选择区域')
-      return false
-    }
-    // 验证街道
-    if (!self.data.listSubAreaIndex) {
-      toast.toast('请选择街道')
-      return false
-    }
+    // // 验证区域
+    // if (!self.data.listOneAreaIndex) {
+    //   toast.toast('请选择区域')
+    //   return false
+    // }
+    // // 验证街道
+    // if (!self.data.listSubAreaIndex) {
+    //   toast.toast('请选择街道')
+    //   return false
+    // }
     // 验证详细地址
     if (!self.data.addressAddress) {
       toast.toast('请填写详细地址')
@@ -297,16 +304,16 @@ Page({
     }
     let data = {
       addressid: self.data.id,
-      areaid: self.data.addressAreaid,
+      // areaid: self.data.addressAreaid,
       Address: self.data.addressAddress,
       Username: self.data.addressUsername,
       Phone: self.data.addressPhone,
       Longitude: self.data.gps.longitude,
       Latitude: self.data.gps.latitude,
-      mapaddress: self.data.gpsAddress,
+      mapaddress: self.data.mapaddress,
       maptype: 'TX',
     }
-    request.http('system/myuser.do?method=saveAddress', data, 'POST').then(result => {
+    request.http('system/myuser.do?method=saveAddress', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         toast.toast(res.message)
@@ -332,7 +339,7 @@ Page({
      success (res) {
        // 确认按钮执行
        if (res.confirm) {
-         request.http('system/myuser.do?method=delAddress', data, 'POST').then(result => {
+         request.http('system/myuser.do?method=delAddress', data).then(result => {
             let res = result.data
             if (res.flag === 1) {
               wx.navigateBack()

@@ -3,14 +3,6 @@ const app = getApp()
 const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
 
-// "pages/scan/scan",
-//     "pages/scan/manual/manual",
-//     "pages/scan/cart/cart",
-//     "pages/scan/editorOrder/editorOrder",
-//     "pages/scan/orderList/orderList",
-//     "pages/scan/orderDetail/orderDetail",
-//     "pages/scan/bar/bar",
-
 Page({
 
   /**
@@ -119,7 +111,7 @@ Page({
       Longitude: self.data.longitude,
       Latitude: self.data.latitude,
     }
-    request.http('invest/microFlow.do?method=listDeptInfo', data, 'POST').then(result => {
+    request.http('invest/microFlow.do?method=listDeptInfo', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         if (!res.data.length) {
@@ -164,7 +156,7 @@ Page({
     let data = {
       deptcode: self.data.scanShopInfo.deptcode
     }
-    request.http('invest/microFlow.do?method=getFlowno', data, 'POST').then(result => {
+    request.http('invest/microFlow.do?method=getFlowno', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         wx.navigateTo({

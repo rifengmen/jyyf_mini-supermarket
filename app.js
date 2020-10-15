@@ -32,9 +32,9 @@ App({
     defaultOpenid: "WX19000101000000000",
     // baseUrl
     // baseUrl: 'http://192.168.29.118:8089/eshop/',
-    // baseUrl: 'https://www.91jyrj.com/eshop/',
+    baseUrl: 'https://www.91jyrj.com/eshop/',
     // baseUrl: 'http://192.168.1.22:8089/eshop/',
-    baseUrl: 'http://192.168.1.102:8089/eshop/',
+    // baseUrl: 'http://192.168.1.103:8089/eshop/',
     // baseUrl: 'https://www.jwkgou.com:8443/simple-eshop/',
     // openid
     openid: '',
@@ -79,6 +79,7 @@ App({
 
 
 
+    // 金威
     // 商家code
     shopcode: '',
     // 商家图标
@@ -88,7 +89,9 @@ App({
     // 联系我们
     webUrl: 'https://www.91jyrj.com/eshop/upload/text/front/lianxinus.html',
     // app标题
-    apptitle: '嘉元o2o'
+    apptitle: '嘉元o2o',
+    // 扫码购类型，0：共用线上购物车；1：本地独立购物车
+    scanType: 0,
   },
 
   // 是否授权

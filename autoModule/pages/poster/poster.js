@@ -82,7 +82,7 @@ Page({
     let data = {
       Deptcode: self.data.Deptcode
     }
-    request.http('info/poster.do?method=listdtlForWX', data, 'POST').then(result => {
+    request.http('info/poster.do?method=listdtlForWX', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         if (res.data.length) {

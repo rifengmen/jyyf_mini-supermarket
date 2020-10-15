@@ -1,5 +1,6 @@
 // component/getTickBtn/getTickBtn.js
 require('../../app.js')
+const app = getApp()
 const request = require('../../utils/request.js')
 const toast = require('../../utils/toast.js')
 
@@ -33,7 +34,7 @@ Component({
       let data = {
         tickid: tickid,
       }
-      request.http('mem/member.do?method=panicCoupon', data, 'POST').then(result => {
+      request.http('mem/member.do?method=panicCoupon', data).then(result => {
         let res = result.data
         toast.toast(res.message)
       }).catch(error => {

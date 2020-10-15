@@ -26,6 +26,8 @@ Page({
     tickNum: 0,
     // 积分
     score: '',
+    // 扫码购类型，0：共用线上购物车；1：本地独立购物车
+    scanType: app.globalData.scanType,
   },
 
   /**
@@ -137,7 +139,7 @@ Page({
       // 团秒标志，0：否；1：是 ；2：小程序自动登录
       tmFlag: 2
     }
-    request.http('system/customlogin.do?method=login', data, 'POST').then(result => {
+    request.http('system/customlogin.do?method=login', data).then(result => {
       let res = result.data
       if(res.flag === 1){
         // cookie
@@ -220,7 +222,7 @@ Page({
   getTickNum () {
     let self = this
     let data = {}
-    request.http('mem/member.do?method=listCoupon', data, 'POST').then(result => {
+    request.http('mem/member.do?method=listCoupon', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -236,7 +238,7 @@ Page({
   getCardInfo () {
     let self = this
     let data = {}
-    request.http('mem/card.do?method=getMyCardInfo', data, 'POST').then(result => {
+    request.http('mem/card.do?method=getMyCardInfo', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -255,7 +257,7 @@ Page({
       memcode: app.globalData.memcode,
       startdate: utils.formatTime(new Date())
     }
-    request.http('mem/card.do?method=listScoreDtl', data, 'POST').then(result => {
+    request.http('mem/card.do?method=listScoreDtl', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -271,17 +273,22 @@ Page({
   getCartCount () {
     let self = this
     let data = {}
-    request.http('bill/shoppingcar.do?method=getCarProductCount', data, 'POST').then(result => {
+    request.http('bill/shoppingcar.do?method=getCarProductCount', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let scanType = app.globalData.scanType
+        let index = 3
+        // if (scanType) {
+        //   index = 2
+        // }
         if (res.data.data) {
           wx.setTabBarBadge({
-            index: 2,
+            index: index,
             text: (res.data.data).toString()
           })
         } else {
           wx.removeTabBarBadge({
-            index: 2
+            index: index
           })
         }
       } else {

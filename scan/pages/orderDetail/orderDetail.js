@@ -88,7 +88,7 @@ Page({
       flowno: self.data.flowno,
       deptcode: self.data.deptcode
     }
-    request.http('invest/microFlow.do?method=listMicroFlowDtl', data, 'POST').then(result => {
+    request.http('invest/microFlow.do?method=listMicroFlowDtl', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

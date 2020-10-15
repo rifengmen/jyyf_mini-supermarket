@@ -1,7 +1,7 @@
 /* 扫码购首页样式 start */
 .scan_cont {
   width: 100%;
-  height: calc(100% - 24rpx);
+  height: calc(100vh - 24rpx);
   padding-top: 24rpx;
 }
 .step {
@@ -27,10 +27,6 @@
   width: 100%;
   height: 100%;
 }
-.step .picker {
-  /*width: 100%;*/
-  /*height: 100%;*/
-}
 .step .step_tit {
   width: 100%;
   height: 70rpx;
@@ -47,9 +43,12 @@
 }
 .scan {
   width:calc(100% - 48rpx);
-  height: 536rpx;
+  height: calc(100% - 548rpx);
   margin: 0 auto;
-  padding-top: 80rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-flow: column;
 }
 .scan .scancart_btn {
   width: 276rpx;
@@ -73,7 +72,7 @@
 .scan .scan_nav {
   width: calc(100% - 48rpx);
   height: 200rpx;
-  margin: 20rpx auto;
+  margin: 0 auto;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -243,6 +242,40 @@
   height: 100%;
 }
 /* 手动输入条形码样式 end */
+/* 购物袋 start */
+.main {
+  width: 100%;
+  height: calc(100vh - 160rpx - 48rpx);
+  padding: 24rpx 0;
+}
+.goods_cont {
+  max-height: calc(100vh - 160rpx - 48rpx - 40rpx);
+}
+.goods {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.goods radio {
+  width: 80rpx;
+}
+.btn_cont {
+  width: 100%;
+  height: 160rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn_cont .btn {
+  width: calc(100% - 80rpx);
+  height: 80rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 购物袋 end */
 /* 结算页样式 start */
 .order_section {
   width: calc(100% - 48rpx);

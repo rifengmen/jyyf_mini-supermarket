@@ -130,7 +130,7 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('system/prize.do?method=listPrizeLog', data, 'POST').then(result => {
+    request.http('system/prize.do?method=listPrizeLog', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let lotteryList = self.data.lotteryList

@@ -1,8 +1,10 @@
 <!--component/scanDialog/scanDialog.wxml-->
-<view class="goodsInfo" catchtouchmove="ture">
-  <view class="goodsInfo_cont bgffffff border_r20">
+<view class="goodsInfo" catchtouchmove="ture" xmlns:wx="http://www.w3.org/1999/xhtml">
+  <view class="goodsInfo_cont bgffffff border_r20" wx:if="{{scanType}}">
     <view class="goodsInfo_name goods_section font32">{{goodsInfo.productName}}</view>
     <view class="goods_section">{{goodsInfo.barcode}}</view>
+    <view class="goods_section" wx:if="{{item.scalageFlag}}">购买数量   ×1</view>
+    <view class="goods_section" wx:else>购买数量   ×{{goodsInfo.quantity}}</view>
     <view class="goods_section font32 font_blod colorfa6400">￥{{goodsInfo.actualSaleMoney}}</view>
     <del class="goods_section del font26 color999999" wx:if="{{goodsInfo.actualSaleMoney !== goodsInfo.saleMoney}}">
       ￥{{goodsInfo.saleMoney}}
@@ -12,4 +14,71 @@
       <view class="btn colorffffff bg71d793 border_a71d793 border_r500 tc" bindtap="confirm">确认</view>
     </view>
   </view>
+  <view class="goodsInfo_cont bgffffff border_r20" wx:else>
+    <view class="goodsInfo_name goods_section font32">{{goodsInfo.Name}}</view>
+    <view class="goods_section">{{goodsInfo.inputbarcode}}</view>
+    <block wx:if="{{goodsInfo.scaleflag}}">
+      <view class="goods_section">库存：{{goodsInfo.deptstock}}斤</view>
+      <view class="goods_section">购买数量：{{goodsInfo.saleamount*2}}斤</view>
+      <view class="goods_section">总价：{{goodsInfo.actualmoney}}元</view>
+      <view class="goods_section font32 font_blod colorfa6400">￥{{goodsInfo.preferential/2}}元/斤</view>
+      <del class="goods_section del font26 color999999" wx:if="{{goodsInfo.preferential !== goodsInfo.originalcost}}">￥{{goodsInfo.originalcost/2}}元/斤</del>
+    </block>
+    <block wx:else>
+      <view class="goods_section">库存：{{goodsInfo.deptstock}}个</view>
+      <view class="goods_section">购买数量：1个</view>
+      <view class="goods_section font32 font_blod colorfa6400">￥{{goodsInfo.preferential}}</view>
+      <del class="goods_section del font26 color999999" wx:if="{{goodsInfo.preferential !== goodsInfo.originalcost}}">￥{{goodsInfo.originalcost}}</del>
+    </block>
+    <view class="btn_cont">
+      <view class="btn color999999 border_a979797 border_r500 tc" bindtap="addBack">加入返回</view>
+      <view class="btn colorffffff bg71d793 border_a71d793 border_r500 tc" bindtap="addGoOn">加入继续</view>
+    </view>
+    <view class="closed font50 border_a979797 border_r500" bindtap="cancel">×</view>
+  </view>
 </view>
+<!--EvaluationGC: 0-->
+<!--EvaluationTC: 0-->
+<!--Graspflag: 0-->
+<!--Name: "娃哈哈营养果汁快线原味500ml"-->
+<!--actualmoney: 3.9-->
+<!--alwaysbuyflag: 0-->
+<!--barcode: "6902083886455"-->
+<!--baseunit: "瓶"-->
+<!--canbuyflag: 1-->
+<!--cumulativesales: 2055-->
+<!--cxflag: 0-->
+<!--delivermoney: 0-->
+<!--deptstock: 85-->
+<!--gdscode: "0200077000"-->
+<!--gdscodebulk: 0-->
+<!--gdsspec: ""-->
+<!--image: "upload/goods/63586/1.jpg"-->
+<!--images: [{…}]-->
+<!--inlastday: "2016-04-15 10:42:58.413"-->
+<!--inputbarcode: "6902083886455"-->
+<!--isstripercode: 1-->
+<!--notinflag: null-->
+<!--oddprice: 0-->
+<!--offmemspecialprice: 3.9-->
+<!--offspecialprice: 3.9-->
+<!--originalcost: 3.9-->
+<!--packingnumber: 1-->
+<!--pfcxisjf: null-->
+<!--pfcxname: null-->
+<!--pfcxno: null-->
+<!--pfcxpieceprice: null-->
+<!--pfcxtype: null-->
+<!--pfpieceprice: null-->
+<!--pfpointbase: 0-->
+<!--placeoforigin: "杭州"-->
+<!--preferential: 3.9-->
+<!--pricemode: 0-->
+<!--safetystock: 0-->
+<!--saleamount: 1-->
+<!--saleprice: 3.9-->
+<!--scaleflag: 0-->
+<!--sendstock: null-->
+<!--showstockout: 0-->
+<!--truememberflag: 1-->
+<!--validityperiod: 0-->

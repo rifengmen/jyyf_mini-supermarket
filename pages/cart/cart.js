@@ -140,13 +140,13 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('bill/shoppingcar.do?method=listMyCar', data, 'POST').then(result => {
+    request.http('bill/shoppingcar.do?method=listMyCar', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let cartList = res.data.carList
         if (cartList.length) {
-          cartList.forEach(val => {
-            val.flag = false
+          cartList.forEach(item => {
+            item.check = false
           })
           self.setData({
             SMGflag: res.data.SMGflag
@@ -178,16 +178,16 @@ Page({
     let allFlag = self.data.allFlag
     let cartList = self.data.cartList
     if (allFlag) {
-      cartList.forEach(val => {
-        val.flag = false
+      cartList.forEach(item => {
+        item.check = false
       })
       self.setData({
         allFlag: !allFlag,
         cartList: cartList,
       })
     } else {
-      cartList.forEach(val => {
-        val.flag = true
+      cartList.forEach(item => {
+        item.check = true
       })
       self.setData({
         allFlag: !allFlag,
@@ -197,16 +197,16 @@ Page({
   },
 
   // 选中商品/不选商品
-  setFlag(e) {
+  setCheck(e) {
     let self = this
     let index = e.currentTarget.dataset.index
     let cartList = self.data.cartList
-    let flag = cartList[index].flag
+    let check = cartList[index].check
     let allFlag = self.data.allFlag
     let _allFlag = true
-    cartList[index].flag = !flag
-    cartList.forEach(val => {
-      if (!val.flag) {
+    cartList[index].check = !check
+    cartList.forEach(item => {
+      if (!item.check) {
         _allFlag = false
       }
     })
@@ -231,11 +231,11 @@ Page({
     let self = this
     let cartList = self.data.cartList
     let delList = []
-    cartList.forEach(val => {
-      if (val.flag) {
+    cartList.forEach(item => {
+      if (item.check) {
         let del = {
-          gdscode: val.Gdscode,
-          Xuhao: val.xuhao,
+          gdscode: item.Gdscode,
+          Xuhao: item.xuhao,
         }
         delList.push(del)
       }
@@ -300,7 +300,6 @@ Page({
     self.updateIntoCar(data)
     // 关闭弹窗
     self.dialogClose()
-    // {"Gdscode":"2000013200","Count":5,"Xuhao":9}
   },
 
   // 设置弹窗斤
@@ -406,12 +405,12 @@ Page({
   updateIntoCar(data) {
     let self = this
     let cartList = self.data.cartList
-    cartList.forEach(val => {
-      if (val.Gdscode === data.Gdscode) {
-        val.buyAMT = data.Count
+    cartList.forEach(item => {
+      if (item.Gdscode === data.Gdscode) {
+        item.buyAMT = data.Count
       }
     })
-    request.http('bill/shoppingcar.do?method=updateIntoCar', data, 'POST').then(result => {
+    request.http('bill/shoppingcar.do?method=updateIntoCar', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let countData = {
@@ -450,7 +449,7 @@ Page({
         getFlag: true
       })
     }
-    request.http('bill/shoppingcar.do?method=delCars', data, 'POST').then(result => {
+    request.http('bill/shoppingcar.do?method=delCars', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let countData = {
@@ -493,20 +492,25 @@ Page({
   getCartCount() {
     let self = this
     let data = {}
-    request.http('bill/shoppingcar.do?method=getCarProductCount', data, 'POST').then(result => {
+    request.http('bill/shoppingcar.do?method=getCarProductCount', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let scanType = app.globalData.scanType
+        let index = 3
+        // if (scanType) {
+        //   index = 2
+        // }
         self.setData({
           cartCount: res.data.data
         })
         if (res.data.data) {
           wx.setTabBarBadge({
-            index: 2,
+            index: index,
             text: (res.data.data).toString()
           })
         } else {
           wx.removeTabBarBadge({
-            index: 2
+            index: index
           })
         }
       } else {
@@ -522,7 +526,7 @@ Page({
     let self = this
     if (self.data.SMGflag) {
       wx.navigateTo({
-        url: '/pages/shopBag/shopBag',
+        url: '/scan/pages/shopBag/shopBag',
       })
     } else {
       wx.navigateTo({

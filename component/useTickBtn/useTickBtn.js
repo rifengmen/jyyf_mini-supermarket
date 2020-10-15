@@ -1,5 +1,6 @@
 // component/useTickBtn/useTickBtn.js
 require('../../app.js')
+const app = getApp()
 const request = require('../../utils/request.js')
 const toast = require('../../utils/toast.js')
 
@@ -49,7 +50,7 @@ Component({
         tickgdscode: tick.tickgdscode,
         noPayMoney: self.data.Totalmoney,
       }
-      request.http('mem/member.do?method=payTicketCheck', data, 'POST').then(result => {
+      request.http('mem/member.do?method=payTicketCheck', data).then(result => {
         let res = result.data
         if (res.flag === 1) {
           if (tick.tickettype === 1) {
@@ -57,7 +58,7 @@ Component({
           } else if (tick.tickettype === 2) {
             tick.paymoney = res.data.DicountMoney
           }
-          getApp().globalData.tick = tick
+          app.globalData.tick = tick
           wx.navigateBack()
         } else {
           toast.toast(res.message)

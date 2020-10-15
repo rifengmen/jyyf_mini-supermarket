@@ -96,7 +96,7 @@ Page({
   getVerifyCodeGraphic () {
     let self = this
     let data = {}
-    request.http('system/customlogin.do?method=getVerifyCodeGraphic', data, 'POST').then(result => {
+    request.http('system/customlogin.do?method=getVerifyCodeGraphic', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let img = res.data.GraphicFileName
@@ -189,7 +189,7 @@ Page({
       mobile: usercode,
       mobilecode: imgcode
     }
-    request.http('system/customlogin.do?method=getCheckCode180126', data, 'POST').then(result => {
+    request.http('system/customlogin.do?method=getCheckCode180126', data).then(result => {
       toast.toast(result.data.message)
     }).catch(error => {
       toast.toast(error.error)
@@ -215,7 +215,7 @@ Page({
       mobile: mobile,
       checkcode: code
     }
-    request.http('system/customlogin.do?method=perfectInfoForWX', data, 'POST').then(result => {
+    request.http('system/customlogin.do?method=perfectInfoForWX', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         toast.toast('注册成功!', 'userInfo')
@@ -237,7 +237,7 @@ Page({
       // 团秒标志，0：否；1：是 ；2：小程序自动登录
       tmFlag: 2
     }
-    request.http('system/customlogin.do?method=login', data, 'POST').then(result => {
+    request.http('system/customlogin.do?method=login', data).then(result => {
       let res = result.data
       if(res.flag === 1){
         // cookie

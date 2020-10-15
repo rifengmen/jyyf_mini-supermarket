@@ -1,4 +1,4 @@
-// pages/cart/cart.js
+// pages/cart2/cart2.js
 const app = getApp()
 const request = require("../../utils/request")
 const toast = require("../../utils/toast")
@@ -140,13 +140,13 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('bill/shoppingcar.do?method=listMyCar', data, 'POST').then(result => {
+    request.http('bill/shoppingcar.do?method=listMyCar', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let cartList = res.data.carList
         if (cartList.length) {
-          cartList.forEach(val => {
-            val.flag = false
+          cartList.forEach(item => {
+            item.check = false
           })
           self.setData({
             SMGflag: res.data.SMGflag
@@ -173,21 +173,21 @@ Page({
   },
 
   // 全选/不选
-  radioChange () {
+  radioChange() {
     let self = this
     let allFlag = self.data.allFlag
     let cartList = self.data.cartList
     if (allFlag) {
-      cartList.forEach(val => {
-        val.flag = false
+      cartList.forEach(item => {
+        item.check = false
       })
       self.setData({
         allFlag: !allFlag,
         cartList: cartList,
       })
     } else {
-      cartList.forEach(val => {
-        val.flag = true
+      cartList.forEach(item => {
+        item.check = true
       })
       self.setData({
         allFlag: !allFlag,
@@ -197,16 +197,16 @@ Page({
   },
 
   // 选中商品/不选商品
-  setFlag (e) {
+  setCheck(e) {
     let self = this
     let index = e.currentTarget.dataset.index
     let cartList = self.data.cartList
-    let flag = cartList[index].flag
+    let check = cartList[index].check
     let allFlag = self.data.allFlag
     let _allFlag = true
-    cartList[index].flag = !flag
-    cartList.forEach(val => {
-      if (!val.flag) {
+    cartList[index].check = !check
+    cartList.forEach(item => {
+      if (!item.check) {
         _allFlag = false
       }
     })
@@ -218,7 +218,7 @@ Page({
   },
 
   // 编辑购物车
-  editorCartList () {
+  editorCartList() {
     let self = this
     let editorFlag = self.data.editorFlag
     self.setData({
@@ -227,15 +227,15 @@ Page({
   },
 
   // 删除按钮
-  deleteBtn () {
+  deleteBtn() {
     let self = this
     let cartList = self.data.cartList
     let delList = []
-    cartList.forEach(val => {
-      if (val.flag) {
+    cartList.forEach(item => {
+      if (item.check) {
         let del = {
-          gdscode: val.Gdscode,
-          Xuhao: val.xuhao,
+          gdscode: item.Gdscode,
+          Xuhao: item.xuhao,
         }
         delList.push(del)
       }
@@ -249,7 +249,7 @@ Page({
     wx.showModal({
       title: '提示',
       content: '您确定要删除这些商品吗？',
-      success (res) {
+      success(res) {
         // 确认按钮执行
         if (res.confirm) {
           // 删除商品的方法
@@ -260,7 +260,7 @@ Page({
   },
 
   // 购物车加的方法
-  addCart (e) {
+  addCart(e) {
     let self = this
     let index = e.currentTarget.dataset.index
     // 购物车数量操作
@@ -268,7 +268,7 @@ Page({
   },
 
   // 购物车减得方法
-  subtrackCart (e) {
+  subtrackCart(e) {
     let self = this
     let index = e.currentTarget.dataset.index
     // 购物车数量操作
@@ -276,7 +276,7 @@ Page({
   },
 
   // 弹窗关闭
-  dialogClose () {
+  dialogClose() {
     let self = this
     self.setData({
       dialogFlag: false,
@@ -288,7 +288,7 @@ Page({
   },
 
   // 弹窗确认
-  dialogConfirm () {
+  dialogConfirm() {
     let self = this
     let goods = self.data.goods
     let data = {
@@ -300,11 +300,10 @@ Page({
     self.updateIntoCar(data)
     // 关闭弹窗
     self.dialogClose()
-    // {"Gdscode":"2000013200","Count":5,"Xuhao":9}
   },
 
   // 设置弹窗斤
-  setDialogJin (e) {
+  setDialogJin(e) {
     let self = this
     self.setData({
       dialogJin: e.detail.value
@@ -316,7 +315,7 @@ Page({
   },
 
   // 设置弹窗两
-  setDialogLiang (e) {
+  setDialogLiang(e) {
     let self = this
     self.setData({
       dialogLiang: e.detail.value
@@ -328,15 +327,15 @@ Page({
   },
 
   // 设置弹窗重量
-  setDialogCount () {
+  setDialogCount() {
     let self = this
     self.setData({
-      dialogCount: (self.data.dialogJin/2 + self.data.dialogLiang/20).toFixed(2)
+      dialogCount: (self.data.dialogJin / 2 + self.data.dialogLiang / 20).toFixed(2)
     })
   },
 
   // 设置弹窗金额
-  setDialogTotalMoney () {
+  setDialogTotalMoney() {
     let self = this
     self.setData({
       dialogTotalMoney: (self.data.dialogPrice * self.data.dialogCount).toFixed(2)
@@ -344,12 +343,12 @@ Page({
   },
 
   // 购物车数量操作
-  editorCartCount (method, index) {
+  editorCartCount(method, index) {
     let self = this
     let cartList = self.data.cartList
     // 判断是否为标签商品
     if (cartList[index].striperbarcodeflag === 1) {
-        toast.toast('称签商品不允许修改数量')
+      toast.toast('称签商品不允许修改数量')
     } else {
       let Count = cartList[index].buyAMT
       let Xuhao = cartList[index].xuhao
@@ -365,7 +364,7 @@ Page({
           wx.showModal({
             title: '提示',
             content: '您确定要删除此商品吗？',
-            success (res) {
+            success(res) {
               // 确认按钮执行
               if (res.confirm) {
                 // 删除商品的方法
@@ -385,8 +384,8 @@ Page({
           dialogFlag: true,
           dialogTitle: goods.Pname,
           dialogPrice: goods.actualprice,
-          dialogJin: Math.floor(goods.buyAMT/0.5),
-          dialogLiang: Math.floor(goods.buyAMT%0.5 * 20),
+          dialogJin: Math.floor(goods.buyAMT / 0.5),
+          dialogLiang: Math.floor(goods.buyAMT % 0.5 * 20),
           dialogCount: parseFloat(goods.buyAMT).toFixed(2),
           dialogTotalMoney: (goods.buyAMT * goods.actualprice).toFixed(2),
         })
@@ -403,15 +402,15 @@ Page({
   },
 
   // 修改购物车商品数量的方法
-  updateIntoCar (data) {
+  updateIntoCar(data) {
     let self = this
     let cartList = self.data.cartList
-    cartList.forEach(val => {
-      if (val.Gdscode === data.Gdscode) {
-        val.buyAMT = data.Count
+    cartList.forEach(item => {
+      if (item.Gdscode === data.Gdscode) {
+        item.buyAMT = data.Count
       }
     })
-    request.http('bill/shoppingcar.do?method=updateIntoCar', data, 'POST').then(result => {
+    request.http('bill/shoppingcar.do?method=updateIntoCar', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let countData = {
@@ -431,7 +430,7 @@ Page({
   },
 
   // 删除商品的方法
-  delCars (delList, flag) {
+  delCars(delList, flag) {
     let self = this
     let cartList = self.data.cartList
     // 判断是删除按钮调用还是修改数量调用，flag：有值就是修改数量调用，否则为删除按钮
@@ -444,7 +443,13 @@ Page({
     let data = {
       gdss: delList
     }
-    request.http('bill/shoppingcar.do?method=delCars', data, 'POST').then(result => {
+    if (!cartList.length) {
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
+    }
+    request.http('bill/shoppingcar.do?method=delCars', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let countData = {
@@ -487,7 +492,7 @@ Page({
   getCartCount () {
     let self = this
     let data = {}
-    request.http('bill/shoppingcar.do?method=getCarProductCount', data, 'POST').then(result => {
+    request.http('bill/shoppingcar.do?method=getCarProductCount', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -506,7 +511,7 @@ Page({
     let self = this
     if (self.data.SMGflag) {
       wx.navigateTo({
-        url: '/pages/shopBag/shopBag',
+        url: '/scan/pages/shopBag/shopBag',
       })
     } else {
       wx.navigateTo({

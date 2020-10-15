@@ -14,6 +14,7 @@
   width: 540rpx;
   padding: 40rpx;
   margin-top: -40%;
+  position: relative;
 }
 .goodsInfo_cont .goods_section {
   width: 100%;
@@ -24,12 +25,11 @@
 }
 .goodsInfo_cont .del {
   display: block;
-  margin-bottom: 80rpx;
 }
 .btn_cont {
   width: calc(100% - 80rpx);
   height: 50rpx;
-  margin: 0 auto;
+  margin: 60rpx auto 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -38,4 +38,14 @@
   width: 173rpx;
   height: 48rpx;
   line-height: 48rpx;
+}
+.closed {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  width: 42rpx;
+  height: 42rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -107,7 +107,7 @@ Page({
     let data ={
       memName: self.data.memname
     }
-    request.http('system/customlogin.do?method=modifyname', data, 'POST').then(result => {
+    request.http('system/customlogin.do?method=modifyname', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         app.globalData.memname = self.data.memname + '(' + self.data.vip + ')'

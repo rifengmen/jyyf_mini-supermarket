@@ -90,7 +90,7 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('system/myuser.do?method=listUserAdressForDept', data, 'POST').then(result => {
+    request.http('system/myuser.do?method=listUserAdressForDept', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

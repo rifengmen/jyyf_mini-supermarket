@@ -33,6 +33,8 @@ Page({
     recommendList: [],
     // 专区列表
     hotList: [],
+    // 抢购商品列表
+    goodsList: [],
     // 弹框组件显示开关
     dialogFlag: false,
     // 弹窗title
@@ -75,6 +77,8 @@ Page({
     self.getTheme()
     // 获取专区列表
     self.getHotList()
+    // 获取抢购商品列表
+    self.getPanicBuyGoodsList()
     // 更新购物车数量
     self.getCartCount()
   },
@@ -99,7 +103,7 @@ Page({
     self.setData({
       bannerFlag: true,
     })
-     // 更新购物车数量
+    // 更新购物车数量
     self.getCartCount()
   },
 
@@ -155,7 +159,7 @@ Page({
       // 卡冲值参数为1，其它是0
       cardflag: 0
     }
-    request.http('system/slide.do?method=listShopHomeSlide', data, 'POST').then(result => {
+    request.http('system/slide.do?method=listShopHomeSlide', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -197,7 +201,7 @@ Page({
     let data = {
       version: end
     }
-    request.http('system/customlogin.do?method=getModulePictureList', data, 'POST').then(result => {
+    request.http('system/customlogin.do?method=getModulePictureList', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -392,7 +396,7 @@ Page({
     let data = {
       Listtype: 2
     }
-    request.http('info/InformationController.do?method=listNotice', data, 'POST').then(result => {
+    request.http('info/InformationController.do?method=listNotice', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -413,7 +417,7 @@ Page({
       // 卡冲值参数为1，其它是0
       cardflag: 0
     }
-    request.http('system/slide.do?method=listShopHomeSlide1', data, 'POST').then(result => {
+    request.http('system/slide.do?method=listShopHomeSlide1', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -431,7 +435,7 @@ Page({
   getTheme () {
     let self = this
     let data = {}
-    request.http('info/Category.do?method=getTheme', data, 'POST').then(result => {
+    request.http('info/Category.do?method=getTheme', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         if (res.data.length) {
@@ -451,7 +455,7 @@ Page({
   getHotList () {
     let self = this
     let data = {}
-    request.http('info/Category.do?method=listHot180414', data, 'POST').then(result => {
+    request.http('info/Category.do?method=listHot180414', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -465,6 +469,38 @@ Page({
     })
   },
 
+  // 获取抢购商品列表
+  getPanicBuyGoodsList () {
+    let self = this
+    let data = {}
+    let url = 'info/panicGdscode.do?method=listPanicBuyGdscode'
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
+    // 设置请求开关
+    self.setData({
+      getFlag: false
+    })
+    request.http(url, data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          goodsList: res.data,
+        })
+      } else {
+        toast.toast(res.message)
+      }
+      wx.hideLoading()
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
   // 去banner详情
   toBannerDetail (e) {
     let self = this
@@ -472,7 +508,7 @@ Page({
     let data = {
       ImageID: id
     }
-    request.http('system/slide.do?method=getLinkForSlide', data, 'POST').then(result => {
+    request.http('system/slide.do?method=getLinkForSlide', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let linktype = res.data.linktype
@@ -531,7 +567,12 @@ Page({
     let self = this
     // 获取添加购物车组件
     let addcart = self.selectComponent('#addCart')
+    let panicBuyaddCart = self.selectComponent('#panicBuyaddCart')
     let goods = e.currentTarget.dataset.goods
+    let from = e.currentTarget.dataset.from
+    if (from === 'panicBuy') {
+      goods.Highpprice = goods.panicprice
+    }
     // 判断是否散称
     if (goods.scaleflag) {
       self.setData({
@@ -541,8 +582,13 @@ Page({
         goods: goods,
       })
     } else {
-      // 调用子组件，传入商品信息添加购物车
-      addcart.addCart(goods)
+      if (from === 'panicBuy') { // 抢购添加
+        // 调用子组件，传入商品信息添加购物车
+        panicBuyaddCart.addCart(goods)
+      } else { // 普通添加
+        // 调用子组件，传入商品信息添加购物车
+        addcart.addCart(goods)
+      }
     }
   },
 
@@ -614,17 +660,22 @@ Page({
   getCartCount () {
     let self = this
     let data = {}
-    request.http('bill/shoppingcar.do?method=getCarProductCount', data, 'POST').then(result => {
+    request.http('bill/shoppingcar.do?method=getCarProductCount', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let scanType = app.globalData.scanType
+        let index = 3
+        // if (scanType) {
+        //   index = 2
+        // }
         if (res.data.data) {
           wx.setTabBarBadge({
-            index: 2,
+            index: index,
             text: (res.data.data).toString()
           })
         } else {
           wx.removeTabBarBadge({
-            index: 2
+            index: index
           })
         }
       } else {

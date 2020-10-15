@@ -391,7 +391,7 @@ Page({
   getCartCount () {
     let self = this
     let data = {}
-    request.http('bill/shoppingcar.do?method=getCarProductCount', data, 'POST').then(result => {
+    request.http('bill/shoppingcar.do?method=getCarProductCount', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

@@ -125,7 +125,7 @@ Page({
     self.setData({
       flag: false
     })
-    request.http('bill/evaluation.do?method=addProductEvaluation', data, 'POST').then(result => {
+    request.http('bill/evaluation.do?method=addProductEvaluation', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         wx.navigateBack()

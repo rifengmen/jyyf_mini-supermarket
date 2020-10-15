@@ -102,7 +102,7 @@ Page({
       memcode: app.globalData.memcode,
       startdate: utils.formatTime(new Date()),
     }
-    request.http('mem/card.do?method=listScoreDtl', data, 'POST').then(result => {
+    request.http('mem/card.do?method=listScoreDtl', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -120,7 +120,7 @@ Page({
   getPrizeList () {
     let self = this
     let data = {}
-    request.http('system/prize.do?method=getPrizeList', data, 'POST').then(result => {
+    request.http('system/prize.do?method=getPrizeList', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         if (res.data.prizeList.length) {
@@ -164,7 +164,7 @@ Page({
     self.setData({
       getFlag: false,
     })
-    request.http('system/prize.do?method=centPrize', data, 'POST').then(result => {
+    request.http('system/prize.do?method=centPrize', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
