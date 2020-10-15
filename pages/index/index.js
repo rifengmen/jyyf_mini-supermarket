@@ -665,9 +665,9 @@ Page({
       if (res.flag === 1) {
         let scanType = app.globalData.scanType
         let index = 3
-        // if (scanType) {
-        //   index = 2
-        // }
+        if (scanType) {
+          index = 2
+        }
         if (res.data.data) {
           wx.setTabBarBadge({
             index: index,

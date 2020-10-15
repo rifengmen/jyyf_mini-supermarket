@@ -157,8 +157,26 @@ Page({
     })
   },
 
+  // 加入返回
+  addBack () {
+    let self = this
+    // 添加商品到购物车
+    self.addScancart()
+    // 关闭购物车弹窗
+    self.cancel()
+  },
+
+  // 加入继续
+  addGoOn () {
+    let self = this
+    // 添加商品到购物车
+    self.addScancart('goOn')
+    // 关闭购物车弹窗
+    self.cancel()
+  },
+
   // 添加商品到购物车
-  addScancart () {
+  addScancart (e) {
     let self = this
     let scanCart = app.globalData.scanCart
     scanCart.push(self.data.goodsInfo)
@@ -168,8 +186,10 @@ Page({
     })
     // 计算商品总价
     self.setTotalmoney()
-    // 关闭购物车弹窗
-    self.cancel()
+    if (e) {
+      // 扫一扫
+      self.scangoodscode()
+    }
   },
 
   // 关闭购物车弹窗

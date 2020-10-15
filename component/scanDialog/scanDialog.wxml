@@ -10,9 +10,10 @@
       ￥{{goodsInfo.saleMoney}}
     </del>
     <view class="btn_cont">
-      <view class="btn color999999 border_a979797 border_r500 tc" bindtap="cancel">取消</view>
-      <view class="btn colorffffff bg71d793 border_a71d793 border_r500 tc" bindtap="confirm">确认</view>
+      <view class="btn color999999 border_a979797 border_r500 tc" bindtap="addBack">加入返回</view>
+      <view class="btn colorffffff bg71d793 border_a71d793 border_r500 tc" bindtap="addGoOn">加入继续</view>
     </view>
+    <view class="closed font50 border_a979797 border_r500" bindtap="cancel">×</view>
   </view>
   <view class="goodsInfo_cont bgffffff border_r20" wx:else>
     <view class="goodsInfo_name goods_section font32">{{goodsInfo.Name}}</view>
@@ -37,48 +38,3 @@
     <view class="closed font50 border_a979797 border_r500" bindtap="cancel">×</view>
   </view>
 </view>
-<!--EvaluationGC: 0-->
-<!--EvaluationTC: 0-->
-<!--Graspflag: 0-->
-<!--Name: "娃哈哈营养果汁快线原味500ml"-->
-<!--actualmoney: 3.9-->
-<!--alwaysbuyflag: 0-->
-<!--barcode: "6902083886455"-->
-<!--baseunit: "瓶"-->
-<!--canbuyflag: 1-->
-<!--cumulativesales: 2055-->
-<!--cxflag: 0-->
-<!--delivermoney: 0-->
-<!--deptstock: 85-->
-<!--gdscode: "0200077000"-->
-<!--gdscodebulk: 0-->
-<!--gdsspec: ""-->
-<!--image: "upload/goods/63586/1.jpg"-->
-<!--images: [{…}]-->
-<!--inlastday: "2016-04-15 10:42:58.413"-->
-<!--inputbarcode: "6902083886455"-->
-<!--isstripercode: 1-->
-<!--notinflag: null-->
-<!--oddprice: 0-->
-<!--offmemspecialprice: 3.9-->
-<!--offspecialprice: 3.9-->
-<!--originalcost: 3.9-->
-<!--packingnumber: 1-->
-<!--pfcxisjf: null-->
-<!--pfcxname: null-->
-<!--pfcxno: null-->
-<!--pfcxpieceprice: null-->
-<!--pfcxtype: null-->
-<!--pfpieceprice: null-->
-<!--pfpointbase: 0-->
-<!--placeoforigin: "杭州"-->
-<!--preferential: 3.9-->
-<!--pricemode: 0-->
-<!--safetystock: 0-->
-<!--saleamount: 1-->
-<!--saleprice: 3.9-->
-<!--scaleflag: 0-->
-<!--sendstock: null-->
-<!--showstockout: 0-->
-<!--truememberflag: 1-->
-<!--validityperiod: 0-->
