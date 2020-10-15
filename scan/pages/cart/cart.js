@@ -101,6 +101,22 @@ Page({
   // 扫一扫
   scangoodscode () {
     let self = this
+    // 验证是否授权
+    if (!app.authorFlag()) {
+      toast.toast('请授权')
+      wx.navigateTo({
+        url: '/pages/author/author',
+      })
+      return false
+    }
+    // 验证是否绑定手机号码
+    if (!app.memcodeflag()) {
+      toast.toast('请绑定手机号码')
+      wx.switchTab({
+        url: '/pages/userInfo/userInfo',
+      })
+      return false
+    }
     wx.scanCode({
       success (res) {
         // 扫码后获取结果参数赋值给Input
