@@ -174,11 +174,11 @@ Page({
       // 更新页面默认按钮
       if (res.flag === 1) {
         let shopList = self.data.shopList
-        shopList.forEach((val, _index) => {
+        shopList.forEach((item, _index) => {
           if (_index === index) {
-            val.defaultflag = 1
+            item.defaultflag = 1
           } else {
-            val.defaultflag = 0
+            item.defaultflag = 0
           }
         })
         self.setData({

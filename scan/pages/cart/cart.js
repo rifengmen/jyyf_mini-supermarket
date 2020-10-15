@@ -204,9 +204,9 @@ Page({
   setTotalmoney () {
     let self = this
     let money = 0
-    self.data.scanCart.forEach((val, index) => {
+    self.data.scanCart.forEach((item, index) => {
       let _money
-      _money = parseFloat(val.actualSaleMoney)
+      _money = parseFloat(item.actualSaleMoney)
       money += _money
     })
     self.setData({
