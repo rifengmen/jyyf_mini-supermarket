@@ -19,7 +19,7 @@ Page({
       {name: '待取送', type: 2},
       {name: '待发货', type: 3},
       {name: '已完成', type: 9},
-      {name: '退款/售后', type: 20},
+      // {name: '退款/售后', type: 20},
     ],
     // 查询开始日期
     startdate: '',

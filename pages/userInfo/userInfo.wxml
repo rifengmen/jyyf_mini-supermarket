@@ -66,12 +66,12 @@
 				</view>
 				<view class="name font24">已完成</view>
 			</navigator>
-			<navigator class="item fl" hover-class="none" url="/pages/userInfo/orderList/orderList?orderType=9">
-				<view class="img">
-					<image src="/lib/images/orderType5.png"></image>
-				</view>
-				<view class="name font24">退款/售后</view>
-			</navigator>
+			<!--<navigator class="item fl" hover-class="none" url="/pages/userInfo/orderList/orderList?orderType=9">-->
+				<!--<view class="img">-->
+					<!--<image src="/lib/images/orderType5.png"></image>-->
+				<!--</view>-->
+				<!--<view class="name font24">退款/售后</view>-->
+			<!--</navigator>-->
 		</view>
 	</view>
 	<!-- 我的订单 end -->
