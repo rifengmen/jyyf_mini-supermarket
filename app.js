@@ -30,12 +30,6 @@ App({
   globalData: {
     // 游客openid
     defaultOpenid: "WX19000101000000000",
-    // baseUrl
-    // baseUrl: 'http://192.168.29.118:8089/eshop/',
-    baseUrl: 'https://www.91jyrj.com/eshop/',
-    // baseUrl: 'http://192.168.1.22:8089/eshop/',
-    // baseUrl: 'http://192.168.1.103:8089/eshop/',
-    // baseUrl: 'https://www.jwkgou.com:8443/simple-eshop/',
     // openid
     openid: '',
     // 会员头像
@@ -71,13 +65,18 @@ App({
     addressId: '',
     // 地址详情(编辑地址用)
     addressDetail: '',
-    // 扫码购
+    // 扫码购 1：本地独立购物车
     // 扫码购店铺
     scanShopInfo: '',
     // 扫码购购物车
     scanCart: [],
 
-
+    // baseUrl
+    // baseUrl: 'http://192.168.29.118:8089/eshop/',
+    baseUrl: 'https://www.91jyrj.com/eshop/',
+    // baseUrl: 'http://192.168.1.22:8089/eshop/',
+    // baseUrl: 'http://192.168.1.103:8089/eshop/',
+    // baseUrl: 'https://www.jwkgou.com:8443/simple-eshop/',
 
     // 金威
     // 商家code
