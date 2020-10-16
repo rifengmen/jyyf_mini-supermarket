@@ -199,7 +199,7 @@
   background:linear-gradient(180deg, #71d793 0%, #f9f9f9 100%);
 }
 .bgf68e74_linear {
-  background:linear-gradient(180deg, #f68e74 0%, #ffffff 100%);
+  background:linear-gradient(180deg, #f68e74 0%, #ffffff 110%);
 }
 .bgffb662_linear {
   background:linear-gradient(180deg, #ffb662 0%, #fa6400 100%);

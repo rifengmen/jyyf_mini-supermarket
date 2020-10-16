@@ -71,7 +71,7 @@
 }
 .goods_item1 .item_img {
   width: 100%;
-  height: 162rpx;
+  height: 215rpx;
   display: flex;
   justify-content: center;
   align-items: center;

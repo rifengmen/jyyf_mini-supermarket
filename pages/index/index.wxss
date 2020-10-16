@@ -248,7 +248,7 @@ swiper.notice_swiper {
 /* 限时抢购 start */
 .timeslimit {
   width: calc(100% - 48rpx);
-  margin: 0 auto;
+  margin: 0 auto 24rpx auto;
 }
 .timeslimit .tit {
   width: calc(100% - 48rpx);
@@ -268,7 +268,7 @@ swiper.notice_swiper {
   height: 100%;
 }
 .goods_list1 {
-  height: 340rpx;
+  height: 376rpx;
 }
 swiper.timeslimit_swiper {
   width: 100%;
