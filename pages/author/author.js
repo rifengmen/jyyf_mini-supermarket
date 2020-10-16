@@ -15,7 +15,11 @@ Page({
     // 商户名称
     apptitle: app.globalData.apptitle,
     // 商户logo
-    shoplogo: app.globalData.shoplogo
+    shoplogo: app.globalData.shoplogo,
+    // code
+    code: '',
+    // openid
+    openid: '',
   },
 
   /**
@@ -151,10 +155,69 @@ Page({
           openid: res.data.openid,
           hasUserInfo: true
         })
-        wx.navigateBack()
+        // 获取用户信息
+        self.login()
       } else {
         toast.toast(res.message)
       }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 获取用户信息
+  login () {
+    let self = this
+    let data = {
+      wxID: self.data.openid,
+      usercode: '',
+      password: '',
+      // 团秒标志，0：否；1：是 ；2：小程序自动登录
+      tmFlag: 2
+    }
+    request.http('system/customlogin.do?method=login', data).then(result => {
+      let res = result.data
+      if(res.flag === 1){
+        // cookie
+        let sessionId = result.header['Set-Cookie']
+        // 用户id
+        let userid = res.data.customerid
+        // 用户名称
+        let memname = res.data.memname
+        // 用户code
+        let memcode = res.data.memcode
+        //门店名称
+        let deptname = res.data.shopInfo.shopname
+        // 门店code
+        let deptcode = res.data.shopInfo.shopcode
+        // 用户身份标识，0：批发客户（app功能）；1：普通客户
+        let iscustomer = res.data.iscustomer
+        // 卡支付标志，1：开通；0：未开通；null：未知
+        let coflag = res.data.coflag
+        // 是否设置默认门店
+        let isdefaultdept = res.data.isdefaultdept
+        // 手机号码
+        let mobile = res.data.mobile
+        // 只允许普通客户登录小程序
+        if (iscustomer !== 1) {
+          toast.toast('当前帐号类型不正确,不可使用!')
+          return false
+        }
+        // 设session
+        if (sessionId) {
+          app.globalData.sessionId = sessionId
+        }
+        app.globalData.userid = userid
+        app.globalData.memname = memname
+        app.globalData.memcode = memcode
+        app.globalData.deptname = deptname
+        app.globalData.deptcode = deptcode
+        app.globalData.mobile = mobile
+        app.globalData.coflag = coflag
+      } else {
+        toast.toast(res.message)
+      }
+      wx.navigateBack()
     }).catch(error => {
       toast.toast(error.error)
     })

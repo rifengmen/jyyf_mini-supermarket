@@ -265,14 +265,6 @@ Page({
           toast.toast('当前帐号类型不正确,不可使用!')
           return false
         }
-        // 设置会员信息
-        if (memcode) {
-          app.globalData.viptype = 3
-        }
-        // 是否开通支付
-        if (coflag && coflag === 1 ) {
-          app.globalData.viptype = 2
-        }
         // 设session
         if (sessionId) {
           app.globalData.sessionId = sessionId

@@ -56,7 +56,6 @@ Component({
       let url = ''
       // 验证是否授权
       if (!app.authorFlag()) {
-        toast.toast('请授权')
         wx.navigateTo({
           url: '/pages/author/author',
         })
@@ -64,7 +63,7 @@ Component({
       }
       // 验证是否绑定手机号码
       if (!app.memcodeflag()) {
-        toast.toast('请绑定手机号码')
+        toast.toast('请注册绑定手机号码')
         wx.switchTab({
           url: '/pages/userInfo/userInfo',
         })

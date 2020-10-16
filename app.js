@@ -98,21 +98,13 @@ App({
     let self = this
     let openid = self.globalData.openid
     let defaultOpenid = self.globalData.defaultOpenid
-    if (openid === defaultOpenid) {
-      return false
-    } else {
-      return true
-   }
+    return openid !== defaultOpenid;
  },
 
   //  是否注册
   memcodeflag () {
     let self = this
     let memcode = self.globalData.memcode
-    if (!memcode) {
-      return false
-    } else {
-      return true
-    }
+    return memcode;
   }
 })
