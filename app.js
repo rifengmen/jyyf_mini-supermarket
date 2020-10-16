@@ -82,9 +82,9 @@ App({
 
     // baseUrl
     // baseUrl: 'http://192.168.29.118:8089/eshop/',
-    baseUrl: 'https://www.91jyrj.com/eshop/',
+    // baseUrl: 'https://www.91jyrj.com/eshop/',
     // baseUrl: 'http://192.168.1.22:8089/eshop/',
-    // baseUrl: 'http://192.168.1.103:8089/eshop/',
+    baseUrl: 'http://192.168.1.105:8089/eshop/',
     // baseUrl: 'https://www.jwkgou.com:8443/simple-eshop/',
 
     // 金威

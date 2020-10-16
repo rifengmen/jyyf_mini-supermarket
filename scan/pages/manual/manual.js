@@ -103,12 +103,12 @@ Page({
       barcode: self.data.goodscode,
     }
     let url = 'info/goods.do?method=getProductDetailsByBarcode'
+    // 验证条码不为空
+    if (!self.data.goodscode) {
+      toast.toast('请输入商品条码！')
+      return false
+    }
     if (self.data.scanType) {
-      // 验证条码不为空
-      if (!self.data.goodscode) {
-        toast.toast('请输入商品条码！')
-        return false
-      }
       // 验证店铺不为空
       if (!self.data.scanShopInfo) {
         toast.toast('请选择店铺！')
