@@ -115,18 +115,6 @@ Page({
     }).catch(error => {
       toast.toast(error.error)
     })
-    // Latitude: null
-    // Longitude: null
-    // address: "迎泽南街测试地址001新"
-    // areaid: 3
-    // areaname: "迎泽南街"
-    // id: 61
-    // isdefault: 1
-    // mapaddress: null
-    // parentAreaName: "迎泽区"
-    // parentAreaid: 1
-    // phone: "18735605086"
-    // username: "门日峰"
   },
 
   // 设置收货地址

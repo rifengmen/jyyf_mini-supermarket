@@ -311,6 +311,10 @@ Page({
     request.http('bill/shoppingcar.do?method=inputIntoCar', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        if (e) {
+          // 扫一扫
+          self.scangoodscode()
+        }
         // 更新购物车数量
         self.getCartCount()
       } else {
@@ -319,10 +323,6 @@ Page({
     }).catch(error => {
       toast.toast(error.error)
     })
-    if (e) {
-      // 扫一扫
-      self.scangoodscode()
-    }
   },
 
   // 更新购物车数量
