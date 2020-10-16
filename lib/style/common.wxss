@@ -343,4 +343,16 @@
   height: 100%;
 }
 /* 日历定位 end */
+/* 提示角标 start */
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 34rpx;
+  padding: 0 12rpx;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+/* 提示角标 end */
 

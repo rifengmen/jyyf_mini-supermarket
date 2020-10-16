@@ -129,20 +129,17 @@ swiper.banner_swiper {
   width: 54rpx;
   height: 54rpx;
   position: relative;
-}
-.nav_cart .nav_img image {
-  width: 100%;
-  height: 100%;
-}
-.nav_cart .nav_img .cart_num {
-  position: absolute;
-  top: -10rpx;
-  right: -10rpx;
-  height: 34rpx;
-  padding: 0 17rpx;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
+}
+.nav_cart .nav_img.cart {
+  width: 80rpx;
+  height: 80rpx;
+}
+.nav_cart .nav_img image {
+  width: 54rpx;
+  height: 54rpx;
 }
 .nav_cart .cart_cont {
   width: calc(100% - 230rpx);

@@ -86,12 +86,16 @@
   line-height: 50rpx;
 }
 .user_section .cont .img {
-  width: 62rpx;
+  width: 110rpx;
   height: 62rpx;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .user_section .cont image {
-  width: 100%;
-  height: 100%;
+  width: 62rpx;
+  height: 62rpx;
 }
 /* card信息 start */
 .card {

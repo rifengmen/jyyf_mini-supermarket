@@ -13,14 +13,7 @@ Page({
     // 订单类型 0全部  1待支付  2待取送 3待发货  9待退款 20已完成
     statusType: 0,
     // 订单类型列表
-    statusList: [
-      {name: '全部', type: 0},
-      {name: '待支付', type: 1},
-      {name: '待取送', type: 2},
-      {name: '待发货', type: 3},
-      {name: '已完成', type: 9},
-      // {name: '退款/售后', type: 20},
-    ],
+    statusList: app.globalData.statusList,
     // 查询开始日期
     startdate: '',
     // 订单列表

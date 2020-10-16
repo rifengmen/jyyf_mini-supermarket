@@ -45,18 +45,21 @@
 			<navigator class="item fl" hover-class="none" url="/pages/userInfo/orderList/orderList?orderType=1">
 				<view class="img">
 					<image src="/lib/images/orderType1.png"></image>
+					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{statusList[1].num}}">{{statusList[1].num}}</view>
 				</view>
 				<view class="name font24">待支付</view>
 			</navigator>
 			<navigator class="item fl" hover-class="none" url="/pages/userInfo/orderList/orderList?orderType=2">
 				<view class="img">
 					<image src="/lib/images/orderType2.png"></image>
+					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{statusList[2].num}}">{{statusList[2].num}}</view>
 				</view>
 				<view class="name font24">待取送</view>
 			</navigator>
 			<navigator class="item fl" hover-class="none" url="/pages/userInfo/orderList/orderList?orderType=3">
 				<view class="img">
 					<image src="/lib/images/orderType3.png"></image>
+					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{statusList[3].num}}">{{statusList[3].num}}</view>
 				</view>
 				<view class="name font24">待发货</view>
 			</navigator>
@@ -96,6 +99,7 @@
 			<navigator class="item fl" hover-class="none" url="/pages/message/messageList/messageList">
 				<view class="img">
 					<image src="/lib/images/myMessage.png"></image>
+					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{messageNum}}">{{messageNum}}</view>
 				</view>
 				<view class="name font24">我的消息</view>
 			</navigator>

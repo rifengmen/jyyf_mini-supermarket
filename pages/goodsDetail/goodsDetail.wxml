@@ -100,9 +100,9 @@
 			<navigator class="nav_img" hover-class="none" open-type="switchTab" url="/pages/index/index">
 				<image src="/lib/images/index.png"></image>
 			</navigator>
-			<navigator class="nav_img" hover-class="none" open-type="switchTab" url="/pages/cart/cart">
+			<navigator class="nav_img cart" hover-class="none" open-type="switchTab" url="/pages/cart/cart">
 				<image src="/lib/images/cart.png"></image>
-        <view class="cart_num colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{cartCount}}">{{cartCount}}</view>
+        <view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{cartCount}}">{{cartCount}}</view>
 			</navigator>
 			<navigator class="nav_img" hover-class="none" open-type="switchTab" url="/pages/userInfo/userInfo">
 				<image src="/lib/images/userInfo.png"></image>

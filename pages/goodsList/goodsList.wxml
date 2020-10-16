@@ -68,7 +68,7 @@
   <!-- 购物车 start -->
   <navigator class="tocart bg000000 border_r500" hover-class="none" url="/pages/cart2/cart2">
     <image src="/lib/images/toCart.png" class="tocart_img border_r500 overflow"></image>
-    <view class="cart_count colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{cartCount}}">{{cartCount}}
+    <view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{cartCount}}">{{cartCount}}
     </view>
   </navigator>
   <!-- 购物车 end -->

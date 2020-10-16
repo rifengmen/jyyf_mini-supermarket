@@ -26,6 +26,10 @@ Page({
     tickNum: 0,
     // 积分
     score: '',
+    // 订单类型列表
+    statusList: app.globalData.statusList,
+    // 未读消息提示，messageNum
+    messageNum: 0,
     // 扫码购类型，0：共用线上购物车；1：本地独立购物车
     scanType: app.globalData.scanType,
   },
@@ -195,6 +199,10 @@ Page({
         if (self.data.openidType) {
           // 更新购物车
           self.getCartCount()
+          // 更新订单类型列表
+          self.getStatusList()
+          // 获取消息列表
+          self.getMessageList()
         }
       } else {
         toast.toast(res.message)
@@ -249,6 +257,62 @@ Page({
         self.setData({
           score: res.data
         })
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 更新订单类型列表
+  getStatusList () {
+    let self = this
+    let statusList = self.data.statusList
+    statusList.forEach(item => {
+      self.getOrderList(item.type)
+    })
+  },
+
+  // 获取订单数量
+  getOrderList (type) {
+    let self = this
+    let data = {
+      Starttime: '2020-01-01',
+      statusType: type,
+    }
+    request.http('bill/order.do?method=listMyOrder', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        let statusList = self.data.statusList
+        statusList.forEach(item => {
+          if (item.type === type) {
+            item.num = res.rowCount
+          }
+        })
+        self.setData({
+          statusList: statusList
+        })
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 获取消息列表
+  getMessageList () {
+    let self = this
+    let data = {
+      messageFlag: 0,
+    }
+    request.http('info/InformationController.do?method=listmessage', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          messageNum: res.rowCount
+        })
+      } else {
+        toast.toast(res.message)
       }
     }).catch(error => {
       toast.toast(error.error)

@@ -19,13 +19,3 @@
   width: 100%;
   height: 100%;
 }
-.cart_count {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 34rpx;
-  padding: 0 17rpx;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-}

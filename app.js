@@ -65,6 +65,15 @@ App({
     addressId: '',
     // 地址详情(编辑地址用)
     addressDetail: '',
+    // 订单类型列表
+    statusList: [
+      {name: '全部', type: 0, num: 0},
+      {name: '待支付', type: 1, num: 0},
+      {name: '待取送', type: 2, num: 0},
+      {name: '待发货', type: 3, num: 0},
+      {name: '已完成', type: 9, num: 0},
+      // {name: '退款/售后', type: 20, num: 0},
+    ],
     // 扫码购 1：本地独立购物车
     // 扫码购店铺
     scanShopInfo: '',
