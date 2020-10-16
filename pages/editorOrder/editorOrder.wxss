@@ -218,3 +218,14 @@
   line-height: 80rpx;
 }
 /* 收货方式 end */
+
+/* buyEnd报错 start */
+.errorMessage {
+  width: calc(100% - 48rpx);
+  height: 100vh;
+  padding: 0 24rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* buyEnd报错 end */

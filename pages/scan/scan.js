@@ -254,7 +254,6 @@ Page({
           goodsInfo: res.data,
           goodsInfoFlag: true,
         })
-        console.log(res.data, 'goodsInfo');
       } else {
         toast.toast(res.message)
       }
@@ -309,10 +308,6 @@ Page({
       data.Buyprice = goodsInfo.preferential
       data.Count = 1
     }
-    if (e) {
-      // 扫一扫
-      self.scangoodscode()
-    }
     request.http('bill/shoppingcar.do?method=inputIntoCar', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
@@ -324,6 +319,10 @@ Page({
     }).catch(error => {
       toast.toast(error.error)
     })
+    if (e) {
+      // 扫一扫
+      self.scangoodscode()
+    }
   },
 
   // 更新购物车数量

@@ -21,6 +21,8 @@ Page({
     address: '',
     // 订单详情
     orderDetail: '',
+    // buyEnd报错时的信息,errorMessage
+    errorMessage: '',
     // 储值卡支付方式开关
     paymode3Flag: false,
     // 电子券支付方式开关
@@ -173,6 +175,9 @@ Page({
         self.getFreight()
       } else {
         toast.toast(res.message)
+        self.setData({
+          errorMessage: res.message
+        })
       }
     }).catch(error => {
       toast.toast(error.error)

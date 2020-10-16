@@ -4,7 +4,7 @@
  */
 require("../app.js")
 
-const toast = (message, url, opentime = 2000, closetime = 3000) => {
+const toast = (message, url, opentime = 3000, closetime = 5000) => {
   wx.showToast({
     title: message,
     icon: 'none',

@@ -15,6 +15,8 @@ Page({
     from: '',
     // 请求开关
     getFlag: false,
+    // 团秒标志，0：非团秒商品
+    tmFlag: 0,
   },
 
   /**
@@ -81,7 +83,13 @@ Page({
   // 获取地址列表
   getAddressList () {
     let self = this
-    let data = {}
+    let data = {
+      tmFlag: self.data.tmFlag
+    }
+    let url = 'system/myuser.do?method=listUserAdress'
+    if (self.data.from === 'editorOrder') {
+      url = 'system/myuser.do?method=listUserAdressForDept'
+    }
     wx.showLoading({
       title: '正在加载',
       mask: true,
@@ -90,7 +98,7 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('system/myuser.do?method=listUserAdressForDept', data).then(result => {
+    request.http(url, data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -107,6 +115,18 @@ Page({
     }).catch(error => {
       toast.toast(error.error)
     })
+    // Latitude: null
+    // Longitude: null
+    // address: "迎泽南街测试地址001新"
+    // areaid: 3
+    // areaname: "迎泽南街"
+    // id: 61
+    // isdefault: 1
+    // mapaddress: null
+    // parentAreaName: "迎泽区"
+    // parentAreaid: 1
+    // phone: "18735605086"
+    // username: "门日峰"
   },
 
   // 设置收货地址
