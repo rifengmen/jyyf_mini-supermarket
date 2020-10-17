@@ -47,7 +47,7 @@ Component({
       if (self.data.type) {
         self.triggerEvent('setList', detail.id)
         wx.navigateTo({
-          url: '/pages/message/detail/detail?id=' + detail.id + '&type=' + self.data.type + '&time=' + detail.prizeDate
+          url: '/pages/message/detail/detail?id=' + detail.id + '&type=' + self.data.type
         })
       }
     },

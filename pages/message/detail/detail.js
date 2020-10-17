@@ -14,8 +14,6 @@ Page({
     id: '',
     // 详情种类 公告 消息
     type: '',
-    // 发布时间
-    time: '',
     // 信息详情
     detail: '',
     // 富文本
@@ -30,7 +28,6 @@ Page({
     self.setData({
       id: options.id,
       type: options.type,
-      time: options.time,
     })
     let title = ''
     let type = self.data.type
@@ -122,14 +119,23 @@ Page({
   // 获取详情
   getDetail (url, data) {
     let self = this
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
     request.http(url, data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let nodes = res.data.content.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:block;float:left;margin: 0 auto"')
+        let detail = res.data
+        if (self.data.type === 'notice') {
+          detail.addtime = detail.pubdate
+        }
         self.setData({
-          detail: res.data,
+          detail: detail,
           nodes: nodes,
         })
+        wx.hideLoading()
       } else {
         toast.toast(res.message)
       }
