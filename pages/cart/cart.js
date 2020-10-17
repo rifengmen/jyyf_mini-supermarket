@@ -438,7 +438,7 @@ Page({
       cartList = cartList.filter(item => item.Gdscode !== delList[0].gdscode)
     } else {
       // 过滤出未选中的商品
-      cartList = cartList.filter(item => item.flag === false)
+      cartList = cartList.filter(item => item.check === false)
     }
     let data = {
       gdss: delList
