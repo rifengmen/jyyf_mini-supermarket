@@ -1,12 +1,14 @@
 /* pages/userInfo/complaintList/complaintList.wxss */
 .complaint_cont {
-  width: calc(100% - 48rpx);
+  width: 100%;
   height: auto;
-  padding: 0 24rpx 200rpx 24rpx;
+  min-height: calc(100vh - 200rpx);
+  padding-bottom: 200rpx;
 }
 .complaint_cont .item {
-  width: 100%;
+  width: calc(100% - 48rpx);
   height: 136rpx;
+  padding:  0 24rpx;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -34,4 +36,8 @@
   width: 100%;
   height: 80rpx;
   line-height: 80rpx;
+}
+.nodata_cont {
+  width: 100%;
+  height: calc(100vh - 200rpx);
 }

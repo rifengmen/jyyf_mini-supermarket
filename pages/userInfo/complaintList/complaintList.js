@@ -11,8 +11,10 @@ Page({
   data: {
     // 请求开关
     getFlag: false,
-    // 类别,1:我要投诉；0:商品建议
+    // 类别,0：投诉建议；1:商品建议；2:我要投诉；
     type: 0,
+    // 投诉类别列表
+    typeList: app.globalData.typeList,
     // title
     title: '',
     // 投诉列表

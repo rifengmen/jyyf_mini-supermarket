@@ -12,7 +12,9 @@ Page({
     // id
     id: '',
     // type
-    type: '',
+    type: 0,
+    // 投诉类别列表
+    typeList: app.globalData.typeList,
     // 详情
     complaintDetail: '',
   },
@@ -26,15 +28,9 @@ Page({
       id: options.id,
       type: options.type,
     })
-    if (self.data.type) {
-      wx.setNavigationBarTitle({
-        title: '建议详情'
-      })
-    } else {
-      wx.setNavigationBarTitle({
-        title: '投诉详情'
-      })
-    }
+    wx.setNavigationBarTitle({
+      title: self.data.typeList[self.data.type]
+    })
     // 获取详情
     self.getComplaintDetail()
   },

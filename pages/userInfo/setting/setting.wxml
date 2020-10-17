@@ -5,9 +5,13 @@
       <view class="">个人资料</view>
       <view class="color999999 font24">修改我的资料 > </view>
     </navigator>
-    <navigator class="set_item border_be5e5e5" hover-class="none" url="/pages/userInfo/complaintList/complaintList?type=1&title=我要投诉">
+    <navigator wx:if="{{scanType}}" class="set_item border_be5e5e5" hover-class="none" url="/pages/userInfo/complaintList/complaintList?type=2&title=我要投诉">
       <view class="">我要投诉</view>
       <view class="color999999 font24">投诉记录 > </view>
+    </navigator>
+    <navigator wx:else class="set_item border_be5e5e5" hover-class="none" url="/pages/userInfo/complaintList/complaintList?type=0&title=投诉建议">
+      <view class="">投诉建议</view>
+      <view class="color999999 font24">历史记录 > </view>
     </navigator>
     <navigator class="set_item border_be5e5e5" hover-class="none" url="/pages/userInfo/about/about">
       <view class="">关于我们</view>

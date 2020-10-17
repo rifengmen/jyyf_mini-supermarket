@@ -109,7 +109,7 @@
 				</view>
 				<view class="name font24">收货地址</view>
 			</navigator>
-			<navigator class="item fl" hover-class="none" url="/pages/userInfo/complaintList/complaintList?type=0&title=商品建议">
+			<navigator wx:if="{{scanType}}" class="item fl" hover-class="none" url="/pages/userInfo/complaintList/complaintList?type=1&title=商品建议">
 				<view class="img">
 					<image src="/lib/images/myComment.png"></image>
 				</view>

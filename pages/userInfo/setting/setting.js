@@ -9,7 +9,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    // 扫码购类型，0：共用线上购物车；1：本地独立购物车
+    scanType: app.globalData.scanType,
   },
 
   /**

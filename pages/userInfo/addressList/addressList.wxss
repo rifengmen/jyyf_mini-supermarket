@@ -32,6 +32,9 @@
   align-items: center;
   position: relative;
 }
+.address_item:last-child {
+  border-bottom: unset;
+}
 .item_desc {
   width: calc(100% - 80rpx);
   height: 100%;
@@ -82,4 +85,8 @@
   transform: translateX(-50%);
   width: 140rpx;
   height: 130rpx;
+}
+.nodata_cont {
+  width: 100%;
+  height: calc(100vh - 128rpx);
 }
