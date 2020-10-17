@@ -526,7 +526,7 @@ Page({
           })
         } else if (linktype === 4) { // 公告详情
           wx.navigateTo({
-            url: '/pages/message/noticeDetail/noticeDetail?id=' + res.data.linkcode,
+            url: '/pages/message/detail/detail?id=' + res.data.linkcode + '&type=notice',
           })
         } else if (linktype === 5) { // 充值中心
           wx.navigateTo({
