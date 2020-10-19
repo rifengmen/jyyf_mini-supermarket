@@ -225,12 +225,6 @@ Page({
     let moduletype = e.currentTarget.dataset.moduletype;
     if (moduletype) {
       switch (moduletype) {
-        case 1:
-          // 常购商品
-          wx.navigateTo({
-            url: '/pages/goodsList/goodsList?Datatype=' + '4' + '&title=' + '常购商品',
-          })
-          break;
         case 2:
           // 电子会员
           wx.navigateTo({
@@ -249,22 +243,10 @@ Page({
             url: '/pages/userInfo/record/record',
           })
           break;
-        case 5:
-          // 会员特价
-          wx.navigateTo({
-            url: '/pages/goodsList/goodsList?Datatype=' + '2' + '&title=' + '会员特价',
-          })
-          break;
         case 6:
           // 扫码购
           wx.navigateTo({
             url: '/scan/pages/scan/scan',
-          })
-          break;
-        case 7:
-          // 特价商品
-          wx.navigateTo({
-            url: '/pages/goodsList/goodsList?Datatype=' + '1' + '&title=' + '特价商品',
           })
           break;
         case 8:
@@ -276,12 +258,6 @@ Page({
             }
           wx.navigateTo({
             url: '/pages/userInfo/complaintList/complaintList?type=' + type + '&title=' + typeList[type],
-          })
-          break;
-        case 9:
-          // 推荐商品
-          wx.navigateTo({
-            url: '/pages/goodsList/goodsList?Datatype=' + '3' + '&title=' + '推荐商品',
           })
           break;
         case 10:
@@ -303,12 +279,6 @@ Page({
           // 周边看看
           wx.navigateTo({
             url: '/autoModule/pages/nearby/nearby',
-          })
-          break;
-        case 14:
-          // 抢购商品
-          wx.navigateTo({
-            url: '/pages/goodsList/goodsList?panicBuy=' + 'panicBuy' + '&title=' + '抢购商品'
           })
           break;
         case 15:
@@ -345,6 +315,36 @@ Page({
           // 在线充值
           wx.navigateTo({
             url: '/autoModule/pages/recharge/recharge',
+          })
+          break;
+        case 14:
+          // 抢购商品
+          wx.navigateTo({
+            url: '/pages/goodsList/goodsList?panicBuy=' + 'panicBuy' + '&title=' + '抢购商品'
+          })
+          break;
+        case 7:
+          // 特价商品
+          wx.navigateTo({
+            url: '/pages/goodsList/goodsList?Datatype=' + '1' + '&title=' + '特价商品',
+          })
+          break;
+        case 5:
+          // 会员特价
+          wx.navigateTo({
+            url: '/pages/goodsList/goodsList?Datatype=' + '2' + '&title=' + '会员特价',
+          })
+          break;
+        case 9:
+          // 推荐商品
+          wx.navigateTo({
+            url: '/pages/goodsList/goodsList?Datatype=' + '3' + '&title=' + '推荐商品',
+          })
+          break;
+        case 1:
+          // 常购商品
+          wx.navigateTo({
+            url: '/pages/goodsList/goodsList?Datatype=' + '4' + '&title=' + '常购商品',
           })
           break;
         case 21:
@@ -440,7 +440,7 @@ Page({
     })
   },
 
-  // 获取推荐商品列表
+  // 获取推荐商品列表(集群)
   getTheme () {
     let self = this
     let data = {}
@@ -525,11 +525,11 @@ Page({
           wx.navigateTo({
             url: '/pages/goodsList/goodsList?panicBuy=' + 'panicBuy' + '&title=' + '抢购商品'
           })
-        } else if (linktype === 2) { // 分类商品列表
+        } else if (linktype === 2) { // 分类商品列表(classcode)
           wx.navigateTo({
             url: '/pages/goodsList/goodsList?classCode=' + res.data.linkcode + '&title=' + '商品列表'
           })
-        } else if (linktype === 3) { // 商品列表
+        } else if (linktype === 3) { // 集群商品列表
           wx.navigateTo({
             url: '/pages/goodsList/goodsList?cateid=' + res.data.linkcode + '&title=' + '商品列表'
           })

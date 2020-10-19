@@ -109,9 +109,9 @@ App({
     // // app首页图
     // loadingimg: '/lib/images/loading.jpg',
     // // 联系我们
-    // webUrl: 'https://www.91jyrj.com/eshop/upload/text/front/lianxinus.html',
+    // webUrl: 'https://www.jwkgou.com:8443/simple-eshop/upload/text/front/lianxinus.html',
     // // app标题
-    // apptitle: '嘉元o2o',
+    // apptitle: '金威快购',
     // // 扫码购类型，0：共用线上购物车；1：本地独立购物车
     // scanType: 0,
   },

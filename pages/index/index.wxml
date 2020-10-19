@@ -147,7 +147,7 @@
 			<view class="tit_img overflow">
 				<image src="/lib/images/timeslimit.png" mode="aspectFit"></image>
 			</view>
-			<text class="colorffffff font32 font_blod">限时抢购</text>
+			<navigator class="colorffffff font32 font_blod" hover-class="none" url="/pages/goodsList/goodsList?panicBuy=panicBuy&title=抢购商品">限时抢购</navigator>
 		</view>
 		<view class="goods_list1 overflow">
 			<swiper class="timeslimit_swiper" autoplay="true" circular="true" interval="5000" display-multiple-items="3">
