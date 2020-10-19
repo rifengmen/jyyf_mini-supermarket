@@ -82,14 +82,10 @@ App({
     // 扫码购购物车
     scanCart: [],
 
-    // baseUrl
-    // baseUrl: 'http://192.168.29.118:8089/eshop/',
-    baseUrl: 'https://www.91jyrj.com/eshop/',
-    // baseUrl: 'http://192.168.1.22:8089/eshop/',
+    // 测试开发
+    // 基础路径
     // baseUrl: 'http://192.168.1.105:8089/eshop/',
-    // baseUrl: 'https://www.jwkgou.com:8443/simple-eshop/',
-
-    // 金威
+    baseUrl: 'https://www.91jyrj.com/eshop/',
     // 商家code
     shopcode: '',
     // 商家图标
@@ -102,6 +98,22 @@ App({
     apptitle: '嘉元o2o',
     // 扫码购类型，0：共用线上购物车；1：本地独立购物车
     scanType: 0,
+
+    // // 金威
+    // // 基础路径
+    // baseUrl: 'https://www.jwkgou.com:8443/simple-eshop/',
+    // // 商家code
+    // shopcode: '',
+    // // 商家图标
+    // shoplogo: '/lib/images/logo.jpg',
+    // // app首页图
+    // loadingimg: '/lib/images/loading.jpg',
+    // // 联系我们
+    // webUrl: 'https://www.91jyrj.com/eshop/upload/text/front/lianxinus.html',
+    // // app标题
+    // apptitle: '嘉元o2o',
+    // // 扫码购类型，0：共用线上购物车；1：本地独立购物车
+    // scanType: 0,
   },
 
   // 是否授权

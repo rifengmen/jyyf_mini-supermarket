@@ -127,12 +127,8 @@ Page({
       let res = result.data
       if (res.flag === 1) {
         let nodes = res.data.content.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:block;float:left;margin: 0 auto"')
-        let detail = res.data
-        if (self.data.type === 'notice') {
-          detail.addtime = detail.pubdate
-        }
         self.setData({
-          detail: detail,
+          detail: res.data,
           nodes: nodes,
         })
         wx.hideLoading()

@@ -51,6 +51,10 @@ Page({
     dialogTotalMoney: '',
     // 商品信息
     goods: '',
+    // 扫码购类型，0：共用线上购物车；1：本地独立购物车
+    scanType: app.globalData.scanType,
+    // 投诉类别列表
+    typeList: app.globalData.typeList,
   },
   /**
    * 生命周期函数--监听页面加载
@@ -265,8 +269,13 @@ Page({
           break;
         case 8:
           // 商品建议
+            let typeList = self.data.typeList
+            let type = 0
+            if (self.data.scanType) {
+              type = 1
+            }
           wx.navigateTo({
-            url: '/pages/userInfo/complaintList/complaintList?type=0&title=商品建议',
+            url: '/pages/userInfo/complaintList/complaintList?type=' + type + '&title=' + typeList[type],
           })
           break;
         case 9:
