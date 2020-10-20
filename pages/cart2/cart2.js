@@ -27,18 +27,6 @@ Page({
     allFlag: false,
     // 弹框组件显示开关
     dialogFlag: false,
-    // 弹窗title
-    dialogTitle: '',
-    // 弹窗价格
-    dialogPrice: '',
-    // 弹窗斤
-    dialogJin: '',
-    // 弹窗两
-    dialogLiang: '',
-    // 弹窗重量
-    dialogCount: '',
-    // 弹窗合计金额
-    dialogTotalMoney: '',
     // 商品信息
     goods: '',
     // 合计金额
@@ -262,39 +250,35 @@ Page({
   // 购物车加的方法
   addCart(e) {
     let self = this
-    let index = e.currentTarget.dataset.index
+    let goods = e.currentTarget.dataset.goods
     // 购物车数量操作
-    self.editorCartCount('addCart', index)
+    self.editorCartCount('addCart', goods)
   },
 
   // 购物车减得方法
   subtrackCart(e) {
     let self = this
-    let index = e.currentTarget.dataset.index
+    let goods = e.currentTarget.dataset.goods
     // 购物车数量操作
-    self.editorCartCount('subtrackCart', index)
+    self.editorCartCount('subtrackCart', goods)
   },
 
   // 弹窗关闭
-  dialogClose() {
+  dialogClose () {
     let self = this
     self.setData({
       dialogFlag: false,
-      dialogJin: '',
-      dialogLiang: '',
-      dialogCount: '',
-      dialogTotalMoney: '',
+      goods: '',
     })
   },
 
   // 弹窗确认
-  dialogConfirm() {
+  dialogConfirm(goods) {
     let self = this
-    let goods = self.data.goods
     let data = {
-      Gdscode: goods.Gdscode,
-      Xuhao: goods.xuhao,
-      Count: self.data.dialogCount,
+      Gdscode: goods.detail.Gdscode,
+      Xuhao: goods.detail.xuhao,
+      Count: goods.detail.count,
     }
     // 修改购物车商品数量的方法
     self.updateIntoCar(data)
@@ -302,58 +286,18 @@ Page({
     self.dialogClose()
   },
 
-  // 设置弹窗斤
-  setDialogJin(e) {
-    let self = this
-    self.setData({
-      dialogJin: e.detail.value
-    })
-    // 设置弹窗重量
-    self.setDialogCount()
-    // 设置弹窗金额
-    self.setDialogTotalMoney()
-  },
-
-  // 设置弹窗两
-  setDialogLiang(e) {
-    let self = this
-    self.setData({
-      dialogLiang: e.detail.value
-    })
-    // 设置弹窗重量
-    self.setDialogCount()
-    // 设置弹窗金额
-    self.setDialogTotalMoney()
-  },
-
-  // 设置弹窗重量
-  setDialogCount() {
-    let self = this
-    self.setData({
-      dialogCount: (self.data.dialogJin / 2 + self.data.dialogLiang / 20).toFixed(2)
-    })
-  },
-
-  // 设置弹窗金额
-  setDialogTotalMoney() {
-    let self = this
-    self.setData({
-      dialogTotalMoney: (self.data.dialogPrice * self.data.dialogCount).toFixed(2)
-    })
-  },
-
   // 购物车数量操作
-  editorCartCount(method, index) {
+  editorCartCount(method, goods) {
     let self = this
     let cartList = self.data.cartList
     // 判断是否为标签商品
-    if (cartList[index].striperbarcodeflag === 1) {
+    if (goods.striperbarcodeflag === 1) {
       toast.toast('称签商品不允许修改数量')
     } else {
-      let Count = cartList[index].buyAMT
-      let Xuhao = cartList[index].xuhao
-      let Gdscode = cartList[index].Gdscode
-      let saleflag = cartList[index].scaleflag
+      let Count = goods.buyAMT
+      let Xuhao = goods.xuhao
+      let Gdscode = goods.Gdscode
+      let saleflag = goods.scaleflag
       // 判断加减
       if (method === 'addCart') {
         Count++
@@ -378,16 +322,11 @@ Page({
       }
       // 判断商品类型，saleflag：0是非散称，1是散称
       if (saleflag) {
-        let goods = cartList[index]
+        goods.Name = goods.Pname
+        goods.Highpprice = goods.actualprice
         self.setData({
           goods: goods,
           dialogFlag: true,
-          dialogTitle: goods.Pname,
-          dialogPrice: goods.actualprice,
-          dialogJin: Math.floor(goods.buyAMT / 0.5),
-          dialogLiang: Math.floor(goods.buyAMT % 0.5 * 20),
-          dialogCount: parseFloat(goods.buyAMT).toFixed(2),
-          dialogTotalMoney: (goods.buyAMT * goods.actualprice).toFixed(2),
         })
       } else {
         let data = {

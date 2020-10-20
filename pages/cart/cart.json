@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "dialog": "/component/dialog/dialog"
+  },
   "navigationBarTitleText": "购物车",
   "enablePullDownRefresh": true
 }

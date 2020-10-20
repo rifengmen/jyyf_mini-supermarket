@@ -9,16 +9,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    // 调用的地方
     from: {
       type: String,
       value: ''
-    },
-    // 抢购单号
-    panicBuy: {
-      type: String,
-      value: ''
-    },
+    }
   },
 
   /**
@@ -69,7 +63,7 @@ Component({
         })
         return false
       }
-      if (self.data.panicBuy) {
+      if (goods.panicbuycode) {
         url = 'info/panicGdscode.do?method=inputIntoCarForPanic'
       } else {
         url = 'bill/shoppingcar.do?method=inputIntoCar'
@@ -77,7 +71,7 @@ Component({
       request.http(url, data).then(result => {
         let res = result.data
         if (res.flag === 1) {
-          if (self.data.panicBuy) {
+          if (goods.panicbuycode) {
             toast.toast(res.message)
           } else {
             toast.toast('添加成功')

@@ -16,7 +16,21 @@ Component({
    * 组件的属性列表
    */
   properties: {
-
+    // 商品信息
+    goods: {
+      type: Object,
+      value: null
+    },
+    // 弹窗斤
+    dialogJin: {
+      type: String,
+      value: ''
+    },
+    // 弹窗两
+    dialogLiang: {
+      type: String,
+      value: ''
+    },
   },
 
   /**
@@ -25,20 +39,10 @@ Component({
   data: {
     // 弹框组件显示开关
     dialogFlag: false,
-    // 弹窗title
-    dialogTitle: '',
-    // 弹窗价格
-    dialogPrice: '',
-    // 弹窗斤
-    dialogJin: '',
-    // 弹窗两
-    dialogLiang: '',
     // 弹窗重量
     dialogCount: '',
     // 弹窗合计金额
     dialogTotalMoney: '',
-    // 商品信息
-    goods: '',
   },
 
   /**
@@ -56,18 +60,15 @@ Component({
         dialogTotalMoney: '',
         goods: '',
       })
+      self.triggerEvent('dialogClose')
     },
 
     // 弹窗确认
     dialogConfirm () {
       let self = this
-      // 获取添加购物车组件
-      let addcart = self.selectComponent('#addCart')
       let goods = self.data.goods
       goods.count = self.data.dialogCount
-      // 调用子组件，传入商品信息添加购物车
-      addcart.addCart(goods)
-      self.dialogClose()
+      self.triggerEvent('dialogConfirm', goods)
     },
 
     // 设置弹窗斤
@@ -106,7 +107,7 @@ Component({
     setDialogTotalMoney () {
       let self = this
       self.setData({
-        dialogTotalMoney: (self.data.dialogPrice * self.data.dialogCount).toFixed(2)
+        dialogTotalMoney: (self.data.goods.Highpprice * self.data.dialogCount).toFixed(2)
       })
     },
   }
