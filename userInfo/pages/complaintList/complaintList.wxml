@@ -1,0 +1,20 @@
+<!--userInfo/pages/complaintList/complaintList.wxml-->
+<view class="container color333333 font28 bgf0f0f0">
+  <view class="complaint_cont">
+    <block wx:for="{{complaintList}}" wx:key="index">
+      <navigator class="item bgffffff border_be5e5e5" hover-class="none" url="/userInfo/pages/complaintDetail/complaintDetail?id={{item.id}}&type={{type}}">
+        <view class="content ellipsis">{{item.content}}</view>
+        <view class="color999999">{{item.addtime}}</view>
+      </navigator>
+    </block>
+    <view class="nodata_cont" wx:if="{{!complaintList.length && getFlag}}">
+      <view class="nodata overflow">
+        <image src="/lib/images/orderNodata.png"></image>
+      </view>
+      <view class="color999999 tc">暂无信息～</view>
+    </view>
+  </view>
+  <view class="btn_cont">
+    <navigator class="btn colorffffff font32 bg71d793 border_r500 tc" hover-class="none" url="/userInfo/pages/addComplaint/addComplaint?type={{type}}&title={{title}}">{{typeList[type]}}</navigator>
+  </view>
+</view>

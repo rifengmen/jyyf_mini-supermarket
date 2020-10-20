@@ -1,0 +1,22 @@
+<!--userInfo/pages/selfPickUp/selfPickUp.wxml-->
+<view class="container color333333 font28 bgffffff" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
+	<!-- 收货人 start -->
+	<view class="section border_be5e5e5">
+		<view class="section_tit">收货人</view>
+		<view class="section_desc">
+			<input type="" value="{{username}}" placeholder="名字" bindinput="setName"/>
+		</view>
+	</view>
+	<!-- 收货人 end -->
+	<!-- 手机号 start -->
+	<view class="section border_be5e5e5">
+		<view class="section_tit">手机号</view>
+		<view class="section_desc">
+			<input type="number" value="{{phone}}" placeholder="手机号" bindinput="setPhone"/>
+		</view>
+	</view>
+	<!-- 手机号 end -->
+	<!-- 确认按钮 start -->
+	<view class="confirm colorffffff font32 bg71d793 tc border_r500" bindtap="confirm">确认</view>
+	<!-- 确认按钮 end -->
+</view>

@@ -10,9 +10,9 @@
 				<view class="name font32 font_blod" wx:if="{{!openidType}}" bindtap="isAuthor">游客，请授权登录</view>
 				<view class="name font32 font_blod" wx:else>{{memname}}</view>
 				<navigator class="navs toregister color71d793" hover-class="none" url="/pages/register/register" wx:if="{{openidType && !memcode}}">点此绑定手机，注册/登录</navigator>
-				<navigator class="navs colorffffff font24 bg71d793 tc border_r500" hover-class="none" url="/pages/userInfo/payPassword/payPassword" wx:if="{{memcode}}">会员卡 > </navigator>
+				<navigator class="navs colorffffff font24 bg71d793 tc border_r500" hover-class="none" url="/userInfo/pages/payPassword/payPassword" wx:if="{{memcode}}">会员卡 > </navigator>
 			</view>
-			<navigator class="my_code" hover-class="none" url="/pages/userInfo/myCode/myCode">
+			<navigator class="my_code" hover-class="none" url="/userInfo/pages/myCode/myCode">
 				<image src="/lib/images/myCode.png"></image>
 				<view class="tc">电子会员</view>
 			</navigator>
@@ -21,7 +21,7 @@
 	<!-- 会员信息 end -->
 	<!-- card信息 start -->
 	<view class="card user_section overflow bgffffff">
-		<navigator class="card_item fl" hover-class="none" url="/pages/userInfo/balance/balance">
+		<navigator class="card_item fl" hover-class="none" url="/userInfo/pages/balance/balance">
 			<view class="tc ellipsis">{{cardInfo.money || 0}}</view>
 			<view class="tc color666666">账户余额</view>
 		</navigator>
@@ -29,7 +29,7 @@
 			<view class="tc">{{tickNum}}</view>
 			<view class="tc color666666">电子券</view>
 		</navigator>
-		<navigator class="card_item fl" hover-class="none" url="/pages/userInfo/score/score">
+		<navigator class="card_item fl" hover-class="none" url="/userInfo/pages/score/score">
 			<view class="tc ellipsis">{{score.Score || 0}}</view>
 			<view class="tc color666666">积分</view>
 		</navigator>
@@ -39,37 +39,37 @@
 	<view class="order user_section bgffffff border_r10">
 		<view class="tit">
 			<view class="font_blod">我的订单</view>
-			<navigator class="color666666 font24" hover-class="none" url="/pages/userInfo/orderList/orderList">全部订单 ></navigator>
+			<navigator class="color666666 font24" hover-class="none" url="/userInfo/pages/orderList/orderList">全部订单 ></navigator>
 		</view>
 		<view class="cont overflow">
-			<navigator class="item fl" hover-class="none" url="/pages/userInfo/orderList/orderList?orderType=1">
+			<navigator class="item fl" hover-class="none" url="/userInfo/pages/orderList/orderList?orderType=1">
 				<view class="img">
 					<image src="/lib/images/orderType1.png"></image>
 					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{statusList[1].num}}">{{statusList[1].num}}</view>
 				</view>
 				<view class="name font24">待支付</view>
 			</navigator>
-			<navigator class="item fl" hover-class="none" url="/pages/userInfo/orderList/orderList?orderType=2">
+			<navigator class="item fl" hover-class="none" url="/userInfo/pages/orderList/orderList?orderType=2">
 				<view class="img">
 					<image src="/lib/images/orderType2.png"></image>
 					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{statusList[2].num}}">{{statusList[2].num}}</view>
 				</view>
 				<view class="name font24">待取送</view>
 			</navigator>
-			<navigator class="item fl" hover-class="none" url="/pages/userInfo/orderList/orderList?orderType=3">
+			<navigator class="item fl" hover-class="none" url="/userInfo/pages/orderList/orderList?orderType=3">
 				<view class="img">
 					<image src="/lib/images/orderType3.png"></image>
 					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{statusList[3].num}}">{{statusList[3].num}}</view>
 				</view>
 				<view class="name font24">待发货</view>
 			</navigator>
-			<navigator class="item fl" hover-class="none" url="/pages/userInfo/orderList/orderList?orderType=20">
+			<navigator class="item fl" hover-class="none" url="/userInfo/pages/orderList/orderList?orderType=20">
 				<view class="img">
 					<image src="/lib/images/orderType4.png"></image>
 				</view>
 				<view class="name font24">已完成</view>
 			</navigator>
-			<!--<navigator class="item fl" hover-class="none" url="/pages/userInfo/orderList/orderList?orderType=9">-->
+			<!--<navigator class="item fl" hover-class="none" url="/userInfo/pages/orderList/orderList?orderType=9">-->
 				<!--<view class="img">-->
 					<!--<image src="/lib/images/orderType5.png"></image>-->
 				<!--</view>-->
@@ -103,25 +103,25 @@
 				</view>
 				<view class="name font24">我的消息</view>
 			</navigator>
-			<navigator class="item fl" hover-class="none" url="/pages/userInfo/addressList/addressList">
+			<navigator class="item fl" hover-class="none" url="/userInfo/pages/addressList/addressList">
 				<view class="img">
 					<image src="/lib/images/myAddress.png"></image>
 				</view>
 				<view class="name font24">收货地址</view>
 			</navigator>
-			<navigator wx:if="{{scanType}}" class="item fl" hover-class="none" url="/pages/userInfo/complaintList/complaintList?type=1&title=商品建议">
+			<navigator wx:if="{{scanType}}" class="item fl" hover-class="none" url="/userInfo/pages/complaintList/complaintList?type=1&title=商品建议">
 				<view class="img">
 					<image src="/lib/images/myComment.png"></image>
 				</view>
 				<view class="name font24">商品建议</view>
 			</navigator>
-			<navigator class="item fl" hover-class="none" url="/pages/userInfo/recordList/recordList">
+			<navigator class="item fl" hover-class="none" url="/userInfo/pages/recordList/recordList">
 				<view class="img">
 					<image src="/lib/images/record.png"></image>
 				</view>
 				<view class="name font24">消费记录</view>
 			</navigator>
-			<navigator class="item fl" hover-class="none" url="/pages/userInfo/setting/setting">
+			<navigator class="item fl" hover-class="none" url="/userInfo/pages/setting/setting">
 				<view class="img">
 					<image src="/lib/images/setting.png"></image>
 				</view>

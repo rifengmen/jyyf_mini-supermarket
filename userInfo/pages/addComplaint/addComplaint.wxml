@@ -1,0 +1,6 @@
+<!--userInfo/pages/addComplaint/addComplaint.wxml-->
+<view class="container color333333 font28 bgffffff">
+  <textarea class="content border_be5e5e5" value="{{content}}" placeholder="请输入您的内容(最多140个字)" bindinput="setContent"></textarea>
+  <view class="btn colorffffff font32 bg71d793 border_r500 tc" bindtap="sendContent">提交</view>
+</view>
+

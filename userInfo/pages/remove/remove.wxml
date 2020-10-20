@@ -1,0 +1,6 @@
+<!--userInfo/pages/remove/remove.wxml-->
+<view class="container color333333 font28 bgffffff">
+  <view class="btn_cont">
+    <view class="btn colorffffff font32 bg71d793 border_r500 tc" bindtap="isRemove">解除绑定</view>
+  </view>
+</view>

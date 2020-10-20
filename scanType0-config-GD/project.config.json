@@ -22,12 +22,12 @@
 			"disablePlugins": [],
 			"outputPath": ""
 		},
-		"useCompilerModule": false,
+		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.12.1",
-	"appid": "wx99c67fe94a47577a",
+	"appid": "wx09b3ca29cd2408ad",
 	"projectname": "mini-supermarket",
 	"debugOptions": {
 		"hidedInDevtools": []

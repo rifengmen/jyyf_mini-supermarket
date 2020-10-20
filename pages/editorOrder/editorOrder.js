@@ -339,11 +339,11 @@ Page({
     let self = this
     if (self.data.pickType) {
       wx.navigateTo({
-        url: '/pages/userInfo/addressList/addressList?from=' + 'editorOrder',
+        url: '/userInfo/pages/addressList/addressList?from=' + 'editorOrder',
       })
     } else {
       wx.navigateTo({
-        url: '/pages/userInfo/selfPickUp/selfPickUp',
+        url: '/userInfo/pages/selfPickUp/selfPickUp',
       })
     }
   },

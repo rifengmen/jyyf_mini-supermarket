@@ -228,7 +228,7 @@ Page({
         case 2:
           // 电子会员
           wx.navigateTo({
-            url: '/pages/userInfo/myCode/myCode',
+            url: '/userInfo/pages/myCode/myCode',
           })
           break;
         case 3:
@@ -240,7 +240,7 @@ Page({
         case 4:
           // 购买记录
           wx.navigateTo({
-            url: '/pages/userInfo/record/record',
+            url: '/userInfo/pages/record/record',
           })
           break;
         case 6:
@@ -257,19 +257,19 @@ Page({
               type = 1
             }
           wx.navigateTo({
-            url: '/pages/userInfo/complaintList/complaintList?type=' + type + '&title=' + typeList[type],
+            url: '/userInfo/pages/complaintList/complaintList?type=' + type + '&title=' + typeList[type],
           })
           break;
         case 10:
           // 我的订单
           wx.navigateTo({
-            url: '/pages/userInfo/orderList/orderList',
+            url: '/userInfo/pages/orderList/orderList',
           })
           break;
         case 11:
           // 我的积分
           wx.navigateTo({
-            url: '/pages/userInfo/score/score',
+            url: '/userInfo/pages/score/score',
           })
           break;
         case 12:
@@ -296,7 +296,7 @@ Page({
         case 17:
           // 我的余额
           wx.navigateTo({
-            url: '/pages/userInfo/balance/balance',
+            url: '/userInfo/pages/balance/balance',
           })
           break;
         case 18:
