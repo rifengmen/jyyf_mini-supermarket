@@ -93,8 +93,6 @@ Page({
     self.getTick()
     // 获取收货地址
     self.getAddress()
-    // 获取运费
-    self.getFreight()
   },
 
   /**
@@ -169,10 +167,8 @@ Page({
             onlyFlag: true,
           })
         }
-        // 获取收货地址
-        self.getAddress()
-        // 获取运费
-        self.getFreight()
+        // 设置订单支付金额
+        self.setPayMoney()
       } else {
         toast.toast(res.message)
         self.setData({
@@ -257,10 +253,9 @@ Page({
         if (res.flag === 1) {
           let address = res.data[0]
           address.pickType = 1
-          self.setData({
-            address: address
-          })
           app.globalData.address = address
+          // 获取运费
+          self.getFreight()
         } else {
           toast.toast(res.message)
         }
@@ -282,10 +277,18 @@ Page({
     request.http('bill/shoppingcar.do?method=getFreight', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let address = app.globalData.address
         self.setData({
+          address: address,
           freight: res.data,
         })
       } else {
+        // 请求运费失败清除地址信息
+        self.setData({
+          address: '',
+        })
+        app.globalData.addressId = ''
+        app.globalData.address = ''
         toast.toast(res.message)
       }
       // 设置订单支付金额
@@ -376,7 +379,7 @@ Page({
     // 积分抵扣金额
     let useScoreMoney = self.data.useScoreMoney
     // 运费
-    let freight = self.data.freight.freight
+    let freight = self.data.freight.freight || self.data.orderDetail.delivermoney || 0
     // 电子券
     let tickMoney = self.data.tick.paymoney || ''
     self.setData({
