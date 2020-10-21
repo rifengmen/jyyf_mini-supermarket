@@ -379,7 +379,7 @@ Page({
     // 积分抵扣金额
     let useScoreMoney = self.data.useScoreMoney
     // 运费
-    let freight = self.data.freight.freight || self.data.orderDetail.delivermoney || 0
+    let freight = self.data.freight.freight || 0
     // 电子券
     let tickMoney = self.data.tick.paymoney || ''
     self.setData({

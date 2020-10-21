@@ -125,7 +125,7 @@
 				</view>
 				<view class="">
 					<view>运费+配送服务费</view>
-					<view class="colorfa6400 font_blod">+￥{{freight.freight || orderDetail.delivermoney || 0}}</view>
+					<view class="colorfa6400 font_blod">+￥{{freight.freight || 0}}</view>
 				</view>
 			</view>
 		</view>
