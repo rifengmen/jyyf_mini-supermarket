@@ -4,5 +4,6 @@
     "dialog": "/component/dialog/dialog"
   },
   "navigationBarBackgroundColor": "#71d793",
-  "navigationBarTextStyle": "white"
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true
 }

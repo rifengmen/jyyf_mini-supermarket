@@ -122,7 +122,25 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    let self = this
+    // 获取banner列表
+    self.getBannerList()
+    // 获取自定义功能列表
+    self.getModulePictureList()
+    // 获取公告列表
+    self.getNoticeList()
+    // 获取海报列表
+    self.getPosterList()
+    // 获取推荐商品列表
+    self.getTheme()
+    // 获取专区列表
+    self.getHotList()
+    // 获取抢购商品列表
+    self.getPanicBuyGoodsList()
+    // 更新购物车数量
+    self.getCartCount()
+    // 关闭下拉刷新
+    wx.stopPullDownRefresh()
   },
 
   /**
