@@ -12,18 +12,7 @@ Page({
     // 搜索内容
     search_val: '',
     // 搜索历史列表
-    hostoryList: [
-      {name: '搜索1'},
-      {name: '搜索2'},
-      {name: '搜索3'},
-      {name: '搜索4'},
-      {name: '搜索5'},
-      {name: '搜索6'},
-      {name: '搜索'},
-      {name: '搜索8'},
-      {name: '搜索9'},
-      {name: '搜索10'},
-    ],
+    hostoryList: [],
   },
 
   /**

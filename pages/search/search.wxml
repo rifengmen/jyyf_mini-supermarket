@@ -13,7 +13,7 @@
 	</view>
 	<!-- 搜索 end -->
 	<!-- 搜索历史 start -->
-	<view class="search_history">
+	<view class="search_history" wx:if="{{hostoryList.length}}">
 		<view class="tit">
 			<view class="font32 font_blod">搜索历史：</view>
 			<view class="color999999" bindtap="clearHistoryList">清空</view>
