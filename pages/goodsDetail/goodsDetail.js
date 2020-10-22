@@ -145,6 +145,10 @@ Page({
       }
       url = 'info/goods.do?method=getProductDetails'
     }
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
     request.http(url, data).then(result => {
       let res = result.data
       if (res.flag === 1) {
@@ -169,6 +173,7 @@ Page({
       } else {
         toast.toast(res.message)
       }
+      wx.hideLoading()
     }).catch(error => {
       toast.toast(error.error)
     })

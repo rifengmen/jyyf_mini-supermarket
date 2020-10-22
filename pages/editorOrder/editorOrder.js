@@ -143,6 +143,10 @@ Page({
     let data = {
       distanceflag: 1,
     }
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
     request.http('bill/shoppingcar.do?method=buyend', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
@@ -175,6 +179,7 @@ Page({
           errorMessage: res.message
         })
       }
+      wx.hideLoading()
     }).catch(error => {
       toast.toast(error.error)
     })

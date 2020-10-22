@@ -95,9 +95,14 @@ Page({
     let data = {
       orderNum: self.data.tradeno
     }
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
     request.http('bill/order.do?method=listOrderDetails', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let orderDetail = res.data
         let PayDetail = res.data.PayDetail
         let tick = ''
         let score = ''
@@ -119,18 +124,22 @@ Page({
           })
           paymodename = paymodenameArr.join('、')
         }
+        if (orderDetail.billstatus === 40) {
+          orderDetail.freight = 0
+        }
         self.setData({
-          orderDetail: res.data,
+          orderDetail: orderDetail,
           paymodename: paymodename,
-          totalMoney: res.data.Actprice,
+          totalMoney: orderDetail.Actprice,
           tick: tick,
           score: score,
-          paymoney: (res.data.Actprice - (tick.paymoney || 0) - (score.paymoney || 0) + res.data.freight + res.data.delivermoney).toFixed(2),
-          againPaymoney: (res.data.shouldmoney - res.data.paymoney).toFixed(2)
+          paymoney: (orderDetail.Actprice - (tick.paymoney || 0) - (score.paymoney || 0) + orderDetail.freight + orderDetail.delivermoney).toFixed(2),
+          againPaymoney: (orderDetail.shouldmoney - orderDetail.paymoney).toFixed(2)
         })
       } else {
         toast.toast(res.message)
       }
+      wx.hideLoading()
     }).catch(error => {
       toast.toast(error.error)
     })

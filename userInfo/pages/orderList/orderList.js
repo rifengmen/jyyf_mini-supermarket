@@ -155,7 +155,14 @@ Page({
       let res = result.data
       if (res.flag === 1) {
         let orderList = self.data.orderList
-        orderList.push(...res.data)
+        let n_orderList = res.data
+        n_orderList.forEach(item => {
+          if (item.billstatus === 40) {
+            item.Totalprice = 0
+            item.Actprice = 0
+          }
+        })
+        orderList.push(...n_orderList)
         self.setData({
           orderList: orderList,
           rowCount: res.rowCount

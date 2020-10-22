@@ -53,6 +53,8 @@ Page({
     dialogFlag: false,
     // 商品信息
     goods: '',
+    // 扫码购类型，0：共用线上购物车；1：本地独立购物车
+    scanType: app.globalData.scanType,
   },
 
   /**
@@ -213,8 +215,12 @@ Page({
   // 获取抢购商品列表
   getPanicBuyGoodsList () {
     let self = this
+    let scanType = self.data.scanType
     let data = {}
     let url = 'info/panicGdscode.do?method=listPanicBuyGdscode'
+    if (scanType) {
+      url = 'info/goods.do?method=getProductListByPromote'
+    }
     // 发送列表请求
     self.getList(data, url)
   },

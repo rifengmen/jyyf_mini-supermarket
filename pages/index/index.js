@@ -71,8 +71,6 @@ Page({
     self.getHotList()
     // 获取抢购商品列表
     self.getPanicBuyGoodsList()
-    // 更新购物车数量
-    self.getCartCount()
   },
 
   /**
@@ -489,6 +487,10 @@ Page({
     let self = this
     let data = {}
     let url = 'info/panicGdscode.do?method=listPanicBuyGdscode'
+    let scanType = self.data.scanType
+    if (scanType) {
+      url = 'info/goods.do?method=getProductListByPromote'
+    }
     wx.showLoading({
       title: '正在加载',
       mask: true,

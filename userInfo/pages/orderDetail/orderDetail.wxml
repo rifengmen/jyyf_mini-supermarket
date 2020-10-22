@@ -1,126 +1,128 @@
 <!--userInfo/pages/orderDetail/orderDetail.wxml-->
 <view class="container color333333 font28 bgf0f0f0">
-  <!-- 待付款 start -->
-  <view class="status bg71d793" wx:if="{{orderDetail.payflag}}">
-    <view class="img">
-      <image src="/lib/images/orderType11.png"></image>
-    </view>
-    <view class="text colorffffff">
-      <view class="">待付款</view>
-      <view class="font24">请尽快付款</view>
-    </view>
-  </view>
-  <!-- 待付款 end -->
-  <!-- 收货地址 start -->
-  <view class="address_cont bgffffff">
-    <view class="address">
-      <view class="name font_blod">{{orderDetail.receiver + ' ' + orderDetail.phone}}</view>
-      <view class="color666666 font24">{{orderDetail.address}}</view>
-    </view>
-  </view>
-  <!-- 收货地址 end -->
-  <!-- 分割线 start -->
-  <view class="decollator bgffffff overflow">
-    <image src="/lib/images/decollator.png" mode="aspectFill"></image>
-  </view>
-  <!-- 分割线 end -->
-  <!-- 门店名称 start -->
-  <view class="deptname_cont bgffffff">
-    <view class="deptname_border border_be5e5e5">
-      <view class="deptname">
-        <view class="img overflow">
-          <image src="/lib/images/shop.png"></image>
-        </view>
-        <view class="name font_blod ellipsis">{{orderDetail.shopname}}</view>
+  <block wx:if="{{orderDetail}}">
+    <!-- 待付款 start -->
+    <view class="status bg71d793" wx:if="{{orderDetail.payflag}}">
+      <view class="img">
+        <image src="/lib/images/orderType11.png"></image>
       </view>
-      <view class="orderCount color999999 tr">共{{orderDetail.OrderDetail.length}}类</view>
+      <view class="text colorffffff">
+        <view class="">待付款</view>
+        <view class="font24">请尽快付款</view>
+      </view>
     </view>
-  </view>
-  <!-- 门店名称 end -->
-  <!-- 订单商品列表 start -->
-  <view class="goodslist bgffffff">
-    <view class="goods_list2 border_be5e5e5">
-      <view class="goods_item2 bgffffff" hover-class="none" wx:for="{{orderDetail.OrderDetail}}" wx:key="index">
-        <view class="item_img overflow">
-          <image src="{{baseUrl + item.imageurl}}" mode="aspectFit" lazy-load="true"></image>
+    <!-- 待付款 end -->
+    <!-- 收货地址 start -->
+    <view class="address_cont bgffffff">
+      <view class="address">
+        <view class="name font_blod">{{orderDetail.receiver + ' ' + orderDetail.phone}}</view>
+        <view class="color666666 font24">{{orderDetail.address}}</view>
+      </view>
+    </view>
+    <!-- 收货地址 end -->
+    <!-- 分割线 start -->
+    <view class="decollator bgffffff overflow">
+      <image src="/lib/images/decollator.png" mode="aspectFill"></image>
+    </view>
+    <!-- 分割线 end -->
+    <!-- 门店名称 start -->
+    <view class="deptname_cont bgffffff">
+      <view class="deptname_border border_be5e5e5">
+        <view class="deptname">
+          <view class="img overflow">
+            <image src="/lib/images/shop.png"></image>
+          </view>
+          <view class="name font_blod ellipsis">{{orderDetail.shopname}}</view>
         </view>
-        <view class="item_desc">
-          <view class="item_name ellipsis2">{{item.goodsname}}</view>
-          <view class="price_cont">
-            <view class="price">
-              <view class="actual_price colorfa6400">￥{{item.price}}</view>
-              <del class="color999999 font22">￥{{item.saleprice}}</del>
-            </view>
-            <view class="cart">
-              <view>× {{item.amount}}</view>
+        <view class="orderCount color999999 tr">共{{orderDetail.OrderDetail.length}}类</view>
+      </view>
+    </view>
+    <!-- 门店名称 end -->
+    <!-- 订单商品列表 start -->
+    <view class="goodslist bgffffff">
+      <view class="goods_list2 border_be5e5e5">
+        <view class="goods_item2 bgffffff" hover-class="none" wx:for="{{orderDetail.OrderDetail}}" wx:key="index">
+          <view class="item_img overflow">
+            <image src="{{baseUrl + item.imageurl}}" mode="aspectFit" lazy-load="true"></image>
+          </view>
+          <view class="item_desc">
+            <view class="item_name ellipsis2">{{item.goodsname}}</view>
+            <view class="price_cont">
+              <view class="price">
+                <view class="actual_price colorfa6400">￥{{item.price}}</view>
+                <del class="color999999 font22">￥{{item.saleprice}}</del>
+              </view>
+              <view class="cart">
+                <view>× {{item.amount}}</view>
+              </view>
             </view>
           </view>
         </view>
       </view>
     </view>
-  </view>
-  <!-- 订单商品列表 end -->
-  <!-- 订单结算信息 start -->
-  <view class="order_pay bgffffff">
-    <view class="">
-      <view class="">商品总额</view>
-      <view class="">￥{{orderDetail.Actprice}}</view>
-    </view>
-    <view class="">
-      <view class="">电子券</view>
-      <view class="colorfa6400">-￥{{tick.paymoney || 0}}</view>
-    </view>
-    <view class="">
-      <view class="">积分抵扣</view>
-      <view class="colorfa6400">-￥{{score.paymoney || 0}}</view>
-    </view>
-    <view class="">
-      <view class="">运费</view>
-      <view class="colorfa6400">+￥{{orderDetail.freight}}</view>
-    </view>
-    <view class="">
-      <view class="">配送服务费</view>
-      <view class="colorfa6400">+￥{{orderDetail.delivermoney}}</view>
-    </view>
-    <view class="">
-      <view class=""></view>
-      <view class="">实付金额：
-        <text class="colorfa6400 font32 font_blod">￥{{paymoney}}</text>
+    <!-- 订单商品列表 end -->
+    <!-- 订单结算信息 start -->
+    <view class="order_pay bgffffff">
+      <view class="">
+        <view class="">商品总额</view>
+        <view class="">￥{{orderDetail.Actprice}}</view>
+      </view>
+      <view class="">
+        <view class="">电子券</view>
+        <view class="colorfa6400">-￥{{tick.paymoney || 0}}</view>
+      </view>
+      <view class="">
+        <view class="">积分抵扣</view>
+        <view class="colorfa6400">-￥{{score.paymoney || 0}}</view>
+      </view>
+      <view class="">
+        <view class="">运费</view>
+        <view class="colorfa6400">+￥{{orderDetail.freight}}</view>
+      </view>
+      <view class="">
+        <view class="">配送服务费</view>
+        <view class="colorfa6400">+￥{{orderDetail.delivermoney}}</view>
+      </view>
+      <view class="">
+        <view class=""></view>
+        <view class="">实付金额：
+          <text class="colorfa6400 font32 font_blod">￥{{paymoney}}</text>
+        </view>
       </view>
     </view>
-  </view>
-  <!-- 订单结算信息 end -->
-  <!-- 还需支付 start -->
-  <view class="order_pay bgffffff" wx:if="{{orderDetail.payflag}}">
-    <view class="">
-      <view class="">还需支付：</view>
-      <view class="colorfa6400 font32 font_blod">￥{{againPaymoney}}</view>
+    <!-- 订单结算信息 end -->
+    <!-- 还需支付 start -->
+    <view class="order_pay bgffffff" wx:if="{{orderDetail.payflag}}">
+      <view class="">
+        <view class="">还需支付：</view>
+        <view class="colorfa6400 font32 font_blod">￥{{againPaymoney}}</view>
+      </view>
     </view>
-  </view>
-  <!-- 还需支付 end -->
-  <!-- 订单信息 start -->
-  <view class="order_desc bgffffff">
-    <view class="">
-      <view class="tit color999999">订单编号：</view>
-      <text class=""> {{orderDetail.orderNum}}</text>
+    <!-- 还需支付 end -->
+    <!-- 订单信息 start -->
+    <view class="order_desc bgffffff">
+      <view class="">
+        <view class="tit color999999">订单编号：</view>
+        <text class=""> {{orderDetail.orderNum}}</text>
+      </view>
+      <view class="" wx:if="{{paymodename}}">
+        <view class="tit color999999">支付方式：</view>
+        <text class=""> {{paymodename}}</text>
+      </view>
+      <view class="">
+        <view class="tit color999999">备注：</view>
+        <text class=""> {{orderDetail.comment || '无'}}</text>
+      </view>
     </view>
-    <view class="" wx:if="{{paymodename}}">
-      <view class="tit color999999">支付方式：</view>
-      <text class=""> {{paymodename}}</text>
+    <!-- 订单信息 end -->
+    <!-- btn start -->
+    <view class="zhanwei" wx:if="{{orderDetail.payflag || orderDetail.cancelflag}}"></view>
+    <view class="btn_cont font32 bgffffff" wx:if="{{orderDetail.payflag || orderDetail.cancelflag}}">
+      <navigator class="btn colorffffff bg71d793 border_r500 border_a71d793 tc" hover-class="none" wx:if="{{orderDetail.payflag}}" url="/userInfo/pages/againPay/againPay?tradeno={{tradeno}}">去支付</navigator>
+      <view class="btn color666666 bgffffff border_r500 border_a979797 tc" wx:if="{{orderDetail.cancelflag}}">
+        <cancelBtn bind:setOrderList="backs" tradeno="{{tradeno}}"></cancelBtn>
+      </view>
     </view>
-    <view class="">
-      <view class="tit color999999">备注：</view>
-      <text class=""> {{orderDetail.comment || '无'}}</text>
-    </view>
-  </view>
-  <!-- 订单信息 end -->
-  <!-- btn start -->
-  <view class="zhanwei" wx:if="{{orderDetail.payflag || orderDetail.cancelflag}}"></view>
-  <view class="btn_cont font32 bgffffff" wx:if="{{orderDetail.payflag || orderDetail.cancelflag}}">
-    <navigator class="btn colorffffff bg71d793 border_r500 border_a71d793 tc" hover-class="none" wx:if="{{orderDetail.payflag}}" url="/userInfo/pages/againPay/againPay?tradeno={{tradeno}}">去支付</navigator>
-    <view class="btn color666666 bgffffff border_r500 border_a979797 tc" wx:if="{{orderDetail.cancelflag}}">
-      <cancelBtn bind:setOrderList="backs" tradeno="{{tradeno}}"></cancelBtn>
-    </view>
-  </view>
-  <!-- btn end -->
+    <!-- btn end -->
+  </block>
 </view>
