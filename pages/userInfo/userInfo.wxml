@@ -12,7 +12,7 @@
 				<navigator class="navs toregister color71d793" hover-class="none" url="/pages/register/register" wx:if="{{openidType && !memcode}}">点此绑定手机，注册/登录</navigator>
 				<navigator class="navs colorffffff font24 bg71d793 tc border_r500" hover-class="none" url="/userInfo/pages/payPassword/payPassword" wx:if="{{memcode}}">会员卡 > </navigator>
 			</view>
-			<navigator class="my_code" hover-class="none" url="/userInfo/pages/myCode/myCode">
+			<navigator class="my_code" hover-class="none" url="/userInfo/pages/myCode/myCode" wx:if="{{memcode}}">
 				<image src="/lib/images/myCode.png"></image>
 				<view class="tc">电子会员</view>
 			</navigator>
@@ -25,7 +25,7 @@
 			<view class="tc ellipsis">{{cardInfo.money || 0}}</view>
 			<view class="tc color666666">账户余额</view>
 		</navigator>
-		<navigator class="card_item ellipsis fl" hover-class="none" url="/pages/tickList/tickList?from=userInfo">
+		<navigator class="card_item ellipsis fl" hover-class="none" url="/autoModule/pages/tickList/tickList?from=userInfo">
 			<view class="tc">{{tickNum}}</view>
 			<view class="tc color666666">电子券</view>
 		</navigator>
@@ -109,11 +109,11 @@
 				</view>
 				<view class="name font24">收货地址</view>
 			</navigator>
-			<navigator wx:if="{{scanType}}" class="item fl" hover-class="none" url="/userInfo/pages/complaintList/complaintList?type=1&title=商品建议">
+			<navigator class="item fl" hover-class="none" url="/userInfo/pages/complaintList/complaintList?type={{type}}&title={{typeList[type]}}">
 				<view class="img">
 					<image src="/lib/images/myComment.png"></image>
 				</view>
-				<view class="name font24">商品建议</view>
+				<view class="name font24">{{typeList[type]}}</view>
 			</navigator>
 			<navigator class="item fl" hover-class="none" url="/userInfo/pages/recordList/recordList">
 				<view class="img">

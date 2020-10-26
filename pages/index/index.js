@@ -288,7 +288,7 @@ Page({
         case 15:
           // 领券中心
           wx.navigateTo({
-            url: '/pages/tickList/tickList?from=auto',
+            url: '/autoModule/pages/tickList/tickList?from=auto',
           })
           break;
         case 16:
@@ -306,7 +306,7 @@ Page({
         case 18:
           // 我的电子券
           wx.navigateTo({
-            url: '/pages/tickList/tickList?from=userInfo',
+            url: '/autoModule/pages/tickList/tickList?from=userInfo',
           })
           break;
         case 19:
@@ -555,7 +555,7 @@ Page({
           })
         } else if (linktype === 7) { // 领券中心
           wx.navigateTo({
-            url: '/pages/tickList/tickList?from=auto',
+            url: '/autoModule/pages/tickList/tickList?from=auto',
           })
         } else if (linktype === 8) { // 直播
           let roomid = res.data.linkcode;

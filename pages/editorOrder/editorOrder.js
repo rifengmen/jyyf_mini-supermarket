@@ -47,6 +47,8 @@ Page({
     scoreFlag: false,
     // 电子券
     tick: '',
+    // 优惠券可用标识
+    isUseTickflag: true,
     // 运费
     freight: '',
     // 订单支付金额
@@ -173,6 +175,8 @@ Page({
         }
         // 设置订单支付金额
         self.setPayMoney()
+        // 设置优惠券可用标识
+        self.getEditorOrder()
       } else {
         toast.toast(res.message)
         self.setData({
@@ -303,6 +307,26 @@ Page({
     })
   },
 
+  // 设置优惠券可用标识
+  getEditorOrder () {
+    let self = this
+    let data = {
+      payMoney: parseFloat(self.data.payMoney),
+      Totalmoney: parseFloat(self.data.orderDetail.needpaymoney),
+    }
+    let url = 'bill/pay.do?method=payMoneytick'
+    request.http(url, data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          isUseTickflag: res.data.length
+        })
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
   // 去电子券列表
   toTickList () {
     let self = this
@@ -311,7 +335,7 @@ Page({
       return false
     }
     wx.navigateTo({
-      url: '/pages/tickList/tickList?from=editorOrder&payMoney=' + self.data.payMoney + '&Totalmoney=' + self.data.orderDetail.needpaymoney,
+      url: '/autoModule/pages/tickList/tickList?from=editorOrder&payMoney=' + self.data.payMoney + '&Totalmoney=' + self.data.orderDetail.needpaymoney,
     })
   },
 
@@ -400,6 +424,7 @@ Page({
   payVerify (e) {
     let self = this
     let address = app.globalData.address || ''
+    let orderDetail = self.data.orderDetail
     let from = e.currentTarget.dataset.from
     self.setData({
       frombtn: from,
@@ -408,7 +433,7 @@ Page({
     let cardBtn = self.selectComponent('#cardBtn')
     let wechatBtn = self.selectComponent('#wechatBtn')
     // 验证收货地址
-    if (!address) {
+    if (!address && !orderDetail.barflag) {
       toast.toast('请选择收货地址')
       return false
     }

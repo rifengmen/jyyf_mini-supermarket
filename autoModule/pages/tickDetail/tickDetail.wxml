@@ -1,4 +1,4 @@
-<!--pages/tickDetail/tickDetail.wxml-->
+<!--autoModule/pages/tickDetail/tickDetail.wxml-->
 <view class="container color333333 font28 bgffffff" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
 	<view class="tick_cont">
 		<!-- 卡片 start -->

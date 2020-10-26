@@ -32,6 +32,10 @@ Page({
     messageNum: 0,
     // 扫码购类型，0：共用线上购物车；1：本地独立购物车
     scanType: app.globalData.scanType,
+    // 类别,0：投诉建议；1:商品建议；2:我要投诉；
+    type: 0,
+    // 投诉类别列表
+    typeList: app.globalData.typeList,
   },
 
   /**
@@ -39,6 +43,11 @@ Page({
    */
   onLoad: function (options) {
     let self = this
+    if (self.data.scanType) {
+      self.setData({
+        type: 1,
+      })
+    }
     let openid = app.globalData.openid
     let defaultOpenid = app.globalData.defaultOpenid
     if (openid && openid !== defaultOpenid) {

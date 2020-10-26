@@ -1,4 +1,4 @@
-/* pages/tickDetail/tickDetail.wxss */
+/* autoModule/pages/tickDetail/tickDetail.wxss */
 .tick_cont {
   width: calc(100% - 48rpx);
   height: auto;

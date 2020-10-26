@@ -3,12 +3,13 @@
   <view class="scan_cont">
     <!-- 扫码购步骤 start -->
     <view class="step bgffffff border_r12">
-      <view class="deptname" wx:if="{{scanType}}">
+      <view class="deptname">
         <view class="shop overflow">
           <image src="/lib/images/shop.png" mode="aspectFit"></image>
         </view>
         <view class="name font32 font_blod ellipsis">
-          <picker class="picker" bindchange="bindPickerChange" value="{{shopIndex}}" range="{{scanShopList}}" range-key="deptname">{{scanShopList[shopIndex].deptname}} > </picker>
+          <picker class="picker" bindchange="bindPickerChange" value="{{shopIndex}}" range="{{scanShopList}}" range-key="deptname" wx:if="{{scanType}}">{{scanShopList[shopIndex].deptname}} > </picker>
+          <view wx:else>{{deptname}}</view>
         </view>
       </view>
       <view class="step_tit tc">- 扫码购步骤 -</view>

@@ -1,8 +1,8 @@
-// pages/tickList/tickList.js
+// autoModule/pages/tickList/tickList.js
 const app = getApp()
-const request = require("../../utils/request")
-const toast = require("../../utils/toast")
-const utils = require("../../utils/util")
+const request = require("../../../utils/request")
+const toast = require("../../../utils/toast")
+const utils = require("../../../utils/util")
 
 Page({
 
@@ -104,7 +104,7 @@ Page({
 
   },
 
-  // 选择电子券页面
+  // 使用电子券页面
   getEditorOrder () {
     let self = this
     let data = {
@@ -208,7 +208,7 @@ Page({
     let from = self.data.from
     if (from === 'auto') {
       wx.navigateTo({
-        url: '/pages/tickDetail/tickDetail?tickid=' + tickid,
+        url: '/autoModule/pages/tickDetail/tickDetail?tickid=' + tickid,
       })
     }
   }

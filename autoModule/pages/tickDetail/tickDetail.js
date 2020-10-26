@@ -1,7 +1,8 @@
-// pages/tickDetail/tickDetail.js
+// autoModule/pages/tickDetail/tickDetail.js
 const app = getApp()
-const request = require("../../utils/request")
-const toast = require("../../utils/toast")
+const request = require("../../../utils/request")
+const toast = require("../../../utils/toast")
+const utils = require("../../../utils/util")
 
 Page({
 

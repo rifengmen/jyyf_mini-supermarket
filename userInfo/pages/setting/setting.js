@@ -9,15 +9,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // 扫码购类型，0：共用线上购物车；1：本地独立购物车
-    scanType: app.globalData.scanType,
+    // 类别,0：投诉建议；1:商品建议；2:我要投诉；
+    type: 2,
+    // 投诉类别列表
+    typeList: app.globalData.typeList,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let self = this
   },
 
   /**

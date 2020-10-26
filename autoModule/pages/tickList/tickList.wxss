@@ -1,4 +1,4 @@
-/* pages/tickList/tickList.wxss */
+/* autoModule/pages/tickList/tickList.wxss */
 .tick_list {
   width: calc(100% - 48rpx);
   height: auto;

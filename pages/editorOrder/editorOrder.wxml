@@ -2,34 +2,38 @@
 <view class="container color333333 font28 bgf0f0f0" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
 	<!-- buyEnd成功 start -->
 	<block wx:if="{{orderDetail}}">
-		<!-- 选择地址 start -->
-		<view class="address_cont bgffffff" bindtap="setPickTypeFlag">
-			<view class="address" wx:if="{{address}}">
-				<block wx:if="{{address.pickType}}">
-					<view class="name font_blod">{{address.username + '  ' + address.phone}}</view>
-					<view class="color666666 font24">{{address.mapaddress || ''}}</view>
-					<view class="color666666 font24">{{address.address}}</view>
-				</block>
-				<block wx:else>
-					<view class="name">
-						<view class="font_blod">{{deptname}}</view>
-						<view class="tag colorffffff font24 bg71d793 border_r500 tc">自提</view>
-						<view class="color999999 font24">(提货时间08:00-12:00)</view>
-					</view>
-					<view class="">{{address.username + '  ' + address.phone}}</view>
-				</block>
+		<!-- 非扫码购显示选择收货地址 start -->
+		<block wx:if="{{!orderDetail.barflag}}">
+			<!-- 选择地址 start -->
+			<view class="address_cont bgffffff" bindtap="setPickTypeFlag">
+				<view class="address" wx:if="{{address}}">
+					<block wx:if="{{address.pickType}}">
+						<view class="name font_blod">{{address.username + '  ' + address.phone}}</view>
+						<view class="color666666 font24">{{address.mapaddress || ''}}</view>
+						<view class="color666666 font24">{{address.address}}</view>
+					</block>
+					<block wx:else>
+						<view class="name">
+							<view class="font_blod">{{deptname}}</view>
+							<view class="tag colorffffff font24 bg71d793 border_r500 tc">自提</view>
+							<view class="color999999 font24">(提货时间08:00-12:00)</view>
+						</view>
+						<view class="">{{address.username + '  ' + address.phone}}</view>
+					</block>
+				</view>
+				<view class="address" wx:else>
+					<view class="">请选择收货地址</view>
+				</view>
+				<view class="more colorc7c7c7 tr"> > </view>
 			</view>
-			<view class="address" wx:else>
-				<view class="">请选择收货地址</view>
+			<!-- 选择地址 end -->
+			<!-- 分割线 start -->
+			<view class="decollator bgffffff overflow">
+				<image src="/lib/images/decollator.png" mode="aspectFill"></image>
 			</view>
-			<view class="more colorc7c7c7 tr"> > </view>
-		</view>
-		<!-- 选择地址 end -->
-		<!-- 分割线 start -->
-		<view class="decollator bgffffff overflow">
-			<image src="/lib/images/decollator.png" mode="aspectFill"></image>
-		</view>
-		<!-- 分割线 end -->
+			<!-- 分割线 end -->
+		</block>
+		<!-- 非扫码购显示选择收货地址 end -->
 		<!-- 门店名称 start -->
 		<view class="deptname_cont bgffffff">
 			<view class="deptname_border border_be5e5e5">
@@ -80,9 +84,12 @@
 		<view class="section bgffffff" wx:if="{{paymode4Flag}}">
 			<view class="remark border_be5e5e5">
 				<view class="section_tit color666666">电子券</view>
-				<view class="section_cont" bindtap="toTickList">
+				<view class="section_cont" bindtap="toTickList" wx:if="{{isUseTickflag}}">
 					<view class="color999999" wx:if="{{!tick}}">请选择电子券  ></view>
 					<view wx:else>优惠<text class="colorfa6400">￥{{tick.paymoney}}</text></view>
+				</view>
+				<view class="section_cont" wx:else>
+					<view class="color999999" wx:if="{{!tick}}">暂无可用优惠券</view>
 				</view>
 			</view>
 		</view>

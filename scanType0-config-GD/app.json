@@ -16,8 +16,6 @@
     "pages/cart2/cart2",
     "pages/scan/scan",
     "pages/editorOrder/editorOrder",
-    "pages/tickList/tickList",
-    "pages/tickDetail/tickDetail",
     "pages/payEnd/payEnd",
     "pages/userInfo/userInfo",
     "pages/roomplayList/roomplayList",
@@ -28,6 +26,8 @@
       "root": "autoModule",
       "name": "autoModule",
       "pages": [
+        "pages/tickList/tickList",
+        "pages/tickDetail/tickDetail",
         "pages/nearby/nearby",
         "pages/poster/poster",
         "pages/lottery/lottery",
