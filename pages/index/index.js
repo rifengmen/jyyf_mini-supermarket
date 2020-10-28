@@ -34,7 +34,15 @@ Page({
     // 专区列表
     hotList: [],
     // 抢购商品列表
-    goodsList: [],
+    panicBuyGoodsList: [],
+    // 特价商品列表
+    specialGoodsList: [],
+    // 导航栏前景颜色值，包括按钮、标题、状态栏的颜色，仅支持 #ffffff 和 #000000
+    frontColor: '#ffffff',
+    // 导航栏背景色
+    barColor: '#71d793',
+    // 首页背景图
+    bgimg: '',
     // 弹框组件显示开关
     dialogFlag: false,
     // 商品信息
@@ -49,13 +57,20 @@ Page({
    */
   onLoad: function (options) {
     let self = this
+    self.setData({
+      deptname: app.globalData.deptname,
+      deptcode: app.globalData.deptcode,
+      barColor: app.globalData.barColor || '#71d793',
+      bgimg: app.globalData.bgimg || '',
+    })
     // 设置title
     wx.setNavigationBarTitle({
       title: app.globalData.apptitle
     })
-    self.setData({
-      deptname: app.globalData.deptname,
-      deptcode: app.globalData.deptcode,
+    // 设置背景色
+    wx.setNavigationBarColor({
+      frontColor: self.data.frontColor,
+      backgroundColor: self.data.barColor,
     })
     // 获取banner列表
     self.getBannerList()
@@ -71,6 +86,8 @@ Page({
     self.getHotList()
     // 获取抢购商品列表
     self.getPanicBuyGoodsList()
+    // 获取特价商品列表
+    self.getSpecialGoodsList()
   },
 
   /**
@@ -135,6 +152,8 @@ Page({
     self.getHotList()
     // 获取抢购商品列表
     self.getPanicBuyGoodsList()
+    // 获取特价商品列表
+    self.getSpecialGoodsList()
     // 更新购物车数量
     self.getCartCount()
     // 关闭下拉刷新
@@ -503,7 +522,45 @@ Page({
       let res = result.data
       if (res.flag === 1) {
         self.setData({
-          goodsList: res.data,
+          panicBuyGoodsList: res.data,
+        })
+      } else {
+        toast.toast(res.message)
+      }
+      wx.hideLoading()
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 获取抢购商品列表
+  getSpecialGoodsList () {
+    let self = this
+    let data = {
+      Datatype: '1',
+      Page: 1,
+      pageSize: 15,
+      Sortflg: 1,
+      sorttype: 0
+    }
+    let url = 'info/goods.do?method=getProductList'
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
+    // 设置请求开关
+    self.setData({
+      getFlag: false
+    })
+    request.http(url, data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          specialGoodsList: res.data,
         })
       } else {
         toast.toast(res.message)

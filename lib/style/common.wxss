@@ -61,7 +61,7 @@
 /* 商品列表1 start */
 .goods_list1 {
   width: calc(100% - 20rpx);
-  min-height: 310rpx;
+  min-height: 406rpx;
   margin: 0 auto;
 }
 .goods_item1 {
@@ -82,9 +82,9 @@
 }
 .goods_item1 .item_name {
   width: calc(100% - 20rpx);
-  height: 30rpx;
-  line-height: 30rpx;
-  margin: 15rpx auto;
+  height: 70rpx;
+  line-height: 1.5;
+  margin: 10rpx auto;
 
 }
 .goods_item1 .price_cont {

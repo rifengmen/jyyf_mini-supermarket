@@ -1,8 +1,14 @@
 <!--index.wxml-->
 <view class="container color333333 font28 bgf9f9f9" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
-	<!-- 广告位 start -->
-	<view class="banner_cont overflow" wx:if="{{bannerList}}">
-		<view class="banner_bg bg71d793_linear"></view>
+	<!-- 背景 start -->
+	<view class="banner_cont bg71d793_linear overflow">
+		<!-- 背景 start -->
+		<block>
+			<view class="banner_bg" style="background-image: url('{{baseUrl + bgimg}}');background-size: cover;" wx:if="{{bgimg}}"></view>
+			<view class="banner_bg" style="background:linear-gradient(180deg, {{barColor}} 0%, #f9f9f9 65%);" wx:else></view>
+		</block>
+		<!-- 背景 end -->
+		<!-- 广告位 start -->
 		<view class="banner_cont_box">
 			<!-- 定位 搜索 start -->
 			<view class="search_cont">
@@ -41,93 +47,94 @@
 			</view>
 			<!-- banner end -->
 		</view>
-	</view>
-	<!-- 广告位 end -->
-	<!-- 自定义功能区 start -->
-	<view class="auto_cate overflow">
-		<block wx:if="{{modulePictureList.length >= 1 && modulePictureList.length <= 5}}">
-			<scroll-view class="cate_list cate_list1" scroll-x enable-flex="true" bindscroll="conScroll" bindscrolltolower="conScrLower" upper-threshold="50rpx" bindscrolltoupper="conScrUpper" scroll-with-animation>
-				<view class="auto_down">
-					<view class="cate_item down" wx:for="{{modulePictureList}}" wx:key="index" data-moduletype="{{item.moduletype}}" bindtap="toAutoCate">
-						<view class="cate_img border_r500 overflow">
-							<image src="{{baseUrl + item.picturename}}"></image>
+		<!-- 广告位 end -->
+		<!-- 自定义功能区 start -->
+		<view class="auto_cate overflow">
+			<block wx:if="{{modulePictureList.length >= 1 && modulePictureList.length <= 5}}">
+				<scroll-view class="cate_list cate_list1" scroll-x enable-flex="true" bindscroll="conScroll" bindscrolltolower="conScrLower" upper-threshold="50rpx" bindscrolltoupper="conScrUpper" scroll-with-animation>
+					<view class="auto_down">
+						<view class="cate_item down" wx:for="{{modulePictureList}}" wx:key="index" data-moduletype="{{item.moduletype}}" bindtap="toAutoCate">
+							<view class="cate_img border_r500 overflow">
+								<image src="{{baseUrl + item.picturename}}"></image>
+							</view>
+							<view class="cate_name font22 tc">{{item.modulename}}</view>
 						</view>
-						<view class="cate_name font22 tc">{{item.modulename}}</view>
 					</view>
-				</view>
-			</scroll-view>
-		</block>
-		<block wx:if="{{modulePictureList.length > 5 && modulePictureList.length <= 10}}">
-			<scroll-view class="cate_list" scroll-x enable-flex="true" bindscroll="conScroll" bindscrolltolower="conScrLower" upper-threshold="50rpx" bindscrolltoupper="conScrUpper" scroll-with-animation>
-				<view class="auto_down">
-					<view class="cate_item down" wx:for="{{modulePictureList}}" wx:key="index" wx:if="{{index < 5}}" data-moduletype="{{item.moduletype}}" bindtap="toAutoCate">
-						<view class="cate_img border_r500 overflow">
-							<image src="{{baseUrl + item.picturename}}"></image>
+				</scroll-view>
+			</block>
+			<block wx:if="{{modulePictureList.length > 5 && modulePictureList.length <= 10}}">
+				<scroll-view class="cate_list" scroll-x enable-flex="true" bindscroll="conScroll" bindscrolltolower="conScrLower" upper-threshold="50rpx" bindscrolltoupper="conScrUpper" scroll-with-animation>
+					<view class="auto_down">
+						<view class="cate_item down" wx:for="{{modulePictureList}}" wx:key="index" wx:if="{{index < 5}}" data-moduletype="{{item.moduletype}}" bindtap="toAutoCate">
+							<view class="cate_img border_r500 overflow">
+								<image src="{{baseUrl + item.picturename}}"></image>
+							</view>
+							<view class="cate_name font22 tc">{{item.modulename}}</view>
 						</view>
-						<view class="cate_name font22 tc">{{item.modulename}}</view>
 					</view>
-				</view>
-				<view class="auto_up">
-					<view class="cate_item up" wx:for="{{modulePictureList}}" wx:key="index" wx:if="{{index >= 5}}" data-moduletype="{{item.moduletype}}" bindtap="toAutoCate">
-						<view class="cate_img border_r500 overflow">
-							<image src="{{baseUrl + item.picturename}}"></image>
+					<view class="auto_up">
+						<view class="cate_item up" wx:for="{{modulePictureList}}" wx:key="index" wx:if="{{index >= 5}}" data-moduletype="{{item.moduletype}}" bindtap="toAutoCate">
+							<view class="cate_img border_r500 overflow">
+								<image src="{{baseUrl + item.picturename}}"></image>
+							</view>
+							<view class="cate_name font22 tc">{{item.modulename}}</view>
 						</view>
-						<view class="cate_name font22 tc">{{item.modulename}}</view>
 					</view>
-				</view>
-			</scroll-view>
-		</block>
-		<block  wx:if="{{modulePictureList.length > 10}}">
-			<scroll-view class="cate_list cate_list2" scroll-x enable-flex="true" bindscroll="conScroll" bindscrolltolower="conScrLower" upper-threshold="50rpx" bindscrolltoupper="conScrUpper" scroll-with-animation>
-				<view class="auto_down">
-					<view class="cate_item down" wx:for="{{modulePictureList}}" wx:key="index" wx:if="{{index%2 === 0}}" data-moduletype="{{item.moduletype}}" bindtap="toAutoCate">
-						<view class="cate_img border_r500 overflow">
-							<image src="{{baseUrl + item.picturename}}"></image>
+				</scroll-view>
+			</block>
+			<block  wx:if="{{modulePictureList.length > 10}}">
+				<scroll-view class="cate_list cate_list2" scroll-x enable-flex="true" bindscroll="conScroll" bindscrolltolower="conScrLower" upper-threshold="50rpx" bindscrolltoupper="conScrUpper" scroll-with-animation>
+					<view class="auto_down">
+						<view class="cate_item down" wx:for="{{modulePictureList}}" wx:key="index" wx:if="{{index%2 === 0}}" data-moduletype="{{item.moduletype}}" bindtap="toAutoCate">
+							<view class="cate_img border_r500 overflow">
+								<image src="{{baseUrl + item.picturename}}"></image>
+							</view>
+							<view class="cate_name font22 tc">{{item.modulename}}</view>
 						</view>
-						<view class="cate_name font22 tc">{{item.modulename}}</view>
 					</view>
-				</view>
-				<view class="auto_up">
-					<view class="cate_item up" wx:for="{{modulePictureList}}" wx:key="index" wx:if="{{index%2 === 1}}" data-moduletype="{{item.moduletype}}" bindtap="toAutoCate">
-						<view class="cate_img border_r500 overflow">
-							<image src="{{baseUrl + item.picturename}}"></image>
+					<view class="auto_up">
+						<view class="cate_item up" wx:for="{{modulePictureList}}" wx:key="index" wx:if="{{index%2 === 1}}" data-moduletype="{{item.moduletype}}" bindtap="toAutoCate">
+							<view class="cate_img border_r500 overflow">
+								<image src="{{baseUrl + item.picturename}}"></image>
+							</view>
+							<view class="cate_name font22 tc">{{item.modulename}}</view>
 						</view>
-						<view class="cate_name font22 tc">{{item.modulename}}</view>
 					</view>
-				</view>
-			</scroll-view>
-		</block>
-		<!-- 自定义滚动条 start -->
-		<block wx:if="{{modulePictureList.length > 10}}">
-			<view class="con-sc-line-one {{lefOrRigOne ? 'con-sc-line-one-left' : 'con-sc-line-one-right'}} border_r500 bg71d793" animation="{{animationData}}"></view>
-			<view class='con-sc-line-two border_r500 bge2dede' style='left: {{leftTwo}}'></view>
-		</block>
-		<!-- 自定义滚动条 end -->
-	</view>
-	<!-- 自定义功能区 end -->
-	<!-- 公告 start -->
-	<view class="notice_cont border_r500 overflow bgffffff">
-		<navigator class="notice_img overflow" hover-class="none" url="/pages/message/noticeList/noticeList">
-			<image src="/lib/images/notice.png"></image>
-		</navigator>
-		<view class="notice_list">
-			<swiper class="notice_swiper" autoplay="true" circular="true" interval="5000" vertical="true">
-				<swiper-item wx:for="{{noticeList}}" wx:key="index" catchtouchmove='catchTouchMove'>
-					<navigator class="notice_item ellipsis" hover-class="none" url="{{'/pages/message/detail/detail?id=' + item.id + '&type=notice&time=' + item.Pubdate}}">{{item.title}}</navigator>
-				</swiper-item>
-			</swiper>
+				</scroll-view>
+			</block>
+			<!-- 自定义滚动条 start -->
+			<block wx:if="{{modulePictureList.length > 10}}">
+				<view class="con-sc-line-one {{lefOrRigOne ? 'con-sc-line-one-left' : 'con-sc-line-one-right'}} border_r500 bg71d793" animation="{{animationData}}"></view>
+				<view class='con-sc-line-two border_r500 bge2dede' style='left: {{leftTwo}}'></view>
+			</block>
+			<!-- 自定义滚动条 end -->
 		</view>
+		<!-- 自定义功能区 end -->
+		<!-- 公告 start -->
+		<view class="notice_cont border_r500 overflow bgffffff">
+			<navigator class="notice_img overflow" hover-class="none" url="/pages/message/noticeList/noticeList">
+				<image src="/lib/images/notice.png"></image>
+			</navigator>
+			<view class="notice_list">
+				<swiper class="notice_swiper" autoplay="true" circular="true" interval="5000" vertical="true">
+					<swiper-item wx:for="{{noticeList}}" wx:key="index" catchtouchmove='catchTouchMove'>
+						<navigator class="notice_item ellipsis" hover-class="none" url="{{'/pages/message/detail/detail?id=' + item.id + '&type=notice&time=' + item.Pubdate}}">{{item.title}}</navigator>
+					</swiper-item>
+				</swiper>
+			</view>
+		</view>
+		<!-- 公告 end -->
 	</view>
-	<!-- 公告 end -->
+	<!-- 背景 end -->
 	<!-- 海报区 start -->
-	<view class="poster overflow">
+	<view class="poster overflow" wx:if="{{posterList.length}}">
 		<view class="poster_img fl overflow" wx:for="{{posterList}}" wx:key="index" bindtap="toBannerDetail" data-id="{{item.ImageID}}">
 			<image src="{{baseUrl + item.Imageurl}}"></image>
 		</view>
 	</view>
 	<!-- 海报区 end -->
 	<!-- 专区 start -->
-	<view class="zone overflow">
+	<view class="zone overflow" wx:if="{{hotList.length}}">
 		<block wx:for="{{hotList}}" wx:key="index">
 			<navigator class="zone_item border_r10 bgfbd2af fl" hover-class="none" url="{{'/pages/goodsList/goodsList?cateid=' + item.Id + '&title=' + item.storecategoryname}}">
 				<view class="zone_itemtit">
@@ -142,7 +149,7 @@
 	</view>
 	<!-- 专区 end -->
 	<!-- 限时抢购 start -->
-	<view class="timeslimit border_r10 bgf68e74_linear" wx:if="{{goodsList.length}}">
+	<view class="timeslimit border_r10 bgf68e74_linear" wx:if="{{panicBuyGoodsList.length}}">
 		<view class="tit">
 			<view class="tit_img overflow">
 				<image src="/lib/images/timeslimit.png" mode="aspectFit"></image>
@@ -151,13 +158,13 @@
 		</view>
 		<view class="goods_list1 overflow">
 			<swiper class="timeslimit_swiper" autoplay="true" circular="true" interval="5000" display-multiple-items="3">
-				<block wx:for="{{goodsList}}" wx:key="index">
+				<block wx:for="{{panicBuyGoodsList}}" wx:key="index">
 					<swiper-item>
 						<navigator class="goods_item1 border_r10 overflow bgffffff" hover-class="none" url="/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&title={{item.Name}}&panicbuycode={{item.panicbuycode}}">
 							<view class="item_img overflow">
 								<image src="{{baseUrl + item.Defaultimage}}" mode="aspectFit" lazy-load="true"></image>
 							</view>
-							<view class="item_name ellipsis">{{item.Name}}</view>
+							<view class="item_name ellipsis2 font24">{{item.Name}}</view>
 							<view class="price_cont">
 								<view class="price">
 									<view class="actual_price colorfa6400 font26">￥{{item.panicprice}}</view>
@@ -175,6 +182,40 @@
 		<!-- 限时抢购 end -->
 	</view>
 	<!-- 限时抢购 end -->
+	<!-- 特价商品 start -->
+	<view class="timeslimit border_r10 bgf68e74_linear" wx:if="{{specialGoodsList.length}}">
+		<view class="tit">
+			<view class="tit_img overflow">
+				<image src="/lib/images/timeslimit.png" mode="aspectFit"></image>
+			</view>
+			<navigator class="colorffffff font32 font_blod" hover-class="none" url="/pages/goodsList/goodsList?Datatype=1&title=特价商品">特价商品</navigator>
+		</view>
+		<view class="goods_list1 overflow">
+			<swiper class="timeslimit_swiper" autoplay="true" circular="true" interval="5000" display-multiple-items="3">
+				<block wx:for="{{specialGoodsList}}" wx:key="index">
+					<swiper-item>
+						<navigator class="goods_item1 border_r10 overflow bgffffff" hover-class="none" url="/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&title={{item.Name}}&panicbuycode=">
+							<view class="item_img overflow">
+								<image src="{{baseUrl + item.Defaultimage}}" mode="aspectFit" lazy-load="true"></image>
+							</view>
+							<view class="item_name ellipsis2 font24">{{item.Name}}</view>
+							<view class="price_cont">
+								<view class="price">
+									<view class="actual_price colorfa6400 font26">￥{{item.Highpprice}}</view>
+									<del class="color999999 font20">￥{{item.Highoprice}}</del>
+								</view>
+								<view class="cart">
+									<addCart id="addCart" catchtap="addCart" data-goods="{{item}}" bind:getCartCount="getCartCount"></addCart>
+								</view>
+							</view>
+						</navigator>
+					</swiper-item>
+				</block>
+			</swiper>
+		</view>
+		<!-- 限时抢购 end -->
+	</view>
+	<!-- 特价商品 end -->
 	<!-- recommendList start -->
 	<view class="recommendList">
 		<!--<view class="tit font36 font_blod">每日推荐</view>-->
@@ -193,7 +234,7 @@
 					<view class="item_img overflow">
 						<image src="{{baseUrl + goods.Defaultimage}}" mode="aspectFit" lazy-load="true"></image>
 					</view>
-					<view class="item_name ellipsis">{{goods.Name}}</view>
+					<view class="item_name ellipsis2 font24">{{goods.Name}}</view>
 					<view class="price_cont">
 						<view class="price" wx:if="{{goods.scaleflag}}">
 							<view class="actual_price colorfa6400 font26">￥{{goods.Highpprice/2}}/斤</view>

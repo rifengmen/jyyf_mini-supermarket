@@ -161,6 +161,11 @@ Page({
           paymode5Flag: (paymodelist.filter(item => item.paymodeid === 5).length ? true : false),
           paymode7Flag: (paymodelist.filter(item => item.paymodeid === 7).length ? true : false),
         })
+        // 扫码购设定收货地址(防止重复请求buyend)
+        if (orderDetail.barflag) {
+          app.globalData.address = {}
+        }
+        // 判断是否有默认收货地址或者只能自提，-1：只能自提；0：未设置默认收货地址，>0:默认收货地址id
         if (res.data.sendId > 0) {
           if (!app.globalData.address) {
             app.globalData.addressId = res.data.sendId
@@ -330,7 +335,7 @@ Page({
   // 去电子券列表
   toTickList () {
     let self = this
-    if (!self.data.address) {
+    if (!self.data.address && !self.data.orderDetail.barflag) {
       toast.toast('请先选择收货地址')
       return false
     }

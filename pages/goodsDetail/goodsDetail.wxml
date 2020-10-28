@@ -119,6 +119,18 @@
 		</view>
 		<!-- 导航 加购物车 end -->
 	</block>
+	<!-- 快捷按钮 start -->
+	<view class="shortcut_key colorffffff font22">
+		<view class="share_btn btn border_r500">
+			<image src="/lib/image/poster.png"></image>
+			<view class="">海报</view>
+		</view>
+		<view class="share_btn btn border_r500">
+			<image src="/lib/image/share.png"></image>
+			<view class="">分享</view>
+		</view>
+	</view>
+	<!-- 快捷按钮 end -->
 	<!-- dialog start -->
 	<view class="dialog" wx:if="{{dialogFlag}}">
 		<dialog goods="{{goods}}" bind:dialogClose="dialogClose" bind:dialogConfirm="dialogConfirm"></dialog>

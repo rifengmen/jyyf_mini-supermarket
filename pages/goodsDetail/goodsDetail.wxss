@@ -98,14 +98,8 @@ swiper.banner_swiper {
 }
 .goods_desc3 {
   width: 100%;
-  /*height: 90rpx;*/
-  /* margin-top: 20rpx; */
   margin-bottom: 110rpx;
 }
-/*.zhanwei {*/
-  /*width: 100%;*/
-  /*height: 114rpx;*/
-/*}*/
 .nav_cart {
   position: fixed;
   bottom: 0;
@@ -152,4 +146,29 @@ swiper.banner_swiper {
   width: 226rpx;
   height: 60rpx;
   line-height: 60rpx;
+}
+.shortcut_key {
+  position: fixed;
+  top: 240rpx;
+  right: 24rpx;
+  width: 100rpx;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+.shortcut_key .btn {
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  margin-bottom: 24rpx;
+  background-color: rgba(0, 0, 0, .7);
+}
+.shortcut_key .btn image {
+  width: 50rpx;
+  height: 50rpx;
 }

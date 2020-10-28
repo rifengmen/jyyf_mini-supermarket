@@ -23,7 +23,6 @@ App({
         }
       }
     })
-
   },
 
   // 全局变量
@@ -38,6 +37,10 @@ App({
     sessionId: '',
     // 搜索内容
     search_val: '',
+    // 导航栏背景色
+    barColor: '',
+    // 首页背景图
+    bgimg: '',
     // 用户id
     userid: '',
     // 用户code

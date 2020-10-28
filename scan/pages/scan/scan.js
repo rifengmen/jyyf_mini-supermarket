@@ -123,6 +123,8 @@ Page({
             scanShopList: res.data,
           })
           app.globalData.scanShopInfo = res.data[0]
+          // 设置title
+          self.setTitle()
         }
       } else {
         toast.toast(res.message)
@@ -148,6 +150,8 @@ Page({
       scanShopInfo: new_scanShopInfo,
     })
     app.globalData.scanShopInfo = new_scanShopInfo
+    // 设置title
+    self.setTitle()
   },
 
   // 去出场码页面
@@ -167,6 +171,16 @@ Page({
       }
     }).catch(error => {
       toast.toast(error.error)
+    })
+  },
+
+  // 设置title
+  setTitle () {
+    let self = this
+    let scanShopList = self.data.scanShopList
+    let shopIndex = self.data.shopIndex
+    wx.setNavigationBarTitle({
+      title: scanShopList[shopIndex].deptname
     })
   },
 })

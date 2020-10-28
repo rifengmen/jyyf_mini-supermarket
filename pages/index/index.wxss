@@ -1,19 +1,11 @@
 /**index.wxss**/
-/* 广告位 start */
-/*  */
 .banner_cont {
-  width: calc(100% - 48rpx);
-  height: 360rpx;
-  padding: 0 24rpx;
+  width: 100%;
+  height: 854rpx;
+  padding: 24rpx 0;
   position: relative;
 }
-.banner_cont .bg_img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
+/* 广告位 start */
 .banner_bg {
   position: absolute;
   top: 0;
@@ -23,10 +15,9 @@
 }
 .banner_cont_box {
   position: absolute;
-  top: 0;
+  top: 24rpx;
   left: 0;
   width: calc(100% - 48rpx);
-  height: 100%;
   padding: 0 24rpx;
 }
 /* 定位 start */
@@ -99,9 +90,12 @@ swiper.banner_swiper {
 /* 广告位 end */
 /* 自定义功能区 start */
 .auto_cate {
-  width: calc(100% - 36rpx);
+  position: absolute;
+  top: 384rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100vw - 36rpx);
   margin: 12rpx auto;
-  position: relative;
 }
 .cate_list {
   width: 100%;
@@ -169,9 +163,12 @@ swiper.banner_swiper {
 /* 海报区 end */
 /* 公告 start */
 .notice_cont {
-  width: calc(100% - 88rpx);
+  position: absolute;
+  top: 808rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100vw - 88rpx);
   height: 70rpx;
-  margin: 0 auto 24rpx auto;
   padding: 0 20rpx;
   display: flex;
   justify-content: space-between;
@@ -268,7 +265,7 @@ swiper.notice_swiper {
   height: 100%;
 }
 .goods_list1 {
-  height: 376rpx;
+  height: 406rpx;
 }
 swiper.timeslimit_swiper {
   width: 100%;

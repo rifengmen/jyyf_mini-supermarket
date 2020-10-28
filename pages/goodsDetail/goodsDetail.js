@@ -158,7 +158,7 @@ Page({
         if (!self.data.panicbuycode) {
           EvaluationGC = res.data.EvaluationGC
           EvaluationTC = res.data.EvaluationTC
-          evaluation = (((EvaluationGC / EvaluationTC).toFixed(4) || 1) * 100)
+          evaluation = (((EvaluationGC / EvaluationTC) || 1) * 100).toFixed(2)
         }
         self.setData({
           goodsDetail: res.data,

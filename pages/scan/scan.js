@@ -78,6 +78,8 @@ Page({
       // 更新购物车数量
       self.getCartCount()
     }
+    // 设置title
+    self.setTitle()
   },
 
   /**
@@ -321,6 +323,14 @@ Page({
       }
     }).catch(error => {
       toast.toast(error.error)
+    })
+  },
+
+  // 设置title
+  setTitle () {
+    let self = this
+    wx.setNavigationBarTitle({
+      title: self.data.deptname
     })
   },
 
