@@ -11,6 +11,8 @@ Page({
   data: {
     // 基础路径
     baseUrl: app.globalData.baseUrl,
+    // 图片路径为空时默认图路径
+    errorImage: app.globalData.errorImage,
     // 门店名称
     deptname: '',
     // 购物车列表

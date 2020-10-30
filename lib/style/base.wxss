@@ -329,6 +329,25 @@
 }
 /* 布局方式 end */
 /* 取消微信默认样式 start */
+button {
+  position: unset;
+  display: unset;
+  margin-left: unset;
+  margin-right: unset;
+  padding-left: unset;
+  padding-right: unset;
+  box-sizing: unset;
+  font-size: unset;
+  text-align: unset;
+  text-decoration: unset;
+  line-height: unset;
+  border-radius: unset;
+  -webkit-tap-highlight-color: unset;
+  overflow: unset;
+  cursor: unset;
+  color: unset;
+  background-color: unset;
+}
 button::after {
   content: unset;
   width: unset;
@@ -341,7 +360,6 @@ button::after {
   transform-origin: unset;
   box-sizing: unset;
   border-radius: unset;
-  
 }
 /* 取消微信默认样式 end */
 /* input框 start */

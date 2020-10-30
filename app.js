@@ -37,10 +37,10 @@ App({
     sessionId: '',
     // 搜索内容
     search_val: '',
-    // 导航栏背景色
-    barColor: '',
     // 首页背景图
-    bgimg: '',
+    miniBackImg: '',
+    // 首页背景色
+    miniBackColor: '',
     // 用户id
     userid: '',
     // 用户code
@@ -60,6 +60,8 @@ App({
     latitude: '',
     // 倒计时时长
     countdownnum: '90',
+    // 图片路径为空时默认图路径
+    errorImage: '/lib/images/errorImage.png',
     // 购物车数量
     cartCount: 0,
     // 收货地址(编辑订单用)

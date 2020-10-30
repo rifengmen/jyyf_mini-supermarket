@@ -30,7 +30,7 @@
 				<block>
 					<navigator class="goods_item2 bgffffff border_be5e5e5" hover-class="none" wx:for="{{goodsList}}" wx:key="index" url="{{'/pages/goodsDetail/goodsDetail?Gdscode=' + item.Gdscode + '&title=' + item.Name}}">
 						<view class="item_img overflow">
-							<image src="{{baseUrl + item.Defaultimage}}" mode="aspectFit" lazy-load="true"></image>
+							<image src="{{item.Defaultimage ? (baseUrl + item.Defaultimage) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
 						</view>
 						<view class="item_desc">
 							<view class="item_name ellipsis2">{{item.Name}}</view>

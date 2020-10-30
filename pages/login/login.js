@@ -157,6 +157,10 @@ Page({
     request.http('system/customlogin.do?method=login', data).then(result => {
       let res = result.data
       if(res.flag === 1){
+        // 首页背景图
+        let miniBackImg = res.data.miniBackImg
+        // 首页背景色
+        let miniBackColor = res.data.miniBackColor
         // cookie
         let sessionId = result.header['Set-Cookie']
         // 用户id
@@ -186,6 +190,8 @@ Page({
         if (sessionId) {
           app.globalData.sessionId = sessionId
         }
+        app.globalData.miniBackImg = miniBackImg
+        app.globalData.miniBackColor = miniBackColor
         app.globalData.userid = userid
         app.globalData.memname = memname
         app.globalData.memcode = memcode

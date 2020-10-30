@@ -7,6 +7,8 @@ Page({
   data: {
     // 基础路径
     baseUrl: app.globalData.baseUrl,
+    // 图片路径为空时默认图路径
+    errorImage: app.globalData.errorImage,
     // 门店名称
     deptname: '',
     // 门店code
@@ -39,10 +41,10 @@ Page({
     specialGoodsList: [],
     // 导航栏前景颜色值，包括按钮、标题、状态栏的颜色，仅支持 #ffffff 和 #000000
     frontColor: '#ffffff',
-    // 导航栏背景色
-    barColor: '#71d793',
     // 首页背景图
-    bgimg: '',
+    miniBackImg: '',
+    // 首页背景色
+    miniBackColor: '#71d793',
     // 弹框组件显示开关
     dialogFlag: false,
     // 商品信息
@@ -60,8 +62,8 @@ Page({
     self.setData({
       deptname: app.globalData.deptname,
       deptcode: app.globalData.deptcode,
-      barColor: app.globalData.barColor || '#71d793',
-      bgimg: app.globalData.bgimg || '',
+      miniBackColor: app.globalData.miniBackColor || '#71d793',
+      miniBackImg: app.globalData.miniBackImg || '',
     })
     // 设置title
     wx.setNavigationBarTitle({
@@ -70,7 +72,7 @@ Page({
     // 设置背景色
     wx.setNavigationBarColor({
       frontColor: self.data.frontColor,
-      backgroundColor: self.data.barColor,
+      backgroundColor: self.data.miniBackColor,
     })
     // 获取banner列表
     self.getBannerList()

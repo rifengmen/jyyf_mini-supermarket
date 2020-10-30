@@ -19,7 +19,7 @@
 					<radio value="" checked="{{item.check}}" bindtap="setCheck" data-index="{{index}}" wx:if="{{editorFlag}}"></radio>
 					<navigator class="goods_item2 border_be5e5e5" hover-class="none" url="/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&title={{item.Pname}}}&panicbuycode={{item.panicbuycode || ''}}">
 						<view class="item_img overflow">
-							<image src="{{baseUrl + item.Pimg}}" mode="aspectFit"></image>
+							<image src="{{item.Pimg ? (baseUrl + item.Pimg) : errorImage}}" mode="aspectFit"></image>
 						</view>
 						<view class="item_desc">
 							<view class="item_name ellipsis2">{{item.Pname}}</view>

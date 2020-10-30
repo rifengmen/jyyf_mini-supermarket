@@ -11,6 +11,8 @@ Page({
   data: {
     // 基础路径
     baseUrl: app.globalData.baseUrl,
+    // 图片路径为空时默认图路径
+    errorImage: app.globalData.errorImage,
     // 门店名称
     deptname: '',
     // 门店code
@@ -339,6 +341,21 @@ Page({
     // 调用子组件添加购物车方法
     self.componentAddCart(goods.detail)
     self.dialogClose()
+  },
+
+  // 获取海报
+  getPoster () {
+    let self = this
+    // wx.getImageInfo({
+    //   src:'https://www.91jyrj.com/eshop',
+    //   success: function (res) {
+    //     //res.path是网络图片的本地地址
+    //     qrCodePath = res.path;
+    //   },
+    //   fail: function (res) {
+    //     //失败回调
+    //   }
+    // })
   },
 
   // 更新购物车数量

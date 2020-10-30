@@ -6,7 +6,7 @@
 		<view class="banner border_r10 overflow bgffffff">
 			<swiper class="banner_swiper" indicator-color="#ffffff" indicator-active-color="#71d793" autoplay="true" circular="true" interval="4000" duration="500" current="{{swiperCurrent}}" bindchange="swiperChange">
 				<swiper-item wx:for="{{goodsDetail.images}}" wx:key="index">
-					<image src="{{baseUrl + item.image}}" class="swiper_item" lazy-load="true" mode="aspectFit"></image>
+					<image src="{{item.image ? (baseUrl + item.image) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
 				</swiper-item>
 			</swiper>
 			<view class="dots" wx:if="{{goodsDetail.images.length > 1}}">
@@ -120,16 +120,16 @@
 		<!-- 导航 加购物车 end -->
 	</block>
 	<!-- 快捷按钮 start -->
-	<!--<view class="shortcut_key colorffffff font22">-->
+	<view class="shortcut_key colorffffff font22" bindtap="getPoster">
 		<!--<view class="share_btn btn border_r500">-->
 			<!--<image src="/lib/images/poster.png"></image>-->
 			<!--<view class="">海报</view>-->
 		<!--</view>-->
-		<!--<view class="share_btn btn border_r500">-->
+		<!--<button class="share_btn btn border_r500" open-type="share">-->
 			<!--<image src="/lib/images/share.png"></image>-->
 			<!--<view class="">分享</view>-->
-		<!--</view>-->
-	<!--</view>-->
+		<!--</button>-->
+	</view>
 	<!-- 快捷按钮 end -->
 	<!-- dialog start -->
 	<view class="dialog" wx:if="{{dialogFlag}}">

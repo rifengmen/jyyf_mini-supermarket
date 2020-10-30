@@ -9,6 +9,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 图片路径为空时默认图路径
+    errorImage: app.globalData.errorImage,
     // 是否显示下拉提示
     isPullDownShow: false,
     // 下拉刷新提示文字

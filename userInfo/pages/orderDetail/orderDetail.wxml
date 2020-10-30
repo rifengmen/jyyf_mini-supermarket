@@ -43,7 +43,7 @@
       <view class="goods_list2 border_be5e5e5">
         <view class="goods_item2 bgffffff" hover-class="none" wx:for="{{orderDetail.OrderDetail}}" wx:key="index">
           <view class="item_img overflow">
-            <image src="{{baseUrl + item.imageurl}}" mode="aspectFit" lazy-load="true"></image>
+            <image src="{{item.imageurl ? (baseUrl + item.imageurl) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
           </view>
           <view class="item_desc">
             <view class="item_name ellipsis2">{{item.goodsname}}</view>
