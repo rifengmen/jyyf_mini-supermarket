@@ -202,6 +202,7 @@ Page({
       signType: wechatstr.signType,
       paySign: wechatstr.paySign,
       success: function (res) {
+        wx.navigateBack()
         toast.toast('充值成功，充值金额五分钟内到账')
       },
       fail: function (res) {

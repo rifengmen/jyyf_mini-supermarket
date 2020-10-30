@@ -316,8 +316,8 @@ Page({
     request.http('system/myuser.do?method=saveAddress', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        toast.toast(res.message)
         wx.navigateBack()
+        toast.toast(res.message)
       } else {
         toast.toast(res.message)
       }

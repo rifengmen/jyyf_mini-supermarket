@@ -57,10 +57,10 @@ Component({
       }
       // 验证是否绑定手机号码
       if (!app.memcodeflag()) {
-        toast.toast('请注册绑定手机号码')
         wx.switchTab({
           url: '/pages/userInfo/userInfo',
         })
+        toast.toast('请注册绑定手机号码')
         return false
       }
       if (goods.panicbuycode) {

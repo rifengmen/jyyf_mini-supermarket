@@ -164,10 +164,10 @@ Component({
             })
           }
         } else {
-          toast.toast(res.message)
           wx.redirectTo({
             url: '/pages/payEnd/payEnd?text=支付失败&type=0',
           })
+          toast.toast(res.message)
         }
         toast.toast(res.message)
       }).catch(error => {
