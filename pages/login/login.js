@@ -88,9 +88,9 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
-  },
+  // onShareAppMessage: function () {
+  //
+  // },
 
   // 获取code
   getCode () {
@@ -156,7 +156,7 @@ Page({
     }
     request.http('system/customlogin.do?method=login', data).then(result => {
       let res = result.data
-      if(res.flag === 1){
+      if (res.flag === 1) {
         // 首页背景图
         let miniBackImg = res.data.miniBackImg
         // 首页背景色
@@ -199,14 +199,14 @@ Page({
         app.globalData.deptcode = deptcode
         app.globalData.mobile = mobile
         app.globalData.coflag = coflag
-        // 未设置默门店先选择门店
-        if (!isdefaultdept){
+        // 未设置默认门店先选择门店
+        if (!isdefaultdept) {
           wx.redirectTo({
-            url: '../shopList/shopList',
+            url: '/pages/shopList/shopList',
           })
         } else {
           wx.switchTab({
-            url: '../index/index',
+            url: '/pages/index/index',
           })
         }
       } else {

@@ -1,16 +1,14 @@
 /* pages/roomplayList/roomplayList.wxss */
 .room_cont {
-  width: 100%;
+  width: calc(100% - 24rpx);
   height: auto;
-  padding: 24rpx 0;
+  padding: 24rpx 12rpx;
 }
 .room_item {
-  width: calc(50% - 36rpx);
+  width: calc(50% - 24rpx);
   height: auto;
-  margin: 0 12rpx 24rpx 24rpx;
-}
-.room_item:nth-child(2n) {
-  margin: 0 24rpx 24rpx 12rpx;
+  margin: 0 12rpx 24rpx 12rpx;
+  display: inline-block;
 }
 .img {
   width: calc(100% - 24rpx);
@@ -22,9 +20,9 @@
   height: 100%;
 }
 .name {
-  width: calc(100% - 24rpx);
-  min-height: 60rpx;
+  width: calc(100% - 48rpx);
+  height: 96rpx;
   line-height: 1.5;
   margin-top: 10rpx;
-  padding: 0 12rpx;
+  padding: 24rpx;
 }

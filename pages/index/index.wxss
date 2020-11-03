@@ -1,4 +1,5 @@
 /**index.wxss**/
+@import "/pages/template/template.wxss";
 .banner_cont {
   width: 100%;
   height: 854rpx;
@@ -272,6 +273,13 @@ swiper.timeslimit_swiper {
   height: 100%;
 }
 /* 限时抢购 end */
+/* 每日推荐 start */
+.index_hot1 {
+  width: calc(100% - 48rpx);
+  height: auto;
+  margin: 0 auto 24rpx auto;
+}
+/* 每日推荐 end */
 /* 推荐商品 start */
 .recommendList {
   width: calc(100% - 48rpx);

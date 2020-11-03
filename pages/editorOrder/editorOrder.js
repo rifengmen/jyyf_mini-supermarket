@@ -135,9 +135,9 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
-  },
+  // onShareAppMessage: function () {
+  //
+  // },
 
   // 获取订单详情
   getOrderDetail () {
@@ -276,6 +276,12 @@ Page({
       }).catch(error => {
         toast.toast(error.error)
       })
+    } else { // 无配送地址清空运费重新计算
+      self.setData({
+        freight: ''
+      })
+      // 设置订单支付金额
+      self.setPayMoney()
     }
   },
 
@@ -303,6 +309,9 @@ Page({
         })
         app.globalData.addressId = ''
         app.globalData.address = ''
+        self.setData({
+          freight: ''
+        })
         toast.toast(res.message)
       }
       // 设置订单支付金额

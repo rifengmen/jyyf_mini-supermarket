@@ -33,6 +33,8 @@ Page({
     animationData: {},
     // 推荐商品列表
     recommendList: [],
+    // indexHot1List
+    indexHotList: [],
     // 专区列表
     hotList: [],
     // 抢购商品列表
@@ -53,6 +55,10 @@ Page({
     scanType: app.globalData.scanType,
     // 投诉类别列表
     typeList: app.globalData.typeList,
+    // 分享门店名称
+    shareDeptname: '',
+    // 分享门店code
+    shareDeptcode: '',
   },
   /**
    * 生命周期函数--监听页面加载
@@ -60,36 +66,33 @@ Page({
   onLoad: function (options) {
     let self = this
     self.setData({
-      deptname: app.globalData.deptname,
-      deptcode: app.globalData.deptcode,
-      miniBackColor: app.globalData.miniBackColor || '#71d793',
-      miniBackImg: app.globalData.miniBackImg || '',
+      shareDeptname: options.deptname || '',
+      shareDeptcode: options.deptcode || '',
     })
-    // 设置title
-    wx.setNavigationBarTitle({
-      title: app.globalData.apptitle
-    })
-    // 设置背景色
-    wx.setNavigationBarColor({
-      frontColor: self.data.frontColor,
-      backgroundColor: self.data.miniBackColor,
-    })
-    // 获取banner列表
-    self.getBannerList()
-    // 获取自定义功能列表
-    self.getModulePictureList()
-    // 获取公告列表
-    self.getNoticeList()
-    // 获取海报列表
-    self.getPosterList()
-    // 获取推荐商品列表
-    self.getTheme()
-    // 获取专区列表
-    self.getHotList()
-    // 获取抢购商品列表
-    self.getPanicBuyGoodsList()
-    // 获取特价商品列表
-    self.getSpecialGoodsList()
+    if (options.from === 'shopList') {
+      // 设置首页信息
+      self.setPagesDesc()
+      // 初始化
+      self.init()
+    } else {
+      // 查看是否授权
+      wx.getSetting({
+        success (res){
+          if (res.authSetting['scope.userInfo']) {
+            // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+            self.getCode()
+          } else {
+            // 未授权设置为游客
+            app.globalData.openid = app.globalData.defaultOpenid
+            self.setData({
+              openid: app.globalData.defaultOpenid
+            })
+            // 获取用户信息
+            self.login()
+          }
+        }
+      })
+    }
   },
 
   /**
@@ -112,8 +115,15 @@ Page({
     self.setData({
       bannerFlag: true,
     })
-    // 更新购物车数量
-    self.getCartCount()
+    // 非onload时执行
+    if (app.globalData.deptcode) {
+      // 设置首页信息
+      self.setPagesDesc()
+      // 初始化
+      self.init()
+      // 更新购物车数量
+      self.getCartCount()
+    }
   },
 
   /**
@@ -140,24 +150,8 @@ Page({
    */
   onPullDownRefresh: function () {
     let self = this
-    // 获取banner列表
-    self.getBannerList()
-    // 获取自定义功能列表
-    self.getModulePictureList()
-    // 获取公告列表
-    self.getNoticeList()
-    // 获取海报列表
-    self.getPosterList()
-    // 获取推荐商品列表
-    self.getTheme()
-    // 获取专区列表
-    self.getHotList()
-    // 获取抢购商品列表
-    self.getPanicBuyGoodsList()
-    // 获取特价商品列表
-    self.getSpecialGoodsList()
-    // 更新购物车数量
-    self.getCartCount()
+    // 初始化
+    self.init()
     // 关闭下拉刷新
     wx.stopPullDownRefresh()
   },
@@ -173,7 +167,210 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    let self = this
+    return {
+      title: app.globalData.apptitle,
+      path: '/pages/index/index?deptname=' + self.data.deptname + '&deptcode=' + self.data.deptcode
+    }
+  },
 
+  // 获取code
+  getCode () {
+    let self = this
+    wx.login({
+      success: res => {
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        if (res.code) {
+          self.setData({
+            code: res.code
+          })
+          // 获取用户头像
+          wx.getUserInfo({
+            success: res => {
+              app.globalData.userImg = res.userInfo.avatarUrl
+            }
+          })
+        } else {
+          toast.toast('登录失败！' + res.errMsg)
+        }
+      },
+      // 接口调用结束
+      complete () {
+        // 获取openid
+        self.getOpenID()
+      }
+    })
+  },
+
+  // 获取openid
+  getOpenID () {
+    let self = this
+    let data = {
+      code: self.data.code
+    }
+    request.http('system/customlogin.do?method=getOpenID', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        app.globalData.openid = res.data.openid
+        self.setData({
+          openid: res.data.openid,
+          hasUserInfo: true
+        })
+        // 获取用户信息
+        self.login()
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 获取用户信息
+  login () {
+    let self = this
+    let data = {
+      wxID: self.data.openid,
+      usercode: '',
+      password: '',
+      // 团秒标志，0：否；1：是 ；2：小程序自动登录
+      tmFlag: 2
+    }
+    request.http('system/customlogin.do?method=login', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        // 首页背景图
+        let miniBackImg = res.data.miniBackImg
+        // 首页背景色
+        let miniBackColor = res.data.miniBackColor
+        // cookie
+        let sessionId = result.header['Set-Cookie']
+        // 用户id
+        let userid = res.data.customerid
+        // 用户名称
+        let memname = res.data.memname
+        // 用户code
+        let memcode = res.data.memcode
+        // 门店名称
+        let deptname = res.data.shopInfo.shopname
+        // 门店code
+        let deptcode = res.data.shopInfo.shopcode
+        // 用户身份标识，0：批发客户（app功能）；1：普通客户
+        let iscustomer = res.data.iscustomer
+        // 卡支付标志，1：开通；0：未开通；null：未知
+        let coflag = res.data.coflag
+        // 默认门店标志
+        let isdefaultdept = res.data.isDefaultDept
+        // 手机号码
+        let mobile = res.data.mobile
+        // 只允许普通客户登录小程序
+        if (iscustomer !== 1) {
+          toast.toast('当前帐号类型不正确,不可使用')
+          return
+        }
+        // 设session
+        if (sessionId) {
+          app.globalData.sessionId = sessionId
+        }
+        app.globalData.miniBackImg = miniBackImg
+        app.globalData.miniBackColor = miniBackColor
+        app.globalData.userid = userid
+        app.globalData.memname = memname
+        app.globalData.memcode = memcode
+        app.globalData.deptname = deptname
+        app.globalData.deptcode = deptcode
+        app.globalData.mobile = mobile
+        app.globalData.coflag = coflag
+        // 未设置默认门店先选择门店
+        if (!isdefaultdept && !self.data.deptname && !self.data.deptcode && !self.data.shareDeptname && !self.data.shareDeptcode) {
+          wx.navigateTo({
+            url: '/pages/shopList/shopList',
+          })
+        } else if (self.data.shareDeptname && self.data.shareDeptcode) { // 判断分享进来的
+          // 选择门店
+          self.changeDept()
+        } else {
+          // 设置首页信息
+          self.setPagesDesc()
+          // 初始化
+          self.init()
+        }
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 选择门店
+  changeDept () {
+    let self = this
+    let userid = app.globalData.userid
+    let shareDeptname = self.data.shareDeptname
+    let shareDeptcode = self.data.shareDeptcode
+    let data = {
+      userid: userid,
+      Deptcode: shareDeptcode
+    }
+    request.http('system/dept.do?method=changeDept', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        app.globalData.deptname = shareDeptname
+        app.globalData.deptcode = shareDeptcode
+        // 设置首页信息
+        self.setPagesDesc()
+        // 初始化
+        self.init()
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 设置首页信息
+  setPagesDesc () {
+    let self = this
+    self.setData({
+      deptname: app.globalData.deptname,
+      deptcode: app.globalData.deptcode,
+      miniBackColor: app.globalData.miniBackColor || '#71d793',
+      miniBackImg: app.globalData.miniBackImg || '',
+    })
+    // 设置title
+    wx.setNavigationBarTitle({
+      title: app.globalData.apptitle
+    })
+    // 设置背景色
+    wx.setNavigationBarColor({
+      frontColor: self.data.frontColor,
+      backgroundColor: self.data.miniBackColor,
+    })
+  },
+
+  // 初始化
+  init () {
+    let self = this
+    // 获取banner列表
+    self.getBannerList()
+    // 获取自定义功能列表
+    self.getModulePictureList()
+    // 获取公告列表
+    self.getNoticeList()
+    // 获取海报列表
+    self.getPosterList()
+    // 获取推荐商品列表
+    self.getTheme()
+    // 获取活动商品列表
+    self.getindexHotList()
+    // 获取专区列表
+    self.getHotList()
+    // 获取抢购商品列表
+    self.getPanicBuyGoodsList()
+    // 获取特价商品列表
+    self.getSpecialGoodsList()
   },
 
   // 手指触摸后移动(阻止冒泡)
@@ -368,9 +565,9 @@ Page({
           break;
         case 1:
           // 常购商品
-          wx.navigateTo({
-            url: '/pages/goodsList/goodsList?Datatype=' + '4' + '&title=' + '常购商品',
-          })
+          // wx.navigateTo({
+          //   url: '/pages/goodsList/goodsList?Datatype=' + '4' + '&title=' + '常购商品',
+          // })
           break;
         case 21:
           // 分类商品列表
@@ -474,7 +671,27 @@ Page({
       if (res.flag === 1) {
         if (res.data.length) {
           self.setData({
-            recommendList: res.data
+            recommendList: res.data,
+          })
+        }
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 获取活动商品列表
+  getindexHotList () {
+    let self = this
+    let data = {}
+    request.http('info/Category.do?method=getTheme', data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        if (res.data.length) {
+          self.setData({
+            indexHotList: [res.data[3]]
           })
         }
       } else {
@@ -711,8 +928,6 @@ Page({
             index: index
           })
         }
-      } else {
-        toast.toast(res.message)
       }
     }).catch(error => {
       toast.toast(error.error)

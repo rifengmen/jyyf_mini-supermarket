@@ -15,6 +15,8 @@ Page({
     errorImage: app.globalData.errorImage,
     // 门店名称
     deptname: '',
+    // 门店code
+    deptcode: '',
     // 购物车列表
     cartList: [],
     // 购物车数量
@@ -60,6 +62,7 @@ Page({
     let self = this
     self.setData({
       deptname: app.globalData.deptname,
+      deptcode: app.globalData.deptcode
     })
     // 获取购物车列表
     self.getCartList()
@@ -114,9 +117,9 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
-  },
+  // onShareAppMessage: function () {
+  //
+  // },
 
   // 获取购物车列表
   getCartList() {
@@ -454,8 +457,6 @@ Page({
             index: index
           })
         }
-      } else {
-        toast.toast(res.message)
       }
     }).catch(error => {
       toast.toast(error.error)

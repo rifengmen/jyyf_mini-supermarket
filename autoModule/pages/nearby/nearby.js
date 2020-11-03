@@ -69,9 +69,9 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
-  },
+  // onShareAppMessage: function () {
+  //
+  // },
 
   // 获取附近店铺列表
   getNearbyList () {

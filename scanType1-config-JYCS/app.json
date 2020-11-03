@@ -1,10 +1,9 @@
 {
   "pages": [
-    "pages/login/login",
+    "pages/index/index",
     "pages/author/author",
     "pages/register/register",
     "pages/shopList/shopList",
-    "pages/index/index",
     "pages/search/search",
     "pages/goodsList/goodsList",
     "pages/goodsDetail/goodsDetail",
@@ -100,12 +99,6 @@
         "text": "分类"
       },
       {
-        "pagePath": "pages/scan/scan",
-        "iconPath": "./lib/images/scan.png",
-        "selectedIconPath": "./lib/images/scanActive.png",
-        "text": "扫码购"
-      },
-      {
         "pagePath": "pages/cart/cart",
         "iconPath": "./lib/images/cart.png",
         "selectedIconPath": "./lib/images/cartActive.png",
@@ -127,7 +120,10 @@
     }
   },
   "plugins": {
-
+    "live-player-plugin": {
+      "version": "1.2.2",
+      "provider": "wx2b03c6e691cd7370"
+    }
   },
   "networkTimeout": {
     "request": 60000,

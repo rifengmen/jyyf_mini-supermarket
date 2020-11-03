@@ -124,9 +124,9 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
-  },
+  // onShareAppMessage: function () {
+  //
+  // },
 
   // 是否需要授权
   isAuthor () {
@@ -350,8 +350,6 @@ Page({
             index: index
           })
         }
-      } else {
-        toast.toast(res.message)
       }
     }).catch(error => {
       toast.toast(error.error)

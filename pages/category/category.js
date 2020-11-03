@@ -13,6 +13,10 @@ Page({
     baseUrl: app.globalData.baseUrl,
     // 图片路径为空时默认图路径
     errorImage: app.globalData.errorImage,
+    // 门店名称
+    deptname: '',
+    // 门店code
+    deptcode: '',
     // 一级分类列表
     level1: [],
     // 选中分类下标
@@ -64,6 +68,10 @@ Page({
    */
   onShow: function () {
     let self = this
+    self.setData({
+      deptname: app.globalData.deptname,
+      deptcode: app.globalData.deptcode
+    })
   },
 
   /**
@@ -121,9 +129,9 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
-  },
+  // onShareAppMessage: function () {
+  //
+  // },
 
   // 获取一级分类
   getLevel1 () {
@@ -330,8 +338,6 @@ Page({
             index: index
           })
         }
-      } else {
-        toast.toast(res.message)
       }
     }).catch(error => {
       toast.toast(error.error)

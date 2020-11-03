@@ -37,11 +37,7 @@ Page({
   onShow: function () {
     let self = this
     // 隐藏小房子按钮
-    wx.hideHomeButton()
-    wx.showLoading({
-      title: '正在加载',
-      mask: true,
-    })
+    // wx.hideHomeButton()
     self.setData({
       userid: app.globalData.userid
     })
@@ -80,9 +76,9 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
-  },
+  // onShareAppMessage: function () {
+  //
+  // },
 
   // 获取定位
   getLocation () {
@@ -118,6 +114,10 @@ Page({
       Latitude: latitude,
       deptType: 1
     }
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
     request.http('system/dept.do?method=listDeptInfo', data).then(result => {
       wx.hideLoading()
       let res = result.data
@@ -150,7 +150,7 @@ Page({
         app.globalData.deptname = deptname
         app.globalData.deptcode = deptcode
         wx.reLaunch({
-          url: '../index/index',
+          url: '/pages/index/index?from=shopList',
         })
       } else {
         toast.toast(res.message)
@@ -187,7 +187,7 @@ Page({
         app.globalData.deptcode = deptcode
         app.globalData.deptname = deptname
         wx.reLaunch({
-          url: '../index/index',
+          url: '/pages/index/index?from=shopList',
         })
       } else {
         toast.toast(res.message)

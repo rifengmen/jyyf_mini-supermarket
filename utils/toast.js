@@ -14,11 +14,11 @@ const toast = (message, url, opentime = 4000, closetime = 5000) => {
     wx.hideToast()
     if (url === 'userInfo') {
       wx.switchTab({
-        url: '../userInfo/userInfo',
+        url: '/pages/userInfo/userInfo',
       })
     } else if (url === 'index') {
       wx.switchTab({
-        url: '../index/index',
+        url: '/pages/index/index',
       })
     } else if (url === 'back') {
       wx.navigateBack()

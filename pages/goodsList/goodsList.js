@@ -76,9 +76,12 @@ Page({
       // 搜索
       sname: options.sname || '',
       title: options.title,
-      deptname: app.globalData.deptname,
-      deptcode: app.globalData.deptcode
+      deptname: options.deptname ||app.globalData.deptname,
+      deptcode: options.deptcode || app.globalData.deptcode
     })
+    // 从分享进来时设置门店信息
+    app.globalData.deptname = self.data.deptname
+    app.globalData.deptcode = self.data.deptcode
     // 设置title
     wx.setNavigationBarTitle({
       title: self.data.title,
@@ -353,8 +356,6 @@ Page({
         self.setData({
           cartCount: res.data.data
         })
-      } else {
-        toast.toast(res.message)
       }
     }).catch(error => {
       toast.toast(error.error)

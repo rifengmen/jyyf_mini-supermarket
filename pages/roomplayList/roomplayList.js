@@ -9,8 +9,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 请求开关
+    getFlag: false,
+    // 查询起始房间号
     curStart: 0,
+    // 每页条数
     maxRooms: 12,
+    // 房间列表
     roomplayList: []
   },
 
@@ -55,40 +60,65 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    let self = this
+    self.setData({
+      curStart: 0,
+      roomplayList: [],
+    })
+    // 获取房间列表
+    self.getRoomplayList()
+    // 关闭下拉刷新
+    wx.stopPullDownRefresh()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let self = this
+    // 获取房间列表
+    self.getRoomplayList()
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
-  },
+  // onShareAppMessage: function () {
+  //
+  // },
 
   // 获取房间列表
   getRoomplayList () {
     let self = this
-    let newstart = self.data.curStart + self.data.roomplayList.length
+    let start = self.data.roomplayList.length
     let data = {
-      start: newstart,
+      start: start,
       limit: self.data.maxRooms
     }
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
+    // 设置请求开关
+    self.setData({
+      getFlag: false
+    })
     request.http('miniLiveInfo.do?method=listLiveInfo', data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let roomplayList = self.data.roomplayList
+        roomplayList.push(...res.data)
         self.setData({
-          roomplayList: res.data
+          roomplayList: roomplayList
         })
       } else {
         toast.toast(res.message)
       }
+      wx.hideLoading()
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
     }).catch(error => {
       toast.toast(error.error)
     })
