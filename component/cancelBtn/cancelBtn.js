@@ -1,8 +1,8 @@
 // component/cancelBtn/cancelBtn.js
 require('../../app.js')
 const app = getApp()
-const request = require('../../utils/request.js')
 const toast = require('../../utils/toast.js')
+import API from '../../api/index'
 
 Component({
   /**
@@ -41,14 +41,14 @@ Component({
       })
     },
 
-    // 确认按钮
+    // 取消订单
     confirm () {
       let self = this
       let tradeno = self.data.tradeno
       let data = {
         tradeno: tradeno
       }
-      request.http('bill/order.do?method=CancelSaleOrder', data, 'POST').then(result => {
+      API.bill.CancelSaleOrder(data).then(result => {
         let res = result.data
         if (res.flag === 1) {
           self.triggerEvent('setOrderList', tradeno)

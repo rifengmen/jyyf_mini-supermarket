@@ -5,7 +5,7 @@
       <view class="">个人资料</view>
       <view class="color999999 font24">修改我的资料 > </view>
     </navigator>
-    <navigator wx:if="{{scanType}}" class="set_item border_be5e5e5" hover-class="none" url="/userInfo/pages/complaintList/complaintList?type={{type}}&title={{typeList[type]}}">
+    <navigator class="set_item border_be5e5e5" hover-class="none" url="/userInfo/pages/complaintList/complaintList?type={{type}}&title={{typeList[type]}}">
       <view class="">{{typeList[type]}}</view>
       <view class="color999999 font24">历史记录 > </view>
     </navigator>
@@ -13,7 +13,7 @@
       <view class="">关于我们</view>
       <view class="color999999 font24">公司介绍 > </view>
     </navigator>
-    <navigator class="set_item" hover-class="none" url="/pages/webUrl/webUrl">
+    <navigator class="set_item" hover-class="none" url="/pages/cantacts/cantacts">
       <view class="">联系我们</view>
       <view class="color999999 font24">期待您的联系 > </view>
     </navigator>

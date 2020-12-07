@@ -1,8 +1,8 @@
 // pages/userInfo/userInfo.js
 const app = getApp()
-const request = require("../../utils/request")
 const toast = require("../../utils/toast")
 const utils = require("../../utils/util")
+import API from '../../api/index'
 
 Page({
 
@@ -10,12 +10,16 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 身份标识，默认0,0:顾客,1:拣货,2:配送,3:取货
+    role: 0,
+    // 身份标识列表
+    roleList: app.globalData.roleList,
     // 用户头像
     userImg: '',
+    // 支付开通标志
+    coflag: '',
     // openid
     openid: '',
-    // openid类型，0：游客；1：已注册
-    openidType: 0,
     // 用户名称
     memname: '',
     // 会员号
@@ -26,14 +30,12 @@ Page({
     tickNum: 0,
     // 积分
     score: '',
-    // 订单类型列表
+    // 订单状态列表
     statusList: app.globalData.statusList,
     // 未读消息提示，messageNum
     messageNum: 0,
-    // 扫码购类型，0：共用线上购物车；1：本地独立购物车
-    scanType: app.globalData.scanType,
     // 类别,0：投诉建议；1:商品建议；2:我要投诉；
-    type: 0,
+    type: 1,
     // 投诉类别列表
     typeList: app.globalData.typeList,
   },
@@ -43,16 +45,10 @@ Page({
    */
   onLoad: function (options) {
     let self = this
-    if (self.data.scanType) {
-      self.setData({
-        type: 1,
-      })
-    }
     let openid = app.globalData.openid
-    let defaultOpenid = app.globalData.defaultOpenid
-    if (openid && openid !== defaultOpenid) {
+    if (openid) {
       self.setData({
-        openidType: 1
+        openid: openid
       })
     }
     // 是否授权登录
@@ -72,24 +68,22 @@ Page({
   onShow: function () {
     let self = this
     let openid = app.globalData.openid
-    let defaultOpenid = app.globalData.defaultOpenid
     let memcode = app.globalData.memcode
     let userImg = app.globalData.userImg
     let memname = app.globalData.memname
+    let coflag = app.globalData.coflag
+    let role = app.globalData.role
     self.setData({
       openid: openid,
       memcode: memcode,
       userImg: userImg,
-      memname: memname
+      memname: memname,
+      coflag: coflag,
+      role: role,
     })
-    if (openid && openid !== defaultOpenid) {
-      self.setData({
-        openidType: 1
-      })
-    }
     if (openid) {
-      // 获取用户信息
-      self.login()
+      // 初始化
+      self.init()
     }
   },
 
@@ -131,10 +125,7 @@ Page({
   // 是否需要授权
   isAuthor () {
     let self = this
-    self.setData({
-      memname: app.globalData.memname
-    })
-    if (!self.data.openidType) {
+    if (!self.data.openid) {
       wx.navigateTo({
         url: '/pages/author/author'
       })
@@ -142,90 +133,28 @@ Page({
     }
   },
 
-  // 获取用户信息
-  login () {
+  // 初始化
+  init () {
     let self = this
-    let data = {
-      wxID: self.data.openid,
-      usercode: '',
-      password: '',
-      // 团秒标志，0：否；1：是 ；2：小程序自动登录
-      tmFlag: 2
-    }
-    request.http('system/customlogin.do?method=login', data).then(result => {
-      let res = result.data
-      if(res.flag === 1){
-        // cookie
-        let sessionId = result.header['Set-Cookie']
-        // 用户id
-        let userid = res.data.customerid
-        // 用户名称
-        let memname = res.data.memname
-        // 用户code
-        let memcode = res.data.memcode
-        //门店名称
-        let deptname = res.data.shopInfo.shopname
-        // 门店code
-        let deptcode = res.data.shopInfo.shopcode
-        // 用户身份标识，0：批发客户（app功能）；1：普通客户
-        let iscustomer = res.data.iscustomer
-        // 卡支付标志，1：开通；0：未开通；null：未知
-        let coflag = res.data.coflag
-        // 是否设置默认门店
-        let isdefaultdept = res.data.isdefaultdept
-        // 手机号码
-        let mobile = res.data.mobile
-        // 只允许普通客户登录小程序
-        if (iscustomer !== 1) {
-         toast.toast('当前帐号类型不正确,不可使用!')
-          return false
-        }
-        // 设session
-        if (sessionId) {
-          app.globalData.sessionId = sessionId
-        }
-        app.globalData.userid = userid
-        app.globalData.memname = memname
-        app.globalData.memcode = memcode
-        app.globalData.deptname = deptname
-        app.globalData.deptcode = deptcode
-        app.globalData.mobile = mobile
-        app.globalData.coflag = coflag
-        // 更新页面信息
-        if (self.data.memcode !== app.globalData.memcode) {
-          self.setData({
-            memname: memname,
-            memcode: memcode
-          })
-        }
-        // 获取电子券数量
-        self.getTickNum()
-        // 获取卡余额
-        self.getCardInfo()
-        // 获取积分
-        self.getScore()
-        // 判断是否授权
-        if (self.data.openidType) {
-          // 更新购物车
-          self.getCartCount()
-          // 更新订单类型列表
-          self.getStatusList()
-          // 获取消息列表
-          self.getMessageList()
-        }
-      } else {
-        toast.toast(res.message)
-      }
-    }).catch(error => {
-      toast.toast(error.error)
-    })
+    // 获取电子券数量
+    self.getTickNum()
+    // 获取卡余额
+    self.getCardInfo()
+    // 获取积分
+    self.getScore()
+    // 更新订单状态列表
+    self.getStatusList()
+    // 获取消息列表
+    self.getMessageList()
+    // 更新购物车
+    self.getCartCount()
   },
 
   // 获取电子券数量
   getTickNum () {
     let self = this
     let data = {}
-    request.http('mem/member.do?method=listCoupon', data).then(result => {
+    API.mem.listCoupon(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -241,7 +170,7 @@ Page({
   getCardInfo () {
     let self = this
     let data = {}
-    request.http('mem/card.do?method=getMyCardInfo', data).then(result => {
+    API.mem.getMyCardInfo(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -260,7 +189,7 @@ Page({
       memcode: app.globalData.memcode,
       startdate: utils.formatTime(new Date())
     }
-    request.http('mem/card.do?method=listScoreDtl', data).then(result => {
+    API.mem.listScoreDtl(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -272,7 +201,7 @@ Page({
     })
   },
 
-  // 更新订单类型列表
+  // 更新订单状态列表
   getStatusList () {
     let self = this
     let statusList = self.data.statusList
@@ -288,7 +217,7 @@ Page({
       Starttime: '2020-01-01',
       statusType: type,
     }
-    request.http('bill/order.do?method=listMyOrder', data).then(result => {
+    API.bill.listMyOrder(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let statusList = self.data.statusList
@@ -300,8 +229,6 @@ Page({
         self.setData({
           statusList: statusList
         })
-      } else {
-        toast.toast(res.message)
       }
     }).catch(error => {
       toast.toast(error.error)
@@ -314,14 +241,12 @@ Page({
     let data = {
       messageFlag: 0,
     }
-    request.http('info/InformationController.do?method=listmessage', data).then(result => {
+    API.info.listmessage(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
           messageNum: res.rowCount
         })
-      } else {
-        toast.toast(res.message)
       }
     }).catch(error => {
       toast.toast(error.error)
@@ -332,23 +257,21 @@ Page({
   getCartCount () {
     let self = this
     let data = {}
-    request.http('bill/shoppingcar.do?method=getCarProductCount', data).then(result => {
+    API.bill.getCarProductCount(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        let scanType = app.globalData.scanType
-        let index = 3
-        if (scanType) {
-          index = 2
-        }
-        if (res.data.data) {
-          wx.setTabBarBadge({
-            index: index,
-            text: (res.data.data).toString()
-          })
-        } else {
-          wx.removeTabBarBadge({
-            index: index
-          })
+        let index = 2
+        if (res.data) {
+          if (res.data.data) {
+            wx.setTabBarBadge({
+              index: index,
+              text: (res.data.data).toString()
+            })
+          } else {
+            wx.removeTabBarBadge({
+              index: index
+            })
+          }
         }
       }
     }).catch(error => {

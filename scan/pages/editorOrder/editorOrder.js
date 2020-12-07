@@ -1,7 +1,7 @@
 // scan/pages/editorOrder/editorOrder.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -108,12 +108,12 @@ Page({
       flowno: self.data.flowno,
       deptcode: self.data.deptcode
     }
-    request.http('invest/microFlow.do?method=listMicroFlowDtl', data).then(result => {
+    API.invest.listMicroFlowDtl(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
           sacnOrderDetail: res.data,
-          totalMoney: res.data.totalMoney,
+          totalMoney: res.data.totalMoney.toFixed(2),
         })
       } else {
         toast.toast(res.message)
@@ -133,7 +133,6 @@ Page({
     } else if (paymode === 7) {
       payFlag = true
     }
-    // let paymode = self.data.payFlag ? 3 : 7
     self.setData({
       payFlag: payFlag,
       paymode: paymode
@@ -147,7 +146,7 @@ Page({
       flowno: self.data.flowno,
       shopCode: self.data.deptcode
     }
-    request.http('invest/microFlow.do?method=getMicroFlowPayMoney', data).then(result => {
+    API.invest.getMicroFlowPayMoney(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let paymodeList = res.data
@@ -227,12 +226,12 @@ Page({
       payList: self.data.paylist,
       shopCode: self.data.deptcode
     }
-    request.http('invest/microFlow.do?method=microFlowToPay', data).then(result => {
+    API.invest.microFlowToPay(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         if (paymode === 3) {
           wx.redirectTo({
-            url: '/pages/payEnd/payEnd?text=支付成功&type=1',
+            url: '/shopping/pages/payEnd/payEnd?text=支付成功&type=1',
           })
         } else if (paymode === 7) {
           // 微信支付
@@ -245,7 +244,7 @@ Page({
       } else {
         toast.toast(res.message)
         wx.redirectTo({
-          url: '/pages/payEnd/payEnd?text=支付失败&type=0',
+          url: '/shopping/pages/payEnd/payEnd?text=支付失败&type=0',
         })
       }
       toast.toast(res.message)
@@ -267,12 +266,12 @@ Page({
       paySign: payStr.paySign,
       success:function(res){
         wx.redirectTo({
-          url: '/pages/payEnd/payEnd?text=支付成功&type=1',
+          url: '/shopping/pages/payEnd/payEnd?text=支付成功&type=1',
         })
       },
       fail:function(res){
         wx.redirectTo({
-          url: '/pages/payEnd/payEnd?text=支付失败&type=0',
+          url: '/shopping/pages/payEnd/payEnd?text=支付失败&type=0',
         })
       },
       complete:function(res){}

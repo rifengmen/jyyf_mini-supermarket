@@ -21,22 +21,6 @@
   width: 100%;
   margin-bottom: 10rpx;
 }
-.btn_cont {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: calc(100vw - 80rpx);
-  height: 200rpx;
-  padding: 0 40rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.btn {
-  width: 100%;
-  height: 80rpx;
-  line-height: 80rpx;
-}
 .nodata_cont {
   width: 100%;
   height: calc(100vh - 200rpx);

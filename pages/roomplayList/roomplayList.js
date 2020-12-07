@@ -1,7 +1,7 @@
 // pages/roomplayList/roomplayList.js
 const app = getApp()
-const request = require("../../utils/request")
 const toast = require("../../utils/toast")
+import API from '../../api/index'
 
 Page({
 
@@ -103,7 +103,7 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('miniLiveInfo.do?method=listLiveInfo', data).then(result => {
+    API.miniLiveInfo.listLiveInfo(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let roomplayList = self.data.roomplayList

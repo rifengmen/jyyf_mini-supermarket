@@ -1,7 +1,7 @@
 // userInfo/pages/recordList/recordList.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -11,7 +11,7 @@ Page({
   data: {
     // 请求开关
     getFlag: false,
-    // 评价列表
+    // 获取消费列表
     recordList: [],
     // 页码
     page: 1,
@@ -65,7 +65,7 @@ Page({
       page: 1,
       recordList: [],
     })
-    // 获取评价列表
+    // 获取消费列表
     self.getRecordList()
     // 关闭下拉刷新
     wx.stopPullDownRefresh()
@@ -88,7 +88,7 @@ Page({
       toast.toast('暂无更多')
       return false
     }
-    // 获取评价列表
+    // 获取消费列表
     self.getRecordList()
   },
 
@@ -107,11 +107,11 @@ Page({
       page: 1,
       recordList: [],
     })
-    // 获取评价列表
+    // 获取消费列表
     self.getRecordList()
   },
 
-  // 获取评价列表
+  // 获取消费列表
   getRecordList () {
     let self = this
     let data = {
@@ -128,7 +128,7 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('mem/member.do?method=listMemberConsum', data).then(result => {
+    API.mem.listMemberConsum(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let recordList = self.data.recordList

@@ -1,8 +1,8 @@
 // userInfo/pages/orderList/orderList.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
 const utils = require("../../../utils/util")
+import API from '../../../api/index'
 
 Page({
 
@@ -10,9 +10,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // 订单类型 0全部  1待支付  2待取送 3待发货  9待退款 20已完成
+    // 订单状态 0全部  1待支付  2待取送 3待发货  9待退款 20已完成
     statusType: 0,
-    // 订单类型列表
+    // 订单状态列表
     statusList: app.globalData.statusList,
     // 查询开始日期
     startdate: '',
@@ -151,7 +151,7 @@ Page({
       pageSize: self.data.count,
       statusType: self.data.statusType,
     }
-    request.http('bill/order.do?method=listMyOrder', data).then(result => {
+    API.bill.listMyOrder(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let orderList = self.data.orderList

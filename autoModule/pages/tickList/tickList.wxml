@@ -3,17 +3,23 @@
 	<view class="tick_list">
 		<block wx:for="{{tickList}}" wx:key="index" >
 			<view class="item border_r10 overflow" hover-class="none" catchtap="toTickDetail" data-tickid="{{item.tickid}}">
-				<image class="bgimg" src="/lib/images/tickBg.png"></image>
+				<image src="{{item.bgurl || bgurl}}" mode="aspectFill" class="bgimg"></image>
 				<view class="tit colorffffff">
 					<view class="name">
-						<view class="face_value font60" wx:if="{{item.tickettype === 1}}"><text class="font40 font_blod">￥</text>{{item.usemoney}}</view>
-						<view class="face_value font60" wx:if="{{item.tickettype === 2}}">{{item.usemoney * 10}}<text class="font30 font_blod">折</text></view>
+						<view class="face_value font60" wx:if="{{item.tickettype === 2}}">
+							<text class="unit font30 font_blod">折</text>
+							{{item.usemoney * 10}}
+						</view>
+						<view class="face_value font60" wx:else>
+							<text class="unit font40 font_blod">￥</text>
+							{{item.usemoney}}
+						</view>
 						<view class="type font24">
 							<view class="ellipsis">{{item.tickettypename}}</view>
 							<view class="ellipsis">满{{item.minsalemoney}}元使用</view>
 						</view>
 					</view>
-					<view class="btn_cont">
+					<view class="tick_btn_cont">
 						<view class="btn colorffffff border_r500 border_affffff" wx:if="{{from === 'userInfo'}}" data-enddate="{{item.enddate}}">{{item.days}}天后过期</view>
 						<view class="btn colorffffff border_r500 border_a38b060 bg38b060" wx:elif="{{from === 'auto'}}">
 							<getTickBtn tickid="{{item.tickid}}"></getTickBtn>
@@ -23,11 +29,11 @@
 						</view>
 					</view>
 				</view>
-				<view class="desc bgffffff">
+				<view class="desc">
 					<view class="desc_tit">使用规则</view>
-					<view class="color666666 font24 ellipsis">{{item.dealflagdescription}}，{{item.limitdeptcode}}，{{item.tickname}}</view>
-					<view class="rule color666666 font24 ellipsis">每月禁用日（{{item.notuseday || '无'}}）</view>
-					<view class="color999999 font24 ellipsis">使用日期：{{item.startdate}} —— {{item.enddate}}</view>
+					<view class="font24 ellipsis">{{item.dealflagdescription}}，{{item.limitdeptcode}}，{{item.tickname}}</view>
+					<view class="rule font24 ellipsis">每月禁用日（{{item.notuseday || '无'}}）</view>
+					<view class="font24 ellipsis">使用日期：{{item.startdate}} —— {{item.enddate}}</view>
 				</view>
 			</view>
 		</block>
@@ -35,7 +41,7 @@
 			<view class="nodata overflow">
 				<image src="/lib/images/orderNodata.png"></image>
 			</view>
-			<view class="color999999 tc">优惠券空空如也～</view>
+			<view class="color999999 tc">电子券空空如也～</view>
 		</view>
 	</view>
 </view>

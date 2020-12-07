@@ -1,7 +1,7 @@
 // userInfo/pages/addComplaint/addComplaint.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -11,7 +11,7 @@ Page({
   data: {
     // 详情
     content: '',
-    // 类别
+    // 投诉建议类别
     type: 0,
     // 请求开关
     flag: true,
@@ -80,7 +80,7 @@ Page({
   //
   // },
 
-  // 设置评价内容
+  // 设置投诉建议内容
   setContent (e) {
     let self = this
     self.setData({
@@ -88,7 +88,7 @@ Page({
     })
   },
 
-  // 提交评价内容
+  // 添加投诉建议
   sendContent () {
     let self = this
     let content = self.data.content
@@ -108,7 +108,7 @@ Page({
     self.setData({
       flag: false
     })
-    request.http('system/suggestion.do?method=addSuggestion', data).then(result => {
+    API.system.addSuggestion(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         wx.navigateBack()

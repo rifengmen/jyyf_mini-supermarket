@@ -1,7 +1,7 @@
 // pages/shopBag/shopBag.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -9,8 +9,22 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // 购物袋列表
-    shopBagList: [],
+    // 购物车
+    scanCart: [],
+    // 积分
+    score: '',
+    // 积分抵扣金额
+    useScoreMoney: 0,
+    // 积分使用开关
+    scoreFlag: false,
+    // 电子券
+    tick: '',
+    // 电子券可用标识
+    isUseTickflag: true,
+    // 商品总价
+    totalmoney: 0,
+    // 支付金额
+    paymoney: 0,
     // 请求开关
     getFlag: false,
   },
@@ -20,8 +34,6 @@ Page({
    */
   onLoad: function (options) {
     let self = this
-    // 获取购物袋列表
-    self.getShopBagList()
   },
 
   /**
@@ -56,14 +68,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    let self = this
-    self.setData({
-      shopBagList: [],
-    })
-    // 获取购物袋列表
-    self.getShopBagList()
-    // 关闭下拉刷新
-    wx.stopPullDownRefresh()
+
   },
 
   /**
@@ -91,14 +96,13 @@ Page({
     self.setData({
       getFlag: false
     })
-    let data = {
-    }
-    request.http('bill/shoppingcar.do?method=getShoppingBagList', data).then(result => {
+    let data = {}
+    API.bill.getShoppingBagList(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let shopBagList = res.data.shoppingbaglist
         shopBagList.forEach((item, index) => {
-          item.amount = 1
+          item.amount = 0
           item.check = false
         })
         self.setData({
@@ -132,59 +136,72 @@ Page({
     })
   },
 
-  // 购物车加的方法
-  addCart(e) {
+  // 获取可用积分
+  getScore () {
     let self = this
-    let index = e.currentTarget.dataset.index
-    // 购物车数量操作
-    self.editorCartCount('addCart', index)
-  },
-
-  // 购物车减得方法
-  subtrackCart(e) {
-    let self = this
-    let index = e.currentTarget.dataset.index
-    // 购物车数量操作
-    self.editorCartCount('subtrackCart', index)
-  },
-
-  // 购物车数量操作
-  editorCartCount(method, index) {
-    let self = this
-    let shopBagList = self.data.shopBagList
-    // 判断加减
-    if (method === 'addCart') {
-      shopBagList[index].amount++
-    } else if (method === 'subtrackCart') {
-      if (shopBagList[index].amount <= 1) {
-        shopBagList[index].amount = 1
-      } else {
-        shopBagList[index].amount--
-      }
+    let data = {
+      payMoney: self.data.paymoney,
+      Totalmoney: self.data.totalmoney,
     }
     self.setData({
-      shopBagList: shopBagList
+      scoreFlag: false,
+      useScoreMoney: 0,
     })
-  },
-
-  // 去编辑订单页面
-  toEditorOrder () {
-    let self = this
-    let shopBagList = self.data.shopBagList.filter(item => item.check)
-    let data = {
-      buybaglist: shopBagList,
-    }
-    request.http('bill/shoppingcar.do?method=buyShoppingBag', data).then(result => {
+    API.bill.payMoneyjf(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        wx.redirectTo({
-          url: '/pages/editorOrder/editorOrder',
+        self.setData({
+          score: res.data,
         })
-      } else {
-        toast.toast(res.message)
       }
     }).catch(error => {
       toast.toast(error.error)
     })
+  },
+
+  // 设置积分使用开关
+  setScoreFlag (e) {
+    let self = this
+    let scoreFlag = self.data.scoreFlag
+    let score = self.data.score
+    if (scoreFlag) {
+      self.setData({
+        scoreFlag: false,
+        useScoreMoney: 0
+      })
+    } else {
+      self.setData({
+        scoreFlag: true,
+        useScoreMoney: score.Money,
+      })
+    }
+    // 计算商品总价
+    self.setTotalmoney()
+  },
+
+  // 计算商品总价
+  setTotalmoney () {
+    let self = this
+    let totalmoney = 0
+    let paymoney = 0
+    // 积分抵扣金额
+    let useScoreMoney = self.data.useScoreMoney || 0
+    // 电子券
+    let tickMoney = self.data.tick.paymoney || 0
+    let scanCart = self.data.scanCart
+    scanCart.forEach(item => {
+      let _money
+      _money = parseFloat(item.actualSaleMoney)
+      totalmoney += _money
+    })
+    paymoney = (totalmoney - useScoreMoney - tickMoney).toFixed(2)
+    self.setData({
+      totalmoney: totalmoney.toFixed(2),
+      paymoney: paymoney
+    })
+    if (!self.data.scoreFlag) {
+      // 获取可用积分
+      self.getScore()
+    }
   },
 })

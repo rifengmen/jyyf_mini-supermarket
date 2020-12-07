@@ -1,8 +1,8 @@
 // component/scanCancelBtn/scanCancelBtn.js
 require('../../app.js')
 const app = getApp()
-const request = require('../../utils/request.js')
 const toast = require('../../utils/toast.js')
+import API from '../../api/index'
 
 Component({
   /**
@@ -47,14 +47,14 @@ Component({
       })
     },
 
-    // 取消
+    // 取消订单
     cancel () {
       let self = this
       let data = {
         flowno: self.data.flowno,
         deptcode: self.data.deptcode
       }
-      request.http('invest/microFlow.do?method=cancelSaleOrder', data, 'POST').then(result => {
+      API.invest.cancelSaleOrder(data).then(result => {
         let res = result.data
         if (res.flag === 1) {
           toast.toast('取消成功!')

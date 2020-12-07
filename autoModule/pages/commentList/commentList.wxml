@@ -3,7 +3,7 @@
 <view class="container color333333 font28 bgf0f0f0" data-weui-theme="dark">
   <!-- 评价类别 start -->
   <view class="comment_tit bgffffff">
-    <view class="name tc {{EType === item.type ? 'active' : ''}}" data-type="{{item.type}}" wx:for="{{typeList}}" wx:key="index" bindtap="setEType">{{item.name}}</view>
+    <view class="name tc {{EType === item.type ? 'active' : ''}}" data-type="{{item.type}}" wx:for="{{EtypeList}}" wx:key="index" bindtap="setEType">{{item.name}}</view>
   </view>
   <!-- 评价类别 end -->
   <!-- 评价 start -->

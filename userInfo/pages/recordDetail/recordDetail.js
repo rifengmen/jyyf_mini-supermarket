@@ -1,7 +1,7 @@
 // userInfo/pages/recordDetail/recordDetail.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -29,7 +29,7 @@ Page({
       deptname: options.deptname,
       saletime: options.saletime,
     })
-    // 获取详情
+    // 获取消费详情
     self.getRecordDetail()
   },
 
@@ -82,14 +82,14 @@ Page({
   //
   // },
 
-  // 获取详情
+  // 获取消费详情
   getRecordDetail () {
     let self = this
     let data = {
       Flowno: self.data.flowno,
       Deptcode: self.data.deptcode
     }
-    request.http('mem/member.do?method=listDetails', data).then(result => {
+    API.mem.listDetails(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

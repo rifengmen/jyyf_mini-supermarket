@@ -47,21 +47,21 @@
 <!-- 首页活动样式一 start -->
 <template name="index_hot1">
   <view class="hot1_cont">
-    <navigator class="hit1_name border_r10 bgffffff" hover-class="none" url="/pages/goodsList/goodsList?cateid={{item.Id}}&title={{item.storecategoryname}}">
+    <navigator class="hit1_name border_r10 bgffffff overflow" hover-class="none" url="/shopping/pages/goodsList/goodsList?Cateid={{item.Id}}&title={{item.storecategoryname}}">
       <image src="{{baseUrl + item.ico}}"></image>
     </navigator>
     <view class="goodsList">
       <view class="item1">
-        <navigator class="item border_r10 bgffffff overflow" hover-class="none" url="/pages/goodsDetail/goodsDetail?Gdscode={{item.gdscodelist[0].Gdscode}}&title={{item.gdscodelist[0].Name}}&panicbuycode=&deptname={{deptname}}&deptcode={{deptcode}}">
+        <navigator class="item border_r10 bgffffff overflow" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.gdscodelist[0].Gdscode}}&title={{item.gdscodelist[0].Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
           <image src="{{item.gdscodelist[0].Defaultimage ? baseUrl + item.gdscodelist[0].Defaultimage : errorImage}}" mode="aspectFit" lazy-load="true"></image>
           <view class="goods_name font24 ellipsis">{{item.gdscodelist[0].Name}}</view>
         </navigator>
-        <navigator class="item border_r10 bgffffff overflow" hover-class="none" url="/pages/goodsDetail/goodsDetail?Gdscode={{item.gdscodelist[1].Gdscode}}&title={{item.gdscodelist[1].Name}}&panicbuycode=&deptname={{deptname}}&deptcode={{deptcode}}">
+        <navigator class="item border_r10 bgffffff overflow" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.gdscodelist[1].Gdscode}}&title={{item.gdscodelist[1].Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
           <image src="{{item.gdscodelist[1].Defaultimage ? baseUrl + item.gdscodelist[1].Defaultimage : errorImage}}" mode="aspectFit" lazy-load="true"></image>
           <view class="goods_name font24 ellipsis">{{item.gdscodelist[1].Name}}</view>
         </navigator>
       </view>
-      <navigator class="item2 border_r10 bgffffff overflow" hover-class="none" url="/pages/goodsDetail/goodsDetail?Gdscode={{item.gdscodelist[2].Gdscode}}&title={{item.gdscodelist[2].Name}}&panicbuycode=&deptname={{deptname}}&deptcode={{deptcode}}">
+      <navigator class="item2 border_r10 bgffffff overflow" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.gdscodelist[2].Gdscode}}&title={{item.gdscodelist[2].Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
         <image src="{{item.gdscodelist[2].Defaultimage ? baseUrl + item.gdscodelist[2].Defaultimage : errorImage}}" mode="aspectFit" lazy-load="true"></image>
         <view class="goods_cont">
           <view class="goods_name font24 ellipsis2 tc">{{item.gdscodelist[2].Name}}</view>

@@ -117,12 +117,3 @@ swiper.banner_swiper {
   margin-right: 10rpx;
 }
 /* 支付方式列表 end */
-.btn {
-  position: fixed;
-  bottom: 60rpx;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100vw - 80rpx);
-  height: 80rpx;
-  line-height: 80rpx;
-}

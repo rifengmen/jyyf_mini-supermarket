@@ -1,8 +1,8 @@
 // component/useTickBtn/useTickBtn.js
 require('../../app.js')
 const app = getApp()
-const request = require('../../utils/request.js')
 const toast = require('../../utils/toast.js')
+import API from '../../api/index'
 
 Component({
   /**
@@ -50,13 +50,13 @@ Component({
         tickgdscode: tick.tickgdscode,
         noPayMoney: self.data.Totalmoney,
       }
-      request.http('mem/member.do?method=payTicketCheck', data).then(result => {
+      API.mem.payTicketCheck(data).then(result => {
         let res = result.data
         if (res.flag === 1) {
-          if (tick.tickettype === 1) {
-            tick.paymoney = tick.usemoney
-          } else if (tick.tickettype === 2) {
+          if (tick.tickettype === 2) {
             tick.paymoney = res.data.DicountMoney
+          } else {
+            tick.paymoney = tick.usemoney
           }
           app.globalData.tick = tick
           wx.navigateBack()

@@ -1,7 +1,7 @@
 // userInfo/pages/setPayPassword/setPayPassword.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -122,7 +122,7 @@ Page({
     })
   },
 
-  // 发送密码
+  // 设置支付密码
   sendPassword () {
     let self = this
     let password = self.data.password
@@ -148,7 +148,7 @@ Page({
       Checkno: '',
       fromWhere: 'miniProgram'
     }
-    request.http('bill/pay.do?method=cardpayopen', data).then(result => {
+    API.bill.cardpayopen(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         app.globalData.coflag = 1
@@ -180,15 +180,11 @@ Page({
   getVerifyCodeGraphic () {
     let self = this
     let data = {}
-    request.http('system/customlogin.do?method=getVerifyCodeGraphic', data).then(result => {
+    API.system.getVerifyCodeGraphic(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let imgCodeUrl = res.data.GraphicFileName
         imgCodeUrl = imgCodeUrl.replace(/\\/g, '/')
-        let sessionId = result.header['Set-Cookie']
-        if (sessionId) {
-          app.globalData.sessionId = sessionId
-        }
         self.setData({
           imgCodeUrl: imgCodeUrl
         })
@@ -238,14 +234,14 @@ Page({
       mobile: app.globalData.mobile,
       mobilecode: self.data.imgCode,
     }
-    request.http('system/customlogin.do?method=getCheckCode180126', data).then(result => {
+    API.system.getCheckCode180126(data).then(result => {
       toast.toast(result.data.message)
     }).catch(error => {
       toast.toast(error.error)
     })
   },
 
-  // 充值支付密码
+  // 重置支付密码
   resetPassword () {
     let self = this
     let password = self.data.password
@@ -281,7 +277,7 @@ Page({
       Checkno: messageCode,
       Cpassword: password,
     }
-    request.http('bill/pay.do?method=payPasswordReset', data).then(result => {
+    API.bill.payPasswordReset(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         wx.navigateBack()

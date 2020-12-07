@@ -1,8 +1,8 @@
 // autoModule/pages/lottery/lottery.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
 const utils = require("../../../utils/util")
+import API from '../../../api/index'
 
 Page({
 
@@ -12,12 +12,18 @@ Page({
   data: {
     // 基础路径
     baseUrl: app.globalData.baseUrl,
+    // 抽奖自定义设置开关
+    cent_istrunbg: app.globalData.cent_istrunbg,
     // 抽奖背景图
-    lotteryBg: 'lib/images/lotteryBg.png',
+    cent_bgurl: app.globalData.cent_bgurl || '/lib/images/lotteryBgUrl.png',
+    // 抽奖转盘图
+    cent_turnurl: app.globalData.cent_turnurl || '/lib/images/lotteryTurnUrl.png',
+    // 抽奖按钮图
+    cent_btnurl: app.globalData.cent_btnurl || '/lib/images/lotteryStart.png',
+    // 谢谢图标
+    thanksimg: '/lib/images/thank.png',
     // 积分
     score: '',
-    // 消耗积分
-    prizeUseCent: '',
     // 奖项
     prizeList: '',
     // 抽奖开关
@@ -40,8 +46,22 @@ Page({
    */
   onLoad: function (options) {
     let self = this
-    // 获取积分
-    self.getScore()
+    let baseUrl = app.globalData.baseUrl
+    let cent_istrunbg = app.globalData.cent_istrunbg
+    let cent_bgurl = '/lib/images/lotteryBgUrl.png'
+    let cent_turnurl = '/lib/images/lotteryTurnUrl.png'
+    let cent_btnurl = '/lib/images/lotteryStart.png'
+    if (cent_istrunbg) {
+      cent_bgurl = baseUrl + app.globalData.cent_bgurl
+      cent_turnurl = baseUrl + app.globalData.cent_turnurl
+      cent_btnurl = baseUrl + app.globalData.cent_btnurl
+    }
+    self.setData({
+      cent_istrunbg: cent_istrunbg,
+      cent_bgurl: cent_bgurl,
+      cent_turnurl: cent_turnurl,
+      cent_btnurl: cent_btnurl,
+    })
     // 获取奖项
     self.getPrizeList()
   },
@@ -95,43 +115,17 @@ Page({
   //
   // },
 
-  // 获取积分
-  getScore () {
-    let self = this
-    let data = {
-      memcode: app.globalData.memcode,
-      startdate: utils.formatTime(new Date()),
-    }
-    request.http('mem/card.do?method=listScoreDtl', data).then(result => {
-      let res = result.data
-      if (res.flag === 1) {
-        self.setData({
-          score: res.data,
-        })
-      } else {
-        toast.toast(res.message)
-      }
-    }).catch(error => {
-      toast.toast(error.error)
-    })
-  },
-
   // 获取奖项
   getPrizeList () {
     let self = this
     let data = {}
-    request.http('system/prize.do?method=getPrizeList', data).then(result => {
+    API.system.getPrizeList(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        if (res.data.prizeList.length) {
-          self.setData({
-            prizeUseCent: res.data.prizeUseCent,
-          })
+        if (res.data && res.data.prizeList.length) {
           // 设置旋转角度
           self.setAngle(res.data.prizeList)
         }
-      } else {
-        toast.toast(res.message)
       }
     }).catch(error => {
       toast.toast(error.error)
@@ -141,6 +135,7 @@ Page({
   // 设置旋转角度
   setAngle (prizeList) {
     let self = this
+    let baseUrl = self.data.baseUrl
     let list = prizeList
     let count = prizeList.length
     prizeList.forEach((item, index) => {
@@ -148,6 +143,11 @@ Page({
       let decollatorAngle = angle / 2
       item.angle = angle * index
       item.decollatorAngle = angle * index + decollatorAngle
+      if (item.prizeno === -1) {
+        item.prize_bgurl = self.data.thanksimg
+      } else {
+        item.prize_bgurl = baseUrl + item.prize_bgurl
+      }
     })
     self.setData({
       prizeList: list,
@@ -164,14 +164,12 @@ Page({
     self.setData({
       getFlag: false,
     })
-    request.http('system/prize.do?method=centPrize', data).then(result => {
+    API.system.centPrize(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
           centPrize: res.data
         })
-        // 获取积分
-        self.getScore()
         // 设置抽奖结果下标
         self.setCentPrizeIndex(res.data)
       } else {

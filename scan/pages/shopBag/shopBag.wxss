@@ -1,6 +1,2 @@
 /* pages/shopBag/shopBag.wxss */
 @import "/lib/style/scan.wxss";
-.nodata_cont {
-  width: 100%;
-  height: calc(100vh - 160rpx);
-}

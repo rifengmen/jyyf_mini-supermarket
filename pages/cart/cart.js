@@ -1,7 +1,7 @@
 // pages/cart/cart.js
 const app = getApp()
-const request = require("../../utils/request")
 const toast = require("../../utils/toast")
+import API from '../../api/index'
 
 Page({
 
@@ -133,24 +133,26 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('bill/shoppingcar.do?method=listMyCar', data).then(result => {
+    API.bill.listMyCar(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        let cartList = res.data.carList
-        if (cartList.length) {
-          cartList.forEach(item => {
-            item.check = false
-          })
-          self.setData({
-            SMGflag: res.data.SMGflag
-          })
-          let countData = {
-            cartList: cartList,
-            totalmoney: res.data.totalmoney,
-            actmoney: res.data.actmoney
+        if (res.data && res.data.carList) {
+          let cartList = res.data.carList
+          if (cartList.length) {
+            cartList.forEach(item => {
+              item.check = false
+            })
+            self.setData({
+              SMGflag: res.data.SMGflag
+            })
+            let countData = {
+              cartList: cartList,
+              totalmoney: res.data.totalmoney,
+              actmoney: res.data.actmoney
+            }
+            // 购物车重新计算
+            self.countCart(countData)
           }
-          // 购物车重新计算
-          self.countCart(countData)
         }
       } else {
         toast.toast(res.message)
@@ -354,7 +356,7 @@ Page({
         item.buyAMT = data.Count
       }
     })
-    request.http('bill/shoppingcar.do?method=updateIntoCar', data).then(result => {
+    API.bill.updateIntoCar(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let countData = {
@@ -373,7 +375,7 @@ Page({
     })
   },
 
-  // 删除商品的方法
+  // 删除购物车商品的方法
   delCars(delList, flag) {
     let self = this
     let cartList = self.data.cartList
@@ -393,7 +395,7 @@ Page({
         getFlag: true
       })
     }
-    request.http('bill/shoppingcar.do?method=delCars', data).then(result => {
+    API.bill.delCars(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let countData = {
@@ -436,26 +438,24 @@ Page({
   getCartCount() {
     let self = this
     let data = {}
-    request.http('bill/shoppingcar.do?method=getCarProductCount', data).then(result => {
+    API.bill.getCarProductCount(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        let scanType = app.globalData.scanType
-        let index = 3
-        if (scanType) {
-          index = 2
-        }
-        self.setData({
-          cartCount: res.data.data
-        })
-        if (res.data.data) {
-          wx.setTabBarBadge({
-            index: index,
-            text: (res.data.data).toString()
+        let index = 2
+        if (res.data) {
+          self.setData({
+            cartCount: res.data.data
           })
-        } else {
-          wx.removeTabBarBadge({
-            index: index
-          })
+          if (res.data.data) {
+            wx.setTabBarBadge({
+              index: index,
+              text: (res.data.data).toString()
+            })
+          } else {
+            wx.removeTabBarBadge({
+              index: index
+            })
+          }
         }
       }
     }).catch(error => {
@@ -466,15 +466,9 @@ Page({
   // 去编辑订单页面
   toEditorOrder() {
     let self = this
-    if (self.data.SMGflag) {
-      wx.navigateTo({
-        url: '/scan/pages/shopBag/shopBag',
-      })
-    } else {
-      wx.navigateTo({
-        url: '/pages/editorOrder/editorOrder',
-      })
-    }
+    wx.navigateTo({
+      url: '/shopping/pages/editorOrder/editorOrder?otc=&goodscode=&amount=',
+    })
   },
 
 })

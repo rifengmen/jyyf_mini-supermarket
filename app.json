@@ -4,23 +4,24 @@
     "pages/author/author",
     "pages/register/register",
     "pages/shopList/shopList",
-    "pages/search/search",
-    "pages/goodsList/goodsList",
-    "pages/goodsDetail/goodsDetail",
-    "pages/message/noticeList/noticeList",
-    "pages/message/messageList/messageList",
-    "pages/message/detail/detail",
     "pages/category/category",
     "pages/cart/cart",
-    "pages/cart2/cart2",
-    "pages/scan/scan",
-    "pages/editorOrder/editorOrder",
-    "pages/payEnd/payEnd",
     "pages/userInfo/userInfo",
-    "pages/roomplayList/roomplayList",
-    "pages/webUrl/webUrl"
+    "pages/roomplayList/roomplayList"
   ],
   "subpackages": [
+    {
+      "root": "shopping",
+      "name": "shopping",
+      "pages": [
+        "pages/search/search",
+        "pages/goodsList/goodsList",
+        "pages/goodsDetail/goodsDetail",
+        "pages/cart2/cart2",
+        "pages/editorOrder/editorOrder",
+        "pages/payEnd/payEnd"
+      ]
+    },
     {
       "root": "autoModule",
       "name": "autoModule",
@@ -35,6 +36,15 @@
         "pages/addComment/addComment",
         "pages/commentList/commentList",
         "pages/buyGoodsList/buyGoodsList"
+      ]
+    },
+    {
+      "root": "message",
+      "name": "message",
+      "pages": [
+        "pages/noticeList/noticeList",
+        "pages/messageList/messageList",
+        "pages/detail/detail"
       ]
     },
     {
@@ -70,11 +80,26 @@
         "pages/myCode/myCode",
         "pages/editorAddress/editorAddress",
         "pages/addressList/addressList",
-        "pages/selfPickUp/selfPickUp",
         "pages/setting/setting",
         "pages/userDetail/userDetail",
         "pages/about/about",
+        "pages/cantacts/cantacts",
         "pages/remove/remove"
+      ]
+    },
+    {
+      "root": "links",
+      "name": "links",
+      "pages": [
+        "pages/app/app",
+        "pages/h5/h5"
+      ]
+    },
+    {
+      "root": "internal",
+      "name": "internal",
+      "pages": [
+        "pages/editOrderStatus/editOrderStatus"
       ]
     }
   ],
@@ -121,7 +146,7 @@
   },
   "plugins": {
     "live-player-plugin": {
-      "version": "1.2.2",
+      "version": "1.2.4",
       "provider": "wx2b03c6e691cd7370"
     }
   },

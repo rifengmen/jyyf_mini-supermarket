@@ -1,7 +1,7 @@
 // userInfo/pages/score/score.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -75,14 +75,14 @@ Page({
   //
   // },
 
-  // 获取列表内容
+  // 获取积分详情
   getList (e) {
     let self = this
     let data = {
       memcode: app.globalData.memcode,
       startdate: e.detail
     }
-    request.http('mem/card.do?method=listScoreDtl', data).then(result => {
+    API.mem.listScoreDtl(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let datas = res.data
@@ -95,6 +95,8 @@ Page({
           cardData: datas.Score,
           list: datas.dataList
         })
+      } else {
+        toast.toast(res.message)
       }
     }).catch(error => {
       toast.toast(error.error)

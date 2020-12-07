@@ -14,19 +14,25 @@
 	<!-- 商品列表 start -->
 	<view class="main">
 		<view class="goods_cont bgffffff border_r10 overflow" wx:if="{{cartList.length}}">
-			<view class="goods_list2">
+			<view class="goods_list1">
 				<view class="goods" wx:for="{{cartList}}" wx:key="index">
 					<radio value="" checked="{{item.check}}" bindtap="setCheck" data-index="{{index}}" wx:if="{{editorFlag}}"></radio>
-					<navigator class="goods_item2 border_be5e5e5" hover-class="none" url="/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&title={{item.Pname}}}&panicbuycode={{item.panicbuycode || ''}}&deptname={{deptname}}&deptcode={{deptcode}}">
+					<navigator class="goods_item border_be5e5e5" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&title={{item.Pname}}}&deptname={{deptname}}&deptcode={{deptcode}}">
 						<view class="item_img overflow">
 							<image src="{{item.Pimg ? (baseUrl + item.Pimg) : errorImage}}" mode="aspectFit"></image>
 						</view>
 						<view class="item_desc">
 							<view class="item_name ellipsis2">{{item.Pname}}</view>
 							<view class="price_cont">
-								<view class="price">
-									<view class="actual_price colorfa6400">￥{{item.actualprice}}</view>
-									<del class="color999999 font22" wx:if="{{item.actualprice !== item.saleprice}}">￥{{item.saleprice}}</del>
+								<view class="price color999999 font22">
+									<view class="actual_price">
+										<text class="colorfa6400">￥</text>
+										<text class="colorfa6400 font36">{{item.actualprice}}</text>
+									</view>
+									<del class="" wx:if="{{item.actualprice !== item.saleprice}}">
+										<text class="">￥</text>
+										<text class="font28">{{item.saleprice}}</text>
+									</del>
 								</view>
 								<view class="cart">
 									<view class="editor_cart bgf0f0f0 border_r500">
@@ -59,9 +65,14 @@
 			<view class="total">
 				<view class="total_tit">合计：</view>
 				<view class="total_num colorfa6400 font36 font_blod ellipsis">￥{{actMoney}}</view>
-				<view class="">优惠：￥{{discountMoney}}</view>
+				<view class="color999999">优惠：￥{{discountMoney}}</view>
 			</view>
-			<view class="toEditorOrder colorffffff font32 border_r500 bg71d793 tc" bindtap="toEditorOrder">去结算({{cartCount}})</view>
+			<block wx:if="{{cartList.length}}">
+				<view class="toEditorOrder colorffffff font32 border_r500 bg71d793 tc" bindtap="toEditorOrder">去结算({{cartCount}})</view>
+			</block>
+			<block wx:else>
+				<view class="toEditorOrder colorffffff font32 border_r500 bgcecece tc">去结算(0)</view>
+			</block>
 		</view>
 		<view class="group" wx:else>
 			<view class="all_btn" bindtap="radioChange">

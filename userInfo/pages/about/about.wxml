@@ -15,27 +15,14 @@
     <view class="tit font32 tc">公司简介</view>
     <view class="name font_blod tc">{{about.aboutTitle}}</view>
     <view class="desc">{{about.aboutDetail}}</view>
-    <!--<view class="shop_section border_be5e5e5">-->
-      <!--<view class="name font_blod">总部地址</view>-->
-      <!--<view class="color666666">{{'测试内容'}}</view>-->
-    <!--</view>-->
-    <!--<view class="shop_section border_be5e5e5">-->
-      <!--<view class="name font_blod">客服电话</view>-->
-      <!--<view class="color0091ff">{{'测试内容'}}</view>-->
-    <!--</view>-->
-    <!--<view class="shop_section border_be5e5e5">-->
-      <!--<view class="name font_blod">客服微信</view>-->
-      <!--<view class="color666666">{{'测试内容'}}</view>-->
-    <!--</view>-->
-    <!--<view class="shop_section">-->
-      <!--<view class="name font_blod">营业时间</view>-->
-      <!--<view class="color666666">{{'测试内容'}}</view>-->
-    <!--</view>-->
   </view>
   <!-- 公司简介 end -->
   <!-- copyright start -->
   <view class="copyright bg999999">
-    <view class="colorffffff">{{about.aboutFooter}}</view>
+    <view class="colorffffff">
+      <text>{{about.aboutFooter}}</text>
+      <text wx:if="{{version}}"> 版本号：{{version}}</text>
+    </view>
   </view>
   <!-- copyright end -->
 </view>

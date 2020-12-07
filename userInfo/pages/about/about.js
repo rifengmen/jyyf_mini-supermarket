@@ -1,7 +1,7 @@
 // userInfo/pages/about/about.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -13,8 +13,12 @@ Page({
     shoplogo: app.globalData.shoplogo,
     // app标题
     apptitle: app.globalData.apptitle,
+    // shopcode
+    shopcode: app.globalData.shopcode,
     // about
     about: '',
+    // 当前线上版本号
+    version: app.globalData.version,
   },
 
   /**
@@ -75,13 +79,13 @@ Page({
   //
   // },
 
-  // 获取about
+  // 关于
   getAbout () {
     let self = this
     let data = {
-      UserCode: app.globalData.memcode
+      UserCode: self.data.shopcode
     }
-    request.http('appversion.do?method=appAbout', data).then(result => {
+    API.appversion.appAbout(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

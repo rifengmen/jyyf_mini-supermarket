@@ -7,6 +7,7 @@
 .item {
   width: 100%;
   height: auto;
+  line-height: 1.5;
   padding: 24rpx 0;
   display: flex;
   justify-content: center;
@@ -25,17 +26,17 @@
   margin-bottom: 10rpx;
 }
 .item_shopname {
-  width: calc(100% - 140rpx);
+  width: calc(100% - 200rpx);
   height: auto;
 }
 .shopname {
   width: 100%;
-  height: 46rpx;
-  line-height: 46rpx;
+  height: auto;
   margin-bottom: 10rpx;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+}
+.tag_cont {
+  width: auto;
+  height: auto;
 }
 .name {
   max-width: calc(100% - 130rpx);
@@ -45,23 +46,23 @@
   width: 120rpx;
   height: 40rpx;
   line-height: 40rpx;
-  border: 1px solid #71d793;
+  margin-right: 24rpx;
 }
 .address {
   width: 100%;
 }
 .distance {
-  width: 120rpx;
+  width: 180rpx;
 }
 .distance > view {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 }
-.distance text {
-  display: inline-block;
-  width: calc(100% - 10rpx);
+.isdefault {
+  margin-left: 20rpx;
+  scale: .5;
 }
 .shopdes {
   width: 100%;

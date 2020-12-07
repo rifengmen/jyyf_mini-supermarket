@@ -1,7 +1,7 @@
 // autoModule/pages/nearby/nearby.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -81,7 +81,7 @@ Page({
       Latitude: app.globalData.latitude,
       deptType: 3,
     }
-    request.http('system/dept.do?method=listDeptInfo', data).then(result => {
+    API.system.listDeptInfo(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

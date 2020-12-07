@@ -127,6 +127,9 @@
 .colord94242 {
   color: #d94242;
 }
+.colore42837 {
+  color: #e42837;
+}
 .color71d793 {
   color: #71d793;
 }
@@ -254,6 +257,12 @@
 }
 .border_a979797 {
   border: 1px solid #979797;
+}
+.border_af7b500 {
+  border: 1px solid #f7b500;
+}
+.border_afa6400 {
+  border: 1px solid #fa6400;
 }
 .border_acecece {
   border: 1px solid #cecece;

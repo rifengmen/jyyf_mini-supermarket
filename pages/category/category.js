@@ -1,7 +1,7 @@
 // pages/category/category.js
 const app = getApp()
-const request = require("../../utils/request")
 const toast = require("../../utils/toast")
+import API from '../../api/index'
 
 Page({
 
@@ -137,7 +137,7 @@ Page({
   getLevel1 () {
     let self = this
     let data = {}
-    request.http('system/goodsclass.do?method=listClass', data).then(result => {
+    API.system.listClass(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -171,7 +171,7 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('system/goodsclass.do?method=listSubClass', data).then(result => {
+    API.system.listSubClass(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -208,7 +208,7 @@ Page({
       sorttype: self.data.sorttype,
       HotCategoryflag: self.data.hotCategoryflag,
     }
-    request.http('info/goods.do?method=getProductListByCate', data).then(result => {
+    API.info.getProductListByCate(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let goodsList = self.data.goodsList
@@ -269,10 +269,6 @@ Page({
   addCart (e) {
     let self = this
     let goods = e.currentTarget.dataset.goods
-    // 判断抢购
-    if (goods.panicbuycode) {
-      goods.Highpprice = goods.panicprice
-    }
     // 判断是否散称
     if (goods.scaleflag) {
       self.setData({
@@ -289,14 +285,8 @@ Page({
   componentAddCart (goods) {
     let self = this
     let addcart = self.selectComponent('#addCart')
-    let panicBuyaddCart = self.selectComponent('#panicBuyaddCart')
-    if (goods.panicbuycode) { // 抢购添加
-      // 调用子组件，传入商品信息添加购物车
-      panicBuyaddCart.addCart(goods)
-    } else { // 普通添加
-      // 调用子组件，传入商品信息添加购物车
-      addcart.addCart(goods)
-    }
+    // 调用子组件，传入商品信息添加购物车
+    addcart.addCart(goods)
   },
 
   // 弹窗关闭
@@ -320,23 +310,21 @@ Page({
   getCartCount () {
     let self = this
     let data = {}
-    request.http('bill/shoppingcar.do?method=getCarProductCount', data).then(result => {
+    API.bill.getCarProductCount(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        let scanType = app.globalData.scanType
-        let index = 3
-        if (scanType) {
-          index = 2
-        }
-        if (res.data.data) {
-          wx.setTabBarBadge({
-            index: index,
-            text: (res.data.data).toString()
-          })
-        } else {
-          wx.removeTabBarBadge({
-            index: index
-          })
+        let index = 2
+        if (res.data) {
+          if (res.data.data) {
+            wx.setTabBarBadge({
+              index: index,
+              text: (res.data.data).toString()
+            })
+          } else {
+            wx.removeTabBarBadge({
+              index: index
+            })
+          }
         }
       }
     }).catch(error => {

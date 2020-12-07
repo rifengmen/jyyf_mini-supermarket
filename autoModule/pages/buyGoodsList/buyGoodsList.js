@@ -1,7 +1,7 @@
 // autoModule/pages/buyGoodsList/buyGoodsList.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -132,12 +132,14 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('mem/member.do?method=listMemberConsumGdscode', data).then(result => {
+    API.mem.listMemberConsumGdscode(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
           buyGoodsList: res.data
         })
+      } else {
+        toast.toast(res.message)
       }
       wx.hideLoading()
       // 设置请求开关

@@ -1,0 +1,7 @@
+<!--links/pages/app/app.wxml-->
+<view class="container color333333 font28 bgf9f9f9" data-weui-theme="dark">
+  <view class="app_cont">
+    <image src="{{baseUrl + links.url}}" mode="aspectFill" class="app_image"></image>
+    <button open-type="launchApp" app-parameter="{{links.cont}}" binderror="launchAppError" class="app_btn bg71d793 colorffffff tc">打开{{links.title}}</button>
+  </view>
+</view>

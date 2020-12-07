@@ -1,7 +1,7 @@
 // scan/pages/manual/manual.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -17,8 +17,6 @@ Page({
     goodsInfoFlag: false,
     // 店铺信息
     scanShopInfo: '',
-    // 扫码购类型，0：共用线上购物车；1：本地独立购物车
-    scanType: app.globalData.scanType,
   },
 
   /**
@@ -101,26 +99,19 @@ Page({
     let self = this
     let data = {
       barcode: self.data.goodscode,
+      deptcode: self.data.scanShopInfo.deptcode
     }
-    let url = 'info/goods.do?method=getProductDetailsByBarcode'
     // 验证条码不为空
     if (!self.data.goodscode) {
       toast.toast('请输入商品条码！')
       return false
     }
-    if (self.data.scanType) {
-      // 验证店铺不为空
-      if (!self.data.scanShopInfo) {
-        toast.toast('请选择店铺！')
-        return false
-      }
-      data = {
-        barcode: self.data.goodscode,
-        deptcode: self.data.scanShopInfo.deptcode
-      }
-      url = 'invest/microFlow.do?method=getProductDetailsByBarcode'
+    // 验证店铺不为空
+    if (!self.data.scanShopInfo) {
+      toast.toast('请选择店铺！')
+      return false
     }
-    request.http(url, data).then(result => {
+    API.invest.getProductDetailsByBarcode(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -138,9 +129,7 @@ Page({
   // 添加商品到购物车
   addScancart () {
     let self = this
-    let scanCart = app.globalData.scanCart
-    scanCart.push(self.data.goodsInfo)
-    app.globalData.scanCart = scanCart
+    app.setScanCart(self.data.goodsInfo, 'add')
     // 关闭购物车弹窗
     self.cancel()
   },
@@ -157,49 +146,18 @@ Page({
   addBack () {
     let self = this
     // 加入购物车
-    self.addCart()
+    self.addScancart()
     // 关闭购物车弹窗
     self.cancel()
+    wx.navigateBack()
   },
 
   // 加入继续
   addGoOn () {
     let self = this
     // 加入购物车
-    self.addCart('goOn')
+    self.addScancart('goOn')
     // 关闭购物车弹窗
     self.cancel()
-  },
-
-  // 加入购物车
-  addCart (e) {
-    let self = this
-    let goodsInfo = self.data.goodsInfo
-    let data = {
-      Userid: app.globalData.userid,
-      Gdscode: goodsInfo.gdscode,
-      barflag: 1,
-      inputbarcode: goodsInfo.inputbarcode,
-    }
-    // isstripercode是否称签商品
-    if (goodsInfo.isstripercode) {
-      data.Actualmoney = goodsInfo.actualmoney
-      data.Buyprice = goodsInfo.saleprice
-      data.Count = goodsInfo.saleamount
-    } else {
-      data.Actualmoney = goodsInfo.preferential
-      data.Buyprice = goodsInfo.preferential
-      data.Count = 1
-    }
-    request.http('bill/shoppingcar.do?method=inputIntoCar', data).then(result => {
-      let res = result.data
-      if (res.flag === 1) {
-
-      } else {
-        toast.toast(res.message)
-      }
-    }).catch(error => {
-      toast.toast(error.error)
-    })
   },
 })

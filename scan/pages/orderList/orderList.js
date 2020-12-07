@@ -1,7 +1,7 @@
 // scan/pages/orderList/orderList.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -11,7 +11,7 @@ Page({
   data: {
     // 查询开始日期
     startdate: '',
-    // 扫码购订单列表
+    // 订单列表
     orderList: [],
     // 请求开关
     getFlag: false,
@@ -67,7 +67,7 @@ Page({
       page: 1,
       orderList: [],
     })
-    // 获取扫码购订单列表
+    // 获取订单列表
     self.getOrderList()
     // 关闭下拉刷新
     wx.stopPullDownRefresh()
@@ -90,7 +90,7 @@ Page({
       toast.toast('暂无更多')
       return false
     }
-    // 获取扫码购订单列表
+    // 获取订单列表
     self.getOrderList()
   },
 
@@ -113,7 +113,7 @@ Page({
     self.getOrderList()
   },
 
-  // 获取扫码购订单列表
+  // 获取订单列表
   getOrderList () {
     let self = this
     wx.showLoading({
@@ -129,7 +129,7 @@ Page({
       Page: self.data.page,
       pageSize: self.data.count,
     }
-    request.http('invest/microFlow.do?method=listMicroFlow', data).then(result => {
+    API.invest.listMicroFlow(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let orderList = self.data.orderList

@@ -1,6 +1,6 @@
 <!--component/scanDialog/scanDialog.wxml-->
 <view class="goodsInfo" catchtouchmove="ture" xmlns:wx="http://www.w3.org/1999/xhtml">
-  <view class="goodsInfo_cont bgffffff border_r20" wx:if="{{scanType}}">
+  <view class="goodsInfo_cont bgffffff border_r20">
     <view class="goodsInfo_name goods_section font32">{{goodsInfo.productName}}</view>
     <view class="goods_section">{{goodsInfo.barcode}}</view>
     <view class="goods_section" wx:if="{{item.scalageFlag}}">购买数量   ×1</view>
@@ -13,28 +13,6 @@
       <view class="btn color999999 border_a979797 border_r500 tc" bindtap="addBack">加入返回</view>
       <view class="btn colorffffff bg71d793 border_a71d793 border_r500 tc" bindtap="addGoOn">加入继续</view>
     </view>
-    <view class="closed font50 border_a979797 border_r500" bindtap="cancel">×</view>
-  </view>
-  <view class="goodsInfo_cont bgffffff border_r20" wx:else>
-    <view class="goodsInfo_name goods_section font32">{{goodsInfo.Name}}</view>
-    <view class="goods_section">{{goodsInfo.inputbarcode}}</view>
-    <block wx:if="{{goodsInfo.scaleflag}}">
-      <view class="goods_section">库存：{{goodsInfo.deptstock}}斤</view>
-      <view class="goods_section">购买数量：{{goodsInfo.saleamount*2}}斤</view>
-      <view class="goods_section">总价：{{goodsInfo.actualmoney}}元</view>
-      <view class="goods_section font32 font_blod colorfa6400">￥{{goodsInfo.preferential/2}}元/斤</view>
-      <del class="goods_section del font26 color999999" wx:if="{{goodsInfo.preferential !== goodsInfo.originalcost}}">￥{{goodsInfo.originalcost/2}}元/斤</del>
-    </block>
-    <block wx:else>
-      <view class="goods_section">库存：{{goodsInfo.deptstock}}个</view>
-      <view class="goods_section">购买数量：1个</view>
-      <view class="goods_section font32 font_blod colorfa6400">￥{{goodsInfo.preferential}}</view>
-      <del class="goods_section del font26 color999999" wx:if="{{goodsInfo.preferential !== goodsInfo.originalcost}}">￥{{goodsInfo.originalcost}}</del>
-    </block>
-    <view class="btn_cont">
-      <view class="btn color999999 border_a979797 border_r500 tc" bindtap="addBack">加入返回</view>
-      <view class="btn colorffffff bg71d793 border_a71d793 border_r500 tc" bindtap="addGoOn">加入继续</view>
-    </view>
-    <view class="closed font50 border_a979797 border_r500" bindtap="cancel">×</view>
+    <view class="closed colorfa6400 font50 border_afa6400 border_r500" bindtap="cancel">×</view>
   </view>
 </view>

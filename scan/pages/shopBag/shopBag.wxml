@@ -1,42 +1,57 @@
 <!--pages/shopBag/shopBag.wxml-->
 <view class="container color333333 font28 bgf0f0f0">
-  <view class="main">
-    <view class="goods_cont bgffffff border_r10 overflow" wx:if="{{shopBagList.length}}">
-      <view class="goods_list2">
-        <view class="goods" wx:for="{{shopBagList}}" wx:key="index">
-          <radio value="{{item.gdscode}}" checked="{{item.check}}" data-goods="{{item}}" bindtap="setCheck"></radio>
-          <view class="goods_item2 border_be5e5e5">
-            <view class="item_desc">
-              <view class="item_name ellipsis2">{{item.gdsname}}</view>
-              <view class="price_cont">
-                <view class="price">
-                  <view class="actual_price colorfa6400">￥{{item.saleprice}}</view>
-                </view>
-                <view class="cart">
-                  <view class="editor_cart bgf0f0f0 border_r500">
-                    <view class="subtrack_cart btn border_r500 overflow" catchtap="subtrackCart" data-index="{{index}}">
-                      <image src="/lib/images/subtrack.png"></image>
-                    </view>
-                    <view class="input_cart font24 tc" bindtap="">{{item.amount}}</view>
-                    <view class="add_cart btn border_r500 overflow" catchtap="addCart" data-index="{{index}}">
-                      <image src="/lib/images/add.png"></image>
-                    </view>
-                  </view>
-                </view>
-              </view>
+  <view class="shopbag_cont">
+    <!-- 电子券 start -->
+    <view class="section bgffffff" wx:if="{{paymode4Flag}}">
+      <view class="section_tit">
+        <view class="section_name">电子券</view>
+        <view class="section_name color999999">未使用电子券</view>
+      </view>
+    </view>
+    <!-- 电子券 end -->
+    <!-- 积分抵扣 start -->
+    <view class="section bgffffff" wx:if="{{paymode5Flag}}">
+      <view class="section_tit">
+        <view class="section_name">积分抵扣</view>
+        <view class="section_cont" bindtap="setScoreFlag">
+          <radio-group class="score_group">
+            <view class="tr">
+              <label class="" for="score">
+                可用
+                <text class="colorfa6400">{{score.useScore || 0}}</text>
+                积分可抵
+                <text class="colorfa6400">{{score.Money || 0}}</text>
+                元
+              </label>
+              <radio id="score" value="" checked="{{scoreFlag}}"></radio>
             </view>
-          </view>
+          </radio-group>
         </view>
       </view>
     </view>
-    <view class="nodata_cont" wx:if="{{!shopBagList.length && getFlag}}">
-      <view class="nodata overflow">
-        <image src="/lib/images/cartNodata.png"></image>
+    <!-- 积分抵扣 end -->
+    <!-- 结算信息 start -->
+    <view class="section bgffffff">
+      <view class="order_desc">
+        <view class="">
+          <view>商品总额</view>
+          <view class="font_blod">￥{{totalmoney}}</view>
+        </view>
+        <view class="" wx:if="{{paymode4Flag}}">
+          <view>电子券</view>
+          <view class="colorfa6400 font_blod">-￥{{tick.paymoney || 0}}</view>
+        </view>
+        <view class="" wx:if="{{paymode5Flag}}">
+          <view>积分抵扣</view>
+          <view class="colorfa6400 font_blod">-￥{{useScoreMoney}}</view>
+        </view>
       </view>
-      <view class="color999999 tc">暂无购物袋～</view>
     </view>
-  </view>
-  <view class="btn_cont">
-    <view class="btn colorffffff font32 bg71d793 border_a71d793 border_r500" bindtap="toEditorOrder">去结算</view>
+    <!-- 结算信息 end -->
+    <!-- 按钮 start -->
+    <view class="btn_cont">
+      <view class="btn colorffffff font32 bg71d793 border_a71d793 border_r500" bindtap="setTlement">去结算</view>
+    </view>
+    <!-- 按钮 end -->
   </view>
 </view>

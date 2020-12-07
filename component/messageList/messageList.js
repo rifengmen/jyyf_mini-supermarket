@@ -1,8 +1,8 @@
 // component/messageList/messageList.js
 require('../../app.js')
 const app = getApp()
-const request = require('../../utils/request.js')
 const toast = require('../../utils/toast.js')
+import API from '../../api/index'
 
 Component({
   /**
@@ -47,7 +47,7 @@ Component({
       if (self.data.type) {
         self.triggerEvent('setList', detail.id)
         wx.navigateTo({
-          url: '/pages/message/detail/detail?id=' + detail.id + '&type=' + self.data.type
+          url: '/message/pages/detail/detail?id=' + detail.id + '&type=' + self.data.type
         })
       }
     },

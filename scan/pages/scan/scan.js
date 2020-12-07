@@ -1,7 +1,7 @@
 // scan/pages/scan/scan.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -60,6 +60,7 @@ Page({
    */
   onUnload: function () {
     let self = this
+    // 离开扫码购清空购物车
     app.globalData.scanCart = []
   },
 
@@ -111,7 +112,7 @@ Page({
       Longitude: self.data.longitude,
       Latitude: self.data.latitude,
     }
-    request.http('invest/microFlow.do?method=listDeptInfo', data).then(result => {
+    API.invest.listDeptInfo(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         if (!res.data.length) {
@@ -154,13 +155,13 @@ Page({
     self.setTitle()
   },
 
-  // 去出场码页面
+  // 获取出场码
   toBar () {
     let self = this
     let data = {
       deptcode: self.data.scanShopInfo.deptcode
     }
-    request.http('invest/microFlow.do?method=getFlowno', data).then(result => {
+    API.invest.getFlowno(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         wx.navigateTo({

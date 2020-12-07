@@ -1,7 +1,7 @@
 // pages/register/register.js
 const app = getApp()
-const request = require("../../utils/request")
 const toast = require("../../utils/toast")
+import API from '../../api/index'
 
 Page({
 
@@ -96,15 +96,11 @@ Page({
   getVerifyCodeGraphic () {
     let self = this
     let data = {}
-    request.http('system/customlogin.do?method=getVerifyCodeGraphic', data).then(result => {
+    API.system.getVerifyCodeGraphic(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let img = res.data.GraphicFileName
         img = img.replace(/\\/g, '/')
-        let sessionId = result.header['Set-Cookie']
-        if (sessionId) {
-          app.globalData.sessionId = sessionId
-        }
         self.setData({
           img: img
         })
@@ -189,7 +185,7 @@ Page({
       mobile: mobile,
       mobilecode: imgcode
     }
-    request.http('system/customlogin.do?method=getCheckCode180126', data).then(result => {
+    API.system.getCheckCode180126(data).then(result => {
       toast.toast(result.data.message)
     }).catch(error => {
       toast.toast(error.error)
@@ -215,9 +211,11 @@ Page({
       mobile: mobile,
       checkcode: code
     }
-    request.http('system/customlogin.do?method=perfectInfoForWX', data).then(result => {
+    API.system.perfectInfoForWX(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        // 获取用户信息
+        self.login()
         toast.toast('注册成功!', 'userInfo')
       } else {
         toast.toast(res.message)
@@ -237,52 +235,31 @@ Page({
       // 团秒标志，0：否；1：是 ；2：小程序自动登录
       tmFlag: 2
     }
-    request.http('system/customlogin.do?method=login', data).then(result => {
+    API.system.login(data).then(result => {
       let res = result.data
-      if(res.flag === 1){
-        // cookie
-        let sessionId = result.header['Set-Cookie']
+      if (res.flag === 1) {
         // 用户id
         let userid = res.data.customerid
+        // 手机号码
+        let mobile = res.data.mobile
         // 用户名称
         let memname = res.data.memname
         // 用户code
         let memcode = res.data.memcode
-        //门店名称
-        let deptname = res.data.shopInfo.shopname
-        // 门店code
-        let deptcode = res.data.shopInfo.shopcode
         // 用户身份标识，0：批发客户（app功能）；1：普通客户
         let iscustomer = res.data.iscustomer
         // 卡支付标志，1：开通；0：未开通；null：未知
         let coflag = res.data.coflag
-        // 是否设置默认门店
-        let isdefaultdept = res.data.isdefaultdept
-        // 手机号码
-        let mobile = res.data.mobile
-        // 只允许普通客户登录小程序
+        // 只允许普通客户登录小程序(批发客户不能登录)
         if (iscustomer !== 1) {
           toast.toast('当前帐号类型不正确,不可使用!')
           return false
         }
-        // 设session
-        if (sessionId) {
-          app.globalData.sessionId = sessionId
-        }
         app.globalData.userid = userid
+        app.globalData.mobile = mobile
         app.globalData.memname = memname
         app.globalData.memcode = memcode
-        app.globalData.deptname = deptname
-        app.globalData.deptcode = deptcode
-        app.globalData.mobile = mobile
         app.globalData.coflag = coflag
-        // 更新页面信息
-        if (self.data.memcode !== app.globalData.memcode) {
-          self.setData({
-            memname: memname,
-            memcode: memcode
-          })
-        }
       } else {
         toast.toast(res.message)
       }

@@ -45,13 +45,6 @@
   padding: 104rpx 0 114rpx 0;
   height: calc(100vh - 170rpx - 48rpx);
 }
-.goods_cont {
-  width: calc(100% - 108rpx);
-  max-height: calc(100vh - 170rpx - 48rpx - 40rpx);
-  margin: 0 auto;
-  padding: 20rpx 30rpx;
-  overflow-y: scroll;
-}
 .goods {
   width: 100%;
   height: auto;

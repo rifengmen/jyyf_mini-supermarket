@@ -7,14 +7,14 @@
 				<image src="{{userImg ? userImg : '/lib/images/userInfo.png'}}"></image>
 			</view>
 			<view class="nick_name">
-				<view class="name font32 font_blod" wx:if="{{!openidType}}" bindtap="isAuthor">游客，请授权登录</view>
+				<view class="name font32 font_blod" wx:if="{{!openid}}" bindtap="isAuthor">游客，请授权登录</view>
 				<view class="name font32 font_blod" wx:else>{{memname}}</view>
-				<navigator class="navs toregister color71d793" hover-class="none" url="/pages/register/register" wx:if="{{openidType && !memcode}}">点此绑定手机，注册/登录</navigator>
-				<navigator class="navs colorffffff font24 bg71d793 tc border_r500" hover-class="none" url="/userInfo/pages/payPassword/payPassword" wx:if="{{memcode}}">会员卡 > </navigator>
+				<navigator class="navs toregister color71d793" hover-class="none" url="/pages/register/register" wx:if="{{openid && !memcode}}">点此绑定手机，注册/登录</navigator>
+				<navigator class="navs color71d793 font24 bgffffff tc border_a71d793 border_r500" hover-class="none" url="/userInfo/pages/setPayPassword/setPayPassword?type=open" wx:if="{{memcode && !coflag}}">开通会员支付 > </navigator>
+				<navigator class="navs colorffffff font24 bg71d793 tc border_r500" hover-class="none" url="/userInfo/pages/payPassword/payPassword" wx:if="{{memcode && coflag}}">会员卡 > </navigator>
 			</view>
 			<navigator class="my_code" hover-class="none" url="/userInfo/pages/myCode/myCode" wx:if="{{memcode}}">
 				<image src="/lib/images/myCode.png"></image>
-				<view class="tc">电子会员</view>
 			</navigator>
 		</view>
 	</view>
@@ -35,6 +35,36 @@
 		</navigator>
 	</view>
 	<!-- card信息 end -->
+	<!-- 内部功能 start -->
+	<view class="other user_section bgffffff border_r10">
+		<view class="tit">
+			<view class="font_blod">内部功能</view>
+		</view>
+		<view class="cont overflow">
+			<navigator class="item fl" hover-class="none" url="/internal/pages/editOrderStatus/editOrderStatus?role=1">
+				<view class="img">
+					<image src="/lib/images/myMessage.png"></image>
+					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc">99</view>
+				</view>
+				<view class="name font24">拣货</view>
+			</navigator>
+			<navigator class="item fl" hover-class="none" url="/internal/pages/editOrderStatus/editOrderStatus?role=2">
+				<view class="img">
+					<image src="/lib/images/myMessage.png"></image>
+					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc">99</view>
+				</view>
+				<view class="name font24">配送</view>
+			</navigator>
+			<navigator class="item fl" hover-class="none" url="/internal/pages/editOrderStatus/editOrderStatus?role=3">
+				<view class="img">
+					<image src="/lib/images/myMessage.png"></image>
+					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc">99</view>
+				</view>
+				<view class="name font24">取货</view>
+			</navigator>
+		</view>
+	</view>
+	<!-- 内部功能 end -->
 	<!-- 我的订单 start -->
 	<view class="order user_section bgffffff border_r10">
 		<view class="tit">
@@ -78,25 +108,40 @@
 		</view>
 	</view>
 	<!-- 我的订单 end -->
+	<!-- 扫码购 start -->
+	<view class="other user_section bgffffff border_r10">
+		<view class="tit">
+			<view class="font_blod">扫码购</view>
+		</view>
+		<view class="cont overflow">
+			<navigator class="item fl" hover-class="none" url="/scan/pages/scan/scan">
+				<view class="img">
+					<image src="/lib/images/userScan.png"></image>
+				</view>
+				<view class="name font24">去扫码</view>
+			</navigator>
+			<navigator class="item fl" hover-class="none" url="/scan/pages/orderList/orderList">
+				<view class="img">
+					<image src="/lib/images/userScanOrder.png"></image>
+				</view>
+				<view class="name font24">扫码购订单</view>
+			</navigator>
+			<navigator class="item fl" hover-class="none" url="/scan/pages/bar/bar">
+				<view class="img">
+					<image src="/lib/images/userBar.png"></image>
+				</view>
+				<view class="name font24">出场码</view>
+			</navigator>
+		</view>
+	</view>
+	<!-- 扫码购 end -->
 	<!-- 其他 start -->
 	<view class="other user_section bgffffff border_r10">
 		<view class="tit">
 			<view class="font_blod">其他</view>
 		</view>
 		<view class="cont overflow">
-			<navigator wx:if="{{scanType}}" class="item fl" hover-class="none" url="/scan/pages/scan/scan">
-				<view class="img">
-					<image src="/lib/images/userScan.png"></image>
-				</view>
-				<view class="name font24">扫码购</view>
-			</navigator>
-			<navigator wx:if="{{scanType}}" class="item fl" hover-class="none" url="/scan/pages/orderList/orderList">
-				<view class="img">
-					<image src="/lib/images/scanOrder.png"></image>
-				</view>
-				<view class="name font24">扫码购订单</view>
-			</navigator>
-			<navigator class="item fl" hover-class="none" url="/pages/message/messageList/messageList">
+			<navigator class="item fl" hover-class="none" url="/message/pages/messageList/messageList">
 				<view class="img">
 					<image src="/lib/images/myMessage.png"></image>
 					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{messageNum}}">{{messageNum}}</view>

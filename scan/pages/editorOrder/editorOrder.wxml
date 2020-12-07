@@ -16,7 +16,7 @@
     </view>
     <view class="orderdesc">
       <view>订单金额</view>
-      <view class="font24 color666666">{{totalMoney || 0}}</view>
+      <view class="font24 color71d793">￥{{totalMoney || 0}}</view>
     </view>
   </view>
   <!-- 订单信息 end -->
@@ -33,20 +33,13 @@
         <label class="font24" for="card"><text>储值卡</text></label>
       </view>
     </radio-group>
-    <!--<view class="btn" bindtap="radioChange" wx:if="{{paymode7Flag}}">-->
-      <!--<radio id="wechat" value="3" checked="{{payFlag}}"></radio>-->
-      <!--<label class="font24" for="wechat">微信</label>-->
-    <!--</view>-->
-    <!--<view class="btn" bindtap="radioChange" wx:if="{{paymode3Flag}}">-->
-      <!--<radio id="card" value="7" checked="{{!payFlag}}"></radio>-->
-      <!--<label class="font24" for="card">储值卡</label>-->
-    <!--</view>-->
   </view>
   <!-- 支付方式 end -->
   <!-- 支付 start -->
   <view class="order_money bgffffff">
     <view class="order_money_totalMoney font24 ellipsis">实付：<span class="colorfa6400 font34">￥{{totalMoney || 0}}</span></view>
-    <view class="pay colorffffff bg71d793" bindtap="isSetPasswordShow">立即支付</view>
+    <view class="pay colorffffff bg71d793" bindtap="isSetPasswordShow" wx:if="{{paymode3Flag || paymode7Flag}}">立即支付</view>
+    <view class="pay colorffffff bgcecece" wx:else>立即支付</view>
   </view>
   <!-- 支付 end -->
   <!-- 密码组件 start -->

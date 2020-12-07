@@ -1,7 +1,7 @@
 // userInfo/pages/myCode/myCode.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -100,13 +100,15 @@ Page({
     let data = {
       code: app.globalData.memcode,
     }
-    request.http('system/customlogin.do?method=myCard', data).then(result => {
+    API.system.myCard(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        self.setData({
-          barcode: res.data.mybarcode,
-          qrcode: res.data.myqrcode
-        })
+        if (res.data) {
+          self.setData({
+            barcode: res.data.mybarcode,
+            qrcode: res.data.myqrcode
+          })
+        }
       } else {
         toast.toast(res.message)
       }
@@ -121,7 +123,7 @@ Page({
     let data = {
       Cpassword: self.data.password
     }
-    request.http('mem/member.do?method=createPayMoneyStr180414', data).then(result => {
+    API.mem.createPayMoneyStr180414(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

@@ -16,7 +16,10 @@
     <view class="address_cont bgffffff">
       <view class="address">
         <view class="name font_blod">{{orderDetail.receiver + ' ' + orderDetail.phone}}</view>
-        <view class="color666666 font24">{{orderDetail.address}}</view>
+        <view class="desc font24 color666666">
+          <text class="tag colorffffff font24 bg71d793 border_r500 tc" wx:if="{{!orderDetail.sendtype}}">自提点</text>
+          <text>{{orderDetail.address}}</text>
+        </view>
       </view>
     </view>
     <!-- 收货地址 end -->
@@ -40,17 +43,23 @@
     <!-- 门店名称 end -->
     <!-- 订单商品列表 start -->
     <view class="goodslist bgffffff">
-      <view class="goods_list2 border_be5e5e5">
-        <view class="goods_item2 bgffffff" hover-class="none" wx:for="{{orderDetail.OrderDetail}}" wx:key="index">
+      <view class="goods_list1">
+        <view class="goods_item bgffffff" hover-class="none" wx:for="{{orderDetail.OrderDetail}}" wx:key="index">
           <view class="item_img overflow">
             <image src="{{item.imageurl ? (baseUrl + item.imageurl) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
           </view>
           <view class="item_desc">
-            <view class="item_name ellipsis2">{{item.goodsname}}</view>
+            <view class="item_name ellipsis2">{{item.productname}}</view>
             <view class="price_cont">
-              <view class="price">
-                <view class="actual_price colorfa6400">￥{{item.price}}</view>
-                <del class="color999999 font22">￥{{item.saleprice}}</del>
+              <view class="price color999999 font22">
+                <view class="actual_price">
+                  <text class="colorfa6400">￥</text>
+                  <text class="colorfa6400 font36">{{item.price}}</text>
+                </view>
+                <del class="" wx:if="{{item.price !== item.saleprice}}">
+                  <text class="">￥</text>
+                  <text class="font28">{{item.saleprice}}</text>
+                </del>
               </view>
               <view class="cart">
                 <view>× {{item.amount}}</view>
@@ -117,7 +126,7 @@
     <!-- 订单信息 end -->
     <!-- btn start -->
     <view class="zhanwei" wx:if="{{orderDetail.payflag || orderDetail.cancelflag}}"></view>
-    <view class="btn_cont font32 bgffffff" wx:if="{{orderDetail.payflag || orderDetail.cancelflag}}">
+    <view class="order_btn_cont font32 bgffffff" wx:if="{{orderDetail.payflag || orderDetail.cancelflag}}">
       <navigator class="btn colorffffff bg71d793 border_r500 border_a71d793 tc" hover-class="none" wx:if="{{orderDetail.payflag}}" url="/userInfo/pages/againPay/againPay?tradeno={{tradeno}}">去支付</navigator>
       <view class="btn color666666 bgffffff border_r500 border_a979797 tc" wx:if="{{orderDetail.cancelflag}}">
         <cancelBtn bind:setOrderList="backs" tradeno="{{tradeno}}"></cancelBtn>

@@ -1,8 +1,8 @@
 // component/scanDialog/scanDialog.js
 require('../../app.js')
 const app = getApp()
-const request = require('../../utils/request.js')
 const toast = require('../../utils/toast.js')
+import API from '../../api/index'
 
 Component({
   /**
@@ -26,8 +26,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    // 扫码购类型，0：共用线上购物车；1：本地独立购物车
-    scanType: app.globalData.scanType,
+
   },
 
   /**

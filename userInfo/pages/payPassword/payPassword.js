@@ -1,7 +1,7 @@
 // userInfo/pages/payPassword/payPassword.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 

@@ -1,7 +1,7 @@
 // userInfo/pages/againPay/againPay.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -111,7 +111,7 @@ Page({
     let data = {
       Tradeno: self.data.tradeno
     }
-    request.http('bill/shoppingcar.do?method=buyend', data, 'POST').then(result => {
+    API.bill.buyend(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let orderDetail = res.data
@@ -145,7 +145,7 @@ Page({
       scoreFlag: false,
       useScoreMoney: 0,
     })
-    request.http('bill/pay.do?method=payMoneyjf', data, 'POST').then(result => {
+    API.bill.payMoneyjf(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

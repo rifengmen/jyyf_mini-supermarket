@@ -4,11 +4,11 @@
  */
 require("../app.js")
 
-const toast = (message, url, opentime = 4000, closetime = 5000) => {
+const toast = (message, url, duration = 4000, closetime = 5000) => {
   wx.showToast({
     title: message,
     icon: 'none',
-    duration: opentime
+    duration: duration
   })
   setTimeout(function () {
     wx.hideToast()

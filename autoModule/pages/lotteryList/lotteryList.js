@@ -1,8 +1,8 @@
 // autoModule/pages/lotteryList/lotteryList.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
 const utils = require("../../../utils/util")
+import API from '../../../api/index'
 
 Page({
 
@@ -130,7 +130,7 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http('system/prize.do?method=listPrizeLog', data).then(result => {
+    API.system.listPrizeLog(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         let lotteryList = self.data.lotteryList

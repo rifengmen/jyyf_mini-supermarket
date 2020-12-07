@@ -1,8 +1,8 @@
 // component/addCart/addCart.js
 require('../../app.js')
 const app = getApp()
-const request = require('../../utils/request.js')
 const toast = require('../../utils/toast.js')
+import API from '../../api/index'
 
 Component({
   /**
@@ -27,8 +27,6 @@ Component({
     gdscode: '',
     // 商品价格
     buyprice: '',
-    // 扫码购标识，扫码购为1，否则为0
-    barflag: 0,
   },
 
   /**
@@ -43,11 +41,8 @@ Component({
         Gdscode: goods.Gdscode,
         Count: goods.count || self.data.count,
         Buyprice: goods.Highpprice,
-        barflag: self.data.barflag,
         Actuslmoney: goods.Highpprice,
-        panicbuycode: goods.panicbuycode,
       }
-      let url = ''
       // 验证是否授权
       if (!app.authorFlag()) {
         wx.navigateTo({
@@ -63,19 +58,10 @@ Component({
         toast.toast('请注册绑定手机号码')
         return false
       }
-      if (goods.panicbuycode) {
-        url = 'info/panicGdscode.do?method=inputIntoCarForPanic'
-      } else {
-        url = 'bill/shoppingcar.do?method=inputIntoCar'
-      }
-      request.http(url, data).then(result => {
+      API.bill.inputIntoCar(data).then(result => {
         let res = result.data
         if (res.flag === 1) {
-          if (goods.panicbuycode) {
-            toast.toast(res.message)
-          } else {
-            toast.toast('添加成功')
-          }
+          toast.toast('添加成功')
           // 更新购物车数量
           self.triggerEvent('getCartCount')
         } else {

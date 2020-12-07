@@ -1,8 +1,8 @@
 // autoModule/pages/tickList/tickList.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
 const utils = require("../../../utils/util")
+import API from '../../../api/index'
 
 Page({
 
@@ -12,6 +12,8 @@ Page({
   data: {
     // 请求开关
     getFlag: false,
+    // 优惠券背景
+    bgurl: '/lib/images/tickBg.png',
     // 电子券列表
     tickList: [],
     // 从哪里来
@@ -36,16 +38,16 @@ Page({
     let title = ''
     if (self.data.from === 'editorOrder') {
       title = '选择电子券'
-      // 选择电子券页面
-      self.getEditorOrder()
+      // 可用电子券
+      self.payMoneytick()
     } else if (self.data.from === 'userInfo') {
       title = '我的电子券'
-      // 我的电子券页面
-      self.getUserInfo()
+      // 我的电子券
+      self.listCoupon()
     } else if (self.data.from === 'auto') {
       title = '领券中心'
-      // 领券中心页面
-      self.getAuto()
+      // 领券中心
+      self.listCouponForGet()
     } else {
       title = '电子券'
     }
@@ -104,39 +106,13 @@ Page({
   //
   // },
 
-  // 使用电子券页面
-  getEditorOrder () {
+  // 可用电子券
+  payMoneytick () {
     let self = this
     let data = {
       payMoney: parseFloat(self.data.payMoney),
       Totalmoney: parseFloat(self.data.Totalmoney),
     }
-    let url = 'bill/pay.do?method=payMoneytick'
-    // 获取电子券列表
-    self.getTickList(url, data)
-  },
-
-  // 我的电子券页面
-  getUserInfo () {
-    let self = this
-    let data = {}
-    let url = 'mem/member.do?method=listCoupon'
-    // 获取电子券列表
-    self.getTickList(url, data)
-  },
-
-  // 领券中心页面
-  getAuto () {
-    let self = this
-    let data = {}
-    let url = 'mem/member.do?method=listCouponForGet'
-    // 获取电子券列表
-    self.getTickList(url, data)
-  },
-
-  // 获取电子券列表
-  getTickList (url, data) {
-    let self = this
     wx.showLoading({
       title: '正在加载',
       mask: true,
@@ -145,32 +121,81 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http(url, data).then(result => {
+    API.bill.payMoneytick(data).then(result => {
       let res = result.data
-      if (res.flag === 1) {
-        let tickList = res.data
-        tickList.forEach(item => {
-          if (item.dealflagdescrible) {
-            item.dealflagdescription = item.dealflagdescrible
-          }
-        })
-        self.setData({
-          tickList: tickList
-        })
-        // 设置到期剩余天数
-        if (self.data.from === 'userInfo') {
-          self.setDays()
-        }
-      } else {
-        toast.toast(res.message)
-      }
-      wx.hideLoading()
-      // 设置请求开关
-      self.setData({
-        getFlag: true
-      })
+      // 设置电子券列表
+      self.setListCoupon(res)
     }).catch(error => {
       toast.toast(error.error)
+    })
+  },
+
+  // 我的电子券
+  listCoupon () {
+    let self = this
+    let data = {}
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
+    // 设置请求开关
+    self.setData({
+      getFlag: false
+    })
+    API.mem.listCoupon(data).then(result => {
+      let res = result.data
+      // 设置电子券列表
+      self.setListCoupon(res)
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 领券中心
+  listCouponForGet () {
+    let self = this
+    let data = {}
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
+    // 设置请求开关
+    self.setData({
+      getFlag: false
+    })
+    API.mem.listCouponForGet(data).then(result => {
+      let res = result.data
+      // 设置电子券列表
+      self.setListCoupon(res)
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 设置电子券列表
+  setListCoupon (res) {
+    let self = this
+    if (res.flag === 1) {
+      let tickList = res.data
+      tickList.forEach(item => {
+        if (item.dealflagdescrible) {
+          item.dealflagdescription = item.dealflagdescrible
+        }
+      })
+      self.setData({
+        tickList: tickList
+      })
+      // 设置到期剩余天数
+      if (self.data.from === 'userInfo') {
+        self.setDays()
+      }
+    } else {
+      toast.toast(res.message)
+    }
+    wx.hideLoading()
+    // 设置请求开关
+    self.setData({
+      getFlag: true
     })
   },
 

@@ -1,7 +1,7 @@
 // userInfo/pages/complaintDetail/complaintDetail.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -11,9 +11,9 @@ Page({
   data: {
     // id
     id: '',
-    // type
+    // 投诉建议类别
     type: 0,
-    // 投诉类别列表
+    // 投诉建议类别列表
     typeList: app.globalData.typeList,
     // 详情
     complaintDetail: '',
@@ -84,13 +84,13 @@ Page({
   //
   // },
 
-  // 获取详情
+  // 获取投诉建议详情
   getComplaintDetail () {
     let self = this
     let data = {
       id: self.data.id,
     }
-    request.http('system/suggestion.do?method=listSuggestionDtl', data).then(result => {
+    API.system.listSuggestionDtl(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

@@ -50,11 +50,8 @@
   align-items: center;
   margin-bottom: 8rpx;
 }
-.address_cont .address .name .tag {
-  width: 80rpx;
-  height: 32rpx;
-  line-height: 32rpx;
-  margin: 0 16rpx;
+.address_cont .address .desc {
+  line-height: 1.5;
 }
 .address_cont .more {
   width: 90rpx;
@@ -119,12 +116,12 @@
 /* 门店名称 end */
 /* 订单商品列表 start */
 .goodslist {
-  width: calc(100% - 48rpx);
+  width: 100%;
   height: auto;
-  padding: 0 24rpx;
 }
-.goods_list2 {
-  padding: 20rpx 0;
+.goods_list1 {
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
 }
 /* 订单商品列表 end */
 /* 订单结算信息 start */
@@ -169,7 +166,7 @@
   height: 90rpx;
   margin-top: 24rpx;
 }
-.btn_cont {
+.order_btn_cont {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -180,7 +177,7 @@
   justify-content: flex-end;
   align-items: center;
 }
-.btn_cont .btn {
+.order_btn_cont .btn {
   width: 226rpx;
   height: 60rpx;
   line-height: 60rpx;

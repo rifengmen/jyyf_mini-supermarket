@@ -4,10 +4,10 @@
   <view class="banner border_r10 overflow bgffffff">
     <swiper class="banner_swiper" indicator-color="#ffffff" indicator-active-color="#71d793" autoplay="true" circular="true" interval="4000" duration="500" current="{{swiperCurrent}}" bindchange="swiperChange">
       <swiper-item wx:for="{{bannerList}}" wx:key="index">
-        <image src="{{baseUrl + item.Imageurl}}" class="swiper_item" lazy-load="true" bindtap="toBannerDetail" data-id="{{item.ImageID}}" mode="aspectFit"></image>
+        <image src="{{baseUrl + item.Imageurl}}" class="swiper_item" lazy-load="true" bindtap="toBannerDetail" data-id="{{item.ImageID}}"></image>
       </swiper-item>
     </swiper>
-    <view class="dots">
+    <view class="dots" wx:if="{{bannerList.length > 1}}">
       <block wx:for="{{bannerList}}" wx:key="index">
         <view class="dot {{index === swiperCurrent ? 'active bg71d793' : 'bgffffff'}} border_r500"></view>
       </block>
@@ -52,5 +52,7 @@
     </view>
   </view>
   <!-- 支付方式列表 end -->
-  <view class="btn colorffffff font32 bg71d793 border_r500 tc" bindtap="sendPay">支付</view>
+  <view class="btn_cont">
+    <view class="btn colorffffff font32 bg71d793 border_r500 tc" bindtap="sendPay">支付</view>
+  </view>
 </view>

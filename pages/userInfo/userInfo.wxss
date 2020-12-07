@@ -51,9 +51,8 @@
   flex-flow: column;
 }
 .my_code image {
-  width: 60rpx;
-  height: 60rpx;
-  margin-bottom: 10rpx;
+  width: 100rpx;
+  height: 100rpx;
 }
 /* 会员信息 end */
 .user_section {

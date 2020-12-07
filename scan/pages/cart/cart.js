@@ -1,7 +1,7 @@
 // scan/pages/cart/cart.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -13,6 +13,8 @@ Page({
     type: '',
     // 购物车
     scanCart: [],
+    // 购物袋列表
+    shopbagList: [],
     // 扫码购店铺
     scanShopInfo: '',
     // 商品条码
@@ -23,6 +25,8 @@ Page({
     goodsInfoFlag: false,
     // 商品总价
     totalmoney: 0,
+    // 编辑开关
+    editflag: false,
     // 流水号
     flowno: '',
   },
@@ -40,6 +44,8 @@ Page({
       // 扫一扫
       self.scangoodscode()
     }
+    // 获取购物袋列表
+    self.getShopBagList()
     // 计算商品总价
     self.setTotalmoney()
   },
@@ -98,6 +104,65 @@ Page({
   //
   // },
 
+  // 获取购物袋列表
+  getShopBagList () {
+    let self = this
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
+    // 设置请求开关
+    self.setData({
+      getFlag: false
+    })
+    let data = {}
+    API.bill.getShoppingBagList(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        let shopBagList = res.data.shoppingbaglist
+        shopBagList.forEach((item, index) => {
+          item.amount = 0
+          item.check = false
+        })
+        self.setData({
+          shopBagList: shopBagList,
+        })
+      } else {
+        toast.toast(res.message)
+      }
+      wx.hideLoading()
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 购物袋数量操作
+  updateShopBag(goods, types) {
+    let self = this
+    let shopBagList = self.data.shopBagList
+    shopBagList.forEach(item =>{
+      if (item.barcode === goodscode.barcode) {
+        // 判断加减
+        if (types === 'addCart') {
+          goods.amount++
+        } else if (types === 'subtrackCart') {
+          if (shopBagList[index].amount <= 0) {
+            goods.amount = 0
+          } else {
+            goods.amount--
+          }
+        }
+      }
+    })
+    self.setData({
+      shopBagList: shopBagList
+    })
+  },
+
   // 扫一扫
   scangoodscode () {
     let self = this
@@ -141,7 +206,7 @@ Page({
       barcode: self.data.goodscode,
       deptcode: self.data.scanShopInfo.deptcode
     }
-    request.http('invest/microFlow.do?method=getProductDetailsByBarcode', data).then(result => {
+    API.invest.getProductDetailsByBarcode(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -159,7 +224,7 @@ Page({
   // 加入返回
   addBack () {
     let self = this
-    // 添加商品到购物车
+    // 加入购物车
     self.addScancart()
     // 关闭购物车弹窗
     self.cancel()
@@ -168,24 +233,23 @@ Page({
   // 加入继续
   addGoOn () {
     let self = this
-    // 添加商品到购物车
+    // 加入购物车
     self.addScancart('goOn')
     // 关闭购物车弹窗
     self.cancel()
   },
 
-  // 添加商品到购物车
-  addScancart (e) {
+  // 加入购物车
+  addScancart (goOn) {
     let self = this
-    let scanCart = app.globalData.scanCart
-    scanCart.push(self.data.goodsInfo)
-    app.globalData.scanCart = scanCart
+    // 扫码购购物车操作,goods:商品信息;types:操作方法(add:加，count:减)
+    app.setScanCart (self.data.goodsInfo, 'add')
     self.setData({
-      scanCart: scanCart,
+      scanCart: app.globalData.scanCart,
     })
     // 计算商品总价
     self.setTotalmoney()
-    if (e) {
+    if (goOn === 'goOn') {
       // 扫一扫
       self.scangoodscode()
     }
@@ -199,23 +263,86 @@ Page({
     })
   },
 
-  // 计算商品总价
-  setTotalmoney () {
+  // 修改购物车数量
+  updateAmount (e) {
     let self = this
-    let money = 0
-    self.data.scanCart.forEach((item, index) => {
-      let _money
-      _money = parseFloat(item.actualSaleMoney)
-      money += _money
-    })
+    let goods = e.currentTarget.dataset.goods
+    let types = e.currentTarget.dataset.types
+    // 扫码购购物车操作,goods:商品信息;types:操作方法(add:加，count:减)
+    app.setScanCart (goods, types)
     self.setData({
-      totalmoney: money.toFixed(2)
+      scanCart: app.globalData.scanCart
+    })
+    // 计算商品总价
+    self.setTotalmoney()
+  },
+
+  // 设置编辑开关
+  setEditflag () {
+    let self = this
+    self.setData({
+      editflag: !self.data.editflag
     })
   },
 
-  // 结算
+  // 删除购物车商品
+  delBtn (e) {
+    let self = this
+    let goods = e.currentTarget.dataset.goods
+    let scanCart = self.data.scanCart
+    scanCart = scanCart.filter(item => item.barcode !== goods.barcode)
+    app.globalData.scanCart = scanCart
+    self.setData({
+      scanCart: scanCart
+    })
+    // 计算商品总价
+    self.setTotalmoney()
+  },
+
+  // 清空购物车
+  clearBtn () {
+    let self = this
+    wx.showModal({
+      title: '提示',
+      content: '确定清空购物车吗？',
+      success: res=>{
+        if (res.confirm) {
+          app.globalData.scanCart = []
+          self.setData({
+            scanCart: []
+          })
+          // 计算商品总价
+          self.setTotalmoney()
+        }
+      }
+    })
+  },
+
+  // 计算商品总价
+  setTotalmoney () {
+    let self = this
+    let totalmoney = 0
+    self.data.scanCart.forEach(item => {
+      let _money
+      if (item.scalageScanProduct) {
+        _money = parseFloat(item.actualSaleMoney)
+      } else {
+        _money = parseFloat(item.actualPrice) * item.quantity
+      }
+      totalmoney += _money
+    })
+    self.setData({
+      totalmoney: totalmoney.toFixed(2),
+    })
+  },
+
+  // 去结算
   setTlement () {
     let self = this
+    // 购物袋加入购物车
+    let shopBagList = self.data.shopBagList.filter(item => item.amount)
+    self.data.scanCart.push(...shopBagList)
+    // 判断购物车存在商品
     if (!self.data.scanCart.length) {
       toast.toast('请添加商品')
       return false
@@ -224,7 +351,7 @@ Page({
       productList: self.data.scanCart,
       deptcode: self.data.scanShopInfo.deptcode
     }
-    request.http('invest/microFlow.do?method=saveFlow', data).then(result => {
+    API.invest.saveFlow(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -232,7 +359,7 @@ Page({
           scanCart: [],
         })
         app.globalData.scanCart = []
-        wx.navigateTo({
+        wx.redirectTo({
           url: '/scan/pages/editorOrder/editorOrder?flowno=' + self.data.flowno + '&deptcode=' + self.data.scanShopInfo.deptcode + '&deptname=' + self.data.scanShopInfo.deptname
         })
       } else {

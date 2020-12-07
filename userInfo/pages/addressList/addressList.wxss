@@ -12,6 +12,7 @@
 .address_tit {
   width: calc(100% - 60rpx);
   height: 78rpx;
+  margin-bottom: 20rpx;
   padding: 0 30rpx;
   display: flex;
   justify-content: space-between;
@@ -20,13 +21,15 @@
 .address_list {
   width: 100%;
   height: auto;
-  max-height: calc(100vh - 128rpx);
+  max-height: calc(100vh - 148rpx);
   overflow-y: scroll;
 }
+/* 地址列表 start */
 .address_item {
   width: calc(100% - 60rpx);
   height: auto;
-  padding: 16rpx 30rpx;
+  margin: 0 auto;
+  padding: 30rpx 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -35,8 +38,8 @@
 .address_item:last-child {
   border-bottom: unset;
 }
-.item_desc {
-  width: calc(100% - 80rpx);
+.address_item .item_desc {
+  width: calc(100% - 110rpx);
   height: 100%;
   margin-right: 20rpx;
   display: flex;
@@ -44,41 +47,32 @@
   align-items: flex-start;
   flex-flow: column;
 }
-.name {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+.address_item .name {
+  line-height: 1.5;
   margin-bottom: 10rpx;
 }
-.tag {
-  height: 32rpx;
-  line-height: 32rpx;
-  margin-left: 20rpx;
-  padding: 0 16rpx;
-}
-.item_editor {
-  width: 80rpx;
+.address_item .item_editor {
+  width: 90rpx;
   height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
+  justify-content: space-between;
+  align-items: center;
   flex-flow: column;
 }
-.item_editor .editor {
+.address_item .item_editor .editor {
   width: 40rpx;
   height: 40rpx;
 }
-.item_editor .editor image {
+.address_item .item_editor .editor image {
   width: 100%;
   height: 100%;
 }
-.item_editor .isdefault {
+.address_item .item_editor .isdefault {
   width: 100%;
-  height: 40rpx;
-  line-height: 40rpx;
-  margin-top: 10rpx;
+  margin-top: 30rpx;
+  scale: .7;
 }
-.no_send {
+.address_item .no_send {
   position: absolute;
   top: 0;
   left: 50%;
@@ -86,7 +80,8 @@
   width: 140rpx;
   height: 130rpx;
 }
+/* 地址列表 end */
 .nodata_cont {
   width: 100%;
-  height: calc(100vh - 128rpx);
+  height: calc(100vh - 148rpx);
 }

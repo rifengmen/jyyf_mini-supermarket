@@ -1,7 +1,7 @@
 // autoModule/pages/addComment/addComment.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -103,7 +103,7 @@ Page({
     })
   },
 
-  // 提交评价内容
+  // 添加评价
   sendContent () {
     let self = this
     let content = self.data.content
@@ -125,7 +125,7 @@ Page({
     self.setData({
       flag: false
     })
-    request.http('bill/evaluation.do?method=addProductEvaluation', data).then(result => {
+    API.bill.addProductEvaluation(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         wx.navigateBack()

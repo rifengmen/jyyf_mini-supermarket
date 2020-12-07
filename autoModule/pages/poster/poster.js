@@ -1,7 +1,7 @@
 // autoModule/pages/poster/poster.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -82,7 +82,7 @@ Page({
     let data = {
       Deptcode: self.data.Deptcode
     }
-    request.http('info/poster.do?method=listdtlForWX', data).then(result => {
+    API.info.listdtlForWX(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         if (res.data.length) {

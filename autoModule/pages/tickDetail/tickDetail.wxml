@@ -3,8 +3,14 @@
 	<view class="tick_cont">
 		<!-- 卡片 start -->
 		<view class="card color71d793 border_r20">
-			<view class="face_value font60" wx:if="{{tickDetail.tickettype === 1}}"><text class="font40 font_blod">￥</text>{{tickDetail.usemoney}}</view>
-			<view class="face_value font60" wx:if="{{tickDetail.tickettype === 2}}">{{tickDetail.usemoney * 10}}<text class="font30 font_blod">折</text></view>
+			<view class="face_value font60" wx:if="{{tickDetail.tickettype === 2}}">
+				<text class="font30 font_blod">折</text>
+				{{tickDetail.usemoney * 10}}
+			</view>
+			<view class="face_value font60" wx:else>
+				<text class="font40 font_blod">￥</text>
+				{{tickDetail.usemoney}}
+			</view>
 			<view class="type font24">
 				<view class="ellipsis">{{tickDetail.tickettypename}}</view>
 				<view class="ellipsis">满{{tickDetail.minsalemoney}}元使用</view>
@@ -55,8 +61,8 @@
 		<!-- 使用说明 end -->
 	</view>
 	<!-- 按钮 start -->
-	<view class="btn_cont bgffffff">
-		<view class="btn colorffffff border_r500 bg71d793 tc">
+	<view class="btn_cont">
+		<view class="btn colorffffff font32 border_r500 bg71d793 tc">
 			<getTickBtn tickid="{{tickDetail.tickid}}"></getTickBtn>
 		</view>
 	</view>

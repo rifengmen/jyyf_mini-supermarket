@@ -1,7 +1,7 @@
 // userInfo/pages/userDetail/userDetail.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -107,7 +107,7 @@ Page({
     let data ={
       memName: self.data.memname
     }
-    request.http('system/customlogin.do?method=modifyname', data).then(result => {
+    API.system.modifyname(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         app.globalData.memname = self.data.memname + '(' + self.data.vip + ')'

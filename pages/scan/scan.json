@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "scanDialog": "/component/scanDialog/scanDialog"
-  },
-  "navigationBarTitleText": "扫码购"
-}

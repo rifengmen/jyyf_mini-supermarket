@@ -11,20 +11,23 @@
     <view class="order_section orderdetail_section bgffffff">
       <view class="order_goods">
         <!-- 商品列表 start -->
-        <view class="goodsList">
+        <view class="goods_list1">
           <!-- 商品简介 start -->
-          <view class="goods_item2 bgffffff border_be5e5e5" wx:for="{{goodsList}}" wx:key="index">
+          <view class="goods_item bgffffff border_be5e5e5" wx:for="{{goodsList}}" wx:key="index">
             <view class="item_desc">
               <view class="item_name ellipsis2">{{item.goodsName}}</view>
               <view class="price_cont">
                 <view class="price">
-                  <view class="actual_price colorfa6400">￥{{item.actualPrice}}</view>
-                  <del class="color999999 font22" wx:if="{{item.actualPrice !== item.salePrice}}">
-                    ￥{{item.salePrice}}</del>
+                  <view class="actual_price">
+                    <text class="colorfa6400">￥</text>
+                    <text class="colorfa6400 font36">{{item.actualPrice}}</text>
+                  </view>
+                  <del class="" wx:if="{{item.actualPrice !== item.salePrice}}">
+                    <text class="">￥</text>
+                    <text class="font22">{{item.salePrice}}</text>
+                  </del>
                 </view>
-                <view class="cart">
-                  <view class="cart_img">×{{item.saleAmount}}</view>
-                </view>
+                <view class="cart">×{{item.saleAmount}}</view>
               </view>
             </view>
           </view>

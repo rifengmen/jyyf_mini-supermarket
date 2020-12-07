@@ -1,8 +1,8 @@
 // pages/shopList/shopList.js
-//获取应用实例
 const app = getApp()
-const request = require("../../utils/request")
 const toast = require("../../utils/toast")
+import API from '../../api/index'
+
 Page({
 
   /**
@@ -13,15 +13,23 @@ Page({
     distanceFlag: true,
     // 门店列表
     shopList: [],
-    // 用户id
-    userid: '',
+    // 门店名称
+    deptname: '',
+    // 门店code
+    deptcode: '',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let self = this
+    // 显示当前门店
+    self.setData({
+      deptname: app.globalData.deptname,
+      deptcode: app.globalData.deptcode,
+      shopList: app.globalData.shopList,
+    })
   },
 
   /**
@@ -37,12 +45,9 @@ Page({
   onShow: function () {
     let self = this
     // 隐藏小房子按钮
-    // wx.hideHomeButton()
-    self.setData({
-      userid: app.globalData.userid
-    })
+    wx.hideHomeButton()
     // 获取定位
-    self.getLocation()
+    // self.getLocation()
   },
 
   /**
@@ -118,8 +123,7 @@ Page({
       title: '正在加载',
       mask: true,
     })
-    request.http('system/dept.do?method=listDeptInfo', data).then(result => {
-      wx.hideLoading()
+    API.system.listDeptInfo(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -128,6 +132,7 @@ Page({
       } else {
         toast.toast(res.message)
       }
+      wx.hideLoading()
     }).catch(error => {
       toast.toast(error.error)
     })
@@ -136,46 +141,47 @@ Page({
   // 选择门店
   changeDept (e) {
     let self = this
-    let index = e.currentTarget.dataset.index
-    let deptcode = self.data.shopList[index].deptcode
-    let deptname = self.data.shopList[index].deptname
-    let userid = self.data.userid
-    let data = {
-      userid: userid,
-      Deptcode: deptcode
-    }
-    request.http('system/dept.do?method=changeDept', data).then(result => {
-      let res = result.data
-      if (res.flag === 1) {
-        app.globalData.deptname = deptname
-        app.globalData.deptcode = deptcode
-        wx.reLaunch({
-          url: '/pages/index/index?from=shopList',
-        })
-      } else {
-        toast.toast(res.message)
-      }
-    }).catch(error => {
-      toast.toast(error.error)
+    let shop = e.currentTarget.dataset.shop
+    let deptcode = shop.deptcode
+    let deptname = shop.deptname
+    app.globalData.deptname = deptname
+    app.globalData.deptcode = deptcode
+    // 清空扫码购购物车
+    app.globalData.scanCart = []
+    wx.reLaunch({
+      url: '/pages/index/index?deptname=' + deptname + '&deptcode=' + deptcode,
     })
   },
 
-  // 设置默认门店
-  setDefaultFlag (e) {
+  // 修改默认门店
+  changeDefaultFlag (e) {
     let self = this
-    let index = e.currentTarget.dataset.index
-    let deptcode = self.data.shopList[index].deptcode
-    let deptname = self.data.shopList[index].deptname
+    let shop = e.currentTarget.dataset.shop
+    let deptcode = shop.deptcode
+    let deptname = shop.deptname
+    let defaultflag = shop.defaultflag
+    if (defaultflag) {
+      // 取消默认门店
+      self.cancelDefaultFlag(deptcode)
+    } else {
+      // 设置默认门店
+      self.setDefaultFlag(deptcode)
+    }
+  },
+
+  // 设置默认门店
+  setDefaultFlag (deptcode) {
+    let self = this
     let data = {
       deptcode: deptcode
     }
-    request.http('system/dept.do?method=setDefaultFlag', data).then(result => {
+    API.system.setDefaultFlag(data).then(result => {
       let res = result.data
       // 更新页面默认按钮
       if (res.flag === 1) {
         let shopList = self.data.shopList
-        shopList.forEach((item, _index) => {
-          if (_index === index) {
+        shopList.forEach((item) => {
+          if (item.deptcode === deptcode) {
             item.defaultflag = 1
           } else {
             item.defaultflag = 0
@@ -183,11 +189,6 @@ Page({
         })
         self.setData({
           shopList: shopList
-        })
-        app.globalData.deptcode = deptcode
-        app.globalData.deptname = deptname
-        wx.reLaunch({
-          url: '/pages/index/index?from=shopList',
         })
       } else {
         toast.toast(res.message)
@@ -198,24 +199,24 @@ Page({
   },
 
   // 取消默认门店
-  cancelDefaultFlag (e) {
+  cancelDefaultFlag (deptcode) {
     let self = this
-    let index = e.currentTarget.dataset.index
-    let deptcode = self.data.shopList[index].deptcode
     let data = {
       deptcode: deptcode
     }
-    request.http('system/dept.do?method=cancelDefaultFlag', data).then(result => {
+    API.system.cancelDefaultFlag(data).then(result => {
       let res = result.data
+      // 更新页面默认按钮
       if (res.flag === 1) {
-        // 更新页面默认按钮
-        if (res.flag === 1) {
-          let shopList = self.data.shopList
-          shopList[index].defaultflag = 0
-          self.setData({
-            shopList: shopList
-          })
-        }
+        let shopList = self.data.shopList
+        shopList.forEach(item => {
+          if (item.deptcode === deptcode) {
+            item.defaultflag = 0
+          }
+        })
+        self.setData({
+          shopList: shopList
+        })
       } else {
         toast.toast(res.message)
       }

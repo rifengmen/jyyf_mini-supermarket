@@ -6,15 +6,12 @@
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, .7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 .dialog_cont .dialog {
   width: 540rpx;
   height: 470rpx;
+  margin: 350rpx auto 0 auto;
   padding: 40rpx;
-  margin-top: -40%;
 }
 .dialog_cont .dialog_title {
   width: 100%;

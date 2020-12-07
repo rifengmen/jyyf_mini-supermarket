@@ -1,7 +1,7 @@
 // autoModule/pages/commentList/commentList.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -17,13 +17,8 @@ Page({
     from: '',
     // 商品code
     gdscode: '',
-    // 订单类型列表
-    typeList: [
-      {name: '全部', type: 0},
-      {name: '好评', type: 1},
-      {name: '中评', type: 2},
-      {name: '差评', type: 3},
-    ],
+    // 订单评价类型列表
+    EtypeList: app.globalData.EtypeList,
     // EType,评论类型（0全部，好评1，中评2，差评3）
     EType: 0,
     // 评价列表
@@ -173,23 +168,6 @@ Page({
       page: self.data.page,
       pageSize: self.data.count
     }
-    let url = 'bill/evaluation.do?method=getProductEvaluation'
-    // 获取评价列表
-    self.getCommentList(url, data)
-  },
-
-  // 获取我的评价列表
-  getMyCommentList () {
-    let self = this
-    let data = {}
-    let url = ''
-    // 获取评价列表
-    self.getCommentList(url, data)
-  },
-
-  // 获取评价列表
-  getCommentList (url, data) {
-    let self = this
     wx.showLoading({
       title: '正在加载',
       mask: true,
@@ -198,15 +176,45 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http(url, data).then(result => {
+    API.bill.getProductEvaluation(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        let commentList = self.data.commentList
-        commentList.push(...res.data)
-        self.setData({
-          commentList: commentList,
-          rowCount: res.rowCount
-        })
+        if (self.data && self.data.commentList) {
+          let commentList = self.data.commentList
+          commentList.push(...res.data)
+          self.setData({
+            commentList: commentList,
+            rowCount: res.rowCount
+          })
+        }
+      } else {
+        toast.toast(res.message)
+      }
+      wx.hideLoading()
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 获取我的评价列表
+  getMyCommentList () {
+    let self = this
+    let data = {}
+    API.bill.getProductEvaluation(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        if (self.data && self.data.commentList) {
+          let commentList = self.data.commentList
+          commentList.push(...res.data)
+          self.setData({
+            commentList: commentList,
+            rowCount: res.rowCount
+          })
+        }
       } else {
         toast.toast(res.message)
       }

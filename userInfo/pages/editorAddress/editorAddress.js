@@ -1,7 +1,7 @@
 // userInfo/pages/editorAddress/editorAddress.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -9,38 +9,30 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // 纬度
-    latitude: 0,
-    // 经度
-    longitude: 0,
     // 地址id
     id: '',
+    // 地址详情(修改地址时用)
+    address: '',
     // 来自哪儿
     from: '',
-    // 地址详情
-    address: '',
-    // // 区域
-    // listOneArea: [
-    //   {areaname: '请选择区域',}
-    // ],
-    // // 选中区域下标
-    // listOneAreaIndex: 0,
-    // // 街道
-    // listSubArea: [
-    //   {areaname: '请选择街道',}
-    // ],
-    // // 选中街道下标
-    // listSubAreaIndex: 0,
     // 名字
     addressUsername: '',
     // 手机号
     addressPhone: '',
-    // 街道
-    addressAreaid: '',
+    // 地址类型,0:自提点,1:收货地址
+    addressType: 1,
     // 定位
     gps: '',
     //  地图信息
     mapaddress: '',
+    // 纬度
+    latitude: 0,
+    // 经度
+    longitude: 0,
+    // 自提点列表
+    siteList: [],
+    // 自提点id
+    siteid: '',
     // 详细地址
     addressAddress: '',
   },
@@ -60,9 +52,8 @@ Page({
         address: address,
         addressUsername: address.username,
         addressPhone: address.phone,
-        addressAreaid: address.areaid,
         addressAddress: address.address,
-        mapaddress: address.mapaddress
+        mapaddress: address.house
       })
     }
   },
@@ -79,8 +70,6 @@ Page({
    */
   onShow: function () {
     let self = this
-    // // 获取区域
-    // self.getListOneArea()
   },
 
   /**
@@ -119,74 +108,6 @@ Page({
   //
   // },
 
-  // // 获取区域
-  // getListOneArea () {
-  //   let self = this
-  //   let address = self.data.address
-  //   let data = {}
-  //   request.http('front/area.do?method=listOneArea', data).then(result => {
-  //     let res = result.data
-  //     if (res.flag === 1) {
-  //       let listOneArea = self.data.listOneArea
-  //       listOneArea.push(...res.data)
-  //       self.setData({
-  //         listOneArea: listOneArea,
-  //       })
-  //       if (address) {
-  //         let _index
-  //         listOneArea.forEach((item, index) => {
-  //           if (item.areaid === address.parentAreaid) {
-  //             _index = index
-  //           }
-  //         })
-  //         self.setData({
-  //           listOneAreaIndex: _index,
-  //         })
-  //         // 获取街道
-  //         self.getListSubArea(address.parentAreaid)
-  //       }
-  //     } else {
-  //       toast.toast(res.message)
-  //     }
-  //   }).catch(error => {
-  //     toast.toast(error.error)
-  //   })
-  // },
-  //
-  // // 获取街道
-  // getListSubArea (areaid) {
-  //   let self = this
-  //   let address = self.data.address
-  //   let data = {
-  //     areaid: areaid,
-  //   }
-  //   request.http('front/area.do?method=listSubArea', data).then(result => {
-  //     let res = result.data
-  //     if (res.flag === 1) {
-  //       let listSubArea = self.data.listSubArea
-  //       listSubArea.push(...res.data)
-  //       self.setData({
-  //         listSubArea: listSubArea
-  //       })
-  //       if (address) {
-  //         let _index
-  //         listSubArea.forEach((item, index) => {
-  //           if (item.areaid === address.areaid) {
-  //             _index = index
-  //           }
-  //         })
-  //         self.setData({
-  //           listSubAreaIndex: _index,
-  //         })
-  //       }
-  //     } else {
-  //       toast.toast(res.message)
-  //     }
-  //   }).catch(error => {
-  //     toast.toast(error.error)
-  //   })
-  // },
-
   // 设置名字
   setUsername (e) {
     let self = this
@@ -203,30 +124,14 @@ Page({
     })
   },
 
-  // // 区域变更
-  // listOneAreaChange (e) {
-  //   let self = this
-  //   let listOneArea = self.data.listOneArea
-  //   let listOneAreaIndex = e.detail.value
-  //   let areaid = listOneArea[listOneAreaIndex].areaid
-  //   self.setData({
-  //     listOneAreaIndex: listOneAreaIndex,
-  //   })
-  //   // 获取街道
-  //   self.getListSubArea(areaid)
-  // },
-  //
-  // // 街道变更
-  // listSubAreaChange (e) {
-  //   let self = this
-  //   let listSubArea = self.data.listSubArea
-  //   let listSubAreaIndex = e.detail.value
-  //   let areaid = listSubArea[listSubAreaIndex].areaid
-  //   self.setData({
-  //     listSubAreaIndex: listSubAreaIndex,
-  //     addressAreaid: areaid,
-  //   })
-  // },
+  // 设置地址类型
+  setAddressType (e) {
+    let self = this
+    let addressType = parseFloat(e.detail.value)
+    self.setData({
+      addressType: addressType
+    })
+  },
 
   // 获取当前位置
   getGps () {
@@ -257,7 +162,39 @@ Page({
           gps: res,
           mapaddress: res.address + res.name
         })
+        // 获取附近自提点
+        self.getSiteList()
       }
+    })
+  },
+
+  // 获取附近自提点
+  getSiteList () {
+    let self = this
+    let data = {
+      Latitude: self.data.gps.latitude,
+      Longitude: self.data.gps.longitude,
+    }
+    API.system.getDept(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          siteList: res.data
+        })
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 设置自提点id
+  setSiteid (e) {
+    let self = this
+    let siteid = e.detail.value
+    self.setData({
+      siteid: siteid
     })
   },
 
@@ -269,7 +206,7 @@ Page({
     })
   },
 
-  // 保存
+  // 保存收货地址
   save () {
     let self = this
     // 验证名字
@@ -287,16 +224,6 @@ Page({
       toast.toast('请选择收货地址')
       return false
     }
-    // // 验证区域
-    // if (!self.data.listOneAreaIndex) {
-    //   toast.toast('请选择区域')
-    //   return false
-    // }
-    // // 验证街道
-    // if (!self.data.listSubAreaIndex) {
-    //   toast.toast('请选择街道')
-    //   return false
-    // }
     // 验证详细地址
     if (!self.data.addressAddress) {
       toast.toast('请填写详细地址')
@@ -304,7 +231,6 @@ Page({
     }
     let data = {
       addressid: self.data.id,
-      // areaid: self.data.addressAreaid,
       Address: self.data.addressAddress,
       Username: self.data.addressUsername,
       Phone: self.data.addressPhone,
@@ -313,7 +239,7 @@ Page({
       mapaddress: self.data.mapaddress,
       maptype: 'TX',
     }
-    request.http('system/myuser.do?method=saveAddress', data).then(result => {
+    API.system.saveAddress(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         wx.navigateBack()
@@ -326,31 +252,28 @@ Page({
     })
   },
 
-  // 删除
-  delete () {
+  // 收藏自提点
+  collectDept () {
     let self = this
-    let data = {
-      Id: self.data.id
+    // 验证选择自提点
+    if (!self.data.siteid) {
+      toast.toast('请选择自提点')
+      return false
     }
-    // 确认弹窗
-    wx.showModal({
-     title: '提示',
-     content: '您确定要删除这个地址吗？',
-     success (res) {
-       // 确认按钮执行
-       if (res.confirm) {
-         request.http('system/myuser.do?method=delAddress', data).then(result => {
-            let res = result.data
-            if (res.flag === 1) {
-              wx.navigateBack()
-            } else {
-              toast.toast(res.message)
-            }
-         }).catch(error => {
-           toast.toast(error.error)
-         })
-       }
-     }
+    let data = {
+      flag: 0, // 0:收藏；1：取消
+      addressid: self.data.siteid
+    }
+    API.system.collectDept(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        wx.navigateBack()
+        toast.toast(res.message)
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
     })
   },
 })

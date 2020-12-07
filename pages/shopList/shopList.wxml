@@ -1,33 +1,39 @@
 <!--pages/shopList/shopList.wxml-->
 <view class="container color333333 font28 bgffffff">
 	<scroll-view class="shop_list">
-		<view class="item border_be5e5e5" wx:for="{{shopList}}" wx:key="index" bindtap="changeDept" data-index="{{index}}">
-			<view class="item_desc">
-				<view class="item_shopname">
-					<view class="shopname">
-            <view class="name font32 font_blod ellipsis">{{item.deptname}}</view>
-            <view class="btn color71d793 font24 bgffffff border_r14 tc" wx:if="{{!item.defaultflag}}" catchtap="setDefaultFlag" data-index="{{index}}">设为默认</view>
-            <view class="btn colorffffff font24 bg71d793 border_r14 tc" wx:else catchtap="cancelDefaultFlag" data-index="{{index}}">取消默认</view>
-          </view>
-					<view class="address color999999 font24 ellipsis">{{item.Contact}}</view>
-				</view>
-				<view class="distance" wx:if="{{distanceFlag}}">
-					<view class="dist">
-						<text class="ellipsis tr">{{item.distance}}</text>m
+		<block wx:for="{{shopList}}" wx:key="index">
+			<view class="item border_be5e5e5" bindtap="changeDept" data-shop="{{item}}">
+				<view class="item_desc">
+					<view class="item_shopname">
+						<view class="shopname">
+							<text class="tag colorffffff font24 bge42837 border_r500 tc" wx:if="{{item.deptcode === deptcode}}">当前门店</text>
+							<text class="tag colorffffff font24 bg71d793 border_r500 tc" wx:if="{{item.defaultflag}}">默认</text>
+							<text class="name font32 font_blod">{{item.deptname}}</text>
+						</view>
+						<view class="address color999999 font24">{{item.Contact}}</view>
 					</view>
-					<view class="colord94242 font24" wx:if="{{!index}}">离我最近</view>
+					<view class="distance" wx:if="{{distanceFlag}}">
+						<view class="dist">
+							<text class="ellipsis">{{item.distance}}</text>
+							<text>m</text>
+						</view>
+						<view class="colord94242 font24" wx:if="{{!index}}">离我最近</view>
+					</view>
+				</view>
+				<view class="shopdes color999999 font24">
+					<view class="desc">
+						<view>电话：{{item.Phone || '暂无电话'}}</view>
+						<view>营业时间：{{item.BusinessHours}}</view>
+						<view class="switch_cont">
+							<text class="color999999">默认设置</text>
+							<switch class="isdefault" checked="{{item.defaultflag}}" color="#71d793" data-shop="{{item}}" catchtap="changeDefaultFlag"/>
+						</view>
+					</view>
+					<view class="mapimg border_a71d793 border_r10" catchtap="showMap" data-shop="{{item}}" wx:if="{{item.Longitude || item.Latitude}}">
+						<image class="" src="/lib/images/mapimg.png"></image>
+					</view>
 				</view>
 			</view>
-			<view class="shopdes color999999 font24">
-				<view class="desc">
-					<view>电话：{{item.Phone || '暂无电话'}}</view>
-					<view>营业时间：{{item.BusinessHours}}</view>
-				</view>
-				<view class="mapimg border_a71d793 border_r10" catchtap="showMap" data-shop="{{item}}" wx:if="{{item.Longitude || item.Latitude}}">
-					<image class="" src="/lib/images/mapimg.png"></image>
-				</view>
-			</view>
-			<!--<map class="item_map" longitude="{{item.Longitude}}" latitude="{{item.Latitude}}" scale="14"></map>-->
-		</view>
+		</block>
 	</scroll-view>
 </view>

@@ -1,8 +1,8 @@
 // autoModule/pages/recharge/recharge.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
 const utils = require("../../../utils/util")
+import API from '../../../api/index'
 
 Page({
 
@@ -31,7 +31,7 @@ Page({
   onLoad: function (options) {
     let self = this
     self.setData({
-      memcode: app.globalData.memcode
+      memcode: app.globalData.memcode,
     })
     // 获取banner列表
     self.getBannerList()
@@ -88,14 +88,14 @@ Page({
   //
   // },
 
-  // 获取banner图列表
+  // 获取充值banner图列表
   getBannerList () {
     let self = this
     let data = {
       // 卡冲值参数为1，其它是0
       cardflag: 1
     }
-    request.http('system/slide.do?method=listShopHomeSlide', data).then(result => {
+    API.system.listShopHomeSlide(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -112,21 +112,25 @@ Page({
   // 修改轮播点儿
   swiperChange (e) {
     let self = this
-    self.setData({
-      swiperCurrent: e.detail.current
-    })
+    if (e.detail.source === 'autoplay' || e.detail.source === 'touch') {
+      self.setData({
+        swiperCurrent: e.detail.current
+      })
+    }
   },
 
   // 获取卡余额
   getCardInfo () {
     let self = this
     let data = {}
-    request.http('mem/card.do?method=getMyCardInfo', data).then(result => {
+    API.mem.getMyCardInfo(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
           cardInfo: res.data
         })
+      } else {
+        toast.toast(res.message)
       }
     }).catch(error => {
       toast.toast(error.error)
@@ -141,7 +145,7 @@ Page({
     })
   },
 
-  // 发送支付信息
+  // 发送充值信息
   sendPay () {
     let self = this
     let money = self.data.money
@@ -153,12 +157,11 @@ Page({
     let data = {
       card_no: self.data.memcode,
       toMoney: money,
-      moneyType: "add"
     }
-    request.http('mem/member.do?method=reChargeToPay', data).then(result => {
+    API.mem.reChargeToPay(data).then(result => {
       let res = result .data
       if (res.flag === 1) {
-        // 调用微信支付
+        // 充值支付
         self.toPay(res.data)
       } else {
         toast.toast(res.message)
@@ -168,7 +171,7 @@ Page({
     })
   },
 
-  // 调用微信支付
+  // 充值支付
   toPay (datas) {
     let self = this
     let data = {
@@ -178,7 +181,7 @@ Page({
       paymoney: datas.paymoney,
       channel: "WX_MINI"
     }
-    request.http('mem/member.do?method=reChargePay', data).then(result => {
+    API.mem.reChargePay(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         // 微信支付

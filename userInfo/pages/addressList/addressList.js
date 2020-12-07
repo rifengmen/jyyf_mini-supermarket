@@ -1,7 +1,7 @@
 // userInfo/pages/addressList/addressList.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -83,12 +83,20 @@ Page({
   // 获取地址列表
   getAddressList () {
     let self = this
+    if (self.data.from === 'editorOrder') {
+      // 当前门店可用地址列表
+      self.listUserAdressForDept()
+    } else {
+      // 我的地址列表
+      self.listUserAdress()
+    }
+  },
+
+  // 我的地址列表
+  listUserAdress () {
+    let self = this
     let data = {
       tmFlag: self.data.tmFlag
-    }
-    let url = 'system/myuser.do?method=listUserAdress'
-    if (self.data.from === 'editorOrder') {
-      url = 'system/myuser.do?method=listUserAdressForDept'
     }
     wx.showLoading({
       title: '正在加载',
@@ -98,22 +106,52 @@ Page({
     self.setData({
       getFlag: false
     })
-    request.http(url, data).then(result => {
+    API.system.listUserAdress(data).then(result => {
       let res = result.data
-      if (res.flag === 1) {
-        self.setData({
-          addressList: res.data
-        })
-      } else {
-        toast.toast(res.message)
-      }
-      wx.hideLoading()
-      // 设置请求开关
-      self.setData({
-        getFlag: true
-      })
+      // 设置地址列表
+      self.setAddressList(res)
     }).catch(error => {
       toast.toast(error.error)
+    })
+  },
+
+  // 当前门店可用地址列表
+  listUserAdressForDept () {
+    let self = this
+    let data = {
+      tmFlag: self.data.tmFlag
+    }
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
+    // 设置请求开关
+    self.setData({
+      getFlag: false
+    })
+    API.system.listUserAdressForDept(data).then(result => {
+      let res = result.data
+      // 设置地址列表
+      self.setAddressList(res)
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 设置地址列表
+  setAddressList (res) {
+    let self = this
+    if (res.flag === 1) {
+      self.setData({
+        addressList: res.data
+      })
+    } else {
+      toast.toast(res.message)
+    }
+    wx.hideLoading()
+    // 设置请求开关
+    self.setData({
+      getFlag: true
     })
   },
 
@@ -127,42 +165,135 @@ Page({
     }
   },
 
-  // 设置/取消默认地址
+  // 修改是否默认地址
   setIsdefault (e) {
     let self = this
     let address = e.currentTarget.dataset.address
     let data = {
       AddressID: address.id,
+      auditMark: address.auditMark,
     }
-    let url
     if (address.isdefault) {
-      url = 'system/myuser.do?method=CancelDefaultAddress'
+      // 取消默认地址
+      self.cancelDefaultAddress(data, address)
     } else {
-      url = 'system/myuser.do?method=SetDefaultAddress'
+      // 保存默认地址
+      self.saveDefaultAddress(data, address)
     }
-    request.http(url, data).then(result => {
+
+  },
+
+  // 保存默认地址
+  saveDefaultAddress (data, address) {
+    let self = this
+    API.system.SetDefaultAddress(data).then(result => {
       let res = result.data
-      if (res.flag === 1) {
-        let addressList = self.data.addressList
-        addressList.forEach(item => {
-          item.isdefault = 0
-        })
-        addressList.forEach(item => {
-          if (item.id === address.id) {
-            if (address.isdefault) {
-              item.isdefault = 0
-            } else {
-              item.isdefault = 1
-            }
-          }
-        })
-        self.setData({
-          addressList: addressList
-        })
-      }
+      // 设置默认地址
+      self.setDefaultAddress(res, address)
       toast.toast(res.message)
     }).catch(error => {
-      toast.toast(error.erro )
+      toast.toast(error.error)
+    })
+  },
+
+  // 取消默认地址
+  cancelDefaultAddress (data, address) {
+    let self = this
+    API.system.CancelDefaultAddress(data).then(result => {
+      let res = result.data
+      // 设置默认地址
+      self.setDefaultAddress(res, address)
+      toast.toast(res.message)
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 设置默认地址
+  setDefaultAddress (res, address) {
+    let self = this
+    if (res.flag === 1) {
+      let addressList = self.data.addressList
+      addressList.forEach(item => {
+        item.isdefault = 0
+      })
+      addressList.forEach(item => {
+        if (item.id === address.id) {
+          if (address.isdefault) {
+            item.isdefault = 0
+          } else {
+            item.isdefault = 1
+          }
+        }
+      })
+      self.setData({
+        addressList: addressList
+      })
+    }
+  },
+
+  // 删除按钮
+  delete (e) {
+    let self = this
+    let address = e.currentTarget.dataset.address
+    // 确认弹窗
+    wx.showModal({
+      title: '提示',
+      content: '您确定要删除这个地址吗？',
+      success (res) {
+        // 确认按钮执行
+        if (res.confirm) {
+          // 判断地址类型,auditMark,0:自提点；1:收货地址
+          if (address.auditMark) {
+            // 删除收货地址
+            self.delAddress(address)
+          } else {
+            // 取消收藏自提点
+            self.collectDept(address)
+          }
+        }
+      }
+    })
+  },
+
+  // 删除收货地址
+  delAddress (address) {
+    let self = this
+    let data = {
+      Id: address.id
+    }
+    API.system.delAddress(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        // 获取地址列表
+        self.getAddressList()
+        toast.toast(res.message)
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 取消收藏自提点
+  collectDept (address) {
+    let self = this
+    let data = {
+      flag: 1, // 0:收藏；1：取消
+      addressid: address.id
+    }
+    API.system.collectDept(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        // 获取地址列表
+        self.getAddressList()
+        toast.toast('删除成功!')
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
     })
   },
 

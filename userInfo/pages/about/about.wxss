@@ -35,12 +35,12 @@
   margin-bottom: 70rpx;
   padding: 0 24rpx;
 }
-.tit {
+.shop_desc .tit {
   width: 100%;
   height: 40rpx;
   line-height: 40rpx;
 }
-.name {
+.shop_desc .name {
   width: 100%;
   height: auto;
   line-height: 2;
@@ -49,21 +49,11 @@
   justify-content: center;
   align-items: center;
 }
-.desc {
+.shop_desc .desc {
   width: 100%;
   height: auto;
   line-height: 1.8;
   margin-bottom: 60rpx;
-}
-.shop_section {
-  width: 100%;
-  height: 76rpx;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.shop_section:last-child {
-  padding-bottom: 40rpx;
 }
 /* 公司简介 end */
 .copyright {

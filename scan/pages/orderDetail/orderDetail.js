@@ -1,7 +1,7 @@
 // scan/pages/orderDetail/orderDetail.js
 const app = getApp()
-const request = require("../../../utils/request")
 const toast = require("../../../utils/toast")
+import API from '../../../api/index'
 
 Page({
 
@@ -81,14 +81,14 @@ Page({
   //
   // },
 
-  // 获取扫码购订单详情
+  // 获取订单详情
   getOrderDetail () {
     let self = this
     let data = {
       flowno: self.data.flowno,
       deptcode: self.data.deptcode
     }
-    request.http('invest/microFlow.do?method=listMicroFlowDtl', data).then(result => {
+    API.invest.listMicroFlowDtl(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({

@@ -1,8 +1,8 @@
 // component/payBtn/payBtn.js
 require('../../app.js')
 const app = getApp()
-const request = require('../../utils/request.js')
 const toast = require('../../utils/toast.js')
+import API from '../../api/index'
 
 Component({
   /**
@@ -53,6 +53,21 @@ Component({
     password: {
       type:String,
       value: '',
+    },
+    // otc,区分购物车与立即购买
+    otc: {
+      type: String,
+      value: '',
+    },
+    // goodscode，立即购买商品code
+    goodscode: {
+      type: String,
+      value: '',
+    },
+    // amount,立即购买商品数量
+    amount: {
+      type: Number,
+      value: 1,
     },
     // 订单编号
     tradeno: {
@@ -135,20 +150,22 @@ Component({
     pay () {
       let self = this
       let globalData = app.globalData
-      let paymode = self.data.paymode
       let data = {
         Sendid: globalData.addressId || 0,
         Usernote: self.data.remark,
         Memcode: globalData.memcode,
         paylist: self.data.paylist,
         channel: "WX_MINI",
+        otc: self.data.otc,
+        goodscode: self.data.goodscode,
+        amount: self.data.amount,
         freight: self.data.freight,
         receiver: globalData.address.username,
         receiverphone: globalData.address.phone,
         Cpassword: self.data.password,
         Tradeno: self.data.orderDetail.tradeno
       }
-      request.http('mem/member.do?method=ordercommit', data).then(result => {
+      API.mem.ordercommit(data).then(result => {
         let res = result.data
         if (res.flag === 1) {
           if (res.data.beecloud.miniPayStr) {
@@ -160,12 +177,12 @@ Component({
             self.wechatPayment()
           } else {
             wx.redirectTo({
-              url: '/pages/payEnd/payEnd?text=支付成功&type=1',
+              url: '/shopping/pages/payEnd/payEnd?text=支付成功&type=1',
             })
           }
         } else {
           wx.redirectTo({
-            url: '/pages/payEnd/payEnd?text=支付失败&type=0',
+            url: '/shopping/pages/payEnd/payEnd?text=支付失败&type=0',
           })
           toast.toast(res.message)
         }
@@ -188,12 +205,12 @@ Component({
           paySign: payStr.paySign,
           success:function(res){
             wx.redirectTo({
-              url: '/pages/payEnd/payEnd?text=支付成功&type=1',
+              url: '/shopping/pages/payEnd/payEnd?text=支付成功&type=1',
             })
           },
           fail:function(res){
             wx.redirectTo({
-            url: '/pages/payEnd/payEnd?text=支付失败&type=0',
+            url: '/shopping/pages/payEnd/payEnd?text=支付失败&type=0',
           })
           },
           complete:function(res){}
