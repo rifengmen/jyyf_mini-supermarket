@@ -158,7 +158,7 @@ swiper.banner_swiper {
 }
 .shortcut_key {
   position: fixed;
-  bottom: 120rpx;
+  top: 200rpx;
   right: 24rpx;
   width: 100rpx;
   height: auto;
@@ -185,3 +185,36 @@ swiper.banner_swiper {
   width: 50rpx;
   height: 50rpx;
 }
+/* 画布样式 start */
+.canvas_cont {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, .6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+.canvas_cont.active {
+  left: 0;
+}
+#posterCanvas {
+  width: 600rpx;
+  height: 860rpx;
+}
+.canvas_cont .btn {
+  width: auto;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin-top: 40rpx;
+  padding: 0 80rpx;
+}
+.canvas_cont .closed {
+  width: 58rpx;
+  height: 58rpx;
+  margin-top: 30rpx;
+}
+/* 画布样式 end */

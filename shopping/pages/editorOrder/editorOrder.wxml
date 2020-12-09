@@ -55,7 +55,7 @@
 									</view>
 									<del class="" wx:if="{{goodsDetail.preferential !== goodsDetail.originalcost}}">
 										<text class="">￥</text>
-										<text class="font28">{{goodsDetail.originalcost}}</text>
+										<text class="font26">{{goodsDetail.originalcost}}</text>
 									</del>
 								</view>
 								<view class="cart">
@@ -82,7 +82,7 @@
 									</view>
 									<del class="" wx:if="{{item.actualprice !== item.saleprice}}">
 										<text class="">￥</text>
-										<text class="font28">{{item.saleprice}}</text>
+										<text class="font26">{{item.saleprice}}</text>
 									</del>
 								</view>
 								<view class="cart">

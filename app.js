@@ -147,8 +147,8 @@ App({
 
     // 测试开发
     // 基础路径
-    baseUrl: 'http://192.168.1.107:8089/eshop/',
-    // baseUrl: 'https://www.91jyrj.com/shop/',
+    // baseUrl: 'http://192.168.1.107:8089/eshop/',
+    baseUrl: 'https://www.91jyrj.com/shop/',
     // 商家code
     shopcode: '',
     // 商家图标

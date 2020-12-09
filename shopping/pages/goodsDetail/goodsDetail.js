@@ -43,6 +43,20 @@ Page({
     dialogFlag: false,
     // 商品信息
     goods: '',
+    // 画布对象
+    canvas: '',
+    // 绘图上下文
+    ctx: '',
+    // 绘图开关
+    drawFlag: true,
+    // 海报画布显示开关
+    posterFlag: false,
+    // 商品图信息
+    goodsPic: '',
+    // 商品小程序码图路径
+    qrCodePicPath: 'upload/cluster/6/6.jpg',
+    // 商品小程序码图信息
+    qrCodePic: '',
   },
 
   /**
@@ -209,9 +223,11 @@ Page({
   // 修改轮播点儿
   swiperChange (e) {
     let self = this
-    self.setData({
-      swiperCurrent: e.detail.current
-    })
+    if (e.detail.source === 'autoplay' || e.detail.source === 'touch') {
+      self.setData({
+        swiperCurrent: e.detail.current
+      })
+    }
   },
 
   // 添加购物车
@@ -290,210 +306,253 @@ Page({
     })
   },
 
-  // 获取海报
-  getPoster () {
+  // 查找画布
+  queryCanvas () {
     let self = this
-    // wx.getImageInfo({
-    //   src:'https://www.91jyrj.com/eshop',
-    //   success: function (res) {
-    //     //res.path是网络图片的本地地址
-    //     qrCodePath = res.path;
-    //   },
-    //   fail: function (res) {
-    //     //失败回调
-    //   }
-    // })
-    console.log('getPoster')
-    // let goodsPicPath = 'https://www.91jyrj.com/eshop/upload/goods/115434/3-zip-300.jpg'
-    // let goodsPicPath = '/lib/images/ceshi000.png'
-    let goodsPicPath = ''
-    // let qrCodePath = 'https://www.91jyrj.com/eshop/upload/goods/72892/3-zip-300.jpg'
-    // let qrCodePath = '/lib/images/ceshi001.png'
-    let qrCodePath = ''
-    // 绘制海报
-    self.drawSharePic(goodsPicPath, qrCodePath)
+    const query = wx.createSelectorQuery()
+    if (!self.data.drawFlag) {
+      self.setData({
+        posterFlag: true,
+      })
+      return
+    }
+    query.select('#posterCanvas').fields({
+      node: true,
+      size: true
+    }).exec(res => {
+      const canvas = res[0].node
+      const ctx = canvas.getContext('2d')
+      const dpr = wx.getSystemInfoSync().pixelRatio
+      // 新接口需显示设置画布宽高
+      canvas.width = res[0].width * dpr
+      canvas.height = res[0].height * dpr
+      ctx.scale(dpr, dpr)
+      self.setData({
+        canvas: canvas,
+        ctx: ctx
+      })
+      // 设置海报绘制基础参数
+      self.setCanvasOptions()
+      // 绘制海报
+      self.drawPoster(ctx)
+    })
   },
 
-  // 绘制海报
-  drawSharePic (goodsPicPath, qrCodePath) {
+  // 设置海报绘制基础参数
+  setCanvasOptions () {
     let self = this
-    console.log('drawSharePic')
     let goodsDetail = self.data.goodsDetail
-    // wx.showLoading({
-    //   title: '正在生成海报...',
-    //   mask: true,
-    // })
-    // y方向的偏移量，因为是从上往下绘制的，所以y一直向下偏移，不断增大。
-    let yOffset = 20
-    let goodsTitle = goodsDetail.Name
+    let goodsTitle = (goodsDetail.Name).split('')
     let goodsTitleArray = []
     // 为了防止标题过长，分割字符串,每行18个
-    for (let i = 0; i < goodsTitle.length / 18; i++) {
-      if (i > 2) {
-        break
+    let breaknum = 18
+    goodsTitle.forEach((item, index) => {
+      if (index % breaknum === 0 && index / breaknum <= 1) {
+        goodsTitleArray.push(goodsTitle.slice(index, index + breaknum).join(''))
       }
-      goodsTitleArray.push(goodsTitle.substr(i * 18, 18))
+    })
+    // y方向的偏移量，因为是从上往下绘制的，所以y一直向下偏移，不断增大。
+    let yOffset = 20
+    if (goodsTitleArray.length !== 1) {
+      yOffset = 10
     }
+    let xOffset = 20
+    let goodsPicWidth = 260
+    let goodsPicHeight = 260
+    let qrCodePicWidth = 80
+    let qrCodePicHeight = 80
     let n_price = 0
     let o_price = 0
     if (goodsDetail.scaleflag) {
-      n_price = goodsDetail.preferential / 2
-      o_price = goodsDetail.originalcost / 2
+      n_price = '￥' + goodsDetail.preferential / 2 + '/斤'
+      o_price = '原价:￥' + goodsDetail.originalcost / 2 + '/斤'
     } else {
-      n_price = goodsDetail.preferential
-      o_price = goodsDetail.originalcost
+      n_price = '￥' + goodsDetail.preferential
+      o_price = '原价:￥' + goodsDetail.originalcost
     }
-    let title1 = '您的好友邀请您一起分享精品好货'
-    let title2 = '立即打开看看吧'
-    let codeText = '长按识别小程序码查看详情'
-    let imgWidth = 780
-    let imgHeight = 1600
-
-    const query = wx.createSelectorQuery()
-    query.select('.shareCanvas')
-        .fields({ node: true, size: true })
-        .exec((res) => {
-          console.log(res, 'exec')
-          const canvas = res[0].node
-          console.log(canvas, 'canvas')
-          const canvasCtx = canvas.getContext('2d')
-          console.log(canvasCtx, 'canvasCtx')
-
-          // const dpr = wx.getSystemInfoSync().pixelRatio
-          // canvas.width = res[0].width * dpr
-          // canvas.height = res[0].height * dpr
-          // ctx.scale(dpr, dpr)
-          //
-          // ctx.fillRect(0, 0, 100, 100)
-
-          // 绘制背景
-          // canvasCtx.setFillStyle('white');
-          canvasCtx.fillRect(0, 0, 390, 800);
-          // 绘制分享的标题文字
-          canvasCtx.setFontSize(24);
-          canvasCtx.setFillStyle('#333333');
-          canvasCtx.setTextAlign('center');
-          canvasCtx.fillText(title1, 195, 40);
-          // 绘制分享的第二行标题文字
-          canvasCtx.fillText(title2, 195, 70);
-          // 绘制商品图片
-          canvasCtx.drawImage(goodsPicPath, 0, 90, 390, 390);
-          // 绘制商品标题
-          yOffset = 490;
-          goodsTitleArray.forEach(function (value) {
-            canvasCtx.setFontSize(20);
-            canvasCtx.setFillStyle('#333333');
-            canvasCtx.setTextAlign('left');
-            canvasCtx.fillText(value, 20, yOffset);
-            yOffset += 25;
-          });
-          // 绘制价格
-          yOffset += 8;
-          canvasCtx.setFontSize(20);
-          canvasCtx.setFillStyle('#fa6400');
-          canvasCtx.setTextAlign('left');
-          canvasCtx.fillText('￥', 20, yOffset);
-          canvasCtx.setFontSize(30);
-          canvasCtx.setFillStyle('#fa6400');
-          canvasCtx.setTextAlign('left');
-          canvasCtx.fillText(n_price, 40, yOffset);
-          // 绘制原价
-          const xOffset = (n_price.length / 2 + 1) * 24 + 50;
-          canvasCtx.setFontSize(20);
-          canvasCtx.setFillStyle('#999999');
-          canvasCtx.setTextAlign('left');
-          canvasCtx.fillText('原价:¥' + o_price, xOffset, yOffset);
-          // 绘制原价的删除线
-          canvasCtx.setLineWidth(1);
-          canvasCtx.moveTo(xOffset, yOffset - 6);
-          canvasCtx.lineTo(xOffset + (3 + o_price.toString().length / 2) * 20, yOffset - 6);
-          canvasCtx.setStrokeStyle('#999999');
-          canvasCtx.stroke();
-          // 绘制最底部文字
-          canvasCtx.setFontSize(18);
-          canvasCtx.setFillStyle('#333333');
-          canvasCtx.setTextAlign('center');
-          canvasCtx.fillText(codeText, 195, 780);
-          // 绘制二维码
-          canvasCtx.drawImage(qrCodePath, 95, 550, 200, 200);
-          // 绘制之前描述的海报
-          canvasCtx.draw(false, function (eee) {
-            console.log(eee, 'eee');
-            console.log(self, 'creatPoster');
-            wx.canvasToTempFilePath({
-              x: 0,
-              y: 0,
-              width: 390,
-              height: 800,
-              destWidth: 390,
-              destHeight: 800,
-              canvasId: 'shareCanvas',
-              success: function (res) {
-                self.setData({
-                  shareImage: res.tempFilePath,
-                  showSharePic: true
-                })
-                wx.hideLoading();
-              },
-              fail: function (res) {
-                console.log(res)
-                wx.hideLoading();
-              }
-            })
-          })
-        })
-
-    const canvasCtx = wx.createCanvasContext('shareCanvas')
-    // canvasCtx.draw()
-    // 绘制之后加一个延时去生成图片，如果直接生成可能没有绘制完成，导出图片会有问题。
-    // setTimeout(function () {
-    //   wx.canvasToTempFilePath({
-    //     x: 0,
-    //     y: 0,
-    //     width: 390,
-    //     height: 800,
-    //     destWidth: 390,
-    //     destHeight: 800,
-    //     canvasId: 'shareCanvas',
-    //     success: function (res) {
-    //       self.setData({
-    //         shareImage: res.tempFilePath,
-    //         showSharePic: true
-    //       })
-    //       wx.hideLoading();
-    //     },
-    //     fail: function (res) {
-    //       console.log(res)
-    //       wx.hideLoading();
-    //     }
-    //   })
-    // }, 2000);
+    let codeTextArray = [
+      '长按识别小程序码',
+      '进入小程序下单购买',
+    ]
+    let canvasOptions = {
+      goodsTitleArray: goodsTitleArray,
+      xOffset: xOffset,
+      yOffset: yOffset,
+      goodsPicWidth: goodsPicWidth,
+      goodsPicHeight: goodsPicHeight,
+      qrCodePicWidth: qrCodePicWidth,
+      qrCodePicHeight: qrCodePicHeight,
+      n_price: n_price,
+      o_price: o_price,
+      codeTextArray: codeTextArray,
+    }
+    self.setData({
+      canvasOptions: canvasOptions
+    })
   },
 
-  // 导出海报
-  toTempFilePath () {
+  // 绘制海报
+  drawPoster (ctx) {
     let self = this
-    console.log(self, 'creatPoster');
+    wx.showLoading({
+      title: '正在生成海报...',
+      mask: true,
+    })
+    // 绘制海报背景
+    self.drawPosterBg(ctx)
+    // 绘制商品图片
+    self.drawPosterGoodsPic(ctx)
+  },
+
+  // 绘制海报背景
+  drawPosterBg (ctx) {
+    let self = this
+    // 绘制背景
+    ctx.fillStyle = '#ffffff'
+    ctx.fillRect(0, 0, 600, 860)
+  },
+
+  // 绘制商品图片
+  drawPosterGoodsPic (ctx) {
+    let self = this
+    let canvas = self.data.canvas
+    let canvasOptions = self.data.canvasOptions
+    // 绘制图片边框
+    ctx.strokeStyle = '#e7e7e7'
+    ctx.strokeRect(canvasOptions.xOffset, canvasOptions.yOffset, canvasOptions.goodsPicWidth, canvasOptions.goodsPicHeight)
+    // 绘制商品图片
+    let goodsPic = canvas.createImage()
+    goodsPic.src = self.data.baseUrl + self.data.goodsDetail.image
+    goodsPic.onload = () => {
+      ctx.drawImage(goodsPic, canvasOptions.xOffset, canvasOptions.yOffset, canvasOptions.goodsPicWidth, canvasOptions.goodsPicHeight)
+      ctx.restore()
+      canvasOptions.yOffset += (canvasOptions.goodsPicHeight + canvasOptions.yOffset)
+      self.setData({
+        canvasOptions: canvasOptions
+      })
+      // 绘制商品名称
+      self.drawPosterGoodsName(ctx)
+    }
+
+  },
+
+  // 绘制商品名称
+  drawPosterGoodsName (ctx) {
+    let self = this
+    let canvasOptions = self.data.canvasOptions
+    canvasOptions.goodsTitleArray.forEach(item => {
+      ctx.font = '15px sans-serif'
+      ctx.fillStyle = '#333333'
+      ctx.textBaseline = 'top'
+      ctx.textAlign = 'left'
+      ctx.fillText(item, canvasOptions.xOffset, canvasOptions.yOffset)
+      canvasOptions.yOffset += 24
+    })
+    self.setData({
+      canvasOptions: canvasOptions
+    })
+    // 绘制商品小程序码
+    self.drawPosterQrCode(ctx)
+  },
+
+  // 绘制商品小程序码
+  drawPosterQrCode (ctx) {
+    let self = this
+    let canvas = self.data.canvas
+    let canvasOptions = self.data.canvasOptions
+    let qrCodePic = canvas.createImage()
+    qrCodePic.src = self.data.baseUrl + self.data.qrCodePicPath
+    qrCodePic.onload = () => {
+      ctx.drawImage(qrCodePic, canvasOptions.xOffset + 180, canvasOptions.yOffset, canvasOptions.qrCodePicWidth, canvasOptions.qrCodePicHeight)
+      ctx.restore()
+      self.setData({
+        canvasOptions: canvasOptions
+      })
+      // 绘制商品价格
+      self.drawPosterGoodsPrice(ctx)
+    }
+  },
+
+  // 绘制商品价格
+  drawPosterGoodsPrice (ctx) {
+    let self = this
+    let canvasOptions = self.data.canvasOptions
+    // 绘制售价
+    canvasOptions.yOffset += 10
+    ctx.font = 'normal bold 24px sans-serif'
+    ctx.fillStyle = '#fa6400'
+    ctx.textBaseline = 'top'
+    ctx.textAlign = 'left'
+    ctx.fillText(canvasOptions.n_price, canvasOptions.xOffset, canvasOptions.yOffset)
+    // 绘制原价
+    ctx.font = '12px sans-serif'
+    ctx.fillStyle = '#999999'
+    ctx.textBaseline = 'top'
+    ctx.textAlign = 'left'
+    ctx.fillText(canvasOptions.o_price, canvasOptions.xOffset + canvasOptions.n_price.toString().length * 20, canvasOptions.yOffset)
+    // 绘制原价的删除线
+    ctx.lineWidth = 1
+    ctx.moveTo(canvasOptions.xOffset + canvasOptions.n_price.toString().length * 20 - 5, canvasOptions.yOffset + 6)
+    ctx.lineTo(canvasOptions.xOffset + canvasOptions.n_price.toString().length * 20 + canvasOptions.o_price.toString().length * 10, canvasOptions.yOffset + 6)
+    ctx.strokeStyle = '#999999'
+    ctx.stroke()
+    // 绘制提示识别小程序码文字
+    canvasOptions.yOffset += 40
+    canvasOptions.codeTextArray.forEach(item => {
+      ctx.font = '13px sans-serif'
+      ctx.fillStyle = '#666666'
+      ctx.textBaseline = 'top'
+      ctx.textAlign = 'left'
+      ctx.fillText(item, canvasOptions.xOffset, canvasOptions.yOffset)
+      canvasOptions.yOffset += 18
+    })
+    wx.hideLoading()
+    self.setData({
+      posterFlag: true,
+      drawFlag: false,
+    })
+  },
+
+  // 保存海报图片
+  savePosterImg () {
+    let self = this
+    // 将canvas生成图片
     wx.canvasToTempFilePath({
+      canvas: self.data.canvas,
       x: 0,
       y: 0,
-      width: 390,
-      height: 800,
-      destWidth: 390,
-      destHeight: 800,
-      canvasId: 'shareCanvas',
-      success: function (res) {
-        self.setData({
-          shareImage: res.tempFilePath,
-          showSharePic: true
+      width: 300,
+      height: 480,
+      destWidth: 300,     // 截取canvas的宽度
+      destHeight: 480,   // 截取canvas的高度
+      success (res) {
+        // 保存图片到相册
+        wx.saveImageToPhotosAlbum({
+          filePath: res.tempFilePath,
+          success () {
+            toast.toast('保存图片成功！')
+            // 关闭画布
+            self.closedPosterCanvas()
+          },
+          fail (error) {
+            toast.toast('请截屏手动保存！')
+          }
         })
-        wx.hideLoading();
       },
-      fail: function (res) {
-        console.log(res)
-        wx.hideLoading();
-      }
     })
+  },
+
+  // 关闭画布
+  closedPosterCanvas () {
+    let self = this
+    self.setData({
+      posterFlag: false,
+    })
+  },
+
+  // 手指触摸后移动(阻止冒泡)
+  catchTouchMove (res) {
+    return false
   },
 
   // 更新购物车数量

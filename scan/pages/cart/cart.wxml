@@ -9,12 +9,12 @@
         <view class="{{editflag ? 'color71d793' : 'colore42837'}}" bindtap="setEditflag">{{editflag ? '完成' : '编辑'}}</view>
       </view>
       <!-- 商品列表 start -->
-      <view class="goodslist overflow">
+      <view class="goods_list1 bgffffff overflow">
         <block wx:for="{{scanCart}}" wx:key="index">
           <!-- 商品简介 start -->
           <view class="goods_item bgffffff border_be5e5e5">
             <view class="delBtn" bindtap="delBtn" data-goods="{{item}}" wx:if="{{editflag}}">
-              <view class="colorffffff bge42837 font40 border_r500 tc">×</view>
+              <image src="/lib/images/closed.png" class="closed bge42837 border_r500" mode="aspectFit"></image>
             </view>
             <view class="item_desc">
               <view class="item_name ellipsis2">{{item.productName}}</view>
@@ -26,7 +26,7 @@
                   </view>
                   <del class="" wx:if="{{item.actualSaleMoney !== item.saleMoney}}">
                     <text class="">￥</text>
-                    <text class="font28">{{item.saleMoney}}</text>
+                    <text class="font26">{{item.saleMoney}}</text>
                   </del>
                 </view>
                 <view class="cart">
@@ -41,7 +41,7 @@
                   </view>
                   <del class="" wx:if="{{item.actualPrice !== item.salePrice}}">
                     <text class="">￥</text>
-                    <text class="font28">{{item.salePrice}}</text>
+                    <text class="font26">{{item.salePrice}}</text>
                   </del>
                 </view>
                 <view class="cart">

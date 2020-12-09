@@ -145,15 +145,6 @@
 .bgffffff {
   background-color: #ffffff;
 }
-.bgcf1322 {
-  background-color: #cf1322;
-}
-.bgfa5151 {
-  background-color: #fa5151;
-}
-.bge42837 {
-  background-color: #e42837;
-}
 .bg71d793 {
   background-color: #71d793;
 }
@@ -181,6 +172,15 @@
 .bgf9f9f9 {
   background-color: #f9f9f9;
 }
+.bgcf1322 {
+  background-color: #cf1322;
+}
+.bgfa5151 {
+  background-color: #fa5151;
+}
+.bge42837 {
+  background-color: #e42837;
+}
 .bgfbd2af {
   background-color: #fbd2af;
 }
@@ -189,6 +189,9 @@
 }
 .bgf7b500 {
   background-color: #f7b500;
+}
+.bgfa6400 {
+  background-color: #fa6400;
 }
 .bg999999 {
   background-color: #999999;

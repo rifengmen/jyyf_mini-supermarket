@@ -23,7 +23,7 @@
 .goodsInfo_cont .del {
   display: block;
 }
-.btn_cont {
+.scan_btn_cont {
   width: calc(100% - 80rpx);
   height: 50rpx;
   margin: 60rpx auto 0 auto;
@@ -31,7 +31,7 @@
   justify-content: space-between;
   align-items: center;
 }
-.btn_cont .btn {
+.scan_btn_cont .btn {
   width: 173rpx;
   height: 50rpx;
   line-height: 50rpx;

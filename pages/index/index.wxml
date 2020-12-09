@@ -155,8 +155,8 @@
 		<block wx:for="{{hotList}}" wx:key="index">
 			<navigator class="zone_item border_r10 bgfbd2af fl" hover-class="none" url="/shopping/pages/goodsList/goodsList?Cateid={{item.Id}}&title={{item.storecategoryname}}">
 				<view class="zone_itemtit">
-					<view class="zone_itemname colorffffff font32 font_blod ellipsis">{{item.storecategoryname}}</view>
-					<view class="tozone border_r500 color333333 font24 bgffffff tc">去看看</view>
+					<view class="zone_itemname colorfa6400 font32 font_blod ellipsis">{{item.storecategoryname}}</view>
+					<view class="tozone border_r500 colorffffff font24 bgd17537 tc">去看看</view>
 				</view>
 				<view class="zone_itemimg">
 					<image src="{{baseUrl + item.ico}}" mode="aspectFit"></image>
@@ -194,7 +194,7 @@
 									</view>
 									<del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
 										<text class="">￥</text>
-										<text class="font28">{{item.Highoprice / 2}}</text>
+										<text class="font26">{{item.Highoprice / 2}}</text>
 										<text class="">/斤</text>
 									</del>
 								</view>
@@ -205,7 +205,7 @@
 									</view>
 									<del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
 										<text class="">￥</text>
-										<text class="font28">{{item.Highoprice}}</text>
+										<text class="font26">{{item.Highoprice}}</text>
 									</del>
 								</view>
 								<view class="cart">
@@ -248,7 +248,7 @@
 									</view>
 									<del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
 										<text class="">￥</text>
-										<text class="font28">{{item.Highoprice / 2}}</text>
+										<text class="font26">{{item.Highoprice / 2}}</text>
 										<text class="">/斤</text>
 									</del>
 								</view>
@@ -259,7 +259,7 @@
 									</view>
 									<del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
 										<text class="">￥</text>
-										<text class="font28">{{item.Highoprice}}</text>
+										<text class="font26">{{item.Highoprice}}</text>
 									</del>
 								</view>
 								<view class="cart">
@@ -297,7 +297,7 @@
 			<!-- 商品列表 start -->
 			<view class="goods_list2">
 				<view class="goods_list2_cont">
-					<block wx:for-item="goods" wx:for-index="gindex" wx:for="{{item.gdscodelist}}" wx:key="gindex" wx:if="{{!gindex%2}}">
+					<block wx:for-item="goods" wx:for-index="gindex" wx:for="{{item.gdscodelist}}" wx:key="gindex" wx:if="{{gindex%2 === 0}}">
 						<navigator class="goods_item border_r10 bgffffff overflow" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{goods.Gdscode}}&title={{goods.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
 							<view class="item_img overflow">
 								<image src="{{goods.Defaultimage ? (baseUrl + goods.Defaultimage) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
@@ -312,7 +312,7 @@
 									</view>
 									<del class="" wx:if="{{goods.Highoprice !== goods.Highpprice}}">
 										<text class="">￥</text>
-										<text class="font28">{{goods.Highoprice / 2}}</text>
+										<text class="font26">{{goods.Highoprice / 2}}</text>
 										<text class="">/斤</text>
 									</del>
 								</view>
@@ -323,7 +323,7 @@
 									</view>
 									<del class="" wx:if="{{goods.Highoprice !== goods.Highpprice}}">
 										<text class="">￥</text>
-										<text class="font28">{{goods.Highoprice}}</text>
+										<text class="font26">{{goods.Highoprice}}</text>
 									</del>
 								</view>
 								<view class="cart">
@@ -334,7 +334,7 @@
 					</block>
 				</view>
 				<view class="goods_list2_cont">
-					<block wx:for-item="goods" wx:for-index="gindex" wx:for="{{item.gdscodelist}}" wx:key="gindex" wx:if="{{gindex%2}}">
+					<block wx:for-item="goods" wx:for-index="gindex" wx:for="{{item.gdscodelist}}" wx:key="gindex" wx:if="{{gindex%2 !== 0}}">
 						<navigator class="goods_item border_r10 bgffffff overflow" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{goods.Gdscode}}&title={{goods.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
 							<view class="item_img overflow">
 								<image src="{{goods.Defaultimage ? (baseUrl + goods.Defaultimage) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
@@ -349,7 +349,7 @@
 									</view>
 									<del class="" wx:if="{{goods.Highoprice !== goods.Highpprice}}">
 										<text class="">￥</text>
-										<text class="font28">{{goods.Highoprice / 2}}</text>
+										<text class="font26">{{goods.Highoprice / 2}}</text>
 										<text class="">/斤</text>
 									</del>
 								</view>
@@ -360,7 +360,7 @@
 									</view>
 									<del class="" wx:if="{{goods.Highoprice !== goods.Highpprice}}">
 										<text class="">￥</text>
-										<text class="font28">{{goods.Highoprice}}</text>
+										<text class="font26">{{goods.Highoprice}}</text>
 									</del>
 								</view>
 								<view class="cart">
@@ -406,7 +406,7 @@
 								</view>
 								<del class="" wx:if="{{goods.Highoprice !== goods.Highpprice}}">
 									<text class="">￥</text>
-									<text class="font28">{{goods.Highoprice / 2}}</text>
+									<text class="font26">{{goods.Highoprice / 2}}</text>
 									<text class="">/斤</text>
 								</del>
 							</view>
@@ -417,7 +417,7 @@
 								</view>
 								<del class="" wx:if="{{goods.Highoprice !== goods.Highpprice}}">
 									<text class="">￥</text>
-									<text class="font28">{{goods.Highoprice}}</text>
+									<text class="font26">{{goods.Highoprice}}</text>
 								</del>
 							</view>
 							<view class="cart">
@@ -426,11 +426,6 @@
 						</view>
 					</navigator>
 				</block>
-				<!-- 查看更多 start -->
-				<view class="goods_item goods_item_more border_r10 overflow">
-					<navigator class="more colorffffff font30 font_blod bge7e7e7 border_r500" hover-class="none" url="/shopping/pages/goodsList/goodsList?Cateid={{item.Id}}&title={{item.storecategoryname}}">更多...</navigator>
-				</view>
-				<!-- 查看更多 end -->
 			</view>
 			<!-- 商品列表 end -->
 		</view>

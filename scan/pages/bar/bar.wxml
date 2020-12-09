@@ -35,7 +35,7 @@
                   </view>
                   <del class="" wx:if="{{item.actualPrice !== item.salePrice}}">
                     <text>￥</text>
-                    <text class="font28">{{item.salePrice}}</text>
+                    <text class="font26">{{item.salePrice}}</text>
                   </del>
                 </view>
                 <view class="cart">

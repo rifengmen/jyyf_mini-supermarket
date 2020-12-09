@@ -28,7 +28,7 @@
 					</view>
 					<del class="" wx:if="{{goodsDetail.preferential !== goodsDetail.originalcost}}">
 						<text class="">￥</text>
-						<text class="font28">{{goodsDetail.originalcost / 2}}</text>
+						<text class="font26">{{goodsDetail.originalcost / 2}}</text>
 						<text class="">/斤</text>
 					</del>
 				</view>
@@ -39,7 +39,7 @@
 					</view>
 					<del class="" wx:if="{{goodsDetail.preferential !== goodsDetail.originalcost}}">
 						<text>￥</text>
-						<text class="font28">{{goodsDetail.originalcost}}</text>
+						<text class="font26">{{goodsDetail.originalcost}}</text>
 					</del>
 				</view>
 			</view>
@@ -117,10 +117,10 @@
 	</block>
 	<!-- 快捷按钮 start -->
 	<view class="shortcut_key colorffffff font22">
-		<!--<view class="share_btn btn border_r500" bindtap="getPoster">-->
-			<!--<image src="/lib/images/poster.png"></image>-->
-			<!--<view class="">海报</view>-->
-		<!--</view>-->
+		<view class="share_btn btn border_r500" bindtap="queryCanvas">
+			<image src="/lib/images/poster.png"></image>
+			<view class="">海报</view>
+		</view>
 		<button class="share_btn btn border_r500" open-type="share">
 			<image src="/lib/images/share.png"></image>
 			<view class="">分享</view>
@@ -132,4 +132,11 @@
 		<dialog goods="{{goods}}" bind:dialogClose="dialogClose" bind:dialogConfirm="dialogConfirm"></dialog>
 	</view>
 	<!-- dialog end -->
+	<!-- canvas start -->
+	<view class="canvas_cont {{posterFlag ? 'active' : ''}}" catchtouchmove="catchTouchMove">
+		<canvas type="2d" id="posterCanvas"></canvas>
+		<view class="btn colorffffff font32 bg71d793 border_r500 tc" catchtap="savePosterImg">保存图片</view>
+		<image src="/lib/images/closed.png" class="closed" mode="aspectFit" catchtap="closedPosterCanvas"></image>
+	</view>
+	<!-- canvas end -->
 </view>
