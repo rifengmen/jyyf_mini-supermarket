@@ -19,7 +19,10 @@ Page({
     mobile: app.globalData.mobile,
     // 订单编号
     tradeno: '',
-  },
+    // 定位
+    longitude: '',
+    latitude: '',
+},
 
   /**
    * 生命周期函数--监听页面加载
@@ -99,18 +102,41 @@ Page({
     })
   },
 
-  // 发送订单编号
-  sendTradeno () {
+  // 变更订单状态
+  pickOrder () {
     let self = this
     let data = {
       role: self.data.role,
       tradeno: self.data.tradeno,
+      phone: self.data.mobile,
+      longitude: self.data.longitude,
+      latitude: self.data.latitude,
     }
-    API.invest.sendTradeno(data).then(result => {
+    // 获取当前位置信息
+    API.bill.pickOrder(data).then(result => {
       let res = result.data
       toast.toast(res.message)
     }).catch(error => {
       toast.toast(error.error)
+    })
+  },
+
+  // 获取定位
+  getLocation () {
+    let self = this
+    wx.getLocation({
+      type: 'gcj02',
+      altitude: false,
+      success (res) {
+        self.setData({
+          longitude: res.longitude,
+          latitude: res.latitude,
+        })
+      },
+      complete () {
+        // 变更订单状态
+        self.pickOrder()
+      }
     })
   },
 
@@ -134,8 +160,8 @@ Page({
           self.setData({
             tradeno: result
           })
-          // 获取商品信息
-          self.sendTradeno()
+          // 获取定位
+          self.getLocation()
         } else {
           toast.toast('请对准条形码扫码')
         }

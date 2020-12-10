@@ -9,7 +9,7 @@
       </view>
     </view>
     <view class="user_section border_be5e5e5">
-      <view>操作状态</view>
+      <view>身份状态</view>
       <view class="user_desc">
         <input type="text" value="{{roledetail.name}}" class="tr" disabled />
       </view>
@@ -30,7 +30,7 @@
   <!-- 按钮部分 start -->
   <view class="btn_cont scan_section">
     <!-- 确认按钮 start -->
-    <view class="btn colorffffff font32 bg71d793 border_r500 border_a71d793 tc" bindtap="sendTradeno">确认</view>
+    <view class="btn colorffffff font32 bg71d793 border_r500 border_a71d793 tc" bindtap="getLocation">确认</view>
     <!-- 确认按钮 end -->
     <!-- 重置按钮 start -->
     <view class="btn color71d793 font32 bgffffff border_r500 border_a71d793 tc" bindtap="resetTradeno">重置</view>

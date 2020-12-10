@@ -37,6 +37,8 @@ const bill = {
   listMyOrder: data => request.http('bill/order.do?method=listMyOrder', data),
   // 获取订单详情
   listOrderDetails: data => request.http('bill/order.do?method=listOrderDetails', data),
+  // 变更订单状态
+  pickOrder: data => request.http('bill/order.do?method=pickOrder', data),
   // 设置支付密码
   cardpayopen: data => request.http('bill/pay.do?method=cardpayopen', data),
   // 重置支付密码

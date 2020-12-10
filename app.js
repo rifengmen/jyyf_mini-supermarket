@@ -67,10 +67,10 @@ App({
     memname: '',
     // 手机号
     mobile: '',
+    // 身份信息，0：顾客；1：配送员；2：团长
+    role: '',
     // 支付开通标志,1为开通，0未开通，null未知
     coflag: 0,
-    // 身份标识，默认0,0:顾客,1:拣货,2:配送,3:取货
-    role: 0,
     // 门店名称
     deptname: '',
     // 门店code
@@ -105,9 +105,8 @@ App({
     // 身份标识列表
     roleList: [
       {name: '顾客', role: 0},
-      {name: '拣货', role: 1},
-      {name: '配送', role: 2},
-      {name: '取货', role: 3},
+      {name: '配送员', role: 1},
+      {name: '团长', role: 2},
     ],
     // 订单状态列表
     statusList: [

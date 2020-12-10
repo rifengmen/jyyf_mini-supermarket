@@ -104,7 +104,7 @@
     }
   ],
   "window": {
-    "backgroundTextStyle": "dark",
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTextStyle": "black",
     "onReachBottomDistance": -100

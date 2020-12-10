@@ -243,6 +243,7 @@
   border-radius: 500rpx;
 }
 /* 圆角 end */
+/* 边框 start */
 .border_be5e5e5 {
   border-bottom: 1px solid #e5e5e5;
 }
@@ -276,6 +277,7 @@
 .border_a71d793_2 {
   border: 2px solid #71d793;
 }
+/* 边框 end */
 /* 层级 start */
 .z_index_-2 {
   z-index: -2;

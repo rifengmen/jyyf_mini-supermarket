@@ -28,13 +28,7 @@ Page({
   onLoad: function (options) {
     let self = this
     let openid = app.globalData.openid
-    let defaultOpenid = app.globalData.defaultOpenid
-    if (openid && openid !== defaultOpenid) {
-      self.setData({
-        hasUserInfo: true
-      })
-      wx.navigateBack()
-    } else if (self.data.canIUse) {
+    if (self.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
@@ -49,6 +43,9 @@ Page({
       // 在没有 open-type=getUserInfo 版本的兼容处理
       wx.getUserInfo({
         success: res => {
+          self.setData({
+            hasUserInfo: true
+          })
           app.globalData.userImg = res.userInfo.avatarUrl
           // 获取code
           self.getCode()
@@ -188,6 +185,8 @@ Page({
         let memcode = res.data.memcode
         // 用户身份标识，0：批发客户（app功能）；1：普通客户
         let iscustomer = res.data.iscustomer
+        // 身份信息，0：顾客；1：配送员；2：团长
+        let role = res.data.role
         // 卡支付标志，1：开通；0：未开通；null：未知
         let coflag = res.data.coflag
         // 只允许普通客户登录小程序(批发客户不能登录)
@@ -199,6 +198,7 @@ Page({
         app.globalData.mobile = mobile
         app.globalData.memname = memname
         app.globalData.memcode = memcode
+        app.globalData.role = role
         app.globalData.coflag = coflag
       } else {
         toast.toast(res.message)

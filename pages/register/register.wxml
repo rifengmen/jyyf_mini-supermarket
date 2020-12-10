@@ -46,6 +46,8 @@
 	</view>
 	<!-- 验证码 end -->
 	<!-- 登录按钮 start -->
-	<view class='btn colorffffff font32 bg71d793 border_r500 tc' bindtap='perfectInfoForWX'>注册</view>
+	<view class="btn_cont">
+		<view class='btn colorffffff font32 bg71d793 border_r500 tc' bindtap='perfectInfoForWX'>注册</view>
+	</view>
 	<!-- 登录按钮 end -->
 </view>

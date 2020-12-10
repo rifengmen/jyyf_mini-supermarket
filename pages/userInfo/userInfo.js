@@ -10,7 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // 身份标识，默认0,0:顾客,1:拣货,2:配送,3:取货
+    // 身份信息，0：顾客；1：配送员；2：团长
     role: 0,
     // 身份标识列表
     roleList: app.globalData.roleList,
@@ -72,7 +72,7 @@ Page({
     let userImg = app.globalData.userImg
     let memname = app.globalData.memname
     let coflag = app.globalData.coflag
-    let role = app.globalData.role
+    let role = Number(app.globalData.role)
     self.setData({
       openid: openid,
       memcode: memcode,

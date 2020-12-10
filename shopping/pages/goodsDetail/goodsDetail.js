@@ -329,7 +329,8 @@ Page({
       ctx.scale(dpr, dpr)
       self.setData({
         canvas: canvas,
-        ctx: ctx
+        ctx: ctx,
+        dpr: dpr,
       })
       // 设置海报绘制基础参数
       self.setCanvasOptions()
@@ -341,26 +342,33 @@ Page({
   // 设置海报绘制基础参数
   setCanvasOptions () {
     let self = this
+    let canvas = self.data.canvas
+    let dpr = self.data.dpr
     let goodsDetail = self.data.goodsDetail
     let goodsTitle = (goodsDetail.Name).split('')
     let goodsTitleArray = []
-    // 为了防止标题过长，分割字符串,每行18个
-    let breaknum = 18
+    // 为了防止标题过长，分割字符串
+    let breaknum = 16
     goodsTitle.forEach((item, index) => {
       if (index % breaknum === 0 && index / breaknum <= 1) {
         goodsTitleArray.push(goodsTitle.slice(index, index + breaknum).join(''))
       }
     })
-    // y方向的偏移量，因为是从上往下绘制的，所以y一直向下偏移，不断增大。
-    let yOffset = 20
-    if (goodsTitleArray.length !== 1) {
-      yOffset = 10
-    }
-    let xOffset = 20
-    let goodsPicWidth = 260
-    let goodsPicHeight = 260
-    let qrCodePicWidth = 80
-    let qrCodePicHeight = 80
+    let canvasW = canvas.width
+    let canvasH = canvas.height
+    let rectW = 600
+    let rectH = 960
+    // 单位
+    let units = (canvasW / dpr) / (rectW / 2)
+    self.setData({
+      units: units,
+    })
+    let goodsPicWidth = 260 * units
+    let goodsPicHeight = 260 * units
+    let qrCodePicWidth = 80 * units
+    let qrCodePicHeight = 80 * units
+    let xOffset = 20 * units
+    let yOffset = 20 * units
     let n_price = 0
     let o_price = 0
     if (goodsDetail.scaleflag) {
@@ -376,12 +384,14 @@ Page({
     ]
     let canvasOptions = {
       goodsTitleArray: goodsTitleArray,
-      xOffset: xOffset,
-      yOffset: yOffset,
+      rectW: rectW,
+      rectH: rectH,
       goodsPicWidth: goodsPicWidth,
       goodsPicHeight: goodsPicHeight,
       qrCodePicWidth: qrCodePicWidth,
       qrCodePicHeight: qrCodePicHeight,
+      xOffset: xOffset,
+      yOffset: yOffset,
       n_price: n_price,
       o_price: o_price,
       codeTextArray: codeTextArray,
@@ -407,9 +417,10 @@ Page({
   // 绘制海报背景
   drawPosterBg (ctx) {
     let self = this
+    let canvasOptions = self.data.canvasOptions
     // 绘制背景
     ctx.fillStyle = '#ffffff'
-    ctx.fillRect(0, 0, 600, 860)
+    ctx.fillRect(0, 0, canvasOptions.rectW, canvasOptions.rectH)
   },
 
   // 绘制商品图片
@@ -426,7 +437,7 @@ Page({
     goodsPic.onload = () => {
       ctx.drawImage(goodsPic, canvasOptions.xOffset, canvasOptions.yOffset, canvasOptions.goodsPicWidth, canvasOptions.goodsPicHeight)
       ctx.restore()
-      canvasOptions.yOffset += (canvasOptions.goodsPicHeight + canvasOptions.yOffset)
+      canvasOptions.yOffset += (canvasOptions.goodsPicHeight + (canvasOptions.yOffset / 2))
       self.setData({
         canvasOptions: canvasOptions
       })
@@ -439,6 +450,7 @@ Page({
   // 绘制商品名称
   drawPosterGoodsName (ctx) {
     let self = this
+    let units = self.data.units
     let canvasOptions = self.data.canvasOptions
     canvasOptions.goodsTitleArray.forEach(item => {
       ctx.font = '15px sans-serif'
@@ -446,7 +458,7 @@ Page({
       ctx.textBaseline = 'top'
       ctx.textAlign = 'left'
       ctx.fillText(item, canvasOptions.xOffset, canvasOptions.yOffset)
-      canvasOptions.yOffset += 24
+      canvasOptions.yOffset += 24 * units
     })
     self.setData({
       canvasOptions: canvasOptions
@@ -458,12 +470,14 @@ Page({
   // 绘制商品小程序码
   drawPosterQrCode (ctx) {
     let self = this
+    let units = self.data.units
     let canvas = self.data.canvas
     let canvasOptions = self.data.canvasOptions
     let qrCodePic = canvas.createImage()
     qrCodePic.src = self.data.baseUrl + self.data.qrCodePicPath
     qrCodePic.onload = () => {
-      ctx.drawImage(qrCodePic, canvasOptions.xOffset + 180, canvasOptions.yOffset, canvasOptions.qrCodePicWidth, canvasOptions.qrCodePicHeight)
+      canvasOptions.yOffset += 35 * units
+      ctx.drawImage(qrCodePic, canvasOptions.xOffset + (180 * units), canvasOptions.yOffset, canvasOptions.qrCodePicWidth, canvasOptions.qrCodePicHeight)
       ctx.restore()
       self.setData({
         canvasOptions: canvasOptions
@@ -476,9 +490,10 @@ Page({
   // 绘制商品价格
   drawPosterGoodsPrice (ctx) {
     let self = this
+    let units = self.data.units
     let canvasOptions = self.data.canvasOptions
     // 绘制售价
-    canvasOptions.yOffset += 10
+    canvasOptions.yOffset -= 20 * units
     ctx.font = 'normal bold 24px sans-serif'
     ctx.fillStyle = '#fa6400'
     ctx.textBaseline = 'top'
@@ -492,19 +507,19 @@ Page({
     ctx.fillText(canvasOptions.o_price, canvasOptions.xOffset + canvasOptions.n_price.toString().length * 20, canvasOptions.yOffset)
     // 绘制原价的删除线
     ctx.lineWidth = 1
-    ctx.moveTo(canvasOptions.xOffset + canvasOptions.n_price.toString().length * 20 - 5, canvasOptions.yOffset + 6)
-    ctx.lineTo(canvasOptions.xOffset + canvasOptions.n_price.toString().length * 20 + canvasOptions.o_price.toString().length * 10, canvasOptions.yOffset + 6)
+    ctx.moveTo(canvasOptions.xOffset + canvasOptions.n_price.toString().length * 20 - 5 * units, canvasOptions.yOffset + 6 * units)
+    ctx.lineTo(canvasOptions.xOffset + canvasOptions.n_price.toString().length * 20 + canvasOptions.o_price.toString().length * 10, canvasOptions.yOffset + 6 * units)
     ctx.strokeStyle = '#999999'
     ctx.stroke()
     // 绘制提示识别小程序码文字
-    canvasOptions.yOffset += 40
+    canvasOptions.yOffset += 45 * units
     canvasOptions.codeTextArray.forEach(item => {
       ctx.font = '13px sans-serif'
       ctx.fillStyle = '#666666'
       ctx.textBaseline = 'top'
       ctx.textAlign = 'left'
       ctx.fillText(item, canvasOptions.xOffset, canvasOptions.yOffset)
-      canvasOptions.yOffset += 18
+      canvasOptions.yOffset += 18 * units
     })
     wx.hideLoading()
     self.setData({
@@ -516,15 +531,16 @@ Page({
   // 保存海报图片
   savePosterImg () {
     let self = this
+    let units = self.data.units
     // 将canvas生成图片
     wx.canvasToTempFilePath({
       canvas: self.data.canvas,
       x: 0,
       y: 0,
-      width: 300,
-      height: 480,
-      destWidth: 300,     // 截取canvas的宽度
-      destHeight: 480,   // 截取canvas的高度
+      width: 300 * units,
+      height: 480 * units,
+      destWidth: 1200 * units,     // 截取canvas的宽度
+      destHeight: 1920 * units,   // 截取canvas的高度
       success (res) {
         // 保存图片到相册
         wx.saveImageToPhotosAlbum({

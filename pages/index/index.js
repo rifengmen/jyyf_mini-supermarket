@@ -85,6 +85,7 @@ Page({
     app.checkUpdateVersion()
     if (deptname && deptcode) {
       self.setData({
+        loadingFlag: false,
         deptname: deptname,
         deptcode: deptcode,
       })
@@ -216,10 +217,6 @@ Page({
       } else {
         toast.toast(res.message)
       }
-      // 关闭等待动画
-      self.setData({
-        loadingFlag: true
-      })
     }).catch(error => {
       toast.toast(error.error)
     })
@@ -297,6 +294,8 @@ Page({
         let memcode = res.data.memcode
         // 用户身份标识，0：批发客户（app功能）；1：普通客户
         let iscustomer = res.data.iscustomer
+        // 身份信息，0：顾客；1：配送员；2：团长
+        let role = res.data.role
         // 卡支付标志，1：开通；0：未开通；null：未知
         let coflag = res.data.coflag
         // 只允许普通客户登录小程序(批发客户不能登录)
@@ -308,6 +307,7 @@ Page({
         app.globalData.mobile = mobile
         app.globalData.memname = memname
         app.globalData.memcode = memcode
+        app.globalData.role = role
         app.globalData.coflag = coflag
         // 默认门店标志
         let isdefaultdept = res.data.isDefaultDept
@@ -441,6 +441,10 @@ Page({
       } else {
         toast.toast(res.message)
       }
+      // 关闭等待动画
+      self.setData({
+        loadingFlag: true
+      })
     }).catch(error => {
       toast.toast(error.error)
     })

@@ -36,31 +36,17 @@
 	</view>
 	<!-- card信息 end -->
 	<!-- 内部功能 start -->
-	<view class="other user_section bgffffff border_r10">
+	<view class="other user_section bgffffff border_r10" wx:if="{{role}}">
 		<view class="tit">
 			<view class="font_blod">内部功能</view>
 		</view>
 		<view class="cont overflow">
-			<navigator class="item fl" hover-class="none" url="/internal/pages/editOrderStatus/editOrderStatus?role=1">
+			<navigator class="item fl" hover-class="none" url="/internal/pages/editOrderStatus/editOrderStatus?role={{role}}">
 				<view class="img">
 					<image src="/lib/images/myMessage.png"></image>
 					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc">99</view>
 				</view>
-				<view class="name font24">拣货</view>
-			</navigator>
-			<navigator class="item fl" hover-class="none" url="/internal/pages/editOrderStatus/editOrderStatus?role=2">
-				<view class="img">
-					<image src="/lib/images/myMessage.png"></image>
-					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc">99</view>
-				</view>
-				<view class="name font24">配送</view>
-			</navigator>
-			<navigator class="item fl" hover-class="none" url="/internal/pages/editOrderStatus/editOrderStatus?role=3">
-				<view class="img">
-					<image src="/lib/images/myMessage.png"></image>
-					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc">99</view>
-				</view>
-				<view class="name font24">取货</view>
+				<view class="name font24">{{roleList[role].name}}</view>
 			</navigator>
 		</view>
 	</view>
