@@ -8,7 +8,7 @@ Page({
     // 基础路径
     baseUrl: app.globalData.baseUrl,
     // 图片路径为空时默认图路径
-    errorImage: app.globalData.errorImage,
+    defgoodsimg: app.globalData.defgoodsimg,
     // 等待动画开关
     loadingFlag: false,
     // openid
@@ -27,40 +27,42 @@ Page({
     search_val: '',
     // 通知列表
     noticeList: [],
-    // banner图 图片列表
-    bannerList: [],
+    // banner类型列表
+    bannerTypeList: app.globalData.bannerTypeList,
     // 轮播点儿下标
-    swiperCurrent: 0,
-    // 海报列表
-    posterList: [],
+    swiperCurrent_banner: 0,
+    swiperCurrent_module: 0,
+    swiperCurrent_friend: 0,
     // 自定义模块列表
     modulePictureList: [],
-    lefOrRigOne: true,
-    leftTwo: '383rpx',
-    flag: true,
-    animationData: {},
     // 友链列表
-    linkList: [],
+    friendLinkList: [],
+    // 视频广告列表
+    advideoList: [
+      {url: 'https://vd4.bdstatic.com/mda-kitkpymkcp9yqnq3/sc/mda-kitkpymkcp9yqnq3.mp4?playlist=%5B%22hd%22%2C%22sc%22%5D&v_from_s=tc_videoui_4135&auth_key=1614913046-0-0-ad552e0f3e7fd577495efed051d87c9e&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=8_2'},
+      {url: 'https://vd2.bdstatic.com/mda-mc3zhgxb0pzn62zb/v1-cae/sc/mda-mc3zhgxb0pzn62zb.mp4?v_from_s=tc_haokanvideoui_5488&auth_key=1614913460-0-0-680133311ef4ab5a3ab1a4aaca45d0b7&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=8_2'},
+      {url: 'https://vd2.bdstatic.com/mda-mc4cvdgiqwb35kd7/fhd/cae_h264_nowatermark/1614907296/mda-mc4cvdgiqwb35kd7.mp4?v_from_s=tc_haokanvideoui_5488&auth_key=1614913494-0-0-877f7e7709e22cb23cb05c3318d7a413&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=8_2'},
+    ],
     // 推荐商品列表
     recommendList: [],
     // indexHotList
     indexHotList: [],
     // 专区列表
     hotList: [],
-    // 秒杀商品列表
-    panicBuyGoodsList: [],
-    // 特价商品列表
-    specialGoodsList: [],
+    // 各种类别商品轮播列表
+    promotemodeList: app.globalData.promotemodeList,
     // 导航栏前景颜色值，包括按钮、标题、状态栏的颜色，仅支持 #ffffff 和 #000000
     frontColor: '#ffffff',
-    // 首页背景图
+    // 主题背景图
     home_bgurl: '',
-    // 首页背景色
+    // 主题背景色
     home_bgcolor: '#71d793',
     // 秒杀/特价背景色
     home_promotebg: '#f68e74',
     // 弹框组件显示开关
     dialogFlag: false,
+    // 广告弹框显示开关
+    addialogFlag: true,
     // 商品信息
     goods: '',
     // 投诉类别列表
@@ -185,7 +187,8 @@ Page({
     let self = this
     let accountInfo = wx.getAccountInfoSync()
     // 当前线上版本号
-    app.globalData.version = accountInfo.version
+    app.globalData.version = accountInfo.miniProgram.version
+    console.log(accountInfo, 'accountInfo')
   },
 
   // 获取店铺基础设置信息配置首页
@@ -197,9 +200,10 @@ Page({
       if (res.flag === 1) {
         self.setData({
           home_bgurl: res.data.home_bgurl || '',
-          home_bgcolor: res.data.home_bgcolor || '#71d793',
+          home_bgcolor: app.colorRgb(res.data.home_bgcolor || '#71d793'),
           home_promotebg: res.data.home_promotebg || '#f68e74',
         })
+        app.globalData.home_bgcolor = res.data.home_bgcolor
         app.globalData.cent_istrunbg = res.data.cent_istrunbg
         app.globalData.cent_bgurl = res.data.cent_bgurl
         app.globalData.cent_turnurl = res.data.cent_turnurl
@@ -209,11 +213,15 @@ Page({
         wx.setNavigationBarTitle({
           title: app.globalData.apptitle
         })
-        // 设置背景色
+        // 设置主题背景色
         wx.setNavigationBarColor({
           frontColor: self.data.frontColor,
-          backgroundColor: self.data.home_bgcolor,
+          backgroundColor: res.data.home_bgcolor || '#71d793',
         })
+        // // 设置tabbar选中字体颜色
+        // wx.setTabBarStyle({
+        //   selectedColor: res.data.home_bgcolor || '#71d793',
+        // })
       } else {
         toast.toast(res.message)
       }
@@ -400,24 +408,27 @@ Page({
   // 初始化
   init () {
     let self = this
-    // 获取banner列表
-    self.getBannerList()
+    // 发送各种banner类型请求
+    self.sendBusinessflag()
     // 获取自定义功能列表
     self.getModulePictureList()
     // 获取公告列表
     self.getNoticeList()
     // 获取友链列表
-    self.getLinkList()
-    // 获取海报列表
-    self.getPosterList()
+    self.getFriendLinkList()
     // 获取推荐商品列表
     self.getTheme()
     // 获取专区列表
     self.getHotList()
-    // 获取秒杀商品列表
-    self.getPanicBuyGoodsList()
+    // 各种类别商品轮播列表
+    self.data.promotemodeList.forEach(item => {
+      if (item.promotemode !== 999) {
+        // 获取各种类别商品轮播列表
+        self.getProductListByPromote(item)
+      }
+    })
     // 获取特价商品列表
-    self.getSpecialGoodsList()
+    self.getProductList()
   },
 
   // 手指触摸后移动(阻止冒泡)
@@ -425,26 +436,39 @@ Page({
     return false
   },
 
-  // 获取banner图列表
-  getBannerList () {
+  // 发送各种banner类型请求
+  sendBusinessflag () {
     let self = this
-    let data = {
-      // 卡冲值参数为1，其它是0
-      cardflag: 0
-    }
+    let bannerTypeList = self.data.bannerTypeList
+    let data = {}
+    bannerTypeList.forEach(item => {
+      data = {
+        businessflag: item.businessflag,
+      }
+      // 获取各种banner图列表
+      self.getBannerList (data)
+    })
+  },
+
+  // 获取各种banner图列表
+  getBannerList (data) {
+    let self = this
     API.system.listShopHomeSlide(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        self.setData({
-          bannerList: res.data
+        let bannerTypeList = self.data.bannerTypeList
+        bannerTypeList.forEach(item => {
+          if (item.businessflag === data.businessflag) {
+            item.list = res.data
+          }
         })
+        self.setData({
+          bannerTypeList: bannerTypeList,
+        })
+        app.globalData.bannerTypeList = bannerTypeList
       } else {
         toast.toast(res.message)
       }
-      // 关闭等待动画
-      self.setData({
-        loadingFlag: true
-      })
     }).catch(error => {
       toast.toast(error.error)
     })
@@ -453,43 +477,36 @@ Page({
   // 修改轮播点儿
   swiperChange (e) {
     let self = this
-    if (e.detail.source === 'autoplay' || e.detail.source === 'touch') {
-      self.setData({
-        swiperCurrent: e.detail.current
-      })
-    }
-  },
-
-
-  // 获取banner详情
-  getBannerDetail (e) {
-    let self = this
-    let id = e.currentTarget.dataset.id
-    let data = {
-      ImageID: id
-    }
-    API.system.getLinkForSlide(data).then(result => {
-      let res = result.data
-      if (res.flag === 1) {
-        // 去banner详情
-        self.toBannerDetail(res.data)
-      } else {
-        toast.toast(res.message)
+    let {swiper} = e.currentTarget.dataset
+    let {source, current} = e.detail
+    if (source === 'autoplay' || source === 'touch') {
+      if (swiper === 'banner') {
+        self.setData({
+          swiperCurrent_banner: current
+        })
+      } else if (swiper === 'module') {
+        self.setData({
+          swiperCurrent_module: current
+        })
+      } else if (swiper === 'friend') {
+        self.setData({
+          swiperCurrent_friend: current
+        })
       }
-    }).catch(error => {
-      toast.toast(error.error)
-    })
+    }
   },
 
   // 去banner详情
-  toBannerDetail (banner) {
+  toBannerDetail (e) {
     let self = this
+    let banner = e.currentTarget.dataset.banner
     let linktype = banner.linktype
+    banner.linkcode = banner.objectcode
     switch (linktype) {
       case 1:
         // 限时秒杀
         wx.navigateTo({
-          url: '/shopping/pages/goodsList/goodsList?panicBuy=' + 'panicBuy' + '&title=' + '限时秒杀'
+          url: '/shopping/pages/goodsList/goodsList?panicBuy=' + 'panicBuy' + '&title=' + '限时秒杀' + '&promotemode=101'
         })
         break
       case 2:
@@ -537,14 +554,34 @@ Page({
             url: '/pages/roomplayList/roomplayList',
           })
         } else {
-          let customParams = encodeURIComponent(JSON.stringify({ path: 'pages/login/login', pid: 1 }))
+          let customParams = encodeURIComponent(JSON.stringify({ path: 'pages/index/index', pid: 1 }))
           wx.navigateTo({
-            url: "plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=" + roomid + "&custom_params=${customParams}"
+            url: "plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=" + roomid + "&custom_params=" + customParams
           })
         }
         break
       default:
     }
+  },
+
+  // 获取公告列表
+  getNoticeList () {
+    let self = this
+    let data = {
+      Listtype: 2
+    }
+    API.info.listNotice(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          noticeList: res.data
+        })
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
   },
 
   // 获取自定义功能列表
@@ -568,8 +605,25 @@ Page({
       let res = result.data
       if (res.flag === 1) {
         if (res.data) {
+          let modulePictureList = res.data.picturenamelist
+          let arr1_startindex = 0
+          let arr1_endindex = 5
+          let arr2_startindex = 0
+          let arr2_endindex = 2
+          let arr1 = []
+          let arr2 = []
+          modulePictureList.forEach(item => {
+            if (modulePictureList.length > arr1_startindex) {
+              arr1.push(modulePictureList.slice(arr1_startindex, arr1_startindex += arr1_endindex))
+            }
+          })
+          arr1.forEach(item => {
+            if (arr1.length > arr2_startindex) {
+              arr2.push(arr1.slice(arr2_startindex, arr2_startindex += arr2_endindex))
+            }
+          })
           self.setData({
-            modulePictureList: res.data.picturenamelist
+            modulePictureList: arr2
           })
         }
       } else {
@@ -680,7 +734,7 @@ Page({
         case 14:
           // 限时秒杀
           wx.navigateTo({
-            url: '/shopping/pages/goodsList/goodsList?panicBuy=' + 'panicBuy' + '&title=' + automodule.modulename
+            url: '/shopping/pages/goodsList/goodsList?panicBuy=' + 'panicBuy' + '&title=' + automodule.modulename + '&promotemode=101'
           })
           break;
         case 7:
@@ -724,58 +778,31 @@ Page({
     }
   },
 
-  // 自定义区滚动条
-  conScroll (e) {
+  // 获取专区列表
+  getHotList () {
     let self = this
-    var len = self.data.modulePictureList.length; // len为多少列
-    var screenLen = wx.getSystemInfoSync().windowWidth; // 屏幕宽度 单位px
-    var conLenR = len * 148; // 148为内容滚动区每一列的宽度 单位rpx
-    var conLenP = screenLen / 750 * conLenR; // 计算内容滚动区的像素长度（小程序规定屏幕宽度为750rpx）
-    var scrollLen = conLenP - screenLen; // 计算滚动轴需要滚动的距离 单位px
-    var addLen;
-    if (self.data.flag) {
-      // 40为红色线条的长度rpx  28为红色和灰色线条的空白区域8rpx 加上 灰色线条的长度20rpx
-      addLen = 40 + e.detail.scrollLeft / scrollLen * 28 + 'rpx'
-    }else{
-      addLen = 40 + (scrollLen - e.detail.scrollLeft) / scrollLen * 28 + 'rpx'
-    }
-    self.animation.width(addLen).step();
-    self.setData({
-      animationData: self.animation.export(),
-    })
-  },
-  conScrLower (e) {
-    let self = this
-    self.animation.width('40rpx').step();
-    self.setData({
-      lefOrRigOne: false,
-      leftTwo: '335rpx',
-      animationData: self.animation.export(),
-      flag: false
-    })
-  },
-  conScrUpper (e) {
-    let self = this
-    self.animation.width('40rpx').step();
-    self.setData({
-      lefOrRigOne: true,
-      leftTwo: '383rpx',
-      animationData: self.animation.export(),
-      flag: true
-    })
-  },
-
-  // 获取公告列表
-  getNoticeList () {
-    let self = this
-    let data = {
-      Listtype: 2
-    }
-    API.info.listNotice(data).then(result => {
+    let data = {}
+    API.info.listHot180414(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let hotList = res.data
+        hotList.forEach((item, index) => {
+          if (hotList.length % 2 === 1) {
+            if (index === hotList.length - 1) {
+              item.lastItem = 1
+            } else {
+              item.lastItem = 0
+            }
+          } else {
+            if ((index === hotList.length - 1) || (index === hotList.length - 2)) {
+              item.lastItem = 1
+            } else {
+              item.lastItem = 0
+            }
+          }
+        })
         self.setData({
-          noticeList: res.data
+          hotList: hotList,
         })
       } else {
         toast.toast(res.message)
@@ -785,18 +812,60 @@ Page({
     })
   },
 
-  // 获取海报列表
-  getPosterList () {
+  // 获取各种类别商品轮播列表
+  getProductListByPromote (promotemode) {
     let self = this
     let data = {
-      // 卡冲值参数为1，其它是0
-      cardflag: 0
+      promotemode: promotemode.promotemode,
+      Page: 1,
+      pageSize: 15,
     }
-    API.system.listShopHomeSlide1(data).then(result => {
+    API.info.getProductListByPromote(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let goodsList = {
+          promotemode: promotemode.promotemode,
+          list: res.data,
+        }
+        // 设置各种类别商品轮播列表
+        self.setPromotemodeList(goodsList)
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 获取特价商品列表
+  getProductList () {
+    let self = this
+    let data = {
+      Datatype: '1',
+      Page: 1,
+      pageSize: 15,
+      Sortflg: 1,
+      sorttype: 0
+    }
+    API.info.getProductList(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        // 商品code统一字段
+        let list = res.data
+        list.forEach(item => {
+          if (item.goodscode && !item.Gdscode) {
+            item.Gdscode = item.goodscode
+          }
+        })
+        // 设置各种类别商品轮播列表
+        let promotemodeList = self.data.promotemodeList
+        promotemodeList.forEach(item => {
+          if (item.promotemode === 999) {
+            item.list = list
+          }
+        })
         self.setData({
-          posterList: res.data
+          promotemodeList: promotemodeList
         })
       } else {
         toast.toast(res.message)
@@ -804,20 +873,88 @@ Page({
     }).catch(error => {
       toast.toast(error.error)
     })
+  },
+
+  // 设置各种类别商品轮播列表
+  setPromotemodeList (goodsList) {
+    let self = this
+    let promotemodeList = self.data.promotemodeList
+    promotemodeList.forEach(item => {
+      if (item.promotemode === goodsList.promotemode) {
+        item.list = goodsList.list
+      }
+    })
+    self.setData({
+      promotemodeList: promotemodeList,
+    })
+  },
+
+  // 获取友链列表
+  getFriendLinkList () {
+    let self = this
+    let data = {}
+    API.system.getFriendLinks(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          friendLinkList: res.data
+        })
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 去友链详情
+  toLinkDetail(e) {
+    let self = this
+    let friendLink = e.currentTarget.dataset.friendlink
+    let sitetype = friendLink.sitetype
+    switch (sitetype) {
+      // 跳转小程序
+      case 1:
+        wx.navigateToMiniProgram({
+          appId: friendLink.appId,
+          path: friendLink.sitedescribe,
+          extraData: '',
+          envVersion: '',
+          success(res) {},
+          fail (res) {},
+        })
+        break
+      // 跳转H5
+      case 2:
+        app.globalData.friendLink = friendLink
+        wx.navigateTo({
+          url: '/friendLink/pages/h5/h5'
+        })
+        break
+      // // 跳转App
+      // case 3:
+      //   app.globalData.friendLink = friendLink
+      //   wx.navigateTo({
+      //     url: '/links/pages/app/app'
+      //   })
+      //   break
+      // 其他（做为副banner）
+      case 4:
+        break
+      default:
+    }
   },
 
   // 获取推荐商品列表(集群)
   getTheme () {
     let self = this
     let data = {}
-    wx.showLoading({
-      title: '正在加载',
-      mask: true,
-    })
-    // 设置请求开关
-    self.setData({
-      getFlag: false
-    })
+    if (self.data.loadingFlag) {
+      wx.showLoading({
+        title: '正在加载',
+        mask: true,
+      })
+    }
     API.info.getTheme(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
@@ -831,185 +968,27 @@ Page({
       } else {
         toast.toast(res.message)
       }
-      wx.hideLoading()
-      // 设置请求开关
+      if (self.data.loadingFlag) {
+        wx.hideLoading()
+      }
+      // 关闭等待动画
       self.setData({
-        getFlag: true
+        loadingFlag: true
       })
     }).catch(error => {
       toast.toast(error.error)
     })
-  },
-
-  // 获取专区列表
-  getHotList () {
-    let self = this
-    let data = {}
-    API.info.listHot180414(data).then(result => {
-      let res = result.data
-      if (res.flag === 1) {
-        self.setData({
-          hotList: res.data
-        })
-      } else {
-        toast.toast(res.message)
-      }
-    }).catch(error => {
-      toast.toast(error.error)
-    })
-  },
-
-  // 获取秒杀商品列表
-  getPanicBuyGoodsList () {
-    let self = this
-    let data = {}
-    API.info.getProductListByPromote(data).then(result => {
-      let res = result.data
-      if (res.flag === 1) {
-        self.setData({
-          panicBuyGoodsList: res.data,
-        })
-      } else {
-        toast.toast(res.message)
-      }
-    }).catch(error => {
-      toast.toast(error.error)
-    })
-  },
-
-  // 获取特价商品列表
-  getSpecialGoodsList () {
-    let self = this
-    let data = {
-      Datatype: '1',
-      Page: 1,
-      pageSize: 15,
-      Sortflg: 1,
-      sorttype: 0
-    }
-    API.info.getProductList(data).then(result => {
-      let res = result.data
-      if (res.flag === 1) {
-        self.setData({
-          specialGoodsList: res.data,
-        })
-      } else {
-        toast.toast(res.message)
-      }
-    }).catch(error => {
-      toast.toast(error.error)
-    })
-  },
-
-  // 获取友链列表
-  getLinkList () {
-    let self = this
-    let data = {
-      // 卡冲值参数为1，其它是0
-      cardflag: 0
-    }
-    API.system.listShopHomeSlide(data).then(result => {
-      let res = result.data
-      if (res.flag === 1) {
-        self.setData({
-          linkList: res.data
-        })
-      } else {
-        toast.toast(res.message)
-      }
-    }).catch(error => {
-      toast.toast(error.error)
-    })
-  },
-
-  // 获取友链详情
-  getLinkDetail (e) {
-    let self = this
-    let id = e.currentTarget.dataset.id
-    let data = {
-      ImageID: id
-    }
-    API.system.getLinkForSlide(data).then(result => {
-      let res = result.data
-      if (res.flag === 1) {
-        // 去友链详情
-        self.toLinkDetail(res.data)
-      } else {
-        toast.toast(res.message)
-      }
-    }).catch(error => {
-      toast.toast(error.error)
-    })
-  },
-
-  // 去友链详情
-  toLinkDetail(link) {
-    let self = this
-    let linktype = link.linktype
-    // links = {
-    //   // 名称
-    //   title: '嘉元app',
-    //   // 小程序appId
-    //   appId: '',
-    //   // 路径(app中转页图片、小程序进入路径、h5的url)
-    //   url: 'upload/shopslide/001.png',
-    //   // 传递的数据
-    //   cont: {},
-    // }
-    let links = link.data
-    app.globalData.links = links
-    switch (linktype) {
-        // 跳转小程序
-      case 1:
-        wx.navigateToMiniProgram({
-          appId: 'wxfdc96a33462b1e54',
-          path: '/pages/login/login',
-          extraData: '',
-          envVersion: '',
-          success(res) {},
-          fail (res) {},
-        })
-        break
-      // 跳转H5
-      case 2:
-        app.globalData.links = {
-          // 名称
-          title: '嘉元微会员',
-          // 小程序appId
-          appId: 'wx700e813e33fcebec',
-          // 路径(app中转页图片、小程序进入路径、h5的url)
-          url: 'https://member.spzlk.cn/supermarket/?dianpu=2',
-          // 传递的数据
-          cont: {},
-        }
-        wx.navigateTo({
-          url: '/links/pages/h5/h5'
-        })
-        break
-        // 跳转App
-      case 3:
-        wx.navigateTo({
-          url: '/links/pages/app/app'
-        })
-        break
-      default:
-    }
   },
 
   // 添加购物车
   addCart (e) {
     let self = this
     let goods = e.currentTarget.dataset.goods
-    // 判断是否散称
-    if (goods.scaleflag) {
-      self.setData({
-        dialogFlag: true,
-        goods: goods,
-      })
-    } else {
-      // 调用子组件添加购物车方法
-      self.componentAddCart(goods)
-    }
+    // 调用数量/重量弹窗
+    self.setData({
+      dialogFlag: true,
+      goods: goods,
+    })
   },
 
   // 调用子组件添加购物车方法
@@ -1035,6 +1014,14 @@ Page({
     // 调用子组件添加购物车方法
     self.componentAddCart(goods.detail)
     self.dialogClose()
+  },
+
+  // 设置广告弹窗开关
+  setAddialogFlag () {
+    let self = this
+    self.setData({
+      addialogFlag: !self.data.addialogFlag
+    })
   },
 
   // 更新购物车数量

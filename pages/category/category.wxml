@@ -1,37 +1,81 @@
 <!--pages/category/category.wxml-->
-<view class="container color333333 font28">
-	<!-- 一级分类 start -->
-	<view class="level1 bgffffff border_bf0f0f0 z_index_1">
-		<scroll-view class="cate_list" scroll-x enable-flex="true">
-			<view class="cate_item" wx:for="{{level1}}" wx:key="index" data-classid="{{item.classid}}" data-index="{{index}}" bindtap="setLevel1ActiveIndex">
-				<view class="cate_img {{level1ActiveIndex === index ? 'active' : ''}} border_r500 overflow">
-					<image src="{{baseUrl + item.ico}}" lazy-load="true"></image>
-				</view>
-				<view class="cate_name font24 tc ellipsis {{level1ActiveIndex === index ? 'color71d793' : ''}}">{{item.classname}}</view>
-			</view>
-		</scroll-view>
+<import src="/pages/template/template.wxml" />
+<view class="container color333333 font28 bgffffff">
+	<!-- 搜索 srtart -->
+	<view class="search_cont bgffffff z_index_1">
+		<template is="search"></template>
 	</view>
-	<!-- 一级分类 end -->
-	<view class="main">
-		<!-- 二级分类 start -->
-		<view class="level2 font24 bgf0f0f0">
-			<view class="level2_list">
-				<block wx:for="{{level2}}" wx:key="index">
-					<view class="level2_item {{level2ActiveIndex === index ? 'bgffffff' : 'bgf0f0f0'}}" data-classid="{{item.classid}}" data-index="{{index}}" bindtap="setLevel2ActiveIndex">
-						<view class="level2_name {{level2ActiveIndex === index ? 'active font28 font_blod' : ''}}">{{item.classname}}</view>
+	<!-- 搜索 end -->
+	<!-- 一级分类 start -->
+	<view class="level1 font24 bgf0f0f0">
+		<view class="level1_list">
+			<scroll-view
+					class="name_cont"
+					scroll-y="true"
+					scroll-with-animation="true"
+					scroll-into-view="{{scroll1Data}}">
+				<block wx:for="{{level1}}" wx:key="index">
+					<view
+							id="{{'level1_name' + index}}"
+							class="level1_item {{level1ActiveIndex === index ? 'bgffffff' : 'bgf0f0f0'}}"
+							data-classid="{{item.classid}}"
+							data-index="{{index}}"
+							bindtap="setLevel1ActiveIndex">
+						<view class="level1_name {{level1ActiveIndex === index ? 'active font28 font_blod' : ''}}">{{item.classname}}</view>
 					</view>
 				</block>
+			</scroll-view>
+		</view>
+	</view>
+	<!-- 一级分类 end -->
+	<!-- 二级分类 start -->
+	<view class="level2 bgffffff z_index_1" wx:if="{{level2.length && level1[level1ActiveIndex].classid !== -1}}">
+		<view class="name_cont bgffffff {{level2ShowFlag ? 'active' : ''}}">
+			<view class="name_cont_1 overflow">
+				<scroll-view
+						class="scroll_name_cont"
+						scroll-x="true"
+						scroll-with-animation="true"
+						scroll-into-view="{{scroll2Data}}">
+					<block wx:for="{{level2}}" wx:key="index">
+						<view
+								id="{{'level2_name' + index}}"
+								class="level2_name font24 border_r500 {{level2ActiveIndex === index ? 'color71d793 border_a71d793' : 'colorcecece border_acecece'}}"
+								data-classid="{{item.classid}}"
+								data-index="{{index}}"
+								bindtap="setLevel2ActiveIndex">
+							{{item.classname}}
+						</view>
+					</block>
+				</scroll-view>
+			</view>
+			<view class="name_cont_2 overflow">
+				<view
+						class="level2_name font24 border_r500 {{level2ActiveIndex === index ? 'color71d793 border_a71d793' : 'colorcecece border_acecece'}}"
+						wx:for="{{level2}}"
+						wx:key="index"
+						data-classid="{{item.classid}}"
+						data-index="{{index}}"
+						bindtap="setLevel2ActiveIndex">
+					{{item.classname}}
+				</view>
 			</view>
 		</view>
-		<!-- 二级分类 end -->
+		<view class="more tc {{level2ShowFlag ? 'active' : ''}}" bindtap="setLevel2ShowFlag"> △ </view>
+	</view>
+	<!-- 二级分类 end -->
+	<view class="main {{level2.length && level1[level1ActiveIndex].classid !== -1 ? 'active' : ''}}">
 		<!-- 商品列表 start -->
-		<view class="goodscont">
-			<view class="goods_list1">
-				<block>
-					<navigator class="goods_item bgffffff border_be5e5e5" hover-class="none" wx:for="{{goodsList}}" wx:key="index" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&title={{item.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
+		<view class="goodscont bgffffff {{level2.length && level1[level1ActiveIndex].classid !== -1 ? 'active' : ''}}">
+			<view class="goods_list1 goodslist">
+				<block wx:for="{{goodsList}}" wx:key="index">
+					<navigator class="goods_item bgffffff border_be5e5e5" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&promotemode={{item.promotemode}}&title={{item.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
+						<!-- 商品图片 start -->
 						<view class="item_img overflow">
-							<image src="{{item.Defaultimage ? (baseUrl + item.Defaultimage) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
+							<image src="{{item.Defaultimage ? (baseUrl + item.Defaultimage) : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
 						</view>
+						<!-- 商品图片 end -->
+						<!-- 商品文字 start -->
 						<view class="item_desc">
 							<view class="item_name ellipsis2">{{item.Name}}</view>
 							<view class="price_cont">
@@ -58,17 +102,20 @@
 									</del>
 								</view>
 								<view class="cart">
-									<view class="cart_img overflow">
-										<addCart id="addCart" catchtap="addCart" data-goods="{{item}}" bind:getCartCount="getCartCount"></addCart>
-									</view>
+									<block wx:if="{{item.promotemode < 100 || item.promotemode > 103}}">
+										<view class="cart_img overflow">
+											<addCart id="addCart" catchtap="addCart" data-goods="{{item}}" bind:getCartCount="getCartCount"></addCart>
+										</view>
+									</block>
 								</view>
 							</view>
 						</view>
+						<!-- 商品文字 end -->
 					</navigator>
 				</block>
 				<view class="nodata_cont" wx:if="{{!goodsList.length && getFlag}}">
 					<view class="nodata overflow">
-						<image src="/lib/images/goodsNodata.png"></image>
+						<image src="/lib/images/goodsNodata.png" mode="aspectFit"></image>
 					</view>
 					<view class="color999999 tc">暂无相关商品～</view>
 				</view>

@@ -6,7 +6,7 @@
     </block>
     <view class="nodata_cont" wx:if="{{!noticeList.length && getFlag}}">
       <view class="nodata overflow">
-        <image src="/lib/images/messageNodata.png"></image>
+        <image src="/lib/images/messageNodata.png" mode="aspectFit"></image>
       </view>
       <view class="color999999 tc">公告空空如也～</view>
     </view>

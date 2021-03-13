@@ -11,7 +11,7 @@
     </block>
     <view class="nodata_cont" wx:if="{{!roomplayList.length && getFlag}}">
       <view class="nodata overflow">
-        <image src="/lib/images/goodsNodata.png"></image>
+        <image src="/lib/images/goodsNodata.png" mode="aspectFit"></image>
       </view>
       <view class="color999999 tc">暂无直播间～</view>
     </view>

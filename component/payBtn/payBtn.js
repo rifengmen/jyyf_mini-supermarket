@@ -9,7 +9,7 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    // 谁调用
+    // 从哪里来/组件使用的地方
     from: {
       type: String,
       value: '',
@@ -59,6 +59,16 @@ Component({
       type: String,
       value: '',
     },
+    // isotc,区分拼团砍价的普通立即购买还是活动立即购买
+    isotc: {
+      type: String,
+      value: '',
+    },
+    // orderType,订单类型
+    orderType: {
+      type: Number,
+      value: 2,
+    },
     // goodscode，立即购买商品code
     goodscode: {
       type: String,
@@ -69,11 +79,21 @@ Component({
       type: Number,
       value: 1,
     },
+    // groupno,活动号
+    groupno: {
+      type: String,
+      value: '',
+    },
     // 订单编号
     tradeno: {
       type: String,
       value: '',
     },
+    // 商品详情
+    goodsDetail: {
+      type: Object,
+      value: null,
+    }
   },
 
   /**
@@ -157,8 +177,11 @@ Component({
         paylist: self.data.paylist,
         channel: "WX_MINI",
         otc: self.data.otc,
+        isotc: self.data.isotc,
+        orderType: self.data.orderType,
         goodscode: self.data.goodscode,
         amount: self.data.amount,
+        groupno: self.data.groupno,
         freight: self.data.freight,
         receiver: globalData.address.username,
         receiverphone: globalData.address.phone,
@@ -187,6 +210,33 @@ Component({
           toast.toast(res.message)
         }
         toast.toast(res.message)
+        // 清除结算信息
+        self.clearOrderDetail()
+      }).catch(error => {
+        toast.toast(error.error)
+      })
+    },
+
+    // 秒杀立即支付
+    panicPay () {
+      let self = this
+      let goodsDetail = self.data.goodsDetail
+      let data = {
+        goodscode: goodsDetail.gdscode,
+        amount: goodsDetail.amount,
+      }
+      API.mem.payOrderComit(data).then(result => {
+        let res = result.data
+        if (res.flag === 1) {
+          // 微信支付
+          let payStr = res.data.beecloud.miniPayStr
+          self.setData({
+            payStr: payStr,
+          })
+          self.wechatPayment()
+        } else {
+          toast.toast(res.message)
+        }
       }).catch(error => {
         toast.toast(error.error)
       })
@@ -210,11 +260,21 @@ Component({
           },
           fail:function(res){
             wx.redirectTo({
-            url: '/shopping/pages/payEnd/payEnd?text=支付失败&type=0',
-          })
+              url: '/shopping/pages/payEnd/payEnd?text=支付失败&type=0',
+            })
           },
           complete:function(res){}
         })
+    },
+
+    // 清除结算信息
+    clearOrderDetail () {
+      let self = this
+      app.globalData.address = ''
+      app.globalData.addressId = ''
+      app.globalData.tick = ''
+      app.globalData.orderDetail = ''
+      app.globalData.paymodeFlag = ''
     },
   }
 })

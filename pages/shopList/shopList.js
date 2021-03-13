@@ -30,6 +30,11 @@ Page({
       deptcode: app.globalData.deptcode,
       shopList: app.globalData.shopList,
     })
+    // 判断门店列表存在
+    if (!self.data.shopList.length) {
+      // 获取定位
+      self.getLocation()
+    }
   },
 
   /**
@@ -46,8 +51,6 @@ Page({
     let self = this
     // 隐藏小房子按钮
     wx.hideHomeButton()
-    // 获取定位
-    // self.getLocation()
   },
 
   /**
@@ -126,9 +129,11 @@ Page({
     API.system.listDeptInfo(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let shopList = res.data
         self.setData({
-          shopList: res.data
+          shopList: shopList,
         })
+        app.globalData.shopList = shopList
       } else {
         toast.toast(res.message)
       }
@@ -142,15 +147,21 @@ Page({
   changeDept (e) {
     let self = this
     let shop = e.currentTarget.dataset.shop
+    let o_deptcode = app.globalData.deptcode
     let deptcode = shop.deptcode
     let deptname = shop.deptname
-    app.globalData.deptname = deptname
-    app.globalData.deptcode = deptcode
-    // 清空扫码购购物车
-    app.globalData.scanCart = []
-    wx.reLaunch({
-      url: '/pages/index/index?deptname=' + deptname + '&deptcode=' + deptcode,
-    })
+    // 判断选择门店是否为当前门店，是：返回；否则重新加载
+    if (o_deptcode === deptcode) {
+      wx.navigateBack()
+    } else {
+      app.globalData.deptname = deptname
+      app.globalData.deptcode = deptcode
+      // 清空扫码购购物车
+      app.globalData.scanCart = []
+      wx.reLaunch({
+        url: '/pages/index/index?deptname=' + deptname + '&deptcode=' + deptcode,
+      })
+    }
   },
 
   // 修改默认门店
@@ -190,6 +201,7 @@ Page({
         self.setData({
           shopList: shopList
         })
+        app.globalData.shopList = shopList
       } else {
         toast.toast(res.message)
       }
@@ -217,6 +229,7 @@ Page({
         self.setData({
           shopList: shopList
         })
+        app.globalData.shopList = shopList
       } else {
         toast.toast(res.message)
       }

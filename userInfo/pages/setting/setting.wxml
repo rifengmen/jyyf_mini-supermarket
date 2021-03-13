@@ -13,15 +13,15 @@
       <view class="">关于我们</view>
       <view class="color999999 font24">公司介绍 > </view>
     </navigator>
-    <navigator class="set_item" hover-class="none" url="/pages/cantacts/cantacts">
+    <navigator class="set_item" hover-class="none" url="/userInfo/pages/cantacts/cantacts">
       <view class="">联系我们</view>
       <view class="color999999 font24">期待您的联系 > </view>
     </navigator>
   </view>
   <view class="remove bgffffff">
-    <navigator class="set_item border_be5e5e5" hover-class="none" url="/userInfo/pages/remove/remove">
+    <view class="set_item border_be5e5e5" bindtap="isRemove">
       <view class="">微信解绑</view>
-      <view class="color999999 font24">去解绑 > </view>
-    </navigator>
+      <view class="color999999 font24">会员解绑</view>
+    </view>
   </view>
 </view>

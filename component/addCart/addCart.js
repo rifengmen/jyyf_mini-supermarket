@@ -9,10 +9,11 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    // 从哪里来/组件使用的地方
     from: {
       type: String,
       value: ''
-    }
+    },
   },
 
   /**
@@ -21,12 +22,6 @@ Component({
   data: {
     // 用户id
     userid: app.globalData.userid,
-    // 商品数量
-    count: 1,
-    // 商品code
-    gdscode: '',
-    // 商品价格
-    buyprice: '',
   },
 
   /**
@@ -37,9 +32,9 @@ Component({
     addCart (goods) {
       let self = this
       let data = {
-        Userid: app.globalData.userid,
+        Userid: self.data.userid,
         Gdscode: goods.Gdscode,
-        Count: goods.count || self.data.count,
+        Count: goods.amount,
         Buyprice: goods.Highpprice,
         Actuslmoney: goods.Highpprice,
       }
@@ -50,14 +45,14 @@ Component({
         })
         return false
       }
-      // 验证是否绑定手机号码
-      if (!app.memcodeflag()) {
-        wx.switchTab({
-          url: '/pages/userInfo/userInfo',
-        })
-        toast.toast('请注册绑定手机号码')
-        return false
-      }
+      // // 验证是否绑定手机号码
+      // if (!app.memcodeflag()) {
+      //   wx.switchTab({
+      //     url: '/pages/userInfo/userInfo',
+      //   })
+      //   toast.toast('请注册绑定手机号码')
+      //   return false
+      // }
       API.bill.inputIntoCar(data).then(result => {
         let res = result.data
         if (res.flag === 1) {

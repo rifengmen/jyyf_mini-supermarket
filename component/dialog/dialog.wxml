@@ -1,28 +1,101 @@
 <!--component/dialog/dialog.wxml-->
 <!-- dialog start -->
-<view class="dialog_cont color999999 font28 z_index_99999" catchtouchmove="ture">
-  <view class="dialog border_r20 bgffffff ellipsis">
-    <view class="dialog_title font32 font_blod color333333">{{goods.Name}}</view>
-    <view class="dialog_section">
-      <view class="dialog_section_tit">单价：</view>
-      <view class="dialog_section_cont color333333">{{goods.Highpprice / 2}}元/斤</view>
-    </view>
-    <view class="dialog_section">
-      <view class="dialog_section_tit">斤数(500g)：</view>
-      <view class="dialog_section_cont color333333">
-        <input class="dialog_input bge7e7e7 border_r500" type="number" placeholder="请输入斤数" value="{{dialogJin}}" bindinput="setDialogJin" />
+<view class="dialog_cont color999999 font28 bg000000_70 z_index_99999" catchtouchmove="catchTouchMove">
+  <!--<view class="dialog border_r20 bgffffff ellipsis">-->
+  <view class="dialog bgffffff">
+    <!-- 商品 start -->
+    <view class="dialog_goods">
+      <view class="goods_list1">
+        <!-- 商品信息 start -->
+        <view class="goods_item bgffffff border_be5e5e5">
+          <!-- 商品图片 start -->
+          <view class="item_img overflow">
+            <image src="{{goods.Defaultimage ? (baseUrl + goods.Defaultimage) : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
+          </view>
+          <!-- 商品图片 end -->
+          <!-- 商品文字 start -->
+          <view class="item_desc">
+            <view class="item_name color333333 ellipsis2">{{goods.Name}}</view>
+            <!-- 价格信息 start -->
+            <view class="price_cont">
+              <block wx:if="{{goods.scaleflag}}">
+                <view class="price color999999 font22">
+                  <view class="actual_price">
+                    <text class="colorfa6400">￥</text>
+                    <text class="colorfa6400 font36">{{goods.Highpprice / 2}}</text>
+                    <text class="">/斤</text>
+                  </view>
+                  <block wx:if="{{goods.Highoprice !== goods.Highpprice}}">
+                    <del class="">
+                      <text class="">￥</text>
+                      <text class="font26">{{goods.Highoprice / 2}}</text>
+                      <text class="">/斤</text>
+                    </del>
+                  </block>
+                </view>
+              </block>
+              <block wx:else>
+                <view class="price color999999 font22">
+                  <view class="actual_price">
+                    <text class="colorfa6400">￥</text>
+                    <text class="colorfa6400 font36">{{goods.Highpprice}}</text>
+                  </view>
+                  <block wx:if="{{goods.Highoprice !== goods.Highpprice}}">
+                    <del class="">
+                      <text class="">￥</text>
+                      <text class="font26">{{goods.Highoprice}}</text>
+                    </del>
+                  </block>
+                </view>
+              </block>
+            </view>
+            <!-- 价格信息 end -->
+          </view>
+          <!-- 商品文字 end -->
+        </view>
+        <!-- 商品信息 end -->
       </view>
     </view>
-    <view class="dialog_section">
-      <view class="dialog_section_tit">两数(50g)：</view>
-      <view class="dialog_section_cont color333333">
-        <input class="dialog_input bge7e7e7 border_r500" type="number" placeholder="请输入两数" value="{{dialogLiang}}" bindinput="setDialogLiang" />
+    <!-- 商品 end -->
+    <!-- 散称数量 start -->
+    <block wx:if="{{goods.scaleflag}}">
+      <view class="dialog_section">
+        <view class="dialog_section_tit">斤数(500g)：</view>
+        <view class="dialog_section_cont color333333">
+          <input class="dialog_input bge7e7e7 border_r500" type="number" placeholder="请输入斤数" value="{{dialogJin}}" bindinput="setDialogJin" />
+        </view>
       </view>
-    </view>
-    <view class="dialog_section">
-      <view class="dialog_section_tit">重量相当于：</view>
-      <view class="dialog_section_cont color333333">{{dialogCount || 0}}kg</view>
-    </view>
+      <view class="dialog_section">
+        <view class="dialog_section_tit">两数(50g)：</view>
+        <view class="dialog_section_cont color333333">
+          <input class="dialog_input bge7e7e7 border_r500" type="number" placeholder="请输入两数" value="{{dialogLiang}}" bindinput="setDialogLiang" />
+        </view>
+      </view>
+      <view class="dialog_section">
+        <view class="dialog_section_tit">重量相当于：</view>
+        <view class="dialog_section_cont color333333">{{dialogCount || 0}}kg</view>
+      </view>
+    </block>
+    <!-- 散称数量 end -->
+    <!-- 包装数量 start -->
+    <block wx:else>
+      <view class="dialog_section">
+        <view class="">购买数量：</view>
+        <view class="editor_cart bgf0f0f0 border_r500">
+          <view class="subtrack_cart btn border_r500 overflow" catchtap="subtrackCart">
+            <image src="/lib/images/subtrack.png"></image>
+          </view>
+          <view class="input_cart font24 tc">
+            <input type="number" value="{{dialogCount}}" bindinput="setDialogCount" />
+          </view>
+          <view class="add_cart btn border_r500 overflow" catchtap="addCart">
+            <image src="/lib/images/add.png"></image>
+          </view>
+        </view>
+      </view>
+    </block>
+    <!-- 包装数量 end -->
+    <!-- 合计金额 start -->
     <view class="dialog_section">
       <view class="dialog_section_tit">大致金额：</view>
       <view class="dialog_section_cont color333333">
@@ -30,9 +103,10 @@
         <text>元</text>
       </view>
     </view>
+    <!-- 合计金额 end -->
     <view class="dialog_btn">
-      <view class="dialog_cancel border_r500 bgffffff tc" bindtap="dialogClose">取消</view>
-      <view class="dialog_confirm colorffffff border_r500 bg71d793 tc" bindtap="dialogConfirm">确认</view>
+      <view class="dialog_cancel color999999 bgffffff border_a999999 border_r500 tc" bindtap="dialogClose">取消</view>
+      <view class="dialog_confirm colorffffff bg71d793 border_a71d793 border_r500 tc" bindtap="dialogConfirm">确认</view>
     </view>
   </view>
 </view>

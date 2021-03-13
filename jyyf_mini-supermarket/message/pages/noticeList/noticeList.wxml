@@ -1,0 +1,14 @@
+<!--message/pages/noticeList/noticeList.wxml-->
+<view class="container color333333 font28 bgffffff">
+  <view class="lottery_cont">
+    <block wx:if="{{noticeList.length}}">
+      <messageList messageList="{{noticeList}}" type="notice" bind:setList="setList"></messageList>
+    </block>
+    <view class="nodata_cont" wx:if="{{!noticeList.length && getFlag}}">
+      <view class="nodata overflow">
+        <image src="/lib/images/messageNodata.png"></image>
+      </view>
+      <view class="color999999 tc">公告空空如也～</view>
+    </view>
+  </view>
+</view>

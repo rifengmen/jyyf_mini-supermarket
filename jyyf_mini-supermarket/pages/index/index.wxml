@@ -1,0 +1,439 @@
+<!--index.wxml-->
+<import src="/pages/template/template.wxml" />
+<view class="container color333333 font28 bgf9f9f9" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
+	<!-- 背景 start -->
+	<block wx:if="{{loadingFlag}}">
+		<view class="banner_cont bg71d793_linear overflow">
+			<!-- 背景图 start -->
+			<block wx:if="{{home_bgurl}}">
+				<view class="banner_bg" style="background-image: url('{{baseUrl + home_bgurl}}');background-size: cover;"></view>
+			</block>
+			<!-- 背景图 end -->
+			<!-- 背景色 start -->
+			<block wx:else>
+				<view class="banner_bg" style="background: linear-gradient(180deg, #fa6400 0%, {{home_bgcolor}} .4 30%, #f9f9f9 90%);"></view>
+			</block>
+			<!-- 背景色 end -->
+			<!-- 定位 搜索 start -->
+			<view class="search_cont">
+				<!-- 定位 start -->
+				<navigator class="gps" hover-class="none" url="/pages/shopList/shopList">
+					<view class="gps_img overflow">
+						<image src="/lib/images/gps.png"></image>
+					</view>
+					<text class="font32 colorffffff ellipsis">{{deptname}} > </text>
+				</navigator>
+				<!-- 定位 end -->
+				<!-- 搜索 start -->
+				<navigator class="search bgf9f9f9 border_r500" hover-class="none" url="/shopping/pages/search/search">
+					<view class="search_input fl">
+						<image src="/lib/images/search.png" class="fr"></image>
+						<form action="javascript:return true;">
+							<input type="text" confirm-type='search' placeholder="搜商品" class="fl font24" value="{{search_val}}" />
+						</form>
+					</view>
+				</navigator>
+				<!-- 搜索 end -->
+			</view>
+			<!-- 定位 搜索 end -->
+			<!-- banner start -->
+			<view class="banner">
+				<swiper class="banner_swiper" indicator-color="#ffffff" indicator-active-color="#71d793" autoplay="true" circular="true" interval="4000" duration="500" current="{{swiperCurrent}}" bindchange="swiperChange">
+					<swiper-item wx:for="{{bannerList}}" wx:key="index">
+						<image src="{{baseUrl + item.Imageurl}}" class="banner_item border_r10 overflow" lazy-load="true" bindtap="getBannerDetail" data-id="{{item.ImageID}}"></image>
+					</swiper-item>
+				</swiper>
+				<view class="dots" wx:if="{{bannerList.length > 1}}">
+					<block wx:for="{{bannerList}}" wx:key="index">
+						<view class="dot {{index === swiperCurrent ? 'active bg71d793' : 'bgffffff'}} border_r500"></view>
+					</block>
+				</view>
+			</view>
+			<!-- banner end -->
+			<!-- 公告 start -->
+			<view class="notice_cont border_r500 overflow bgffffff">
+				<navigator class="notice_img overflow" hover-class="none" url="/message/pages/noticeList/noticeList">
+					<image src="/lib/images/notice.png"></image>
+				</navigator>
+				<view class="notice_list">
+					<swiper class="notice_swiper" autoplay="true" circular="true" interval="5000" vertical="true">
+						<swiper-item wx:for="{{noticeList}}" wx:key="index" catchtouchmove='catchTouchMove'>
+							<navigator class="notice_item ellipsis" hover-class="none" url="/message/pages/detail/detail?id={{item.id}}&type=notice&time={{item.Pubdate}}">{{item.title}}</navigator>
+						</swiper-item>
+					</swiper>
+				</view>
+			</view>
+			<!-- 公告 end -->
+			<!-- 自定义功能区 start -->
+			<view class="auto_cate overflow">
+				<block wx:if="{{modulePictureList.length >= 1 && modulePictureList.length <= 5}}">
+					<scroll-view class="cate_list cate_list1" scroll-x enable-flex="true" bindscroll="conScroll" bindscrolltolower="conScrLower" upper-threshold="50rpx" bindscrolltoupper="conScrUpper" scroll-with-animation>
+						<view class="auto_down">
+							<view class="cate_item down" wx:for="{{modulePictureList}}" wx:key="index" data-automodule="{{item}}" bindtap="toAutoModuleDetail">
+								<view class="cate_img overflow">
+									<image src="{{baseUrl + item.picturename}}" mode="aspectFit" lazy-load="true"></image>
+								</view>
+								<view class="cate_name font22 tc">{{item.modulename}}</view>
+							</view>
+						</view>
+					</scroll-view>
+				</block>
+				<block wx:if="{{modulePictureList.length > 5 && modulePictureList.length <= 10}}">
+					<scroll-view class="cate_list" scroll-x enable-flex="true" bindscroll="conScroll" bindscrolltolower="conScrLower" upper-threshold="50rpx" bindscrolltoupper="conScrUpper" scroll-with-animation>
+						<view class="auto_down">
+							<view class="cate_item down" wx:for="{{modulePictureList}}" wx:key="index" wx:if="{{index < 5}}" data-automodule="{{item}}" bindtap="toAutoModuleDetail">
+								<view class="cate_img overflow">
+									<image src="{{baseUrl + item.picturename}}" mode="aspectFit" lazy-load="true"></image>
+								</view>
+								<view class="cate_name font22 tc">{{item.modulename}}</view>
+							</view>
+						</view>
+						<view class="auto_up">
+							<view class="cate_item up" wx:for="{{modulePictureList}}" wx:key="index" wx:if="{{index >= 5}}" data-automodule="{{item}}" bindtap="toAutoModuleDetail">
+								<view class="cate_img overflow">
+									<image src="{{baseUrl + item.picturename}}" mode="aspectFit" lazy-load="true"></image>
+								</view>
+								<view class="cate_name font22 tc">{{item.modulename}}</view>
+							</view>
+						</view>
+					</scroll-view>
+				</block>
+				<block  wx:if="{{modulePictureList.length > 10}}">
+					<scroll-view class="cate_list cate_list2" scroll-x enable-flex="true" bindscroll="conScroll" bindscrolltolower="conScrLower" upper-threshold="50rpx" bindscrolltoupper="conScrUpper" scroll-with-animation>
+						<view class="auto_down">
+							<view class="cate_item down" wx:for="{{modulePictureList}}" wx:key="index" wx:if="{{index%2 === 0}}" data-automodule="{{item}}" bindtap="toAutoModuleDetail">
+								<view class="cate_img overflow">
+									<image src="{{baseUrl + item.picturename}}" mode="aspectFit" lazy-load="true"></image>
+								</view>
+								<view class="cate_name font22 tc">{{item.modulename}}</view>
+							</view>
+						</view>
+						<view class="auto_up">
+							<view class="cate_item up" wx:for="{{modulePictureList}}" wx:key="index" wx:if="{{index%2 === 1}}" data-automodule="{{item}}" bindtap="toAutoModuleDetail">
+								<view class="cate_img overflow">
+									<image src="{{baseUrl + item.picturename}}" mode="aspectFit" lazy-load="true"></image>
+								</view>
+								<view class="cate_name font22 tc">{{item.modulename}}</view>
+							</view>
+						</view>
+					</scroll-view>
+				</block>
+				<!-- 自定义滚动条 start -->
+				<block wx:if="{{modulePictureList.length > 10}}">
+					<view class="con-sc-line-one {{lefOrRigOne ? 'con-sc-line-one-left' : 'con-sc-line-one-right'}} border_r500 bg71d793" animation="{{animationData}}"></view>
+					<view class='con-sc-line-two border_r500 bge2dede' style='left: {{leftTwo}}'></view>
+				</block>
+				<!-- 自定义滚动条 end -->
+			</view>
+			<!-- 自定义功能区 end -->
+			<!-- 外链banner区域 start -->
+			<view class="link_cont">
+				<swiper class="link_swiper" indicator-dots="true" indicator-color="#ffffff" indicator-active-color="#71d793" autoplay="true" circular="true" interval="4000" duration="500">
+					<swiper-item wx:for="{{linkList}}" wx:key="index">
+						<image src="{{baseUrl + item.Imageurl}}" class="link_item border_r500 overflow" lazy-load="true" bindtap="getLinkDetail" data-id="{{item.ImageID}}"></image>
+					</swiper-item>
+				</swiper>
+			</view>
+			<!-- 外链banner区域 end -->
+		</view>
+	</block>
+	<block wx:else>
+		<view class="banner_cont index_loading">
+			<image src="/lib/images/loading.gif" mode="aspectFit"></image>
+		</view>
+	</block>
+	<!-- 背景 end -->
+	<!-- 海报区 start -->
+	<view class="poster overflow" wx:if="{{posterList.length}}">
+		<view class="poster_img fl overflow" wx:for="{{posterList}}" wx:key="index" bindtap="getBannerDetail" data-id="{{item.ImageID}}">
+			<image src="{{baseUrl + item.Imageurl}}"></image>
+		</view>
+	</view>
+	<!-- 海报区 end -->
+	<!-- 专区 start -->
+	<view class="zone overflow" wx:if="{{hotList.length}}">
+		<block wx:for="{{hotList}}" wx:key="index">
+			<navigator class="zone_item border_r10 bgfbd2af fl" hover-class="none" url="/shopping/pages/goodsList/goodsList?Cateid={{item.Id}}&title={{item.storecategoryname}}">
+				<view class="zone_itemtit">
+					<view class="zone_itemname colorfa6400 font32 font_blod ellipsis">{{item.storecategoryname}}</view>
+					<view class="tozone border_r500 colorffffff font24 bgd17537 tc">去看看</view>
+				</view>
+				<view class="zone_itemimg">
+					<image src="{{baseUrl + item.ico}}" mode="aspectFit"></image>
+				</view>
+			</navigator>
+		</block>
+	</view>
+	<!-- 专区 end -->
+	<!-- 限时秒杀 start -->
+	<view
+			class="timeslimit border_r10"
+			style="background: linear-gradient(180deg, {{home_promotebg}} 0%, #f9f9f9 100%);"
+			wx:if="{{panicBuyGoodsList.length > 4}}">
+		<view class="tit">
+			<view class="tit_img overflow">
+				<image src="/lib/images/timeslimit.png" mode="aspectFit"></image>
+			</view>
+			<navigator class="colorffffff font32 font_blod" hover-class="none" url="/shopping/pages/goodsList/goodsList?title=限时秒杀&panicBuy=panicBuy">限时秒杀</navigator>
+		</view>
+		<view class="goods_list3 overflow">
+			<swiper class="timeslimit_swiper" autoplay="true" circular="true" interval="5000" display-multiple-items="3">
+				<block wx:for="{{panicBuyGoodsList}}" wx:key="index">
+					<swiper-item>
+						<navigator class="goods_item border_r10 overflow bgffffff" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&title={{item.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
+							<view class="item_img overflow">
+								<image src="{{item.Defaultimage ? (baseUrl + item.Defaultimage) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
+							</view>
+							<view class="item_name ellipsis2 font24">{{item.Name}}</view>
+							<view class="price_cont">
+								<view class="price color999999 font22" wx:if="{{item.scaleflag}}">
+									<view class="actual_price">
+										<text class="colorfa6400">￥</text>
+										<text class="colorfa6400 font36">{{item.Highpprice / 2}}</text>
+										<text class="">/斤</text>
+									</view>
+									<del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
+										<text class="">￥</text>
+										<text class="font26">{{item.Highoprice / 2}}</text>
+										<text class="">/斤</text>
+									</del>
+								</view>
+								<view class="price color999999 font22" wx:else>
+									<view class="actual_price">
+										<text class="colorfa6400">￥</text>
+										<text class="colorfa6400 font36">{{item.Highpprice}}</text>
+									</view>
+									<del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
+										<text class="">￥</text>
+										<text class="font26">{{item.Highoprice}}</text>
+									</del>
+								</view>
+								<view class="cart">
+									<addCart id="addCart" catchtap="addCart" data-goods="{{item}}" bind:getCartCount="getCartCount"></addCart>
+								</view>
+							</view>
+						</navigator>
+					</swiper-item>
+				</block>
+			</swiper>
+		</view>
+	</view>
+	<!-- 限时秒杀 end -->
+	<!-- 特价商品 start -->
+	<view
+			class="timeslimit border_r10"
+			style="background: linear-gradient(180deg, {{home_promotebg}} 0%, #f9f9f9 100%);"
+			wx:if="{{specialGoodsList.length > 4}}">
+		<view class="tit">
+			<view class="tit_img overflow">
+				<image src="/lib/images/timeslimit.png" mode="aspectFit"></image>
+			</view>
+			<navigator class="colorffffff font32 font_blod" hover-class="none" url="/shopping/pages/goodsList/goodsList?Datatype=1&title=特价商品">特价商品</navigator>
+		</view>
+		<view class="goods_list3 overflow">
+			<swiper class="timeslimit_swiper" autoplay="true" circular="true" interval="5000" display-multiple-items="3">
+				<block wx:for="{{specialGoodsList}}" wx:key="index">
+					<swiper-item>
+						<navigator class="goods_item border_r10 overflow bgffffff" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&title={{item.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
+							<view class="item_img overflow">
+								<image src="{{item.Defaultimage ? (baseUrl + item.Defaultimage) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
+							</view>
+							<view class="item_name ellipsis2 font24">{{item.Name}}</view>
+							<view class="price_cont">
+								<view class="price color999999 font22" wx:if="{{item.scaleflag}}">
+									<view class="actual_price">
+										<text class="colorfa6400">￥</text>
+										<text class="colorfa6400 font36">{{item.Highpprice / 2}}</text>
+										<text class="">/斤</text>
+									</view>
+									<del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
+										<text class="">￥</text>
+										<text class="font26">{{item.Highoprice / 2}}</text>
+										<text class="">/斤</text>
+									</del>
+								</view>
+								<view class="price color999999 font22" wx:else>
+									<view class="actual_price">
+										<text class="colorfa6400">￥</text>
+										<text class="colorfa6400 font36">{{item.Highpprice}}</text>
+									</view>
+									<del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
+										<text class="">￥</text>
+										<text class="font26">{{item.Highoprice}}</text>
+									</del>
+								</view>
+								<view class="cart">
+									<addCart id="addCart" catchtap="addCart" data-goods="{{item}}" bind:getCartCount="getCartCount"></addCart>
+								</view>
+							</view>
+						</navigator>
+					</swiper-item>
+				</block>
+			</swiper>
+		</view>
+	</view>
+	<!-- 特价商品 end -->
+	<!-- 首页活动样式一 start -->
+	<view class="index_hot1" wx:if="{{indexHotList.length}}">
+		<block wx:for="{{indexHotList}}" wx:key="index">
+			<template is="index_hot1" data="{{item, baseUrl, deptname, deptcode, errorImage}}"></template>
+		</block>
+	</view>
+	<!-- 首页活动样式一 end -->
+	<!-- recommendList_2 start -->
+	<view class="recommendList overflow">
+		<view class="recommend border_r10 overflow" wx:for="{{recommendList}}" wx:key="index" data-index='{{index}}'>
+			<!-- 标题 start -->
+			<navigator class="recommend_tit bgffffff" hover-class="none" url="/shopping/pages/goodsList/goodsList?Cateid={{item.Id}}&title={{item.storecategoryname}}">
+				<view class="tit_img overflow" wx:if="{{item.showway === 1}}">
+					<image src="{{baseUrl + item.ico}}"></image>
+				</view>
+				<view class="tit_text" wx:if="{{item.showway === 2}}">
+					<view class="font32 font_blod">{{item.storecategoryname}}</view>
+					<navigator class="more color71d793" hover-class="none" url="/shopping/pages/goodsList/goodsList?Cateid={{item.Id}}&title={{item.storecategoryname}}">查看更多...</navigator>
+				</view>
+			</navigator>
+			<!-- 标题 end -->
+			<!-- 商品列表 start -->
+			<view class="goods_list2">
+				<view class="goods_list2_cont">
+					<block wx:for-item="goods" wx:for-index="gindex" wx:for="{{item.gdscodelist}}" wx:key="gindex" wx:if="{{gindex%2 === 0}}">
+						<navigator class="goods_item border_r10 bgffffff overflow" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{goods.Gdscode}}&title={{goods.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
+							<view class="item_img overflow">
+								<image src="{{goods.Defaultimage ? (baseUrl + goods.Defaultimage) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
+							</view>
+							<view class="item_name ellipsis2">{{goods.Name}}</view>
+							<view class="price_cont">
+								<view class="price color999999 font22" wx:if="{{goods.scaleflag}}">
+									<view class="actual_price">
+										<text class="colorfa6400">￥</text>
+										<text class="colorfa6400 font36">{{goods.Highpprice / 2}}</text>
+										<text class="">/斤</text>
+									</view>
+									<del class="" wx:if="{{goods.Highoprice !== goods.Highpprice}}">
+										<text class="">￥</text>
+										<text class="font26">{{goods.Highoprice / 2}}</text>
+										<text class="">/斤</text>
+									</del>
+								</view>
+								<view class="price color999999 font22" wx:else>
+									<view class="actual_price">
+										<text class="colorfa6400">￥</text>
+										<text class="colorfa6400 font36">{{goods.Highpprice}}</text>
+									</view>
+									<del class="" wx:if="{{goods.Highoprice !== goods.Highpprice}}">
+										<text class="">￥</text>
+										<text class="font26">{{goods.Highoprice}}</text>
+									</del>
+								</view>
+								<view class="cart">
+									<addCart id="addCart" catchtap="addCart" data-goods="{{goods}}" bind:getCartCount="getCartCount"></addCart>
+								</view>
+							</view>
+						</navigator>
+					</block>
+				</view>
+				<view class="goods_list2_cont">
+					<block wx:for-item="goods" wx:for-index="gindex" wx:for="{{item.gdscodelist}}" wx:key="gindex" wx:if="{{gindex%2 !== 0}}">
+						<navigator class="goods_item border_r10 bgffffff overflow" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{goods.Gdscode}}&title={{goods.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
+							<view class="item_img overflow">
+								<image src="{{goods.Defaultimage ? (baseUrl + goods.Defaultimage) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
+							</view>
+							<view class="item_name ellipsis2">{{goods.Name}}</view>
+							<view class="price_cont">
+								<view class="price color999999 font22" wx:if="{{goods.scaleflag}}">
+									<view class="actual_price">
+										<text class="colorfa6400">￥</text>
+										<text class="colorfa6400 font36">{{goods.Highpprice / 2}}</text>
+										<text class="">/斤</text>
+									</view>
+									<del class="" wx:if="{{goods.Highoprice !== goods.Highpprice}}">
+										<text class="">￥</text>
+										<text class="font26">{{goods.Highoprice / 2}}</text>
+										<text class="">/斤</text>
+									</del>
+								</view>
+								<view class="price color999999 font22" wx:else>
+									<view class="actual_price">
+										<text class="colorfa6400">￥</text>
+										<text class="colorfa6400 font36">{{goods.Highpprice}}</text>
+									</view>
+									<del class="" wx:if="{{goods.Highoprice !== goods.Highpprice}}">
+										<text class="">￥</text>
+										<text class="font26">{{goods.Highoprice}}</text>
+									</del>
+								</view>
+								<view class="cart">
+									<addCart id="addCart" catchtap="addCart" data-goods="{{goods}}" bind:getCartCount="getCartCount"></addCart>
+								</view>
+							</view>
+						</navigator>
+					</block>
+				</view>
+			</view>
+			<!-- 商品列表 end -->
+		</view>
+	</view>
+	<!-- recommendList_2 end -->
+	<!-- recommendList_3 start -->
+	<view class="recommendList overflow">
+		<view class="recommend bgffffff border_r10 overflow" wx:for="{{recommendList}}" wx:key="index" data-index='{{index}}'>
+			<!-- 标题 start -->
+			<navigator class="recommend_tit bgffffff" hover-class="none" url="/shopping/pages/goodsList/goodsList?Cateid={{item.Id}}&title={{item.storecategoryname}}">
+				<view class="tit_img overflow" wx:if="{{item.showway === 1}}">
+					<image src="{{baseUrl + item.ico}}"></image>
+				</view>
+				<view class="tit_text" wx:if="{{item.showway === 2}}">
+					<view class="font32 font_blod">{{item.storecategoryname}}</view>
+					<navigator class="more color71d793" hover-class="none" url="/shopping/pages/goodsList/goodsList?Cateid={{item.Id}}&title={{item.storecategoryname}}">查看更多...</navigator>
+				</view>
+			</navigator>
+			<!-- 标题 end -->
+			<!-- 商品列表 start -->
+			<view class='goods_list3'>
+				<block wx:for-item="goods" wx:for-index="gindex" wx:for="{{item.gdscodelist}}" wx:key="gindex">
+					<navigator class="goods_item border_r10 overflow" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{goods.Gdscode}}&title={{goods.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
+						<view class="item_img overflow">
+							<image src="{{goods.Defaultimage ? (baseUrl + goods.Defaultimage) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
+						</view>
+						<view class="item_name ellipsis2 font24">{{goods.Name}}</view>
+						<view class="price_cont">
+							<view class="price color999999 font22" wx:if="{{goods.scaleflag}}">
+								<view class="actual_price">
+									<text class="colorfa6400">￥</text>
+									<text class="colorfa6400 font36">{{goods.Highpprice / 2}}</text>
+									<text class="">/斤</text>
+								</view>
+								<del class="" wx:if="{{goods.Highoprice !== goods.Highpprice}}">
+									<text class="">￥</text>
+									<text class="font26">{{goods.Highoprice / 2}}</text>
+									<text class="">/斤</text>
+								</del>
+							</view>
+							<view class="price color999999 font22" wx:else>
+								<view class="actual_price">
+									<text class="colorfa6400">￥</text>
+									<text class="colorfa6400 font36">{{goods.Highpprice}}</text>
+								</view>
+								<del class="" wx:if="{{goods.Highoprice !== goods.Highpprice}}">
+									<text class="">￥</text>
+									<text class="font26">{{goods.Highoprice}}</text>
+								</del>
+							</view>
+							<view class="cart">
+								<addCart id="addCart" catchtap="addCart" data-goods="{{goods}}" bind:getCartCount="getCartCount"></addCart>
+							</view>
+						</view>
+					</navigator>
+				</block>
+			</view>
+			<!-- 商品列表 end -->
+		</view>
+	</view>
+	<!-- recommendList_3 end -->
+	<!-- dialog start -->
+	<view class="dialog" wx:if="{{dialogFlag}}">
+		<dialog goods="{{goods}}" bind:dialogClose="dialogClose" bind:dialogConfirm="dialogConfirm"></dialog>
+	</view>
+	<!-- dialog end -->
+</view>

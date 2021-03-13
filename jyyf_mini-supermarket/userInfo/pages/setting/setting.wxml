@@ -1,0 +1,27 @@
+<!--userInfo/pages/setting/setting.wxml-->
+<view class="container color333333 font28 bgf0f0f0">
+  <view class="set_cont bgffffff">
+    <navigator class="set_item border_be5e5e5" hover-class="none" url="/userInfo/pages/userDetail/userDetail">
+      <view class="">个人资料</view>
+      <view class="color999999 font24">修改我的资料 > </view>
+    </navigator>
+    <navigator class="set_item border_be5e5e5" hover-class="none" url="/userInfo/pages/complaintList/complaintList?type={{type}}&title={{typeList[type]}}">
+      <view class="">{{typeList[type]}}</view>
+      <view class="color999999 font24">历史记录 > </view>
+    </navigator>
+    <navigator class="set_item border_be5e5e5" hover-class="none" url="/userInfo/pages/about/about">
+      <view class="">关于我们</view>
+      <view class="color999999 font24">公司介绍 > </view>
+    </navigator>
+    <navigator class="set_item" hover-class="none" url="/pages/cantacts/cantacts">
+      <view class="">联系我们</view>
+      <view class="color999999 font24">期待您的联系 > </view>
+    </navigator>
+  </view>
+  <view class="remove bgffffff">
+    <navigator class="set_item border_be5e5e5" hover-class="none" url="/userInfo/pages/remove/remove">
+      <view class="">微信解绑</view>
+      <view class="color999999 font24">去解绑 > </view>
+    </navigator>
+  </view>
+</view>

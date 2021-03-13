@@ -11,6 +11,8 @@ Page({
   data: {
     // 基础路径
     baseUrl: app.globalData.baseUrl,
+    // 图片路径为空时默认图路径
+    defgoodsimg: app.globalData.defgoodsimg,
     // 门店名称
     deptname: '',
     // 门店code
@@ -23,8 +25,6 @@ Page({
     goodsDetail: '',
     // 订单详情
     orderDetail: '',
-    // buyend报错时的信息,errorMessage
-    errorMessage: '',
     // 储值卡支付方式开关
     paymode3Flag: false,
     // 电子券支付方式开关
@@ -39,6 +39,8 @@ Page({
     cartList: [],
     // 订单备注
     remark: '',
+    // 备注禁用开关
+    remarkFlag: false,
     // 积分
     score: '',
     // 积分抵扣金额
@@ -63,6 +65,12 @@ Page({
     frombtn: '',
     // otc,区分购物车与立即购买now:正常立即购买
     otc: '',
+    // isotc,区分拼团砍价的普通立即购买还是活动立即购买
+    isotc: '',
+    // orderType,订单类型
+    orderType: 0,
+    // groupno,活动号
+    groupno: '',
   },
 
   /**
@@ -71,32 +79,30 @@ Page({
   onLoad: function (options) {
     let self = this
     self.setData({
+      orderDetail: app.globalData.orderDetail,
+      paymode3Flag: app.globalData.paymodeFlag.paymode3Flag,
+      paymode4Flag: app.globalData.paymodeFlag.paymode4Flag,
+      paymode5Flag: app.globalData.paymodeFlag.paymode5Flag,
+      paymode7Flag: app.globalData.paymodeFlag.paymode7Flag,
       deptname: app.globalData.deptname,
       deptcode: app.globalData.deptcode,
       otc: options.otc,
+      isotc: options.isotc,
+      orderType: options.orderType,
       goodscode: options.goodscode,
       amount: options.amount,
+      groupno: options.groupno,
     })
-    let data = ''
     // 判断购物车结算还是单一商品立即购买
     if (self.data.goodscode) {
-      data = {
-        otc: self.data.otc,
-        goodscode: self.data.goodscode,
-        amount: self.data.amount,
-        distanceflag: 1,// 按照距离计算运费
-      }
       // 获取商品详情
       self.getGoodsDetail()
     } else {
-      data = {
-        distanceflag: 1,// 按照距离计算运费
-      }
       // 获取购物车列表
       self.getCartList()
     }
-    // 结算buyend
-    self.buyend(data)
+    // 获取收货地址
+    // self.getAddress()
   },
 
   /**
@@ -137,9 +143,10 @@ Page({
    */
   onUnload: function () {
     let self = this
-    app.globalData.address = ''
-    app.globalData.addressId = ''
     app.globalData.tick = ''
+    self.setData({
+      tick: '',
+    })
   },
 
   /**
@@ -162,48 +169,6 @@ Page({
   // onShareAppMessage: function () {
   //
   // },
-
-  // 结算
-  buyend (data) {
-    let self = this
-    wx.showLoading({
-      title: '正在加载',
-      mask: true,
-    })
-    API.bill.buyend(data).then(result => {
-      let res = result.data
-      if (res.flag === 1) {
-        let orderDetail = res.data
-        let paymodelist = res.data.Paymodelist
-        self.setData({
-          orderDetail: orderDetail,
-          paymode3Flag: (paymodelist.filter(item => item.paymodeid === 3).length ? true : false),
-          paymode4Flag: (paymodelist.filter(item => item.paymodeid === 4).length ? true : false),
-          paymode5Flag: (paymodelist.filter(item => item.paymodeid === 5).length ? true : false),
-          paymode7Flag: (paymodelist.filter(item => item.paymodeid === 7).length ? true : false),
-        })
-        // 判断是否有默认收货地址或者只能自提，-1：只能自提；0：未设置默认收货地址，>0:默认收货地址id
-        if (res.data.sendId > 0) {
-          if (!app.globalData.address) {
-            app.globalData.addressId = res.data.sendId
-          }
-          // 获取收货地址
-          self.getAddress()
-        } else {
-          // 设置订单支付金额
-          self.setPayMoney()
-        }
-      } else {
-        toast.toast(res.message)
-        self.setData({
-          errorMessage: res.message
-        })
-      }
-      wx.hideLoading()
-    }).catch(error => {
-      toast.toast(error.error)
-    })
-  },
 
   // 获取商品详情
   getGoodsDetail () {
@@ -252,44 +217,6 @@ Page({
     }).catch(error => {
       toast.toast(error.error)
     })
-  },
-
-  // 获取可用积分
-  getScore () {
-    let self = this
-    let data = {
-      payMoney: parseFloat(self.data.payMoney),
-      Totalmoney: self.data.orderDetail.needpaymoney + self.data.freight.freight,
-    }
-    self.setData({
-      scoreFlag: false,
-      useScoreMoney: 0,
-    })
-    API.bill.payMoneyjf(data).then(result => {
-      let res = result.data
-      if (res.flag === 1) {
-        self.setData({
-          score: res.data,
-        })
-      }
-    }).catch(error => {
-      toast.toast(error.error)
-    })
-  },
-
-  // 获取电子券信息
-  getTick () {
-    let self = this
-    let tick = app.globalData.tick
-    if (tick) {
-      self.setData({
-        tick: tick,
-      })
-      // 获取可用积分
-      self.getScore()
-    }
-    // 设置订单支付金额
-    self.setPayMoney()
   },
 
   // 获取收货地址
@@ -359,6 +286,44 @@ Page({
     }).catch(error => {
       toast.toast(error.error)
     })
+  },
+
+  // 获取可用积分
+  getScore () {
+    let self = this
+    let data = {
+      payMoney: parseFloat(self.data.payMoney),
+      Totalmoney: self.data.orderDetail.needpaymoney + self.data.freight.freight,
+    }
+    self.setData({
+      scoreFlag: false,
+      useScoreMoney: 0,
+    })
+    API.bill.payMoneyjf(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          score: res.data,
+        })
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 获取电子券信息
+  getTick () {
+    let self = this
+    let tick = app.globalData.tick
+    if (tick) {
+      self.setData({
+        tick: tick,
+      })
+      // // 获取可用积分
+      // self.getScore()
+      // 设置订单支付金额
+      self.setPayMoney()
+    }
   },
 
   // 设置电子券可用标识
@@ -488,7 +453,8 @@ Page({
   setPasswordFlag () {
     let self = this
     self.setData({
-      passwordFlag: !self.data.passwordFlag
+      passwordFlag: !self.data.passwordFlag,
+      remarkFlag: !self.data.remarkFlag
     })
   },
 
@@ -499,9 +465,10 @@ Page({
     // 获取支付按钮
     let cardBtn = self.selectComponent('#cardBtn')
     let wechatBtn = self.selectComponent('#wechatBtn')
+    // 设置密码弹框开关
+    self.setPasswordFlag()
     self.setData({
       password: e.detail,
-      passwordFlag: false,
     })
     if (from === 'card') {
       // 设置支付信息

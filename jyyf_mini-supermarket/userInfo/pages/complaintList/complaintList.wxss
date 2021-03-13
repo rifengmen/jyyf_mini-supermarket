@@ -1,0 +1,27 @@
+/* userInfo/pages/complaintList/complaintList.wxss */
+.complaint_cont {
+  width: 100%;
+  height: auto;
+  min-height: calc(100vh - 200rpx);
+  padding-bottom: 200rpx;
+}
+.complaint_cont .item {
+  width: calc(100% - 48rpx);
+  height: 136rpx;
+  padding:  0 24rpx;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-flow: column;
+}
+.complaint_cont .item:last-child {
+  border-bottom: unset;
+}
+.complaint_cont .item .content {
+  width: 100%;
+  margin-bottom: 10rpx;
+}
+.nodata_cont {
+  width: 100%;
+  height: calc(100vh - 200rpx);
+}

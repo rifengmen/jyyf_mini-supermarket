@@ -26,9 +26,9 @@ Page({
       search_val: app.globalData.search_val
     })
     // 获取搜索记录
-    self.getHistoryList()
+    // self.getHistoryList()
     // 获取热门搜索列表
-    self.getHotSearchList()
+    // self.getHotSearchList()
   },
 
   /**
@@ -126,7 +126,7 @@ Page({
     let Sname = e.detail.value
     let title = '搜索列表'
     app.globalData.search_val = Sname
-    wx.navigateTo({
+    wx.redirectTo({
       url: '/shopping/pages/goodsList/goodsList?Sname=' + Sname + '&title=' + title,
     })
   },

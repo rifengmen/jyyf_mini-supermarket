@@ -1,0 +1,40 @@
+/* shopping/pages/goodsList/goodsList.wxss */
+.goods_list_edit {
+  position: fixed;
+  top: 50rpx;
+  right: 50rpx;
+  width: 100rpx;
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, .1);
+}
+.fixed_img {
+  width: 100%;
+  height: 100%;
+}
+.main {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+.goods_list2 {
+  width: calc(100% - 48rpx);
+  padding: 24rpx;
+}
+.tocart {
+  position: fixed;
+  bottom: 80rpx;
+  left: 40rpx;
+  width: 100rpx;
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, .1);
+}
+.nodata_cont {
+  width: 100%;
+  height: 100vh;
+}

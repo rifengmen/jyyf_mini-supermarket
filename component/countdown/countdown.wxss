@@ -1,0 +1,13 @@
+/* component/countdown/countdown.wxss */
+.countdown_time {
+    width: 100%;
+    height: 30rpx;
+    line-height: 30rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.countdown_time .time {
+    height: 100%;
+    padding: 0 4rpx;
+}

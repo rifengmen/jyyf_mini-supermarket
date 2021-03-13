@@ -1,0 +1,40 @@
+<!--internal/pages/editOrderStatus/editOrderStatus.wxml-->
+<view class="container color333333 font28">
+  <!-- 用户资料部分 start -->
+  <view class="user_detail">
+    <view class="user_section border_be5e5e5">
+      <view>操作人员</view>
+      <view class="user_desc">
+        <input type="text" value="{{mobile}}" class="tr" disabled />
+      </view>
+    </view>
+    <view class="user_section border_be5e5e5">
+      <view>身份状态</view>
+      <view class="user_desc">
+        <input type="text" value="{{roledetail.name}}" class="tr" disabled />
+      </view>
+    </view>
+    <view class="user_section border_be5e5e5">
+      <view></view>
+      <view class="user_desc font24">
+        <input type="text" value="{{tradeno}}" class="tr" placeholder="输入订单号、取货码或点击右侧扫描条形码" bindinput="setTradeno" />
+        <!-- 扫一扫按钮 start -->
+        <view class="scan" bindtap="scanTradeno">
+          <image src="/lib/images/scan.png" />
+        </view>
+        <!-- 扫一扫按钮 end -->
+      </view>
+    </view>
+  </view>
+  <!-- 用户资料部分 end -->
+  <!-- 按钮部分 start -->
+  <view class="btn_cont scan_section">
+    <!-- 确认按钮 start -->
+    <view class="btn colorffffff font32 bg71d793 border_r500 border_a71d793 tc" bindtap="getLocation">确认</view>
+    <!-- 确认按钮 end -->
+    <!-- 重置按钮 start -->
+    <view class="btn color71d793 font32 bgffffff border_r500 border_a71d793 tc" bindtap="resetTradeno">重置</view>
+    <!-- 重置按钮 end -->
+  </view>
+  <!-- 按钮部分 end -->
+</view>

@@ -5,52 +5,79 @@
 		<image src="{{cent_bgurl}}" mode="widthFix" class="lotteryBgUrl"></image>
 		<!-- 背景图 end -->
 		<!-- 按钮 start -->
-		<view class="btn_cont colorfa6400">
+		<view class="lottery_btn_cont colorfa6400">
 			<navigator class="btn bgffffff tc" hover-class="none" url="/userInfo/pages/score/score">我的积分</navigator>
 			<view class="btn bgffffff tc border_r500" wx:if="{{prizeUseCent}}">{{prizeUseCent}}积分抽奖一次</view>
 			<view class="btn color333333 bgffffff tc border_r500" wx:else>暂无抽奖活动</view>
 			<navigator class="btn bgffffff tc" hover-class="none" url="/autoModule/pages/lotteryList/lotteryList">中奖记录</navigator>
 		</view>
 		<!-- 按钮 end -->
+		<!-- 倒计时 start -->
+		<block wx:if="{{!startFlag}}">
+			<view class="lottery_countdown colorffffff font24">
+				<view class="">距开始还剩 </view>
+				<countdown
+						class="countdown_cont"
+						times="{{prizeStart}}"
+						type="{{1}}"
+						bind:setFlag="setStartFlag"></countdown>
+			</view>
+		</block>
+		<block wx:if="{{startFlag && !endFlag}}">
+			<view class="lottery_countdown colorffffff font24">
+				<view class="">距结束还剩 </view>
+				<countdown
+						class="countdown_cont"
+						times="{{prizeEnd}}"
+						type="{{0}}"
+						bind:setFlag="setEndFlag"></countdown>
+			</view>
+		</block>
+		<!-- 倒计时 end -->
 		<!-- 转盘 start -->
 		<view class="lottery_cont border_r500 overflow">
-			<image src="{{cent_turnurl}}" class="lotteryTurnUrl" animation="{{animationData}}"></image>
-			<view class="lottery_turn turnbg colorffffff overflow" wx:if="{{!cent_istrunbg}}">
-				<view class="turn_text tc overflow" animation="{{animationData}}">
-					<block wx:for="{{prizeList}}"
-								 wx:key="index">
-						<view
-								class="text_item font24"
-								style="{{'transform: rotate(-' + item.angle + 'deg)'}}">
-							<view class="name">{{item.prizename}}</view>
-							<image src="{{item.prize_bgurl}}"></image>
-						</view>
-					</block>
+			<image src="{{cent_turnurl}}" mode="aspectFit" class="lotteryTurnUrl" animation="{{animationData}}"></image>
+			<!-- 启用自定义 start -->
+			<block wx:if="{{cent_istrunbg}}">
+				<view class="lottery_turn turnbg colorffffff overflow">
+					<view class="turn_text tc overflow" animation="{{animationData}}">
+						<block wx:for="{{prizeList}}"
+							   wx:key="index">
+							<view class="text_item font24"
+								  style="{{'transform: rotate(-' + item.angle + 'deg)'}}">
+								<view class="name">{{item.prizename}}</view>
+								<image src="{{item.prize_bgurl}}" mode="aspectFit"></image>
+							</view>
+						</block>
+					</view>
 				</view>
-			</view>
-			<view class="lottery_turn colorffffff overflow" wx:else>
-				<view class="turn_text tc overflow" animation="{{animationData}}">
-					<block wx:for="{{prizeList}}"
-								 wx:key="index">
-						<view
-								class="text_item font26"
-								style="{{'transform: rotate(-' + item.angle + 'deg)'}}"
-						>
-							<view class="name">{{item.prizename}}</view>
-						</view>
-					</block>
+			</block>
+			<!-- 启用自定义 end -->
+			<!-- 默认样式 start -->
+			<block wx:else>
+				<view class="lottery_turn colorffffff overflow">
+					<view class="turn_text tc overflow" animation="{{animationData}}">
+						<block wx:for="{{prizeList}}"
+							   wx:key="index">
+							<view class="text_item font26"
+								  style="{{'transform: rotate(-' + item.angle + 'deg)'}}">
+								<view class="name">{{item.prizename}}</view>
+							</view>
+						</block>
+					</view>
+					<view class="turn_text tc overflow" animation="{{animationData}}">
+						<block wx:for="{{prizeList}}"
+							   wx:key="index">
+							<view class="text_decollator border_affffff"
+								  style="{{'transform: rotate(-' + item.decollatorAngle + 'deg); transform-origin: left bottom'}}"></view>
+						</block>
+					</view>
 				</view>
-				<view class="turn_text tc overflow" animation="{{animationData}}">
-					<block wx:for="{{prizeList}}"
-								 wx:key="index">
-						<view
-								class="text_decollator border_affffff"
-								style="{{'transform: rotate(-' + item.decollatorAngle + 'deg); transform-origin: left bottom'}}"
-						></view>
-					</block>
-				</view>
-			</view>
-			<image src="{{cent_btnurl}}" class="lotteryStart" bindtap="getCentPrize"></image>
+			</block>
+			<!-- 默认样式 end -->
+			<!-- 抽奖按钮 start -->
+			<image src="{{cent_btnurl}}" mode="aspectFit" class="lotteryStart" bindtap="getCentPrize"></image>
+			<!-- 抽奖按钮 end -->
 		</view>
 		<!-- 转盘 end -->
 	</view>

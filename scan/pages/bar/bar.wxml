@@ -23,7 +23,7 @@
       <view class="online_detailtit font32 font_blod bgcecece">订单详情</view>
       <view class="online_detail">
         <!-- 商品简介 start -->
-        <view>
+        <view class="goods_list1 goodslist">
           <view class="goods_item bgffffff border_be5e5e5" wx:for="{{goodsList}}" wx:key="index">
             <view class="item_desc">
               <view class="item_name ellipsis2">{{item.goodsName}}</view>

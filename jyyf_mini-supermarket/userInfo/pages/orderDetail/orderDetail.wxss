@@ -1,0 +1,186 @@
+/* userInfo/pages/orderDetail/orderDetail.wxss */
+/* 待付款 start */
+.status {
+  width: calc(100% - 30rpx);
+  height: 110rpx;
+  padding-left: 30rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.status .img {
+  width: 62rpx;
+  height: 62rpx;
+  margin-right: 20rpx;
+}
+.status .img image {
+  width: 100%;
+  height: 100%;
+}
+.status .text {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-flow: column;
+}
+/* 待付款 end */
+/* 收货地址 start */
+.address_cont {
+  width: calc(100% - 48rpx);
+  height: auto;
+  padding: 0 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.address_cont .address {
+  width: calc(100% - 120rpx);
+  height: auto;
+  margin-right: 30rpx;
+  padding: 26rpx 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-flow: column;
+}
+.address_cont .address .name {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+.address_cont .address .desc {
+  line-height: 1.5;
+}
+.address_cont .more {
+  width: 90rpx;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+/* 收货地址 end */
+/* 分隔符 start */
+.decollator {
+  width: 100%;
+  height: 8rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.decollator image {
+  width: 100%;
+  height: 100%;
+}
+/* 分割符 end */
+/* 门店名称 start */
+.deptname_cont {
+  width: calc(100% - 48rpx);
+  height: 80rpx;
+  padding: 0 24rpx;
+}
+.deptname_cont .deptname_border {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.deptname_cont .deptname {
+  width: calc(100% - 150rpx);
+  margin-right: 20rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.deptname_cont .deptname .img {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 10rpx;
+}
+.deptname_cont .deptname image {
+  width: 100%;
+  height: 100%;
+}
+.deptname_cont .deptname .name {
+  width: calc(100% - 50rpx);
+  height: 100%;
+  line-height: 80rpx;
+}
+.address_cont .orderCount {
+  width: 130rpx;
+  height: 100%;
+  line-height: 80rpx;
+}
+/* 门店名称 end */
+/* 订单商品列表 start */
+.goodslist {
+  width: 100%;
+  height: auto;
+}
+.goods_list1 {
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+}
+/* 订单商品列表 end */
+/* 订单结算信息 start */
+.order_pay {
+  width: calc(100% - 48rpx);
+  height: auto;
+  padding: 24rpx;
+  margin-bottom: 24rpx;
+}
+.order_pay > view {
+  width: 100%;
+  height: 50rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.order_pay > view:last-child {
+  height: 90rpx;
+}
+/* 订单结算信息 end */
+/* 订单信息 start */
+.order_desc {
+  width: calc(100% - 48rpx);
+  height: auto;
+  padding: 24rpx;
+}
+.order_desc > view {
+  width: 100%;
+  min-height: 50rpx;
+  line-height: 1.5;
+  display: flex;
+  justify-content: flex-start;
+}
+.order_desc .tit {
+  min-width: 90rpx;
+  margin-right: 20rpx;
+}
+/* 订单信息 end */
+/* btn start */
+.zhanwei {
+  width: 100%;
+  height: 90rpx;
+  margin-top: 24rpx;
+}
+.order_btn_cont {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: calc(100% - 48rpx);
+  height: 90rpx;
+  padding:  0 24rpx;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.order_btn_cont .btn {
+  width: 226rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  margin-left: 30rpx;
+}
+/* btn end */

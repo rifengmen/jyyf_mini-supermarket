@@ -33,6 +33,11 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    // 手指触摸后移动(阻止冒泡)
+    catchTouchMove (res) {
+      return false
+    },
+
     // confirm确认
     confirm () {
       let self = this

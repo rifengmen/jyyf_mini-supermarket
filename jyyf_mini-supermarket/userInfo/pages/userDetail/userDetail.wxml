@@ -1,0 +1,18 @@
+<!--userInfo/pages/userDetail/userDetail.wxml-->
+<view class="container color333333 font28 bgffffff">
+  <view class="memname_section border_be5e5e5">
+    <view class="memname">昵称</view>
+    <view class="input">
+      <input type="text" class="tl color71d793" value="{{memname}}" placeholder="请输入您的昵称" bindinput="setMemname" />
+    </view>
+  </view>
+  <view class="memname_section">
+    <view class="memname">会员等级</view>
+    <view class="input">
+      <input type="text" class="tl color999999" value="{{vip}}" disabled />
+    </view>
+  </view>
+  <view class="btn_cont">
+    <view class="btn colorffffff font32 bg71d793 border_r500 tc" bindtap="isModifyMemname">确认</view>
+  </view>
+</view>

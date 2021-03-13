@@ -1,0 +1,19 @@
+<!--pages/roomplayList/roomplayList.wxml-->
+<view class="container color333333 font28 bgf0f0f0">
+  <view class="room_cont bgf0f0f0 overflow">
+    <block wx:for="{{roomplayList}}" wx:key="index">
+      <view class="room_item border_r10 bgffffff overflow fl" catchtap='toRoom' data-roomid='{{item.roomid}}' >
+        <view class="img">
+          <image src="{{item.cover_img}}" class="border_r10" mode="aspectFit"></image>
+        </view>
+        <view class="name font32 font_blod">{{item.name}} </view>
+      </view>
+    </block>
+    <view class="nodata_cont" wx:if="{{!roomplayList.length && getFlag}}">
+      <view class="nodata overflow">
+        <image src="/lib/images/goodsNodata.png"></image>
+      </view>
+      <view class="color999999 tc">暂无直播间～</view>
+    </view>
+  </view>
+</view>

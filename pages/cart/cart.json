@@ -1,5 +1,6 @@
 {
   "usingComponents": {
+    "buyEnd": "/component/buyEnd/buyEnd",
     "dialog": "/component/dialog/dialog"
   },
   "navigationBarTitleText": "购物车",

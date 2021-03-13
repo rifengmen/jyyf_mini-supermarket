@@ -11,6 +11,8 @@ Page({
   data: {
     // 基础路径
     baseUrl: app.globalData.baseUrl,
+    // 支付开通标志,1为开通，0未开通，null未知
+    coflag: 0,
     // code类型，false：会员码；true：付款码
     codeType: false,
     // 会员卡条码
@@ -25,6 +27,8 @@ Page({
     password: '',
     // 密码弹框开关
     passwordFlag: false,
+    // 屏幕亮度
+    screenBrightness: 1,
   },
 
   /**
@@ -32,6 +36,9 @@ Page({
    */
   onLoad: function (options) {
     let self = this
+    self.setData({
+      coflag: app.globalData.coflag,
+    })
     if (!self.data.codeType) {
       // 获取会员卡
       self.getMyCard()
@@ -49,7 +56,17 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let self = this
+    wx.getScreenBrightness({
+      success (res) {
+        self.setData({
+          screenBrightness: res.value
+        })
+      }
+    })
+    wx.setScreenBrightness({
+      value: 1,
+    })
   },
 
   /**
@@ -70,7 +87,10 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    let self = this
+    wx.setScreenBrightness({
+      value: self.data.screenBrightness,
+    })
   },
 
   /**
@@ -141,6 +161,7 @@ Page({
   // 设置code类型
   setCodeType (e) {
     let self = this
+    let coflag = self.data.coflag
     let type = e.currentTarget.dataset.codetype
     let codeType
     if (type === 'card') {
@@ -155,9 +176,15 @@ Page({
       }
     } else if (type === 'pay') {
       if (!self.data.codeType) {
-        codeType = true
-        // 设置密码弹框开关
-        self.setPasswordFlag()
+        // 判断是否开通支付
+        if (coflag) {
+          codeType = true
+          // 设置密码弹框开关
+          self.setPasswordFlag()
+        } else {
+          // 支付开通提醒
+          app.coflagTip()
+        }
       }
     }
     self.setData({

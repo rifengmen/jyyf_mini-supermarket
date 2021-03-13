@@ -1,0 +1,5 @@
+/* message/pages/messageList/messageList.wxss */
+.nodata_cont {
+  width: 100%;
+  height: 100vh;
+}

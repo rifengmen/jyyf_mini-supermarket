@@ -1,4 +1,8 @@
 /* internal/pages/editOrderStatus/editOrderStatus.wxss */
+.scan_cont {
+  min-height: unset;
+  padding-bottom: 260rpx;
+}
 .user_detail {
   width: calc(100% - 48rpx);
   height: auto;
@@ -6,7 +10,7 @@
 }
 .user_section {
   width: 100%;
-  height: 120rpx;
+  height: 100rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;

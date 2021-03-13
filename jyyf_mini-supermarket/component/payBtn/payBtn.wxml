@@ -1,0 +1,5 @@
+<!--component/payBtn/payBtn.wxml-->
+<view class="payBtn">
+  <view class="" wx:if="{{from === 'card'}}">余额支付</view>
+  <view class="" wx:if="{{from === 'wechat'}}">微信支付</view>
+</view>

@@ -118,6 +118,9 @@
 .colorcecece {
   color: #cecece;
 }
+.colorb2b2b2 {
+  color: #b2b2b2;
+}
 .colorffffff {
   color: #ffffff;
 }
@@ -132,6 +135,12 @@
 }
 .color71d793 {
   color: #71d793;
+}
+.color329e56 {
+  color: #329e56;
+}
+.color38b060 {
+  color: #38b060
 }
 .color0091ff {
   color: #0091ff;
@@ -153,6 +162,12 @@
 }
 .bg38b060 {
   background-color: #38b060;
+}
+.bg7cbd92 {
+  background-color: #7cbd92;
+}
+.bg2c2c2c {
+  background-color: #2c2c2c;
 }
 .bgcecece {
   background-color: #cecece;
@@ -198,6 +213,12 @@
 }
 .bg373947 {
   background-color: #373947;
+}
+.bg000000_40 {
+  background-color: rgba(0, 0, 0, .4);
+}
+.bg000000_70 {
+  background-color: rgba(0, 0, 0, .7);
 }
 /* 背景颜色 end */
 /* 背景渐变 start */
@@ -259,8 +280,8 @@
 .border_a38b060 {
   border: 1px solid #38b060;
 }
-.border_a979797 {
-  border: 1px solid #979797;
+.border_a999999 {
+  border: 1px solid #999999;
 }
 .border_af7b500 {
   border: 1px solid #f7b500;
@@ -271,8 +292,8 @@
 .border_acecece {
   border: 1px solid #cecece;
 }
-.border_a979797_2 {
-  border: 2px solid #979797;
+.border_a999999_2 {
+  border: 2px solid #999999;
 }
 .border_a71d793_2 {
   border: 2px solid #71d793;

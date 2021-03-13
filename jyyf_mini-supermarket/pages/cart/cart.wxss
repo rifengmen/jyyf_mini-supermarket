@@ -1,0 +1,114 @@
+/* pages/cart/cart.wxss */
+.editor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% - 48rpx);
+  height: 80rpx;
+  padding: 0 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.deptname {
+  width: calc(100% - 100rpx);
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.deptname .shop {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+.deptname .shop image {
+  width: 100%;
+  height: 100%;
+}
+.deptname .name {
+  width: calc(100% - 60rpx);
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.editor .btn {
+  width: 100rpx;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.main {
+  width: 100%;
+  padding: 104rpx 0 114rpx 0;
+  height: calc(100vh - 170rpx - 48rpx);
+}
+.goods {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.goods radio {
+  width: 80rpx;
+}
+.account {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: calc(100% - 48rpx);
+  height: 90rpx;
+  padding: 0 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.account .account_cont {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.account .account_cont .total {
+  width: calc(100% - 246rpx);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.total .total_tit {
+  width: 90rpx;
+}
+.total .total_num {
+  max-width: calc(100% - 120rpx);
+  margin-right: 20rpx;
+}
+.toEditorOrder {
+  width: 226rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  margin-left: 20rpx;
+}
+.group {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.account .all_btn {
+  width: 120rpx;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.delete_btn {
+  width: 226rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  border: 1px solid #999999
+}

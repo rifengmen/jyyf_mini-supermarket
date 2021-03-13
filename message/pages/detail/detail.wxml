@@ -2,7 +2,7 @@
 <view class="container color333333 font28">
   <view class="cont">
     <view class="tit font32 font_blod tc ">{{detail.title}}</view>
-    <view class="time color999999 tc">{{detail.addtime}}</view>
+    <view class="time color999999 tc">{{detail.addtime || detail.pubdate}}</view>
     <rich-text class="" nodes="{{nodes}}" bindtap="previewImage"></rich-text>
   </view>
 </view>

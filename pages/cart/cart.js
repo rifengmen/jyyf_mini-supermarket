@@ -12,7 +12,7 @@ Page({
     // 基础路径
     baseUrl: app.globalData.baseUrl,
     // 图片路径为空时默认图路径
-    errorImage: app.globalData.errorImage,
+    defgoodsimg: app.globalData.defgoodsimg,
     // 门店名称
     deptname: '',
     // 门店code
@@ -39,6 +39,10 @@ Page({
     actMoney: 0.00,
     // 优惠金额
     discountMoney: 0.00,
+    // otc,区分购物车与立即购买now:正常立即购买
+    otc: '',
+    // isotc,区分拼团砍价的普通立即购买还是活动立即购买
+    isotc: '',
   },
 
   /**
@@ -244,8 +248,8 @@ Page({
     wx.showModal({
       title: '提示',
       content: '您确定要删除这些商品吗？',
-      success(res) {
-        // 确认按钮执行
+      success: res => {
+        // 确认
         if (res.confirm) {
           // 删除商品的方法
           self.delCars(delList)
@@ -315,8 +319,8 @@ Page({
           wx.showModal({
             title: '提示',
             content: '您确定要删除此商品吗？',
-            success(res) {
-              // 确认按钮执行
+            success: res => {
+              // 确认
               if (res.confirm) {
                 // 删除商品的方法
                 self.delCars(delList, 'editorCartCount')
@@ -330,7 +334,9 @@ Page({
       // 判断商品类型，saleflag：0是非散称，1是散称
       if (saleflag) {
         goods.Name = goods.Pname
+        goods.Defaultimage = goods.Pimg
         goods.Highpprice = goods.actualprice
+        goods.Highoprice = goods.saleprice
         self.setData({
           goods: goods,
           dialogFlag: true,
@@ -463,12 +469,19 @@ Page({
     })
   },
 
-  // 去编辑订单页面
-  toEditorOrder() {
+  // 去结算
+  toBuyEnd() {
     let self = this
-    wx.navigateTo({
-      url: '/shopping/pages/editorOrder/editorOrder?otc=&goodscode=&amount=',
-    })
+    let buyEnd = self.selectComponent('#buyEnd')
+    let goods = {
+      otc: '',
+      isotc: '',
+      orderType: '',
+      Gdscode: '',
+      amount: '',
+    }
+    // 调用子组件，传入商品信息
+    buyEnd.toBuyEnd(goods)
   },
 
 })

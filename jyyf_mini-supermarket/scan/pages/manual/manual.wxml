@@ -1,0 +1,23 @@
+<!--scan/pages/manual/manual.wxml-->
+<view class="container color333333 font28 bgffffff">
+  <view class="manual_cont">
+    <view class="manual_input">
+      <view class="inputs border_r8 bgf0f0f0">
+        <input type="number" value="{{goodscode}}" bindinput="setGoodscode" placeholder="请输入商品条码" />
+        <image src="/lib/images/closed.png" class="closed bgfa6400 border_r500" mode="aspectFit" wx:if="{{goodscode}}" bindtap="clearGoodscode"></image>
+      </view>
+      <view class="manual_btn border_r4 bg71d793 colorffffff" bindtap="getGoodsInfo">确认</view>
+    </view>
+    <view class="manual_des">
+      <view class="manual_img">
+        <image src="/lib/images/demobar.png" mode="aspectFit"></image>
+      </view>
+      <view class="font24 tc">请参照上图输入数字商品条形码</view>
+    </view>
+  </view>
+  <!-- 商品信息弹窗 start-->
+  <view class="scanDialog" wx:if="{{goodsInfoFlag}}">
+    <scanDialog id="scanDialog" goodsInfo="{{goodsInfo}}" bind:addScancart="addScancart" bind:cancel="cancel" bind:addGoOn="addGoOn" bind:addBack="addBack"></scanDialog>
+  </view>
+  <!-- 商品信息弹窗 end-->
+</view>

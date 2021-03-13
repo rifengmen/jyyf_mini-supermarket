@@ -11,10 +11,10 @@ Page({
   data: {
     // 商户名称
     apptitle: app.globalData.apptitle,
-    // 商户logo
-    shoplogo: app.globalData.shoplogo,
     // 基础路径
     baseUrl: app.globalData.baseUrl,
+    // 主题背景色
+    home_bgcolor: '#71d793',
     // 手机号码
     mobile: '',
     // 图片
@@ -33,7 +33,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let self = this
+    self.setData({
+      home_bgcolor: app.globalData.home_bgcolor,
+    })
   },
 
   /**

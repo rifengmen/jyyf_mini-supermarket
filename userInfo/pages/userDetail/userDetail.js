@@ -21,7 +21,7 @@ Page({
   onLoad: function (options) {
     let self = this
     let memnameArr = app.globalData.memname
-    let memname = memnameArr.slice(0, memnameArr.lastIndexOf('('))
+    let memname = app.globalData.memname
     let vip = memnameArr.slice(memnameArr.lastIndexOf('(') + 1, -1)
     self.setData({
       memname: memname,
@@ -92,7 +92,8 @@ Page({
     wx.showModal({
       title: '提示',
       content: '确认修改您的昵称吗？',
-      success: res=>{
+      success: res => {
+        // 确认
         if (res.confirm) {
           // 修改用户昵称
           self.modifyMemname()

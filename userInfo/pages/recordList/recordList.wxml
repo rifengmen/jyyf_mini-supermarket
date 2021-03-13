@@ -9,13 +9,13 @@
         </view>
         <view class="desc">
           <view class="add color71d793 font24">+{{item.Score}}分</view>
-          <view class="font36">-￥{{item.Money}}</view>
+          <view class="font32">-￥{{item.Money}}</view>
         </view>
       </navigator>
     </block>
     <view class="nodata_cont" wx:if="{{!recordList.length && getFlag}}">
       <view class="nodata overflow">
-        <image src="/lib/images/orderNodata.png"></image>
+        <image src="/lib/images/orderNodata.png" mode="aspectFit"></image>
       </view>
       <view class="color999999 tc">您的消费记录空空如也～</view>
     </view>

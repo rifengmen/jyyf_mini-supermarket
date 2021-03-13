@@ -3,13 +3,13 @@
   <!-- banner start -->
   <view class="banner border_r10 overflow bgffffff">
     <swiper class="banner_swiper" indicator-color="#ffffff" indicator-active-color="#71d793" autoplay="true" circular="true" interval="4000" duration="500" current="{{swiperCurrent}}" bindchange="swiperChange">
-      <swiper-item wx:for="{{bannerList}}" wx:key="index">
-        <image src="{{baseUrl + item.Imageurl}}" class="swiper_item" lazy-load="true" bindtap="toBannerDetail" data-id="{{item.ImageID}}"></image>
+      <swiper-item wx:for="{{bannerTypeList[1].list}}" wx:key="index">
+        <image src="{{baseUrl + item.Imageurl}}" class="banner_item border_r10 overflow" lazy-load="true" bindtap="toBannerDetail" data-id="{{item.ImageID}}"></image>
       </swiper-item>
     </swiper>
-    <view class="dots" wx:if="{{bannerList.length > 1}}">
-      <block wx:for="{{bannerList}}" wx:key="index">
-        <view class="dot {{index === swiperCurrent ? 'active bg71d793' : 'bgffffff'}} border_r500"></view>
+    <view class="dots border_r500" wx:if="{{bannerTypeList[1].list.length > 1}}">
+      <block wx:for="{{bannerTypeList[1].list}}" wx:key="index">
+        <view class="dot border_a71d793 {{index === swiperCurrent ? 'active bg71d793' : 'bgffffff'}} border_r500"></view>
       </block>
     </view>
   </view>

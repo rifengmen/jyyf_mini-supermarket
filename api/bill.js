@@ -21,28 +21,30 @@ const bill = {
   buyShoppingBag: data => request.http('bill/shoppingcar.do?method=buyShoppingBag', data),
   // 结算
   buyend: data => request.http('bill/shoppingcar.do?method=buyend', data),
+  // 获取运费
+  getFreight: data => request.http('bill/shoppingcar.do?method=getFreight', data),
+  // 设置支付密码
+  cardpayopen: data => request.http('bill/pay.do?method=cardpayopen', data),
+  // 重置支付密码
+  payPasswordReset: data => request.http('bill/pay.do?method=payPasswordReset', data),
   // 可用电子券
   payMoneytick: data => request.http('bill/pay.do?method=payMoneytick', data),
   // 可用积分
   payMoneyjf: data => request.http('bill/pay.do?method=payMoneyjf', data),
-  // 获取运费
-  getFreight: data => request.http('bill/shoppingcar.do?method=getFreight', data),
-  // 取消订单
-  CancelSaleOrder: data => request.http('bill/order.do?method=CancelSaleOrder', data),
-  // 获取商品评价列表
-  getProductEvaluation: data => request.http('bill/evaluation.do?method=getProductEvaluation', data),
-  // 添加评价
-  addProductEvaluation: data => request.http('bill/evaluation.do?method=addProductEvaluation', data),
   // 获取订单列表
   listMyOrder: data => request.http('bill/order.do?method=listMyOrder', data),
   // 获取订单详情
   listOrderDetails: data => request.http('bill/order.do?method=listOrderDetails', data),
   // 变更订单状态
   pickOrder: data => request.http('bill/order.do?method=pickOrder', data),
-  // 设置支付密码
-  cardpayopen: data => request.http('bill/pay.do?method=cardpayopen', data),
-  // 重置支付密码
-  payPasswordReset: data => request.http('bill/pay.do?method=payPasswordReset', data),
+  // 取消订单
+  CancelSaleOrder: data => request.http('bill/order.do?method=CancelSaleOrder', data),
+  // 获取订单数量（内部功能用）
+  getOrderNum: data => request.http('bill/order.do?method=getOrderNum', data),
+  // 获取商品评价列表
+  getProductEvaluation: data => request.http('bill/evaluation.do?method=getProductEvaluation', data),
+  // 添加评价
+  addProductEvaluation: data => request.http('bill/evaluation.do?method=addProductEvaluation', data),
 }
 
 export default bill

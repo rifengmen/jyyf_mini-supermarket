@@ -13,7 +13,7 @@ Page({
     getFlag: false,
     // 页面title
     title: '',
-    // 上一级页面
+    // 从哪里来/组件使用的地方
     from: '',
     // 商品code
     gdscode: '',
@@ -26,7 +26,7 @@ Page({
     // 页码
     page: 1,
     // 每页条数
-    count: 15,
+    count: 16,
     // 总条数
     rowCount: 0,
   },

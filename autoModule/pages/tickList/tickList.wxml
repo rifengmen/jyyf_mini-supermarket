@@ -2,8 +2,8 @@
 <view class="container color333333 font28 bgf0f0f0" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
 	<view class="tick_list">
 		<block wx:for="{{tickList}}" wx:key="index" >
-			<view class="item border_r10 overflow" hover-class="none" catchtap="toTickDetail" data-tickid="{{item.tickid}}">
-				<image src="{{item.bgurl || bgurl}}" mode="aspectFill" class="bgimg"></image>
+			<view class="item border_r10 overflow" hover-class="none" catchtap="toTickDetail" data-tick="{{item}}">
+				<image src="{{item.bgurl ? (baseUrl + item.bgurl) : bgurl}}" mode="aspectFill" class="bgimg"></image>
 				<view class="tit colorffffff">
 					<view class="name">
 						<view class="face_value font60" wx:if="{{item.tickettype === 2}}">
@@ -15,16 +15,17 @@
 							{{item.usemoney}}
 						</view>
 						<view class="type font24">
+							<view class="font30 ellipsis" wx:if="{{item.gettype === 2}}">{{item.score}}积分兑换</view>
 							<view class="ellipsis">{{item.tickettypename}}</view>
 							<view class="ellipsis">满{{item.minsalemoney}}元使用</view>
 						</view>
 					</view>
 					<view class="tick_btn_cont">
-						<view class="btn colorffffff border_r500 border_affffff" wx:if="{{from === 'userInfo'}}" data-enddate="{{item.enddate}}">{{item.days}}天后过期</view>
-						<view class="btn colorffffff border_r500 border_a38b060 bg38b060" wx:elif="{{from === 'auto'}}">
-							<getTickBtn tickid="{{item.tickid}}"></getTickBtn>
+						<view class="btn color38b060 border_r500 border_affffff bgffffff" wx:if="{{from === 'userInfo'}}" data-enddate="{{item.enddate}}">{{item.days}}天后过期</view>
+						<view class="btn {{item.residuecount ? 'color38b060' : 'colorcecece'}} border_r500 border_affffff bgffffff" wx:elif="{{from === 'auto'}}">
+							<getTickBtn tick="{{item}}"></getTickBtn>
 						</view>
-						<view class="btn colorffffff border_r500 border_a38b060 bg38b060" wx:elif="{{from=== 'editorOrder'}}">
+						<view class="btn color38b060 border_r500 border_affffff bgffffff" wx:elif="{{from=== 'editorOrder'}}">
 							<useTickBtn tick="{{item}}" Totalmoney="{{Totalmoney}}"></useTickBtn>
 						</view>
 					</view>
@@ -39,7 +40,7 @@
 		</block>
 		<view class="nodata_cont" wx:if="{{!tickList.length && getFlag}}">
 			<view class="nodata overflow">
-				<image src="/lib/images/orderNodata.png"></image>
+				<image src="/lib/images/orderNodata.png" mode="aspectFit"></image>
 			</view>
 			<view class="color999999 tc">电子券空空如也～</view>
 		</view>

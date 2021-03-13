@@ -1,20 +1,15 @@
 <!--userInfo/pages/about/about.wxml-->
 <view class="container color333333 font28 bgffffff">
   <!-- logo start -->
-  <view class="logo_cont">
-    <view class="logo border_r8 overflow bg71d793">
-      <view class="logo_img border_r500 overflow bgffffff">
-        <image src="{{shoplogo}}"></image>
-      </view>
-      <text class="apptitle colorffffff font30 font_blod tc">{{apptitle}}</text>
+  <view class="logo">
+    <view class="logo_img overflow">
+      <image src="/baseimg/logo.png" mode="aspectFit"></image>
     </view>
+    <view class="apptitle font40 font_blod tc">{{apptitle}}</view>
   </view>
-  <!-- logo end -->
   <!-- 公司简介 start -->
   <view class="shop_desc">
-    <view class="tit font32 tc">公司简介</view>
-    <view class="name font_blod tc">{{about.aboutTitle}}</view>
-    <view class="desc">{{about.aboutDetail}}</view>
+    <rich-text class="" nodes="{{nodes}}"></rich-text>
   </view>
   <!-- 公司简介 end -->
   <!-- copyright start -->

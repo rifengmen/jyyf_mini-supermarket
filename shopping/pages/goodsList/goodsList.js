@@ -9,14 +9,14 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 基础路径
+    baseUrl: app.globalData.baseUrl,
     // 图片路径为空时默认图路径
-    errorImage: app.globalData.errorImage,
+    defgoodsimg: app.globalData.defgoodsimg,
     // 是否显示下拉提示
     isPullDownShow: false,
     // 下拉刷新提示文字
     pullDownText: true,
-    // 基础路径
-    baseUrl: app.globalData.baseUrl,
     // 列表显示方式listType,2:两列，1:一列
     listType: 2,
     // 推荐商品id
@@ -29,6 +29,8 @@ Page({
     Classcode: '',
     // 搜索关键字
     Sname: '',
+    // 活动类别
+    promotemode: '',
     // title
     title: '',
     // 门店名称
@@ -38,7 +40,7 @@ Page({
     // 页数
     page: 1,
     // 每页条数
-    count: 15,
+    count: 16,
     // 商品总条数
     rowCount: 0,
     // 排序方式（1销量、2人气、3价格)
@@ -57,6 +59,8 @@ Page({
     dialogFlag: false,
     // 商品信息
     goods: '',
+    // 页面滚动开关
+    scrollflag: false,
   },
 
   /**
@@ -76,6 +80,7 @@ Page({
       Classcode: options.Classcode || '',
       // 搜索
       Sname: options.Sname || '',
+      promotemode: options.promotemode || '',
       title: options.title,
       deptname: options.deptname ||app.globalData.deptname,
       deptcode: options.deptcode || app.globalData.deptcode
@@ -89,6 +94,8 @@ Page({
     })
     // 请求对应商品列表
     self.sendMethods()
+    // 设置滚动开关
+    self.setScrollflag()
   },
 
   /**
@@ -120,7 +127,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    let self = this
+    // 清除倒计时
+    clearInterval(self.data.time)
   },
 
   /**
@@ -166,6 +175,29 @@ Page({
   //
   // },
 
+  /**
+   * 监听页面滚动
+   */
+  onPageScroll (e) {
+    let self = this
+    let scrollflag = self.data.scrollflag
+    if (!scrollflag) {
+      self.setData({
+        scrollflag: true
+      })
+    }
+  },
+
+  // 设置滚动开关
+  setScrollflag () {
+    let self = this
+    self.data.time = setInterval(() => {
+      self.setData({
+        scrollflag: false
+      })
+    }, 2000)
+  },
+
   // 设置列表显示样式
   setListType () {
     let self = this
@@ -187,8 +219,8 @@ Page({
       // 获取自定义商品列表
       self.getAutoGoodsList()
     } else if (self.data.panicBuy) {
-      // 获取秒杀商品列表
-      self.getPanicBuyGoodsList()
+      // 获取拼团、秒杀、砍价、预售商品列表
+      self.getPanicBuyGoodsList(self.data.promotemode)
     } else if (self.data.Classcode) {
       // 获取轮播图(分类)商品列表
       self.getCodeGoodsList()
@@ -257,10 +289,14 @@ Page({
     })
   },
 
-  // 获取秒杀商品列表
-  getPanicBuyGoodsList () {
+  // 获取拼团、秒杀、砍价商品列表
+  getPanicBuyGoodsList (promotemode) {
     let self = this
-    let data = {}
+    let data = {
+      promotemode: promotemode,
+      Page: 1,
+      pageSize: 15,
+    }
     wx.showLoading({
       title: '正在加载',
       mask: true,
@@ -339,7 +375,14 @@ Page({
     let self = this
     if (res.flag === 1) {
       let goodsList = self.data.goodsList
-      goodsList.push(...res.data)
+      // 商品code统一字段
+      let list = res.data
+      list.forEach(item => {
+        if (item.goodscode && !item.Gdscode) {
+          item.Gdscode = item.goodscode
+        }
+      })
+      goodsList.push(...list)
       self.setData({
         goodsList: goodsList,
         rowCount: res.rowCount
@@ -358,16 +401,11 @@ Page({
   addCart (e) {
     let self = this
     let goods = e.currentTarget.dataset.goods
-    // 判断是否散称
-    if (goods.scaleflag) {
-      self.setData({
-        dialogFlag: true,
-        goods: goods,
-      })
-    } else {
-      // 调用子组件添加购物车方法
-      self.componentAddCart(goods)
-    }
+    // 调用数量/重量弹窗
+    self.setData({
+      dialogFlag: true,
+      goods: goods,
+    })
   },
 
   // 调用子组件添加购物车方法

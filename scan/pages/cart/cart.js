@@ -14,7 +14,7 @@ Page({
     // 购物车
     scanCart: [],
     // 购物袋列表
-    shopbagList: [],
+    shopBagList: [],
     // 扫码购店铺
     scanShopInfo: '',
     // 商品条码
@@ -45,7 +45,7 @@ Page({
       self.scangoodscode()
     }
     // 获取购物袋列表
-    self.getShopBagList()
+    // self.getShopBagList()
     // 计算商品总价
     self.setTotalmoney()
   },
@@ -120,13 +120,15 @@ Page({
       let res = result.data
       if (res.flag === 1) {
         let shopBagList = res.data.shoppingbaglist
-        shopBagList.forEach((item, index) => {
-          item.amount = 0
-          item.check = false
+        shopBagList.forEach(item => {
+          item.quantity = 0
         })
         self.setData({
           shopBagList: shopBagList,
         })
+
+
+
       } else {
         toast.toast(res.message)
       }
@@ -148,12 +150,12 @@ Page({
       if (item.barcode === goodscode.barcode) {
         // 判断加减
         if (types === 'addCart') {
-          goods.amount++
+          goods.quantity++
         } else if (types === 'subtrackCart') {
           if (shopBagList[index].amount <= 0) {
             goods.amount = 0
           } else {
-            goods.amount--
+            goods.quantity--
           }
         }
       }
@@ -173,14 +175,14 @@ Page({
       })
       return false
     }
-    // 验证是否绑定手机号码
-    if (!app.memcodeflag()) {
-      toast.toast('请注册绑定手机号码')
-      wx.switchTab({
-        url: '/pages/userInfo/userInfo',
-      })
-      return false
-    }
+    // // 验证是否绑定手机号码
+    // if (!app.memcodeflag()) {
+    //   toast.toast('请注册绑定手机号码')
+    //   wx.switchTab({
+    //     url: '/pages/userInfo/userInfo',
+    //   })
+    //   return false
+    // }
     wx.scanCode({
       success (res) {
         // 扫码后获取结果参数赋值给Input
@@ -305,7 +307,8 @@ Page({
     wx.showModal({
       title: '提示',
       content: '确定清空购物车吗？',
-      success: res=>{
+      success: res => {
+        // 确认
         if (res.confirm) {
           app.globalData.scanCart = []
           self.setData({
@@ -340,8 +343,11 @@ Page({
   setTlement () {
     let self = this
     // 购物袋加入购物车
-    let shopBagList = self.data.shopBagList.filter(item => item.amount)
-    self.data.scanCart.push(...shopBagList)
+    let shopBagList = self.data.shopBagList
+    if (shopBagList.length) {
+      shopBagList = self.data.shopBagList.filter(item => item.quantity)
+      self.data.scanCart.push(...shopBagList)
+    }
     // 判断购物车存在商品
     if (!self.data.scanCart.length) {
       toast.toast('请添加商品')

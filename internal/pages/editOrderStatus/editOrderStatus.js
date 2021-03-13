@@ -9,6 +9,12 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 基础路径
+    baseUrl: app.globalData.baseUrl,
+    // 图片路径为空时默认图路径
+    defgoodsimg: app.globalData.defgoodsimg,
+    // 订单详情
+    orderDetail: '',
     // 身份标识，默认0,0:顾客,1:拣货,2:配送,3:取货
     role: 0,
     // 身份标识列表
@@ -40,6 +46,8 @@ Page({
     wx.setNavigationBarTitle({
       title: roledetail.name
     })
+    // 获取定位
+    self.getLocation()
   },
 
   /**
@@ -93,6 +101,21 @@ Page({
   //
   // },
 
+  // 获取定位
+  getLocation () {
+    let self = this
+    wx.getLocation({
+      type: 'gcj02',
+      altitude: false,
+      success (res) {
+        self.setData({
+          longitude: res.longitude,
+          latitude: res.latitude,
+        })
+      }
+    })
+  },
+
   // 设置订单号
   setTradeno (e) {
     let self = this
@@ -121,25 +144,6 @@ Page({
     })
   },
 
-  // 获取定位
-  getLocation () {
-    let self = this
-    wx.getLocation({
-      type: 'gcj02',
-      altitude: false,
-      success (res) {
-        self.setData({
-          longitude: res.longitude,
-          latitude: res.latitude,
-        })
-      },
-      complete () {
-        // 变更订单状态
-        self.pickOrder()
-      }
-    })
-  },
-
   // 重置订单编号
   resetTradeno () {
     let self = this
@@ -160,12 +164,54 @@ Page({
           self.setData({
             tradeno: result
           })
-          // 获取定位
-          self.getLocation()
+          // 获取订单详情
+          self.getOrderDetail()
         } else {
           toast.toast('请对准条形码扫码')
         }
       }
     })
+  },
+
+  // 获取订单详情
+  getOrderDetail () {
+    let self = this
+    let data = {
+      orderNum: self.data.tradeno
+    }
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
+    API.bill.listOrderDetails(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        let orderDetail = res.data
+        self.setData({
+          orderDetail: orderDetail,
+        })
+      } else {
+        toast.toast(res.message)
+      }
+      wx.hideLoading()
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 确定按钮
+  confrim () {
+    let self = this
+    // 判断订单编号不为空
+    if (self.data.tradeno) {
+      // 判断查询订单详情还是修改订单状态
+      if (self.data.orderDetail) {
+        // 修改订单状态
+        self.pickOrder()
+      } else {
+        // 获取订单详情
+        self.getOrderDetail()
+      }
+    }
   },
 })

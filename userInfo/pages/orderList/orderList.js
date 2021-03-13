@@ -10,7 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // 订单状态 0全部  1待支付  2待取送 3待发货  9待退款 20已完成
+    // 订单状态 0全部  1待支付  2待中转  3待收货  9已完成
     statusType: 0,
     // 订单状态列表
     statusList: app.globalData.statusList,
@@ -49,14 +49,24 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let self = this
+    let ordernum = app.globalData.ordernum
+    // 检查是否取消后返回进入，订单列表对应数据刷新
+    if (ordernum) {
+      let e = {
+        detail: ordernum
+      }
+      // 设置订单列表
+      self.setOrderList(e)
+    }
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    // 清空取消后返回进入设置的订单详情
+    app.globalData.ordernum = ''
   },
 
   /**
@@ -157,7 +167,7 @@ Page({
         let orderList = self.data.orderList
         let n_orderList = res.data
         n_orderList.forEach(item => {
-          if (item.billstatus === 40) {
+          if (item.billstatus === 4 || item.billstatus === 40) {
             item.Totalprice = 0
             item.Actprice = 0
           }
@@ -192,11 +202,36 @@ Page({
   // 设置订单列表
   setOrderList (e) {
     let self = this
-    // 重新请求
-    self.setData({
-      page: 1,
-      orderList: [],
+    let ordernum = Number(e.detail)
+    let orderList = self.data.orderList
+    orderList.forEach(item => {
+      if (Number(item.ordernum) === ordernum) {
+        item.billstatus = 40
+        item.Totalprice = 0
+        item.Actprice = 0
+        item.payflag = 0
+        item.cancelflag = 0
+        item.billstatusdescribe = item.ordernum + '申请订单取消'
+      }
     })
-    self.getOrderList()
+    self.setData({
+      orderList: orderList
+    })
+  },
+
+  // 去结算
+  toBuyEnd(e) {
+    let self = this
+    let tradeno = e.currentTarget.dataset.tradeno
+    let buyEnd = self.selectComponent('#buyEnd' + tradeno)
+    let goods = {
+      otc: '',
+      isotc: '',
+      orderType: '',
+      Gdscode: '',
+      amount: '',
+    }
+    // 调用子组件，传入商品信息
+    buyEnd.toBuyEnd(goods)
   },
 })

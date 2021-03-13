@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "addCart": "/component/addCart/addCart",
+    "dialog": "/component/dialog/dialog"
+  },
+  "navigationBarTitleText": "全部商品",
+  "onReachBottomDistance": 50
+}

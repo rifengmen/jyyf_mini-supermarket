@@ -21,7 +21,4 @@
   width: 100%;
   margin-bottom: 10rpx;
 }
-.nodata_cont {
-  width: 100%;
-  height: calc(100vh - 200rpx);
-}
+

@@ -54,11 +54,11 @@
   </view>
   <!-- 实付金额 end -->
   <!-- 支付按钮 start -->
-  <view class="btn_cont colorffffff font32 bgffffff">
-    <view class="card_btn border_r500 bgf7b500 tc" wx:if="{{paymode3Flag}}">
+  <view class="btn_cont colorffffff font32">
+    <view class="card_btn btn border_r500 bgf7b500 tc" wx:if="{{paymode3Flag}}">
       <payBtn id="cardBtn" data-from="card" from="card" payMoney="{{payMoney}}" scoreFlag="{{scoreFlag}}" score="{{score}}" freight="{{orderDetail.freight}}" orderDetail="{{orderDetail}}" remark="{{remark}}" password="{{password}}" bindtap="payVerify" bind:setPasswordFlag="setPasswordFlag"></payBtn>
     </view>
-    <view class="wechat_btn border_r500 bg71d793 tc" wx:if="{{paymode7Flag}}">
+    <view class="wechat_btn btn border_r500 bg71d793 tc" wx:if="{{paymode7Flag}}">
       <payBtn id="wechatBtn" data-from="wechat" from="wechat" payMoney="{{payMoney}}" scoreFlag="{{scoreFlag}}" score="{{score}}" freight="{{orderDetail.freight}}" orderDetail="{{orderDetail}}" remark="{{remark}}" password="{{password}}" bindtap="payVerify" bind:setPasswordFlag="setPasswordFlag"></payBtn>
     </view>
   </view>

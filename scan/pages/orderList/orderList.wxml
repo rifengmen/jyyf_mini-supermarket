@@ -16,7 +16,7 @@
             <view class="pay_btn border_r4 bg71d793 colorffffff border_a71d793" wx:if="{{item.payFLag}}">
               <navigator class="" hover-class="none" url="/scan/pages/editorOrder/editorOrder?flowno={{item.flowno}}&deptcode={{item.shopCode}}&deptname={{item.shopName}}">付款</navigator>
             </view>
-            <view class="cancel_btn border_r4 bgffffff color666666 border_a979797" wx:if="{{item.cancelFlag}}" catchtap="cancelBtn" data-index="{{index}}">
+            <view class="cancel_btn border_r4 bgffffff color666666 border_a999999" wx:if="{{item.cancelFlag}}" catchtap="cancelBtn" data-index="{{index}}">
               <scanCancelBtn id="scanCancelBtn{{index}}" flowno="{{item.flowno}}" deptcode="{{item.shopCode}}">取消</scanCancelBtn>
             </view>
           </view>
@@ -25,7 +25,7 @@
     </block>
     <view class="nodata_cont" wx:if="{{!orderList.length && getFlag}}">
       <view class="nodata overflow">
-        <image src="/lib/images/orderNodata.png"></image>
+        <image src="/lib/images/orderNodata.png" mode="aspectFit"></image>
       </view>
       <view class="color999999 tc">您的订单空空如也～</view>
     </view>

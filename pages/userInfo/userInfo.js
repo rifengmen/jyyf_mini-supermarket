@@ -10,6 +10,10 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 导航栏前景颜色值，包括按钮、标题、状态栏的颜色，仅支持 #ffffff 和 #000000
+    frontColor: '#ffffff',
+    // 主题背景色
+    home_bgcolor: '#71d793',
     // 身份信息，0：顾客；1：配送员；2：团长
     role: 0,
     // 身份标识列表
@@ -32,8 +36,12 @@ Page({
     score: '',
     // 订单状态列表
     statusList: app.globalData.statusList,
+    // 消息类别标识，0：个人消息，10：内部功能新订单消息
+    businessflag: 10,
     // 未读消息提示，messageNum
     messageNum: 0,
+    // 内部功能未读消息提示，internalMessageNum
+    internalMessageNum: 0,
     // 类别,0：投诉建议；1:商品建议；2:我要投诉；
     type: 1,
     // 投诉类别列表
@@ -67,6 +75,7 @@ Page({
    */
   onShow: function () {
     let self = this
+    let home_bgcolor = app.globalData.home_bgcolor || '#71d793'
     let openid = app.globalData.openid
     let memcode = app.globalData.memcode
     let userImg = app.globalData.userImg
@@ -74,12 +83,18 @@ Page({
     let coflag = app.globalData.coflag
     let role = Number(app.globalData.role)
     self.setData({
+      home_bgcolor: home_bgcolor,
       openid: openid,
       memcode: memcode,
       userImg: userImg,
       memname: memname,
       coflag: coflag,
       role: role,
+    })
+    // 设置主题背景色
+    wx.setNavigationBarColor({
+      frontColor: self.data.frontColor,
+      backgroundColor: self.data.home_bgcolor,
     })
     if (openid) {
       // 初始化
@@ -136,6 +151,8 @@ Page({
   // 初始化
   init () {
     let self = this
+    // 获取订单数量（内部功能用）
+    self.getOrderNum()
     // 获取电子券数量
     self.getTickNum()
     // 获取卡余额
@@ -144,10 +161,33 @@ Page({
     self.getScore()
     // 更新订单状态列表
     self.getStatusList()
-    // 获取消息列表
-    self.getMessageList()
+    // 设置未读消息数量
+    self.setMessageNum()
+    // 设置内部功能未读消息数量
+    self.setInternalMessageList()
     // 更新购物车
     self.getCartCount()
+  },
+
+  // 获取订单数量（内部功能用）
+  getOrderNum () {
+    let self = this
+    let role = self.data.role
+    let data = {
+      role: role,
+    }
+    API.bill.getOrderNum(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        let roleList = self.data.roleList
+        roleList[role].num = res.data
+        self.setData({
+          roleList: roleList,
+        })
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
   },
 
   // 获取电子券数量
@@ -235,8 +275,8 @@ Page({
     })
   },
 
-  // 获取消息列表
-  getMessageList () {
+  // 设置未读消息数量
+  setMessageNum () {
     let self = this
     let data = {
       messageFlag: 0,
@@ -246,6 +286,25 @@ Page({
       if (res.flag === 1) {
         self.setData({
           messageNum: res.rowCount
+        })
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 设置内部功能未读消息数量
+  setInternalMessageList () {
+    let self = this
+    let data = {
+      businessflag: self.data.businessflag,
+      messageFlag: 0,
+    }
+    API.info.listmessage(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          internalMessageNum: res.rowCount
         })
       }
     }).catch(error => {

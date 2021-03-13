@@ -10,13 +10,15 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 基础路径
+    baseUrl: app.globalData.baseUrl,
     // 请求开关
     getFlag: false,
     // 优惠券背景
     bgurl: '/lib/images/tickBg.png',
     // 电子券列表
     tickList: [],
-    // 从哪里来
+    // 从哪里来/组件使用的地方
     from: '',
     // 支付金额
     payMoney: 0,
@@ -54,6 +56,8 @@ Page({
     wx.setNavigationBarTitle({
       title: title,
     })
+    // 支付开通提醒
+    app.coflagTip()
   },
 
   /**
@@ -178,12 +182,23 @@ Page({
     if (res.flag === 1) {
       let tickList = res.data
       tickList.forEach(item => {
+        // 优惠券简介统一字段
         if (item.dealflagdescrible) {
           item.dealflagdescription = item.dealflagdescrible
         }
+        // 设置tickid，统一字段查看详情
+        if (!item.onlinetickid) {
+          item.onlinetickid = item.tickid
+        }
+        // 设置剩余数量
+        let residuecount = item.totalcount - item.havepaniccount
+        if (residuecount <= 0) {
+          residuecount = 0
+        }
+        item.residuecount = residuecount
       })
       self.setData({
-        tickList: tickList
+        tickList: tickList.reverse()
       })
       // 设置到期剩余天数
       if (self.data.from === 'userInfo') {
@@ -229,13 +244,10 @@ Page({
   // 去电子券详情
   toTickDetail (e) {
     let self = this
-    let tickid = e.currentTarget.dataset.tickid
-    let from = self.data.from
-    if (from === 'auto') {
-      wx.navigateTo({
-        url: '/autoModule/pages/tickDetail/tickDetail?tickid=' + tickid,
-      })
-    }
+    let { tick } = e.currentTarget.dataset
+    wx.navigateTo({
+      url: '/autoModule/pages/tickDetail/tickDetail?from=' + self.data.from + '&tickid=' + tick.onlinetickid,
+    })
   }
 
 })

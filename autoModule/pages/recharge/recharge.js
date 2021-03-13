@@ -12,8 +12,10 @@ Page({
   data: {
     // 基础路径
     baseUrl: app.globalData.baseUrl,
+    // banner类型列表
+    bannerTypeList: [],
     // banner图 图片
-    bannerList: [],
+    // bannerList: [],
     // 轮播点儿下标
     swiperCurrent: 0,
     // 卡号
@@ -32,9 +34,10 @@ Page({
     let self = this
     self.setData({
       memcode: app.globalData.memcode,
+      bannerTypeList: app.globalData.bannerTypeList,
     })
     // 获取banner列表
-    self.getBannerList()
+    // self.getBannerList()
     // 获取卡余额
     self.getCardInfo()
   },
@@ -88,33 +91,13 @@ Page({
   //
   // },
 
-  // 获取充值banner图列表
-  getBannerList () {
-    let self = this
-    let data = {
-      // 卡冲值参数为1，其它是0
-      cardflag: 1
-    }
-    API.system.listShopHomeSlide(data).then(result => {
-      let res = result.data
-      if (res.flag === 1) {
-        self.setData({
-          bannerList: res.data
-        })
-      } else {
-        toast.toast(res.message)
-      }
-    }).catch(error => {
-      toast.toast(error.error)
-    })
-  },
-
   // 修改轮播点儿
   swiperChange (e) {
     let self = this
-    if (e.detail.source === 'autoplay' || e.detail.source === 'touch') {
+    let {source, current} = e.detail
+    if (source === 'autoplay' || source === 'touch') {
       self.setData({
-        swiperCurrent: e.detail.current
+        swiperCurrent: current
       })
     }
   },

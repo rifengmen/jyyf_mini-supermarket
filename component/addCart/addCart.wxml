@@ -1,5 +1,9 @@
 <!--component/addCart/addCart.wxml-->
 <view class="addcart">
-  <view class="addcart_text" wx:if="{{from === 'goodsDetail'}}">加入购物车</view>
-  <image src="/lib/images/addcart.png" class="addcart_img" wx:else></image>
+    <block wx:if="{{from === 'goodsDetail'}}">
+        <view class="addcart_text">加入购物车</view>
+    </block>
+    <block wx:else>
+        <image src="/lib/images/addcart.png" class="addcart_img"></image>
+    </block>
 </view>

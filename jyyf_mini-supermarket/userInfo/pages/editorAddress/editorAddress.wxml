@@ -1,0 +1,80 @@
+<!--userInfo/pages/editorAddress/editorAddress.wxml-->
+<view class="container color333333 font28 bgffffff" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
+	<!-- 地址类型 start -->
+	<view class="section border_be5e5e5" wx:if="{{!id}}">
+		<view class="section_tit">地址类型</view>
+		<view class="section_desc">
+			<radio-group class="group" bindchange="setAddressType">
+				<view class="">
+					<radio id="address" value="1" checked></radio>
+					<label class="" for="address">配送地址</label>
+				</view>
+				<view class="">
+					<radio id="site" value="0"></radio>
+					<label class="" for="site">自提点地址</label>
+				</view>
+			</radio-group>
+		</view>
+	</view>
+	<!-- 地址类型 end -->
+	<!-- 收货人 start -->
+	<view class="section border_be5e5e5" wx:if="{{addressType}}">
+		<view class="section_tit">收货人</view>
+		<view class="section_desc">
+			<input type="" value="{{addressUsername}}" placeholder="名字" bindinput="setUsername" />
+		</view>
+	</view>
+	<!-- 收货人 end -->
+	<!-- 手机号 start -->
+	<view class="section border_be5e5e5" wx:if="{{addressType}}">
+		<view class="section_tit">手机号</view>
+		<view class="section_desc">
+			<input type="number" value="{{addressPhone}}" placeholder="手机号" bindinput="setPhone" />
+		</view>
+	</view>
+	<!-- 手机号 end -->
+	<!-- 收货地址 start -->
+	<view class="section border_be5e5e5">
+		<view class="section_tit">收货地址</view>
+		<view class="section_desc gps" bindtap="getGps">
+			<view class="color999999" wx:if="{{mapaddress}}">{{mapaddress}}</view>
+			<input type="" value="" placeholder="选择收货地址" disabled wx:elif="{{addressType && !mapaddress}}"/>
+			<input type="" value="" placeholder="选择收货地址查看附近自提点" disabled wx:elif="{{!addressType && !mapaddress}}"/>
+			<image src="/lib/images/mapimg.png"></image>
+		</view>
+	</view>
+	<!-- 收货地址 end -->
+	<!-- 详细地址 start -->
+	<view class="section border_be5e5e5" wx:if="{{addressType}}">
+		<view class="section_tit">详细地址</view>
+		<view class="section_desc">
+			<input type="" value="{{addressAddress}}" placeholder="详细地址" bindinput="setAddressAddress"/>
+		</view>
+	</view>
+	<!-- 详细地址 end -->
+	<!-- 自提点地址列表 start -->
+	<view class="site_list" wx:else>
+		<view class="site_tit">自提点列表</view>
+		<radio-group class="site_group" bindchange="setSiteid">
+			<block wx:for="{{siteList}}" wx:key="index">
+				<view class="site_item bgffffff border_be5e5e5">
+					<radio id="{{index}}" value="{{item.addressid}}"></radio>
+					<label class="item_desc" for="{{index}}">
+						<view class="color666666 font24">
+							<view>{{item.address + item.address + item.address}}</view>
+							<view class="phone">联系电话：{{item.Phone}}</view>
+						</view>
+						<view class="distance color71d793 tr">{{item.distance}}米</view>
+					</label>
+				</view>
+			</block>
+		</radio-group>
+	</view>
+	<!-- 自提点地址列表 end -->
+	<!-- 按钮 start -->
+	<view class="btn_cont font32">
+		<view class="btn save_btn colorffffff bg71d793 border_r500 border_a71d793 tc" bindtap="save" wx:if="{{addressType}}">保存地址</view>
+		<view class="btn save_btn colorffffff bg71d793 border_r500 border_a71d793 tc" bindtap="collectDept" wx:else>保存地址</view>
+	</view>
+	<!-- 按钮 end -->
+</view>

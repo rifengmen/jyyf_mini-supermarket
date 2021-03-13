@@ -1,1 +1,4 @@
 /* userInfo/pages/cantacts/cantacts.wxss */
+.cantacts_cont {
+    padding: 24rpx;
+}

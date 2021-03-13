@@ -13,7 +13,7 @@
     </view>
     <view class="nodata_cont" wx:if="{{!commentList.length && getFlag}}">
       <view class="nodata overflow">
-        <image src="/lib/images/orderNodata.png"></image>
+        <image src="/lib/images/orderNodata.png" mode="aspectFit"></image>
       </view>
       <view class="color999999 tc">评价记录空空如也～</view>
     </view>

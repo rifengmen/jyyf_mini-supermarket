@@ -28,7 +28,7 @@ Component({
     // 密码
     pd: [{password: ''}, {password: ''}, {password: ''}, {password: ''}, {password: ''}, {password: ''},],
     // focusFlag input框获取焦点开关
-    focusFlag: false,
+    focusFlag: true,
 
   },
 
@@ -36,22 +36,16 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    // stops 阻止冒泡
-    stops () {},
+    // 手指触摸后移动(阻止冒泡)
+    catchTouchMove (res) {
+      return false
+    },
 
     // input框获取焦点
     focusInput () {
       let self = this
       self.setData({
         focusFlag: !self.data.focusFlag,
-      })
-    },
-
-    // input框失去焦点
-    blurInput () {
-      let self = this
-      self.setData({
-        focusFlag: false,
       })
     },
 

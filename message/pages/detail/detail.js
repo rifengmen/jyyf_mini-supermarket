@@ -98,6 +98,8 @@ Page({
   getNoticeDetail () {
     let self = this
     let data = {
+      // msg_type,公告类别，0：根据id查询普通公告详情； 1：查询关于我们；  2：查询联系我们
+      msg_type: 0,
       id: self.data.id
     }
     wx.showLoading({
@@ -158,8 +160,6 @@ Page({
       })
     })
     let current = e.target.src
-    console.log(current, 'current')
-    console.log(e, 'e')
     wx.previewImage({
       current: current, // 当前显示图片的http链接
       urls: srcList // 需要预览图片http链接列表

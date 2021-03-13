@@ -1,2 +1,7 @@
 <!--userInfo/pages/cantacts/cantacts.wxml-->
-<web-view src="{{cantacts}}"></web-view>
+<!--<web-view src="{{cantacts}}"></web-view>-->
+<view class="container color333333 font28 bgffffff">
+    <view class="cantacts_cont">
+        <rich-text class="" nodes="{{nodes}}" bindtap="previewImage"></rich-text>
+    </view>
+</view>

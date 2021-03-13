@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "scanDialog": "/component/scanDialog/scanDialog"
+  },
+  "navigationBarTitleText": "购物车"
+}

@@ -1,54 +1,34 @@
-/* 搜索框样式 start */
-.search_cont {
-  width: 100%;
-  height: 70rpx;
+/* logo样式 start */
+.logo {
+  width: calc(100% - 160rpx);
+  height: 300rpx;
+  padding: 80rpx;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  flex-flow: column;
 }
-.search_cont_90 {
-  width: calc(100% - 48rpx);
-  height: 90rpx;
-  margin: 0 auto;
-}
-.search_cont .search {
+.logo_img {
   width: 100%;
-  height: 60rpx;
+  height: 200rpx;
 }
-.search_cont .search .search_input {
-  width: calc(100% - 60rpx);
-  height: 100%;
-  border: none;
-  padding: 0 30rpx;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-.search_input image {
-  width: 30rpx;
-  height: 30rpx;
-  margin-right: 20rpx;
-}
-.search_input form {
-  width: 90%;
-  height: 100%;
-}
-.search_input input {
+.logo_img image {
   width: 100%;
   height: 100%;
-  line-height: 60rpx;
 }
-/* 搜索框样式 end */
+/* logo样式 end */
 /* 分类样式 start */
 .cate_item {
-  width: 121rpx;
-  height: 170rpx;
-  padding: 12rpx;
+  width: 20%;
+  height: 180rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: column;
 }
 .cate_img {
-  width: 102rpx;
-  height: 102rpx;
-  padding: 10rpx;
+  width: 122rpx;
+  height: 122rpx;
 }
 .cate_img image {
   width: 100%;
@@ -56,9 +36,32 @@
 }
 .cate_name {
   width: 100%;
-  margin-top: 8rpx;
+  height: calc(100% - 122rpx);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /* 分类样式 end */
+/* banner图轮播点儿样式 start */
+.dots {
+  position: absolute;
+  right: 20rpx;
+  bottom: 20rpx;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+.dots .dot {
+  margin: 0 8rpx;
+  width: 10rpx;
+  height: 10rpx;
+  transition: all .5s;
+}
+.dots .dot.active{
+  width: 24rpx;
+}
+/* banner图轮播点儿样式 end */
 /* 商品列表 start */
 .goods_cont {
   width: calc(100% - 88rpx);
@@ -86,13 +89,8 @@
   height: 100%;
   padding: 0 24rpx;
 }
-.goods_scorll {
-  width: 100%;
-  height: 100%;
-}
 .goods_list1 .goods_item {
   width: 100%;
-  min-height: 190rpx;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -101,8 +99,8 @@
   border-bottom: unset;
 }
 .goods_list1 .goods_item .item_img {
-  width: 150rpx;
-  height: 150rpx;
+  width: 170rpx;
+  height: 170rpx;
   margin-right: 20rpx;
   position: relative;
 }
@@ -122,9 +120,9 @@
   align-items: center;
 }
 .goods_list1 .goods_item .item_desc {
-  width: calc(100% - 170rpx);
+  width: calc(100% - 190rpx);
   min-height: 170rpx;
-  padding: 10rpx 0;
+  padding: 20rpx 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -196,6 +194,118 @@
   align-items: center;
 }
 /* 商品列表_1 end */
+/* 商品列表_1plus start */
+.goods_list1plus {
+  width: calc(100% - 48rpx);
+  height: 100%;
+  padding: 0 24rpx;
+}
+.goods_list1plus .goods_item {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.goods_list1plus .goods_item:last-child {
+  margin-bottom: unset;
+}
+.goods_list1plus .goods_item .item_img {
+  width: 300rpx;
+  height: 300rpx;
+  position: relative;
+}
+.goods_list1plus .goods_item .item_img image {
+  width: 100%;
+  height: 100%;
+}
+.goods_list1plus .goods_item .item_img .age {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.goods_list1plus .goods_item .item_desc {
+  width: calc(100% - 348rpx);
+  min-height: 252rpx;
+  padding: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: column;
+}
+.goods_list1plus .goods_item .item_name {
+  width: 100%;
+  max-height: 80rpx;
+}
+.goods_list1plus .goods_item .panicBuy {
+  width: 100%;
+}
+.goods_list1plus .goods_item .price_cont {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.goods_list1plus .goods_item .price {
+  width: 70%;
+  height: 100%;
+}
+.goods_list1plus .goods_item .price .actual_price {
+  margin-right: 20rpx;
+}
+.goods_list1plus .goods_item .price del {
+  text-decoration: line-through;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.goods_list1plus .goods_item .cart {
+  width: 30%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.goods_list1plus .goods_item .cart_img {
+  width: 60rpx;
+  height: 60rpx;
+}
+.goods_list1plus .goods_item .cart image {
+  width: 100%;
+  height: 100%;
+}
+.editor_cart {
+  width: 174rpx;
+  height: 40rpx;
+  padding: 4rpx 8rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.editor_cart .btn {
+  width: 40rpx;
+  height: 40rpx;
+}
+.editor_cart .btn image {
+  width: 100%;
+  height: 100%;
+}
+.editor_cart .input_cart {
+  width: 80rpx;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 商品列表_1plus end */
 /* 商品列表_2 start */
 .goods_list2 {
   width: 100%;
@@ -203,31 +313,47 @@
   justify-content: space-between;
 }
 .goods_list2 .goods_list2_cont {
-  width: 340rpx;
+  width: 344rpx;
 }
 .goods_list2 .goods_item {
   width: 100%;
   height: auto;
-  margin-bottom: 18rpx;
+  margin-bottom: 20rpx;
   box-shadow:0px 0px 4px 3px rgba(243,239,239,0.5);
 }
+.goods_list2 .goods_item:last-child {
+  margin-bottom: unset;
+}
 .goods_list2 .goods_item .item_img {
-  width: calc(100% - 40rpx);
-  height: 300rpx;
-  padding: 0 20rpx;
+  width: 100%;
+  height: 344rpx;
+  position: relative;
 }
 .goods_list2 .goods_item .item_img image {
   width: 100%;
   height: 100%;
 }
-.goods_list2 .goods_item .item_name {
+.goods_list2 .goods_item .item_img .age {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.goods_list2 .goods_item .item_desc {
   width: calc(100% - 40rpx);
+  padding: 20rpx;
+}
+.goods_list2 .goods_item .item_name {
+  width: 100%;
   line-height: 1.5;
-  margin: 20rpx auto;
 }
 .goods_list2 .goods_item .price_cont {
-  width: calc(100% - 40rpx);
-  margin: 20rpx auto;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -308,19 +434,24 @@
   height: 100%;
 }
 /* 商品列表_3 end */
+.goodslist {
+  width: 100%;
+  padding: unset;
+}
 /* 商品列表 end */
 /* 无数据样式 start */
 .nodata_cont {
   width: 100%;
-  height: 100%;
+  /*height: 100%;*/
+  padding: 150rpx 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-flow: column;
 }
 .nodata {
-  width: 362rpx;
-  height: 280rpx;
+  width: 300rpx;
+  height: 200rpx;
   margin-bottom: 50rpx;
 }
 .nodata image {
@@ -440,6 +571,11 @@
 }
 /* 提示角标 end */
 /* 标签 start */
+.tag_cont {
+  width: 100%;
+  height: auto;
+  padding: 10rpx 0;
+}
 .tag {
   margin: 0 20rpx;
   padding: 4rpx 20rpx;
@@ -451,4 +587,61 @@
   margin-right: unset;
 }
 /* 标签 end */
+/* 密码弹框 start */
+.password_cont {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, .7);
+}
+.password_cont .password {
+  width: 540rpx;
+  height: 290rpx;
+  margin: 350rpx auto 0 auto;
+  padding: 40rpx;
+}
+.password_cont .tit {
+  padding: 10rpx 0;
+}
+.password_cont .password_input {
+  width: 100%;
+  height: 72rpx;
+  padding: 40rpx 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.password_cont .password_input .input {
+  position: absolute;
+  top: 40rpx;
+  left: 0;
+  width: 0;
+  height: 0rpx;
+}
+.password_cont .password_input .pd {
+  width: 72rpx;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.password_cont .password_btn {
+  width: 100%;
+  height: 50rpx;
+  padding: 30rpx 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.password_cont .password_btn .btn {
+  width: 170rpx;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 密码弹框 end */
 

@@ -16,7 +16,7 @@
     </view>
     <view class="orderdesc">
       <view>订单金额</view>
-      <view class="font24 color71d793">￥{{totalMoney || 0}}</view>
+      <view class="font32 color71d793">￥{{totalMoney || 0}}</view>
     </view>
   </view>
   <!-- 订单信息 end -->

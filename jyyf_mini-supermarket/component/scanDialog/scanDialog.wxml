@@ -1,0 +1,18 @@
+<!--component/scanDialog/scanDialog.wxml-->
+<view class="goodsInfo" catchtouchmove="ture" xmlns:wx="http://www.w3.org/1999/xhtml">
+  <view class="goodsInfo_cont bgffffff border_r20">
+    <view class="goodsInfo_name goods_section font32">{{goodsInfo.productName}}</view>
+    <view class="goods_section">{{goodsInfo.barcode}}</view>
+    <view class="goods_section" wx:if="{{item.scalageFlag}}">购买数量   ×1</view>
+    <view class="goods_section" wx:else>购买数量   ×{{goodsInfo.quantity}}</view>
+    <view class="goods_section font32 font_blod colorfa6400">￥{{goodsInfo.actualSaleMoney}}</view>
+    <del class="goods_section del font26 color999999" wx:if="{{goodsInfo.actualSaleMoney !== goodsInfo.saleMoney}}">
+      ￥{{goodsInfo.saleMoney}}
+    </del>
+    <view class="scan_btn_cont">
+      <view class="btn color999999 border_a979797 border_r500 tc" bindtap="addBack">加入返回</view>
+      <view class="btn colorffffff bg71d793 border_a71d793 border_r500 tc" bindtap="addGoOn">加入继续</view>
+    </view>
+    <image src="/lib/images/closed.png" class="closed bgfa6400 border_r500" mode="aspectFit" bindtap="cancel"></image>
+  </view>
+</view>

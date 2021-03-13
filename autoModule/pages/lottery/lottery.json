@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "countdown": "/component/countdown/countdown"
+  },
   "navigationBarTitleText": "积分抽奖"
 }

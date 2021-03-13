@@ -11,14 +11,16 @@ Page({
   data: {
     // 请求开关
     getFlag: false,
-    // 公告列表
+    // 消息类别标识，0：个人消息，10：内部功能新订单消息
+    businessflag: 0,
+    // 消息列表
     messageList: [],
     // 查询开始时间
     startdate: '',
     // 页码
     page: 1,
     // 每页条数
-    count: 15,
+    count: 16,
     // 总条数
     rowCount: 0,
   },
@@ -28,6 +30,9 @@ Page({
    */
   onLoad: function (options) {
     let self = this
+    self.setData({
+      businessflag: options.businessflag || 0,
+    })
     // 获取消息列表
     self.getMessageList()
   },
@@ -107,6 +112,7 @@ Page({
   getMessageList () {
     let self = this
     let data = {
+      businessflag: self.data.businessflag,
       messageFlag: 1,
       Page: self.data.page,
       pageSize: self.data.count

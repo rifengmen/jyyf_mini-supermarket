@@ -1,0 +1,83 @@
+<!--component/orderDesc/orderDesc.wxml-->
+<!-- 收货地址 start -->
+<view class="address_cont bgffffff">
+    <view class="address">
+        <view class="name font_blod">{{orderDetail.receiver + ' ' + orderDetail.phone}}</view>
+        <view class="desc font24 color666666">
+            <text class="tag colorffffff font24 bg71d793 border_r500 tc" wx:if="{{!orderDetail.sendtype}}">自提点</text>
+            <text>{{orderDetail.address}}</text>
+        </view>
+    </view>
+</view>
+<!-- 收货地址 end -->
+<!-- 分割线 start -->
+<view class="decollator bgffffff overflow">
+    <image src="/lib/images/decollator.png" mode="aspectFill"></image>
+</view>
+<!-- 分割线 end -->
+<!-- 门店名称 start -->
+<view class="deptname_cont bgffffff">
+    <view class="deptname_border border_be5e5e5">
+        <view class="deptname">
+            <view class="img overflow">
+                <image src="/lib/images/shop.png"></image>
+            </view>
+            <view class="name font_blod ellipsis">{{orderDetail.shopname}}</view>
+        </view>
+        <view class="orderCount color999999 tr">共{{orderDetail.OrderDetail.length}}类</view>
+    </view>
+</view>
+<!-- 门店名称 end -->
+<!-- 订单商品列表 start -->
+<view class="goodslist bgffffff">
+    <view class="goods_list1">
+        <block wx:for="{{orderDetail.OrderDetail}}" wx:key="index">
+            <view class="goods_item bgffffff">
+                <view class="item_img overflow">
+                    <image src="{{item.picture1 ? (baseUrl + item.picture1) : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
+                </view>
+                <view class="item_desc">
+                    <view class="item_name ellipsis2">{{item.productname}}</view>
+                    <view class="price_cont">
+                        <view class="price color999999 font22">
+                            <view class="actual_price">
+                                <text class="colorfa6400">￥</text>
+                                <text class="colorfa6400 font36">{{item.price}}</text>
+                            </view>
+                            <block wx:if="{{item.price !== item.saleprice}}">
+                                <del class="">
+                                    <text class="">￥</text>
+                                    <text class="font26">{{item.saleprice}}</text>
+                                </del>
+                            </block>
+                        </view>
+                        <view class="cart">
+                            <view>× {{item.amount}}</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </block>
+    </view>
+</view>
+<!-- 订单商品列表 end -->
+<!-- 订单信息 start -->
+<view class="order_desc bgffffff">
+    <view class="">
+        <view class="tit color999999">订单编号：</view>
+        <text class=""> {{orderDetail.orderNum}}</text>
+    </view>
+    <view class="" wx:if="{{paymodename}}">
+        <view class="tit color999999">支付方式：</view>
+        <text class=""> {{paymodename}}</text>
+    </view>
+    <view class="">
+        <view class="tit color999999">备注：</view>
+        <text class=""> {{orderDetail.comment || '无'}}</text>
+    </view>
+    <view class="" wx:if="{{orderDetail.pickoutcode !== '0'}}">
+        <view class="tit color999999">取货码：</view>
+        <text class="colorfa6400 font32"> {{orderDetail.pickoutcode}}</text>
+    </view>
+</view>
+<!-- 订单信息 end -->

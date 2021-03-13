@@ -139,8 +139,12 @@ Page({
           toast.toast('附近暂无扫码购店铺')
           return false
         } else if (res.data.length >= 1) {
+          let scanShopInfo = res.data[0]
           self.setData({
-            scanShopInfo: res.data[0],
+            scanShopInfo: scanShopInfo,
+            // 店铺信息
+            deptcode: scanShopInfo.deptcode,
+            deptname: scanShopInfo.deptname,
           })
           // 获取出场码
           self.getBar()
@@ -157,15 +161,17 @@ Page({
   getBar () {
     let self = this
     let data = {
-      deptcode: self.data.scanShopInfo.deptcode
+      deptcode: self.data.deptcode
     }
     API.invest.getFlowno(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
           barimg: res.data.barimg,
-          flowno: res.data.flowno,
+          flowno: res.data.orderInfo.flowno,
         })
+        // 获取订单详情
+        self.getOrderDetail()
       } else {
         toast.toast(res.message)
       }
@@ -187,7 +193,7 @@ Page({
     let self = this
     let data = {
       flowno: self.data.flowno,
-      deptcode: self.data.deptcode
+      deptcode: self.data.deptcode,
     }
     API.invest.listMicroFlowDtl(data).then(result => {
       let res = result.data

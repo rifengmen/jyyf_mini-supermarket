@@ -13,17 +13,3 @@
 .input {
   width: calc(100% - 150rpx);
 }
-.btn_cont {
-  width: 100%;
-  height: auto;
-  padding: 60rpx 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.btn {
-  width: calc(100% - 80rpx);
-  height: 80rpx;
-  line-height: 80rpx;
-  margin: 0 auto;
-}

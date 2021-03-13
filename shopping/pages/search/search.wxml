@@ -1,36 +1,36 @@
 <!--shopping/pages/search/search.wxml-->
-<view class="container color333333 font28" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
+<view class="container color333333 font28" data-weui-theme="dark">
 	<!-- 搜索 start -->
-	<view class="search_cont search_cont_90 color71d793 font24">
+	<view class="search_cont color71d793 font24">
 		<view class="search bgf0f0f0 border_r500 overflow">
 			<view class="search_input fl">
 				<image src="/lib/images/search.png" class="fr"></image>
 				<form action="javascript:return true;">
-					<input type="text" focus confirm-type='search' placeholder="搜索商品" class="fl" value="{{search_val}}" bindconfirm="toGoodsList"/>
+					<input type="text" focus="{{true}}" confirm-type='search' placeholder="搜索商品" class="fl" value="{{search_val}}" bindconfirm="toGoodsList"/>
 				</form>
 			</view>
 		</view>
 	</view>
 	<!-- 搜索 end -->
 	<!-- 搜索历史 start -->
-	<view class="search_section">
-		<view class="tit">
-			<view class="font32 font_blod">搜索历史：</view>
-			<view class="color999999" bindtap="clearHistoryList">清空</view>
-		</view>
-		<view class="history colord0cfcf overflow">
-			<view class="fl border_r500" wx:for="{{hostoryList}}" wx:key="index">{{item.name}}</view>
-		</view>
-	</view>
+	<!--<view class="search_section">-->
+		<!--<view class="tit">-->
+			<!--<view class="font32 font_blod">搜索历史：</view>-->
+			<!--<view class="color999999" bindtap="clearHistoryList">清空</view>-->
+		<!--</view>-->
+		<!--<view class="history colord0cfcf overflow">-->
+			<!--<view class="fl border_r500" wx:for="{{hostoryList}}" wx:key="index">{{item.name}}</view>-->
+		<!--</view>-->
+	<!--</view>-->
 	<!-- 搜索历史 end -->
 	<!-- 热门搜索 start -->
-	<view class="search_section">
-		<view class="tit">
-			<view class="font32 font_blod">热门搜索：</view>
-		</view>
-		<view class="history colord0cfcf overflow">
-			<view class="fl border_r500" wx:for="{{hotSearchList}}" wx:key="index">{{item.name}}</view>
-		</view>
-	</view>
+	<!--<view class="search_section">-->
+		<!--<view class="tit">-->
+			<!--<view class="font32 font_blod">热门搜索：</view>-->
+		<!--</view>-->
+		<!--<view class="history colord0cfcf overflow">-->
+			<!--<view class="fl border_r500" wx:for="{{hotSearchList}}" wx:key="index">{{item.name}}</view>-->
+		<!--</view>-->
+	<!--</view>-->
 	<!-- 热门搜索 end -->
 </view>

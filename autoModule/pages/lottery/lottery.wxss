@@ -12,7 +12,7 @@
   width: 100%;
   height: 100%;
 }
-.btn_cont {
+.lottery_btn_cont {
   position: absolute;
   top: 220rpx;
   left: 50%;
@@ -23,7 +23,7 @@
   justify-content: space-between;
   align-items: center;
 }
-.btn_cont .btn {
+.lottery_btn_cont .btn {
   width: auto;
   height: 100%;
   padding: 0 30rpx;
@@ -31,12 +31,28 @@
   justify-content: center;
   align-items: center;
 }
-.btn_cont .btn:first-child {
+.lottery_btn_cont .btn:first-child {
   border-radius: 0 500rpx 500rpx 0;
 }
-.btn_cont .btn:last-child {
+.lottery_btn_cont .btn:last-child {
   border-radius: 500rpx 0 0 500rpx;
 }
+/* 倒计时 start */
+.lottery_countdown {
+  position: absolute;
+  top: 150rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 80rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lottery_countdown .countdown_cont {
+  margin-left: 20rpx;
+}
+/* 倒计时 end */
 /* 抽奖转盘样式 start */
 .lottery_cont {
   position: absolute;

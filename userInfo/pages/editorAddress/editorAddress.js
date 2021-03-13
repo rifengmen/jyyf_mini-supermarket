@@ -13,7 +13,7 @@ Page({
     id: '',
     // 地址详情(修改地址时用)
     address: '',
-    // 来自哪儿
+    // 从哪里来/组件使用的地方
     from: '',
     // 名字
     addressUsername: '',

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "password": "/component/password/password"
+  },
+  "navigationBarTitleText": "编辑订单"
+}

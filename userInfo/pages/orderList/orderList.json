@@ -1,7 +1,8 @@
 {
   "usingComponents": {
-    "startdate": "/component/startdate/startdate",
-    "cancelBtn": "/component/cancelBtn/cancelBtn"
+    "buyEnd": "/component/buyEnd/buyEnd",
+    "cancelBtn": "/component/cancelBtn/cancelBtn",
+    "startdate": "/component/startdate/startdate"
   },
   "navigationBarTitleText": "订单列表",
   "enablePullDownRefresh": true,

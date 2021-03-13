@@ -1,0 +1,369 @@
+/* 字体尺寸 start */
+.font10 {
+  font-size: 10rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font12 {
+  font-size: 12rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font14 {
+  font-size: 14rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font16 {
+  font-size: 16rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font18 {
+  font-size: 18rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font20 {
+  font-size: 20rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font22 {
+  font-size: 22rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font24 {
+  font-size: 24rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font26 {
+  font-size: 26rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font28 {
+  font-size: 28rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font30 {
+  font-size: 30rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font32 {
+  font-size: 32rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font34 {
+  font-size: 34rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font36 {
+  font-size: 36rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font38 {
+  font-size: 38rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font40 {
+  font-size: 40rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font50 {
+  font-size: 50rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font60 {
+  font-size: 60rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font70 {
+  font-size: 70rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+.font80 {
+  font-size: 80rpx;
+  font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+/* 字体尺寸 end */
+
+/* 字体粗细 start */
+.font_lighter {
+  font-weight: lighter;
+}
+.font_blod{
+  font-weight: bold;
+}
+.font_bloder {
+  font-weight: bolder
+}
+.font_inherit {
+  font-weight: inherit;
+}
+/* 字体粗细 end */
+
+/* 字体颜色 start */
+.color000000 {
+  color: #000;
+}
+.color333333 {
+  color: #333;
+}
+.color666666 {
+  color: #666;
+}
+.color999999 {
+  color: #999;
+}
+.colord0cfcf {
+  color: #d0cfcf;
+}
+.colorc7c7c7 {
+  color: #c7c7c7;
+}
+.colorcecece {
+  color: #cecece;
+}
+.colorffffff {
+  color: #ffffff;
+}
+.colorfa6400 {
+  color: #fa6400;
+}
+.colord94242 {
+  color: #d94242;
+}
+.colore42837 {
+  color: #e42837;
+}
+.color71d793 {
+  color: #71d793;
+}
+.color0091ff {
+  color: #0091ff;
+}
+.colorrgba0 {
+  color: rgba(255, 255, 255, 0);
+}
+/* 字体颜色 end */
+
+/* 背景颜色 start */
+.bgffffff {
+  background-color: #ffffff;
+}
+.bg71d793 {
+  background-color: #71d793;
+}
+.bg329e56 {
+  background-color: #329e56;
+}
+.bg38b060 {
+  background-color: #38b060;
+}
+.bgcecece {
+  background-color: #cecece;
+}
+.bge7e7e7 {
+  background-color: #e7e7e7;
+}
+.bge2dede {
+  background-color: #e2dede;
+}
+.bgf0f0f0 {
+  background-color: #f0f0f0;
+}
+.bgfafafa {
+  background-color: #fafafa;
+}
+.bgf9f9f9 {
+  background-color: #f9f9f9;
+}
+.bgcf1322 {
+  background-color: #cf1322;
+}
+.bgfa5151 {
+  background-color: #fa5151;
+}
+.bge42837 {
+  background-color: #e42837;
+}
+.bgfbd2af {
+  background-color: #fbd2af;
+}
+.bgd17537 {
+  background-color: #d17537;
+}
+.bgf7b500 {
+  background-color: #f7b500;
+}
+.bgfa6400 {
+  background-color: #fa6400;
+}
+.bg999999 {
+  background-color: #999999;
+}
+.bg373947 {
+  background-color: #373947;
+}
+/* 背景颜色 end */
+/* 背景渐变 start */
+.bg71d793_linear {
+  background:linear-gradient(180deg, #71d793 0%, #f9f9f9 100%);
+}
+.bgf68e74_linear {
+  background:linear-gradient(180deg, #f68e74 0%, #ffffff 110%);
+}
+.bgffb662_linear {
+  background:linear-gradient(180deg, #ffb662 0%, #fa6400 100%);
+}
+/* 背景渐变 end */
+/* 圆角 start */
+.border_r4 {
+  border-radius: 4rpx;
+}
+.border_r6 {
+  border-radius: 6rpx;
+}
+.border_r8 {
+  border-radius: 8rpx;
+}
+.border_r10 {
+  border-radius: 10rpx;
+}
+.border_r12 {
+  border-radius: 12rpx;
+}
+.border_r14 {
+  border-radius: 14rpx;
+}
+.border_r16 {
+  border-radius: 16rpx;
+}
+.border_r18 {
+  border-radius: 18rpx;
+}
+.border_r20 {
+  border-radius: 20rpx;
+}
+.border_r500 {
+  border-radius: 500rpx;
+}
+/* 圆角 end */
+/* 边框 start */
+.border_be5e5e5 {
+  border-bottom: 1px solid #e5e5e5;
+}
+.border_bf0f0f0 {
+  border-bottom: 1px solid #f0f0f0;
+}
+.border_affffff {
+  border: 1px solid #ffffff;
+}
+.border_a71d793 {
+  border: 1px solid #71d793;
+}
+.border_a38b060 {
+  border: 1px solid #38b060;
+}
+.border_a979797 {
+  border: 1px solid #979797;
+}
+.border_af7b500 {
+  border: 1px solid #f7b500;
+}
+.border_afa6400 {
+  border: 1px solid #fa6400;
+}
+.border_acecece {
+  border: 1px solid #cecece;
+}
+.border_a979797_2 {
+  border: 2px solid #979797;
+}
+.border_a71d793_2 {
+  border: 2px solid #71d793;
+}
+/* 边框 end */
+/* 层级 start */
+.z_index_-2 {
+  z-index: -2;
+}
+.z_index_-1 {
+  z-index: -1;
+}
+.z_index_1 {
+  z-index: 1;
+}
+.z_index_2 {
+  z-index: 2;
+}
+.z_index_5 {
+  z-index: 5;
+}
+.z_index_10 {
+  z-index: 10;
+}
+.z_index_20 {
+  z-index: 20;
+}
+.z_index_999 {
+  z-index: 999;
+}
+.z_index_99999 {
+  z-index: 99999;
+}
+/* 层级 end */
+/* 文本溢出隐藏 start */
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ellipsis2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+/* 文本溢出隐藏 end */
+
+/* 布局方式 start */
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.tl {
+  text-align: left;
+}
+.tc {
+  text-align: center;
+}
+.tr {
+  text-align: right;
+}
+.overflow {
+  overflow: hidden;
+}
+/* 布局方式 end */
+/* 取消微信默认样式 start */
+button::after {
+  content: unset;
+  width: unset;
+  height: unset;
+  position: unset;
+  top: unset;
+  left: unset;
+  border: unset;
+  transform: unset;
+  transform-origin: unset;
+  box-sizing: unset;
+  border-radius: unset;
+}
+/* 取消微信默认样式 end */
+/* input框 start */
+input::placeholder {
+  color: #999999;
+}
+/* input框 end */
+/* del标签 start */
+del {
+  text-decoration: line-through;
+}
+/* del标签 end */

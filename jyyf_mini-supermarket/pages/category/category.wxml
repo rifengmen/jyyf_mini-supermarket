@@ -1,0 +1,84 @@
+<!--pages/category/category.wxml-->
+<view class="container color333333 font28">
+	<!-- 一级分类 start -->
+	<view class="level1 bgffffff border_bf0f0f0 z_index_1">
+		<scroll-view class="cate_list" scroll-x enable-flex="true">
+			<view class="cate_item" wx:for="{{level1}}" wx:key="index" data-classid="{{item.classid}}" data-index="{{index}}" bindtap="setLevel1ActiveIndex">
+				<view class="cate_img {{level1ActiveIndex === index ? 'active' : ''}} border_r500 overflow">
+					<image src="{{baseUrl + item.ico}}" lazy-load="true"></image>
+				</view>
+				<view class="cate_name font24 tc ellipsis {{level1ActiveIndex === index ? 'color71d793' : ''}}">{{item.classname}}</view>
+			</view>
+		</scroll-view>
+	</view>
+	<!-- 一级分类 end -->
+	<view class="main">
+		<!-- 二级分类 start -->
+		<view class="level2 font24 bgf0f0f0">
+			<view class="level2_list">
+				<block wx:for="{{level2}}" wx:key="index">
+					<view class="level2_item {{level2ActiveIndex === index ? 'bgffffff' : 'bgf0f0f0'}}" data-classid="{{item.classid}}" data-index="{{index}}" bindtap="setLevel2ActiveIndex">
+						<view class="level2_name {{level2ActiveIndex === index ? 'active font28 font_blod' : ''}}">{{item.classname}}</view>
+					</view>
+				</block>
+			</view>
+		</view>
+		<!-- 二级分类 end -->
+		<!-- 商品列表 start -->
+		<view class="goodscont">
+			<view class="goods_list1">
+				<block>
+					<navigator class="goods_item bgffffff border_be5e5e5" hover-class="none" wx:for="{{goodsList}}" wx:key="index" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&title={{item.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
+						<view class="item_img overflow">
+							<image src="{{item.Defaultimage ? (baseUrl + item.Defaultimage) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
+						</view>
+						<view class="item_desc">
+							<view class="item_name ellipsis2">{{item.Name}}</view>
+							<view class="price_cont">
+								<view class="price color999999 font22" wx:if="{{item.scaleflag}}">
+									<view class="actual_price">
+										<text class="colorfa6400">￥</text>
+										<text class="colorfa6400 font36">{{item.Highpprice / 2}}</text>
+										<text class="">/斤</text>
+									</view>
+									<del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
+										<text class="">￥</text>
+										<text class="font26">{{item.Highoprice / 2}}</text>
+										<text class="">/斤</text>
+									</del>
+								</view>
+								<view class="price color999999 font22" wx:else>
+									<view class="actual_price">
+										<text class="colorfa6400">￥</text>
+										<text class="colorfa6400 font36">{{item.Highpprice}}</text>
+									</view>
+									<del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
+										<text class="">￥</text>
+										<text class="font26">{{item.Highoprice}}</text>
+									</del>
+								</view>
+								<view class="cart">
+									<view class="cart_img overflow">
+										<addCart id="addCart" catchtap="addCart" data-goods="{{item}}" bind:getCartCount="getCartCount"></addCart>
+									</view>
+								</view>
+							</view>
+						</view>
+					</navigator>
+				</block>
+				<view class="nodata_cont" wx:if="{{!goodsList.length && getFlag}}">
+					<view class="nodata overflow">
+						<image src="/lib/images/goodsNodata.png"></image>
+					</view>
+					<view class="color999999 tc">暂无相关商品～</view>
+				</view>
+			</view>
+		</view>
+		<!-- 商品列表 end -->
+	</view>
+	<!-- dialog start -->
+	<view class="dialog" wx:if="{{dialogFlag}}">
+		<dialog goods="{{goods}}" bind:dialogClose="dialogClose" bind:dialogConfirm="dialogConfirm"></dialog>
+	</view>
+	<!-- dialog end -->
+</view>

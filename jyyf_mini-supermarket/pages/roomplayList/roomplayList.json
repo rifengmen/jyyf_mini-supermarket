@@ -1,0 +1,6 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "房间列表",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 50
+}

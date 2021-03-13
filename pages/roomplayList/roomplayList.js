@@ -14,7 +14,7 @@ Page({
     // 查询起始房间号
     curStart: 0,
     // 每页条数
-    maxRooms: 12,
+    maxRooms: 20,
     // 房间列表
     roomplayList: []
   },
@@ -128,9 +128,9 @@ Page({
   toRoom (e) {
     let self = this
     let roomid = e.currentTarget.dataset.roomid
-    let customParams = encodeURIComponent(JSON.stringify({ path: 'pages/login/login', pid: 1 }))
+    let customParams = encodeURIComponent(JSON.stringify({ path: 'pages/index/index', pid: 1 }))
     wx.navigateTo({
-      url: "plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=" + roomid + "&custom_params=${customParams}"
+      url: "plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=" + roomid + "&custom_params=" + customParams
     })
   },
 })

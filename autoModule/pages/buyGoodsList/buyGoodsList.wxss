@@ -24,7 +24,4 @@
   height: 100%;
   line-height: 60rpx;
 }
-.nodata_cont {
-  width: 100%;
-  height: calc(100vh - 48rpx);
-}
+

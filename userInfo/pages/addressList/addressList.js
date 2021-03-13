@@ -11,7 +11,7 @@ Page({
   data: {
     // 地址列表
     addressList: [],
-    // 来自哪儿
+    // 从哪里来/组件使用的地方
     from: '',
     // 请求开关
     getFlag: false,
@@ -240,8 +240,8 @@ Page({
     wx.showModal({
       title: '提示',
       content: '您确定要删除这个地址吗？',
-      success (res) {
-        // 确认按钮执行
+      success: res => {
+        // 确认
         if (res.confirm) {
           // 判断地址类型,auditMark,0:自提点；1:收货地址
           if (address.auditMark) {

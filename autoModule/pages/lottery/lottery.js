@@ -22,10 +22,18 @@ Page({
     cent_btnurl: app.globalData.cent_btnurl || '/lib/images/lotteryStart.png',
     // 谢谢图标
     thanksimg: '/lib/images/thank.png',
-    // 积分
-    score: '',
+    // 抽奖开始标识
+    startFlag: false,
+    // 抽奖结束标识
+    endFlag: false,
+    // 抽奖开始时间
+    prizeStart: '',
+    // 抽奖结束时间
+    prizeEnd: '',
     // 奖项
     prizeList: '',
+    // 抽奖消耗积分
+    prizeUseCent: 0,
     // 抽奖开关
     getFlag: true,
     // 抽奖结果
@@ -115,6 +123,21 @@ Page({
   //
   // },
 
+  // 设置抽奖开始标识
+  setStartFlag () {
+    let self = this
+    self.setData({
+      startFlag: true
+    })
+  },
+  // 设置抽奖结束标识
+  setEndFlag () {
+    let self = this
+    self.setData({
+      endFlag: true
+    })
+  },
+
   // 获取奖项
   getPrizeList () {
     let self = this
@@ -125,6 +148,11 @@ Page({
         if (res.data && res.data.prizeList.length) {
           // 设置旋转角度
           self.setAngle(res.data.prizeList)
+          self.setData({
+            prizeUseCent: res.data.prizeUseCent,
+            prizeStart: res.data.lotteryStart,
+            prizeEnd: res.data.lotteryEnd,
+          })
         }
       }
     }).catch(error => {
@@ -158,6 +186,17 @@ Page({
   getCentPrize () {
     let self = this
     let data = {}
+    // 判断抽奖开始时间，拦截请求
+    if (!self.data.startFlag) {
+      toast.toast('本次抽奖活动还未开始，请耐心等待！')
+      return false
+    }
+    // 判断抽奖结束时间，拦截请求
+    if (self.data.endFlag) {
+      toast.toast('本次抽奖活动已经结束，下次活动正在准备中！')
+      return false
+    }
+    // 判断是否获取到奖品列表
     if (!self.data.getFlag) {
       return false
     }
@@ -195,8 +234,6 @@ Page({
     let angle = prizeList[self.data.centPrizeIndex].angle
     // 旋转方法
     self.startRotate(angle, () => {
-      // 获取积分
-      self.getScore()
       // 弹出抽奖结果
       wx.showModal({
         title: '恭喜',

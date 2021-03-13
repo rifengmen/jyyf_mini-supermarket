@@ -1,0 +1,76 @@
+/* userInfo/pages/editorAddress/editorAddress.wxss */
+.section {
+  width: calc(100% - 48rpx);
+  min-height: 100rpx;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.isdefault {
+  justify-content: space-between;
+}
+.section_tit {
+  margin-right: 100rpx;
+}
+.section_desc {
+  width: 60%;
+  line-height: 1.5;
+  padding: 18rpx 0;
+  white-space: pre-wrap;
+}
+.group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.gps {
+  width: 480rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.gps view {
+  width: calc(100% - 80rpx);
+}
+.gps input {
+  width: 400rpx;
+}
+.gps image {
+  width: 60rpx;
+  height: 60rpx;
+}
+.site_list {
+  width: 100%;
+  height: auto;
+}
+.site_tit {
+  width: calc(100% - 48rpx);
+  height: 80rpx;
+  line-height: 80rpx;
+  margin: 0 auto;
+}
+.site_item {
+  width: calc(100% - 48rpx);
+  height: auto;
+  margin: 0 auto;
+  padding: 20rpx 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.site_item:last-child {
+  border: unset;
+}
+.site_item .item_desc {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.site_item .phone {
+  margin-top: 10rpx;
+}
+.site_item .distance {
+  width: 200rpx;
+}

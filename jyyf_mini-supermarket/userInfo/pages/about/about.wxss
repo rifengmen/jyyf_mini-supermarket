@@ -1,0 +1,69 @@
+/* userInfo/pages/about/about.wxss */
+/* logo start */
+.logo_cont {
+  width: 100%;
+  height: auto;
+  padding: 70rpx 0;
+}
+.logo {
+  width: 160rpx;
+  height: 160rpx;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: column;
+}
+.logo .logo_img {
+  width: 100rpx;
+  height: 100rpx;
+  margin: 12rpx auto 0 auto;
+}
+.logo .logo_img image {
+  width: 100%;
+  height: 100%;
+}
+.logo .apptitle {
+  width: 100%;
+  height: 48rpx;
+}
+/* logo end */
+/* 公司简介 start */
+.shop_desc {
+  width: calc(100% - 48rpx);
+  height: auto;
+  margin-bottom: 70rpx;
+  padding: 0 24rpx;
+}
+.shop_desc .tit {
+  width: 100%;
+  height: 40rpx;
+  line-height: 40rpx;
+}
+.shop_desc .name {
+  width: 100%;
+  height: auto;
+  line-height: 2;
+  margin: 24rpx auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.shop_desc .desc {
+  width: 100%;
+  height: auto;
+  line-height: 1.8;
+  margin-bottom: 60rpx;
+}
+/* 公司简介 end */
+.copyright {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 70rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

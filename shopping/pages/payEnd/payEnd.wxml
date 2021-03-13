@@ -9,6 +9,6 @@
 		</view>
 		<view class="nav_btn">
 			<navigator class="nav colorffffff bg71d793 border_a71d793 border_r500 tc" hover-class="none" open-type="switchTab" url="/pages/userInfo/userInfo">会员中心</navigator>
-			<navigator class="nav color666666 bgffffff border_a979797 border_r500 tc" hover-class="none" open-type="switchTab" url="/pages/index/index">返回首页</navigator>
+			<navigator class="nav color666666 bgffffff border_a999999 border_r500 tc" hover-class="none" open-type="switchTab" url="/pages/index/index">返回首页</navigator>
 		</view>
 	</view>

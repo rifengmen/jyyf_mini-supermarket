@@ -14,8 +14,6 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     // 商户名称
     apptitle: app.globalData.apptitle,
-    // 商户logo
-    shoplogo: app.globalData.shoplogo,
     // code
     code: '',
     // openid
@@ -27,7 +25,6 @@ Page({
    */
   onLoad: function (options) {
     let self = this
-    let openid = app.globalData.openid
     if (self.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况

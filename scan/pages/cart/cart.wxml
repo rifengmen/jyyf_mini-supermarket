@@ -9,7 +9,7 @@
         <view class="{{editflag ? 'color71d793' : 'colore42837'}}" bindtap="setEditflag">{{editflag ? '完成' : '编辑'}}</view>
       </view>
       <!-- 商品列表 start -->
-      <view class="goods_list1 bgffffff overflow">
+      <view class="goods_list1 goodslist bgffffff overflow">
         <block wx:for="{{scanCart}}" wx:key="index">
           <!-- 商品简介 start -->
           <view class="goods_item bgffffff border_be5e5e5">
@@ -75,13 +75,13 @@
         <view class="shopbag_item bgffffff">
           <image src="/lib/images/shopbag1.png" mode="aspectFit" class="shopbag_image"></image>
           <view class="shopbag_desc">
-            <view class="name font24">小号￥0.20</view>
+            <view class="name font24">小号￥{{shopBagList[0].memprice}}</view>
             <view class="cart">
               <view class="editor_cart bgf0f0f0 border_r500">
                 <view class="subtrack_cart btn border_r500 overflow" catchtap="updateShopBag" data-goods="{{item}}" data-types="count">
                   <image src="/lib/images/subtrack.png"></image>
                 </view>
-                <view class="input_cart font24 tc">0</view>
+                <view class="input_cart font24 tc">{{shopBagList[0].quantity}}</view>
                 <view class="add_cart btn border_r500 overflow" catchtap="updateShopBag" data-goods="{{item}}" data-types="add">
                   <image src="/lib/images/add.png"></image>
                 </view>
@@ -94,13 +94,13 @@
         <view class="shopbag_item bgffffff">
           <image src="/lib/images/shopbag2.png" mode="aspectFit" class="shopbag_image"></image>
           <view class="shopbag_desc">
-            <view class="name font24">大号￥0.30</view>
+            <view class="name font24">大号￥{{shopBagList[1].memprice}}</view>
             <view class="cart">
               <view class="editor_cart bgf0f0f0 border_r500">
                 <view class="subtrack_cart btn border_r500 overflow" catchtap="updateShopBag" data-goods="{{item}}" data-types="count">
                   <image src="/lib/images/subtrack.png"></image>
                 </view>
-                <view class="input_cart font24 tc">0</view>
+                <view class="input_cart font24 tc">{{shopBagList[1].quantity}}</view>
                 <view class="add_cart btn border_r500 overflow" catchtap="updateShopBag" data-goods="{{item}}" data-types="add">
                   <image src="/lib/images/add.png"></image>
                 </view>

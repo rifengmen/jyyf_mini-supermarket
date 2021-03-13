@@ -61,7 +61,7 @@
   align-items: center;
 }
 .item .tick_btn_cont .btn {
-  padding: 0 16rpx;
+  padding: 10rpx 30rpx;
 }
 .item .desc {
   position: absolute;
@@ -80,7 +80,4 @@
 .item .desc .rule {
   margin: 8rpx 0;
 }
-.nodata_cont {
-  width: 100%;
-  height: 100vh;
-}
+

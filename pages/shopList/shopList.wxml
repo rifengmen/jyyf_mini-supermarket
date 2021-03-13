@@ -7,10 +7,12 @@
 					<view class="item_shopname">
 						<view class="shopname">
 							<text class="tag colorffffff font24 bge42837 border_r500 tc" wx:if="{{item.deptcode === deptcode}}">当前门店</text>
-							<text class="tag colorffffff font24 bg71d793 border_r500 tc" wx:if="{{item.defaultflag}}">默认</text>
 							<text class="name font32 font_blod">{{item.deptname}}</text>
 						</view>
-						<view class="address color999999 font24">{{item.Contact}}</view>
+						<view class="address">
+							<text class="color999999 font24">{{item.Contact}}</text>
+							<text class="tag colorffffff font24 bg71d793 border_r500 tc" wx:if="{{item.defaultflag}}">默认</text>
+						</view>
 					</view>
 					<view class="distance" wx:if="{{distanceFlag}}">
 						<view class="dist">

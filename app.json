@@ -17,9 +17,9 @@
         "pages/search/search",
         "pages/goodsList/goodsList",
         "pages/goodsDetail/goodsDetail",
-        "pages/cart2/cart2",
         "pages/editorOrder/editorOrder",
-        "pages/payEnd/payEnd"
+        "pages/payEnd/payEnd",
+        "pages/wxScene/wxScene"
       ]
     },
     {
@@ -83,13 +83,12 @@
         "pages/setting/setting",
         "pages/userDetail/userDetail",
         "pages/about/about",
-        "pages/cantacts/cantacts",
-        "pages/remove/remove"
+        "pages/cantacts/cantacts"
       ]
     },
     {
-      "root": "links",
-      "name": "links",
+      "root": "friendLink",
+      "name": "friendLink",
       "pages": [
         "pages/app/app",
         "pages/h5/h5"
@@ -146,7 +145,7 @@
   },
   "plugins": {
     "live-player-plugin": {
-      "version": "1.2.4",
+      "version": "1.2.8",
       "provider": "wx2b03c6e691cd7370"
     }
   },
@@ -156,3 +155,4 @@
   },
   "sitemapLocation": "sitemap.json"
 }
+

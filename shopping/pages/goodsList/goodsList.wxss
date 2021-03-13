@@ -1,14 +1,27 @@
+@import "/pages/template/template.wxss";
 /* shopping/pages/goodsList/goodsList.wxss */
+.search_cont {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% - 48rpx);
+  padding: 10rpx 24rpx;
+}
 .goods_list_edit {
   position: fixed;
-  top: 50rpx;
-  right: 50rpx;
-  width: 100rpx;
-  height: 100rpx;
+  top: 20rpx;
+  right: 0rpx;
+  width: 70rpx;
+  height: 60rpx;
+  padding-right: 30rpx;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, .1);
+  border-radius: 500rpx 0 0 500rpx;
+}
+.edit_scroll {
+  right: -80rpx;
 }
 .fixed_img {
   width: 100%;
@@ -16,12 +29,13 @@
 }
 .main {
   width: 100%;
-  min-height: 100vh;
+  min-height: calc(100vh - 90rpx);
   margin: 0 auto;
+  padding-top: 90rpx;
 }
 .goods_list2 {
   width: calc(100% - 48rpx);
-  padding: 24rpx;
+  padding: 10rpx 24rpx;
 }
 .tocart {
   position: fixed;
@@ -33,8 +47,8 @@
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, .1);
+  transition: all .5s;
 }
-.nodata_cont {
-  width: 100%;
-  height: 100vh;
+.tocart.scroll {
+  left: -60rpx;
 }

@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "addCart": "/component/addCart/addCart",
+    "buyEnd": "/component/buyEnd/buyEnd",
     "dialog": "/component/dialog/dialog"
   },
   "enablePullDownRefresh": true

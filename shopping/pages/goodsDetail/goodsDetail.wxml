@@ -6,12 +6,12 @@
 		<view class="banner border_r10 overflow bgffffff">
 			<swiper class="banner_swiper" indicator-color="#ffffff" indicator-active-color="#71d793" autoplay="true" circular="true" interval="4000" duration="500" current="{{swiperCurrent}}" bindchange="swiperChange">
 				<swiper-item wx:for="{{goodsDetail.images}}" wx:key="index" class="swiper_item">
-					<image src="{{item.image ? (baseUrl + item.image) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
+					<image src="{{item ? (baseUrl + item) : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
 				</swiper-item>
 			</swiper>
-			<view class="dots" wx:if="{{goodsDetail.images.length > 1}}">
+			<view class="dots border_r500" wx:if="{{goodsDetail.images.length > 1}}">
 				<block wx:for="{{goodsDetail.images}}" wx:key="index">
-					<view class="dot {{index === swiperCurrent ? 'active bg71d793' : 'bgffffff'}} border_r500"></view>
+					<view class="dot border_a71d793 {{index === swiperCurrent ? 'active bg71d793' : 'bgffffff'}} border_r500"></view>
 				</block>
 			</view>
 		</view>
@@ -19,7 +19,16 @@
 		<!-- goodsname start -->
 		<view class="goods_desc1 bgffffff">
 			<view class="goods_name">
-				<view class="name font32 font_blod">{{goodsDetail.Name}}</view>
+				<view class="name_section font32 font_blod">{{goodsDetail.Name}}</view>
+				<!-- 活动人数 start -->
+				<view class="name_section">
+					<view class="tag_cont">
+						<text class="tag color71d793 font24 bgffffff border_r500 border_a71d793 tc" wx:if="{{goodsDetail.promotemode === 100}}">{{goodsDetail.topamount}}人拼团</text>
+						<text class="tag color71d793 font24 bgffffff border_r500 border_a71d793 tc" wx:elif="{{goodsDetail.promotemode === 102}}">{{goodsDetail.topamount}}人砍价</text>
+					</view>
+				</view>
+				<!-- 活动人数 end -->
+				<!-- 价格显示 start -->
 				<view class="price color999999 font22" wx:if="{{goodsDetail.scaleflag}}">
 					<view class="actual_price">
 						<text class="colorfa6400">￥</text>
@@ -42,19 +51,22 @@
 						<text class="font26">{{goodsDetail.originalcost}}</text>
 					</del>
 				</view>
+				<!-- 价格显示 end -->
 			</view>
+			<!-- 产地、活动时间 start -->
 			<view class="goods_time">
 				<view class="goods_placeoforigin tr">产地：</view>
 				<view class="font_blod tr">{{goodsDetail.placeoforigin || '暂无'}}</view>
 			</view>
+			<!-- 产地、活动时间 end -->
 		</view>
 		<!-- goodsname end -->
 		<!-- 秒杀信息 start -->
-		<view class="panicBuy bgffffff" wx:if="{{goodsDetail.promotemode === 101}}">
-			<view class="panicBuy_desc">秒杀时间：{{goodsDetail.startdate}} - {{goodsDetail.enddate}}</view>
-			<view class="panicBuy_desc">单人限量：{{goodsDetail.perlimit}}</view>
-			<view class="panicBuy_desc">总限量：{{goodsDetail.sumlimit}}</view>
-			<view class="panicBuy_desc">已购：{{goodsDetail.salelimit}}</view>
+		<view class="goods_section bgffffff" wx:if="{{goodsDetail.promotemode === 101}}">
+			<view class="section_desc">秒杀时间：{{goodsDetail.startdate}} - {{goodsDetail.enddate}}</view>
+			<view class="section_desc">单人限量：{{goodsDetail.perlimit}}</view>
+			<view class="section_desc">总数量：{{goodsDetail.sumlimit}}</view>
+			<view class="section_desc">剩余量：{{(goodsDetail.sumlimit - goodsDetail.salelimit) <= 0 ? 0 : (goodsDetail.sumlimit - goodsDetail.salelimit)}}</view>
 		</view>
 		<!-- 秒杀信息 end -->
 		<!-- 销量 库存 好评 start -->
@@ -73,9 +85,98 @@
 			</view>
 		</view>
 		<!-- 销量 库存 好评 end -->
+		<!-- 拼团/砍价信息 start -->
+		<block wx:if="{{goodsDetail.promotemode === 100 || goodsDetail.promotemode === 102}}">
+			<!-- 我的拼团/砍价详情 start -->
+			<view class="goods_section bgffffff" wx:if="{{groupDetail}}">
+				<view class="section_tit font_blod">
+					<view class="font30" wx:if="{{goodsDetail.promotemode === 100}}">我的拼团</view>
+					<view class="font30" wx:elif="{{goodsDetail.promotemode === 102}}">我的砍价</view>
+				</view>
+				<block wx:for="{{groupDetail}}" wx:key="index">
+					<view class="section_desc font24">
+						<view class="name ellipsis">
+							<text class="">{{item.nickname}}</text>
+							<text class="tag colorffffff font20 bg329e56 border_r500 tc" wx:if="{{item.flag}}">发起人</text>
+						</view>
+						<view class="">{{item.phone}}</view>
+					</view>
+				</block>
+				<!-- 拼团成功标识 start -->
+				<image class="groupsuccess" src="/lib/images/groupsuccess.png" wx:if="{{goodsDetail.promotemode === 100 && goodsDetail.topamount <= groupDetail.length}}"></image>
+				<!-- 拼团成功标识 end -->
+				<!-- 砍价成功标识 start -->
+				<image class="groupsuccess" src="/lib/images/groupsuccess.png" wx:if="{{goodsDetail.promotemode === 102 && (goodsDetail.topamount + 1) <= groupDetail.length}}"></image>
+				<!-- 砍价成功标识 end -->
+			</view>
+			<!-- 我的拼团/砍价详情 end -->
+			<!-- 拼团/砍价历史列表、参与按钮 start -->
+			<view class="goods_section bgffffff">
+				<view class="section_tit font_blod">
+					<view class="font30" wx:if="{{goodsDetail.promotemode === 100}}">大家都在拼</view>
+					<view class="font30" wx:if="{{goodsDetail.promotemode === 102}}">大家都在砍</view>
+					<block wx:if="{{groupList.length}}">
+						<view class="btn colorffffff font24 bg329e56 border_r500 tc" catchtap="setJoinDialogFlag" wx:if="{{goodsDetail.promotemode === 100}}">参与拼团</view>
+						<view class="btn colorffffff font24 bg329e56 border_r500 tc" catchtap="setJoinDialogFlag" wx:if="{{goodsDetail.promotemode === 102}}">参与砍价</view>
+					</block>
+					<block wx:else>
+						<view class="color71d793 font24" wx:if="{{goodsDetail.promotemode === 100}}">赶快发起拼团吧！</view>
+						<view class="color71d793 font24" wx:if="{{goodsDetail.promotemode === 102}}">赶快发起砍价吧！</view>
+					</block>
+				</view>
+				<!-- 拼团/砍价历史列表 start -->
+				<block wx:if="{{groupList.length}}">
+					<!-- 大于三条滚动 start -->
+					<block wx:if="{{groupList.length > 3}}">
+						<swiper class="group_swiper" autoplay="true" circular="true" interval="3000" vertical="true" display-multiple-items="3">
+							<swiper-item wx:for="{{groupList}}" wx:key="index" catchtouchmove='catchTouchMove'>
+								<view class="section_desc font24">
+									<view class="name ellipsis">
+										<text class="">{{item.nickname}}</text>
+										<block wx:if="{{goodsDetail.promotemode === 100}}">
+											<text class="tag colorffffff font20 bge42837 border_r500 tc" wx:if="{{item.groupflag}}">拼团成功</text>
+											<text class="tag colorffffff font20 bge42837 border_r500 tc" wx:else>拼团中...</text>
+										</block>
+										<block wx:if="{{goodsDetail.promotemode === 102}}">
+											<text class="tag colorffffff font20 bge42837 border_r500 tc" wx:if="{{item.groupflag}}">砍价成功</text>
+											<text class="tag colorffffff font20 bge42837 border_r500 tc" wx:else>砍价中...</text>
+										</block>
+									</view>
+									<view class="">{{item.groupno}}</view>
+									<view class="">{{item.hackdate}}</view>
+								</view>
+							</swiper-item>
+						</swiper>
+					</block>
+					<!-- 大于三条滚动 end -->
+					<!-- 小于三条不滚动 end -->
+					<block wx:else>
+						<view class="section_desc font24" wx:for="{{groupList}}" wx:key="index">
+							<view class="name ellipsis">
+								<text class="">{{item.nickname}}</text>
+								<block wx:if="{{goodsDetail.promotemode === 100}}">
+									<text class="tag colorffffff font20 bge42837 border_r500 tc" wx:if="{{item.groupflag}}">拼团成功</text>
+									<text class="tag colorffffff font20 bge42837 border_r500 tc" wx:else>拼团中...</text>
+								</block>
+								<block wx:if="{{goodsDetail.promotemode === 102}}">
+									<text class="tag colorffffff font20 bge42837 border_r500 tc" wx:if="{{item.groupflag}}">砍价成功</text>
+									<text class="tag colorffffff font20 bge42837 border_r500 tc" wx:else>砍价中...</text>
+								</block>
+							</view>
+							<view class="">{{item.groupno}}</view>
+							<view class="">{{item.hackdate}}</view>
+						</view>
+					</block>
+					<!-- 小于三条不滚动 end -->
+				</block>
+				<!-- 拼团/砍价历史列表 end -->
+			</view>
+			<!-- 拼团/砍价历史列表、参与按钮 end -->
+		</block>
+		<!-- 拼团/砍价信息 end -->
 		<!-- 评价 start -->
-		<view class="comment_cont {{describe ? '' : 'comment_conts'}} bgffffff">
-			<view class="tit">
+		<view class="goods_section comment_cont bgffffff">
+			<view class="section_tit font30 font_blod">
 				<view class="font_blod">商品评价{{goodsDetail.EvaluationTC ? '(' + goodsDetail.EvaluationTC + ')' : ''}}</view>
 				<navigator class="more" hover-class="none" wx:if="{{goodsDetail.EvaluationTC}}" url="/autoModule/pages/commentList/commentList?title=商品评价&from=goodsDetail&gdscode={{Gdscode}}">查看全部 > </navigator>
 				<view class="color999999" wx:else>暂无评价</view>
@@ -86,14 +187,18 @@
 		</view>
 		<!-- 评价 end -->
 		<!-- 详情 start -->
-		<view class="goods_desc3 bgffffff">
+		<view class="goods_section bgffffff" wx:if="{{describe}}">
 			<view class="" wx:if="{{describe}}">
 				<rich-text class="" nodes="{{describe}}"></rich-text>
 			</view>
 		</view>
 		<!-- 详情 end -->
-		<!-- 导航 加购物车 start -->
+		<!-- 占位 start -->
+		<view class="zhanwei"></view>
+		<!-- 占位 end -->
+		<!-- 导航 购物按钮 start -->
 		<view class="nav_cart bgffffff">
+			<!-- 导航 start -->
 			<view class="nav">
 				<navigator class="nav_img" hover-class="none" open-type="switchTab" url="/pages/index/index">
 					<image src="/lib/images/index.png"></image>
@@ -106,21 +211,81 @@
 					<image src="/lib/images/userInfo.png"></image>
 				</navigator>
 			</view>
+			<!-- 导航 end -->
+			<!-- 购物按钮 start -->
 			<view class="cart_cont colorffffff font32">
-				<view class="cart_btn btn bg71d793 border_r500 tc">
-					<addCart id="addCart" catchtap="addCart" bind:getCartCount="getCartCount" from="goodsDetail"></addCart>
+				<!-- 发起 活动号 加入购物车 start -->
+				<block>
+					<!-- 发起拼团按钮 start -->
+					<view class="cart_btn btn bg71d793 border_r500 tc" catchtap="add" data-addtype="buyEnd" data-ordertype="3" wx:if="{{goodsDetail.promotemode === 100 && !groupno}}">
+						<buyEnd id="buyEnd" goodsDetail="{{goodsDetail}}" from="goodsDetail" orderType="3"></buyEnd>
+					</view>
+					<!-- 发起拼团按钮 end -->
+					<!-- 发起砍价按钮 start -->
+					<view class="cart_btn btn bg71d793 border_r500 tc" wx:elif="{{goodsDetail.promotemode === 102 && !groupno}}" catchtap="hackAdd">发起砍价</view>
+					<!-- 发起砍价按钮 end -->
+					<!-- 拼团显示活动号 start -->
+					<block wx:elif="{{goodsDetail.promotemode === 100 && groupno}}">
+						<view class="cart_btn btn groupno_btn colorffffff font28 bg7cbd92 border_r500 tc" wx:if="{{goodsDetail.topamount > groupDetail.length}}">
+							<text>活动号：</text>
+							<text class="color329e56">{{groupno}}</text>
+							<text>，还差</text>
+							<text class="color329e56"> {{goodsDetail.topamount - groupDetail.length}} </text>
+							<text>人成功</text>
+						</view>
+						<view class="cart_btn btn colorffffff bg7cbd92 border_r500 tc" wx:else>活动号：{{groupno}}</view>
+					</block>
+					<!-- 拼团显示活动号 end -->
+					<!-- 砍价显示活动号 start -->
+					<block wx:elif="{{goodsDetail.promotemode === 102 && groupno}}">
+						<view class="cart_btn btn groupno_btn colorffffff font28 bg7cbd92 border_r500 tc" wx:if="{{(goodsDetail.topamount + 1) > groupDetail.length}}">
+							<text>活动号：</text>
+							<text class="color329e56">{{groupno}}</text>
+							<text>，还差</text>
+							<text class="color329e56"> {{(goodsDetail.topamount + 1) - groupDetail.length}} </text>
+							<text>人成功</text>
+						</view>
+						<view class="cart_btn btn colorffffff bg7cbd92 border_r500 tc" wx:else>活动号：{{groupno}}</view>
+					</block>
+					<!-- 砍价显示活动号 end -->
+					<!-- 加入购物车 start -->
+					<view class="cart_btn btn bg71d793 border_r500 tc" wx:elif="{{goodsDetail.promotemode < 100 || goodsDetail.promotemode > 103}}">
+						<addCart id="addCart" catchtap="add" data-addtype="addCart" bind:getCartCount="getCartCount" from="goodsDetail"></addCart>
+					</view>
+					<!-- 加入购物车 end -->
+				</block>
+				<!-- 发起 活动号 加入购物车 start -->
+				<!-- 砍价成功立即购买 start -->
+				<view class="cart_btn btn bg71d793 border_r500 tc" catchtap="add" data-addtype="buyEnd" data-ordertype="5" wx:if="{{goodsDetail.promotemode === 102 && groupno && pay}}">
+					<buyEnd id="buyEnd" goodsDetail="{{goodsDetail}}" from="goodsDetail" orderType="5"></buyEnd>
 				</view>
-				<view class="often_btn btn bg329e56 border_r500 tc" bindtap="buyend">立即购买</view>
+				<!-- 砍价成功立即购买 end -->
+				<!-- 预售时显示预售立即购买按钮 start -->
+				<view class="often_btn btn bg329e56 border_r500 tc" catchtap="add" data-addtype="buyEnd" data-ordertype="6" wx:if="{{goodsDetail.promotemode === 103}}">
+					<buyEnd id="buyEnd" goodsDetail="{{goodsDetail}}" from="goodsDetail" orderType="6"></buyEnd>
+				</view>
+				<!-- 预售时显示预售立即购买按钮 end -->
+				<!-- 秒杀时显示秒杀立即购买按钮 start -->
+				<view class="often_btn btn bg329e56 border_r500 tc" catchtap="add" data-addtype="buyEnd" data-ordertype="7" wx:if="{{goodsDetail.promotemode === 101}}">
+					<buyEnd id="buyEnd" goodsDetail="{{goodsDetail}}" from="goodsDetail" orderType="7"></buyEnd>
+				</view>
+				<!-- 秒杀时显示秒杀立即购买按钮 end -->
+				<!-- 非拼团/砍价时显示普通立即购买按钮 start -->
+				<view class="often_btn btn bg329e56 border_r500 tc" catchtap="add" data-addtype="buyEnd" data-ordertype="2" wx:if="{{goodsDetail.promotemode < 100 || goodsDetail.promotemode > 103}}">
+					<buyEnd id="buyEnd" goodsDetail="{{goodsDetail}}" from="goodsDetail" orderType="2"></buyEnd>
+				</view>
+				<!-- 非拼团/砍价时显示普通立即购买按钮 end -->
 			</view>
+			<!-- 购物按钮 end -->
 		</view>
-		<!-- 导航 加购物车 end -->
+		<!-- 导航 购物按钮 end -->
 	</block>
 	<!-- 快捷按钮 start -->
 	<view class="shortcut_key colorffffff font22">
-		<view class="share_btn btn border_r500" bindtap="queryCanvas">
-			<image src="/lib/images/poster.png"></image>
-			<view class="">海报</view>
-		</view>
+        <navigator class="share_btn btn border_r500" hover-class="none" url="/shopping/pages/drawPoster/drawPoster?Gdscode={{Gdscode}}&promotemode={{promotemode}}&title={{title}}&deptname={{deptname}}&deptcode={{deptcode}}">
+            <image src="/lib/images/poster.png"></image>
+            <view class="">海报</view>
+        </navigator>
 		<button class="share_btn btn border_r500" open-type="share">
 			<image src="/lib/images/share.png"></image>
 			<view class="">分享</view>
@@ -132,11 +297,25 @@
 		<dialog goods="{{goods}}" bind:dialogClose="dialogClose" bind:dialogConfirm="dialogConfirm"></dialog>
 	</view>
 	<!-- dialog end -->
-	<!-- canvas start -->
-	<view class="canvas_cont {{posterFlag ? 'active' : ''}}" catchtouchmove="catchTouchMove">
-		<canvas type="2d" id="posterCanvas"></canvas>
-		<view class="btn colorffffff font32 bg71d793 border_r500 tc" catchtap="savePosterImg">保存图片</view>
-		<image src="/lib/images/closed.png" class="closed" mode="aspectFit" catchtap="closedPosterCanvas"></image>
+	<!-- 拼团/砍价参与弹窗 start -->
+	<view class="password_cont" catchtouchmove="catchTouchMove" wx:if="{{joinDialogFlag}}">
+		<view class="password bgffffff border_r20">
+			<view class="tit font32 font_blod">请输入您要参与的活动号码</view>
+			<view class="password_input" catchtap="focusInput">
+				<input class="input colorrgba01" value="{{joinno}}" type="number" maxlength="4" bindinput="setJoinno" focus="{{focusFlag}}" />
+				<view class="pd font50 font_blod bgf0f0f0 border_r8">{{pd[0].password}}</view>
+				<view class="pd font50 font_blod bgf0f0f0 border_r8">{{pd[1].password}}</view>
+				<view class="pd font50 font_blod bgf0f0f0 border_r8">{{pd[2].password}}</view>
+				<view class="pd font50 font_blod bgf0f0f0 border_r8">{{pd[3].password}}</view>
+			</view>
+			<view class="password_btn">
+				<view class="cancel_btn btn color999999 border_r20 border_a999999" catchtap="setJoinDialogFlag">取消</view>
+				<view class="confirm_btn btn colorffffff bg71d793 border_r20 border_a71d793" catchtap="join" data-addtype="buyEnd" data-ordertype="4" wx:if="{{goodsDetail.promotemode === 100}}">
+					<buyEnd id="buyEnd" goodsDetail="{{goodsDetail}}" from="goodsDetail" orderType="4"></buyEnd>
+				</view>
+				<view class="confirm_btn btn colorffffff bg71d793 border_r20 border_a71d793" catchtap="join" wx:if="{{goodsDetail.promotemode === 102}}">确认</view>
+			</view>
+		</view>
 	</view>
-	<!-- canvas end -->
+	<!-- 拼团/砍价参与弹窗 end -->
 </view>

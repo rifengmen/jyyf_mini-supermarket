@@ -13,7 +13,7 @@ Page({
     // tickid
     tickid: '',
     // 电子券详情
-    tickDetail: '',
+    tickDetail: ''
   },
 
   /**
@@ -22,6 +22,7 @@ Page({
   onLoad: function (options) {
     let self = this
     self.setData({
+      from: options.from,
       tickid: options.tickid,
     })
     // 获取电子券详情
@@ -86,8 +87,14 @@ Page({
     API.mem.getCouponDtl(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let tickDetail = res.data
+        let residuecount = tickDetail.totalcount - tickDetail.havepaniccount
+        if (residuecount < 0) {
+          residuecount = 0
+        }
+        tickDetail.residuecount = residuecount
         self.setData({
-          tickDetail: res.data,
+          tickDetail: tickDetail,
         })
       } else {
         toast.toast(res.message)

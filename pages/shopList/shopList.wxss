@@ -34,10 +34,6 @@
   height: auto;
   margin-bottom: 10rpx;
 }
-.tag_cont {
-  width: auto;
-  height: auto;
-}
 .name {
   max-width: calc(100% - 130rpx);
   margin-right: 10rpx;

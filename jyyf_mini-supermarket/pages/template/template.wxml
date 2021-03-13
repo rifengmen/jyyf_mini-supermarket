@@ -1,0 +1,74 @@
+<!-- 卡信息列表 -->
+<template name="card">
+  <view class="card_cont colorffffff">
+    <image class="card_bg" src="/lib/images/cardBg.png"></image>
+    <view class="card">
+      <view class="card_desc">
+        <view class="name font32" wx:if="{{type === 'balance'}}">账户余额(元)</view>
+        <view class="name font32" wx:if="{{type === 'score'}}">账户积分(分)</view>
+        <view class="num font70">{{cardData || 0}}</view>
+      </view>
+      <navigator class="toRecharge bg329e56" hover-class="none" url="/autoModule/pages/recharge/recharge" wx:if="{{type === 'balance'}}">
+        <image src="/lib/images/toRecharge.png"></image>
+        <text>充值 ></text>
+      </navigator>
+    </view>
+  </view>
+</template>
+<template name="list">
+  <view class="item {{(index + 1) === list.length ? '' : 'border_be5e5e5'}}" wx:for="{{list}}" wx:key="index">
+    <view class="name_cont">
+      <view class="name">{{item.name}}</view>
+      <view class="color999999">{{item.time}}</view>
+    </view>
+    <view class="desc">{{item.desc}}</view>
+  </view>
+</template>
+<!-- 卡信息列表 end -->
+<!-- 商品评价 start -->
+<template name="comment">
+  <view class="comment_item font24 border_bf0f0f0" wx:for="{{commentList}}" wx:key="index">
+    <view class="user border_r500 overflow">
+      <image src="/lib/images/userInfo.png" mode="aspectFit"></image>
+    </view>
+    <view class="desc">
+      <view class="name">{{item.username}}</view>
+      <view class="color999999">{{item.Etime}}</view>
+      <view class="text">{{item.content}}</view>
+      <!-- <view class="desc_img overflow">
+        <view class="img fl overflow">
+          <image src="/lib/images/ceshi001.png" mode="aspectFit"></image>
+        </view>
+      </view> -->
+    </view>
+  </view>
+</template>
+<!-- 商品评价 end -->
+<!-- 首页活动样式一 start -->
+<template name="index_hot1">
+  <view class="hot1_cont">
+    <navigator class="hit1_name border_r10 bgffffff overflow" hover-class="none" url="/shopping/pages/goodsList/goodsList?Cateid={{item.Id}}&title={{item.storecategoryname}}">
+      <image src="{{baseUrl + item.ico}}"></image>
+    </navigator>
+    <view class="goodsList">
+      <view class="item1">
+        <navigator class="item border_r10 bgffffff overflow" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.gdscodelist[0].Gdscode}}&title={{item.gdscodelist[0].Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
+          <image src="{{item.gdscodelist[0].Defaultimage ? baseUrl + item.gdscodelist[0].Defaultimage : errorImage}}" mode="aspectFit" lazy-load="true"></image>
+          <view class="goods_name font24 ellipsis">{{item.gdscodelist[0].Name}}</view>
+        </navigator>
+        <navigator class="item border_r10 bgffffff overflow" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.gdscodelist[1].Gdscode}}&title={{item.gdscodelist[1].Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
+          <image src="{{item.gdscodelist[1].Defaultimage ? baseUrl + item.gdscodelist[1].Defaultimage : errorImage}}" mode="aspectFit" lazy-load="true"></image>
+          <view class="goods_name font24 ellipsis">{{item.gdscodelist[1].Name}}</view>
+        </navigator>
+      </view>
+      <navigator class="item2 border_r10 bgffffff overflow" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.gdscodelist[2].Gdscode}}&title={{item.gdscodelist[2].Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
+        <image src="{{item.gdscodelist[2].Defaultimage ? baseUrl + item.gdscodelist[2].Defaultimage : errorImage}}" mode="aspectFit" lazy-load="true"></image>
+        <view class="goods_cont">
+          <view class="goods_name font24 ellipsis2 tc">{{item.gdscodelist[2].Name}}</view>
+          <view class="goods_btn colorffffff bg71d793 border_r500 tc">点击购买</view>
+        </view>
+      </navigator>
+    </view>
+  </view>
+</template>
+<!-- 首页活动样式一 end -->

@@ -1,7 +1,7 @@
 <!--pages/userInfo/userInfo.wxml-->
 <view class="container color333333 font28 bgf9f9f9" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
 	<!-- 会员信息 start -->
-	<view class="userinfo_cont bg71d793">
+	<view class="userinfo_cont" style="background-color: {{home_bgcolor}}">
 		<view class="desc bgffffff border_be5e5e5">
 			<view class="picture border_r500 overflow" bindtap="isAuthor">
 				<image src="{{userImg ? userImg : '/lib/images/userInfo.png'}}"></image>
@@ -20,10 +20,10 @@
 	</view>
 	<!-- 会员信息 end -->
 	<!-- card信息 start -->
-	<view class="card user_section overflow bgffffff">
+	<view class="card user_section bgffffff overflow">
 		<navigator class="card_item fl" hover-class="none" url="/userInfo/pages/balance/balance">
 			<view class="tc ellipsis">{{cardInfo.money || 0}}</view>
-			<view class="tc color666666">账户余额</view>
+			<view class="tc color666666">金币余额</view>
 		</navigator>
 		<navigator class="card_item ellipsis fl" hover-class="none" url="/autoModule/pages/tickList/tickList?from=userInfo">
 			<view class="tc">{{tickNum}}</view>
@@ -41,13 +41,30 @@
 			<view class="font_blod">内部功能</view>
 		</view>
 		<view class="cont overflow">
-			<navigator class="item fl" hover-class="none" url="/internal/pages/editOrderStatus/editOrderStatus?role={{role}}">
-				<view class="img">
-					<image src="/lib/images/myMessage.png"></image>
-					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc">99</view>
-				</view>
-				<view class="name font24">{{roleList[role].name}}</view>
-			</navigator>
+			<block wx:if="{{role === 1 || role === 2}}">
+				<navigator
+						class="item fl"
+						hover-class="none"
+						url="/internal/pages/editOrderStatus/editOrderStatus?role={{role}}">
+					<view class="img">
+						<image src="/lib/images/role{{role}}.png"></image>
+						<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{roleList[role].num}}">{{roleList[role].num}}</view>
+					</view>
+					<view class="name font24">{{roleList[role].name}}</view>
+				</navigator>
+			</block>
+			<block wx:if="{{role === 10}}">
+				<navigator
+						class="item fl"
+						hover-class="none"
+						url="/message/pages/messageList/messageList?businessflag={{businessflag}}">
+					<view class="img">
+						<image src="/lib/images/myMessage.png"></image>
+						<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{internalMessageNum}}">{{internalMessageNum}}</view>
+					</view>
+					<view class="name font24">订单消息</view>
+				</navigator>
+			</block>
 		</view>
 	</view>
 	<!-- 内部功能 end -->
@@ -55,7 +72,7 @@
 	<view class="order user_section bgffffff border_r10">
 		<view class="tit">
 			<view class="font_blod">我的订单</view>
-			<navigator class="color666666 font24" hover-class="none" url="/userInfo/pages/orderList/orderList">全部订单 ></navigator>
+			<navigator class="color666666 font24" hover-class="none" url="/userInfo/pages/orderList/orderList?orderType=-2">全部订单 ></navigator>
 		</view>
 		<view class="cont overflow">
 			<navigator class="item fl" hover-class="none" url="/userInfo/pages/orderList/orderList?orderType=1">
@@ -70,16 +87,16 @@
 					<image src="/lib/images/orderType2.png"></image>
 					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{statusList[2].num}}">{{statusList[2].num}}</view>
 				</view>
-				<view class="name font24">待取送</view>
+				<view class="name font24">待中转</view>
 			</navigator>
 			<navigator class="item fl" hover-class="none" url="/userInfo/pages/orderList/orderList?orderType=3">
 				<view class="img">
 					<image src="/lib/images/orderType3.png"></image>
 					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{statusList[3].num}}">{{statusList[3].num}}</view>
 				</view>
-				<view class="name font24">待发货</view>
+				<view class="name font24">待收货</view>
 			</navigator>
-			<navigator class="item fl" hover-class="none" url="/userInfo/pages/orderList/orderList?orderType=20">
+			<navigator class="item fl" hover-class="none" url="/userInfo/pages/orderList/orderList?orderType=9">
 				<view class="img">
 					<image src="/lib/images/orderType4.png"></image>
 				</view>
@@ -127,6 +144,12 @@
 			<view class="font_blod">其他</view>
 		</view>
 		<view class="cont overflow">
+			<navigator class="item fl" hover-class="none" url="/autoModule/pages/recharge/recharge">
+				<view class="img">
+					<image src="/lib/images/recharge.png"></image>
+				</view>
+				<view class="name font24">金币充值</view>
+			</navigator>
 			<navigator class="item fl" hover-class="none" url="/message/pages/messageList/messageList">
 				<view class="img">
 					<image src="/lib/images/myMessage.png"></image>
@@ -158,6 +181,18 @@
 				</view>
 				<view class="name font24">设置</view>
 			</navigator>
+			<!--<navigator class="item fl" hover-class="none" url="/shopping/pages/wxScene/wxScene">-->
+				<!--<view class="img">-->
+					<!--<image src="/lib/images/setting.png"></image>-->
+				<!--</view>-->
+				<!--<view class="name font24">测试分享</view>-->
+			<!--</navigator>-->
+			<!--<navigator class="item fl" hover-class="none" url="/pages/register/register">-->
+				<!--<view class="img">-->
+					<!--<image src="/lib/images/setting.png"></image>-->
+				<!--</view>-->
+				<!--<view class="name font24">测试注册</view>-->
+			<!--</navigator>-->
 		</view>
 	</view>
 	<!-- 其他 end -->

@@ -36,7 +36,7 @@
       </view>
       <view class="nodata_cont" wx:if="{{!addressList.length && getFlag}}">
         <view class="nodata overflow">
-          <image src="/lib/images/orderNodata.png"></image>
+          <image src="/lib/images/orderNodata.png" mode="aspectFit"></image>
         </view>
         <view class="color999999 tc">您的地址空空如也～</view>
       </view>

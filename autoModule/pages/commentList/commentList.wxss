@@ -28,7 +28,4 @@
   padding: 90rpx 24rpx 0 24rpx;
   margin-bottom: unset;
 }
-.nodata_cont {
-  width: 100%;
-  height: calc(100vh - 90rpx);
-}
+

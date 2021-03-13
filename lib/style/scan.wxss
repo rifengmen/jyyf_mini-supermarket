@@ -115,6 +115,7 @@
 .goodslist {
   width: 100%;
   height: calc(100% - 24rpx);
+  padding: unset;
 }
 .delBtn {
   width: auto;
@@ -325,6 +326,10 @@
   display: flex;
   justify-content: space-between;
   flex-flow: column;
+}
+.orderdetail_section {
+  width: 100%;
+  padding: unset;
 }
 .orderdesc {
   width: 100%;

@@ -1,4 +1,7 @@
 /* pages/userInfo/userInfo.wxss */
+.container {
+  padding-bottom: 24rpx;
+}
 /* 会员信息 start */
 .userinfo_cont {
   width: calc(100% - 48rpx);
@@ -58,7 +61,7 @@
 .user_section {
   width: calc(100% - 108rpx);
   height: auto;
-  margin: 0 auto 24rpx auto;
+  margin: 0 auto;
   padding: 30rpx 30rpx 10rpx 30rpx;
 }
 .user_section .tit {
@@ -103,7 +106,7 @@
 .card_item {
   width: calc(100% / 3 - 20rpx);
   height: 80rpx;
-  padding: 0 10rpx;
+  padding: 0 10rpx 20rpx 10rpx;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -113,6 +116,12 @@
   margin-bottom: 10rpx;
 }
 /* card信息 end */
+.other {
+  margin-top: 24rpx;
+}
+.order {
+  margin-top: 24rpx;
+}
 /* 我的订单 start */
 .order .item {
   width: 25%;

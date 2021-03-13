@@ -1,5 +1,4 @@
 /**
- *
  * 网络请求相关操作
  */
 require("../app.js")
@@ -13,8 +12,11 @@ const http = (url, data, method = 'POST') => {
   }
   // 设置请求门店
   let requestData = data
-  if (!requestData.deptcode) {
-    requestData.deptcode = app.globalData.deptcode
+  // 请求直播间列表不增加门店code，deptcode
+  if (url !== 'miniLiveInfo.do?method=listLiveInfo') {
+    if (!requestData.deptcode) {
+      requestData.deptcode = app.globalData.deptcode
+    }
   }
   return new Promise(function (resolve, reject) {
     wx.request({

@@ -1,2 +1,2 @@
 <!--component/getTickBtn/getTickBtn.wxml-->
-<view catchtap="getTick">立即领取</view>
+<view catchtap="isScore">{{tick.gettype === 2 ? '积分兑换' : '立即领取'}}</view>

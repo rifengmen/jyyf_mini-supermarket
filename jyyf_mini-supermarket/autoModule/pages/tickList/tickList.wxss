@@ -1,0 +1,86 @@
+/* autoModule/pages/tickList/tickList.wxss */
+.tick_list {
+  width: calc(100% - 48rpx);
+  height: auto;
+  padding: 24rpx;
+}
+.item {
+  width: 100%;
+  height: 360rpx;
+  margin-bottom: 24rpx;
+  position: relative;
+}
+.item:last-child {
+  margin-bottom: unset;
+}
+.item .bgimg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.item .tit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - 60rpx);
+  height: 160rpx;
+  padding: 0 30rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.item .tit .name {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+.item .tit .face_value {
+  height: 100%;
+  margin-right: 20rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.item .tit .unit {
+  margin-right: 10rpx;
+}
+.item .tit .type {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-flow: column;
+}
+.item .tick_btn_cont {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.item .tick_btn_cont .btn {
+  padding: 0 16rpx;
+}
+.item .desc {
+  position: absolute;
+  top: 160rpx;
+  left: 0;
+  width: calc(100% - 60rpx);
+  min-height: 180rpx;
+  padding: 0 30rpx 20rpx 30rpx;
+}
+.item .desc view {
+  width: 100%;
+}
+.item .desc .desc_tit {
+  margin: 20rpx 0 10rpx 0;
+}
+.item .desc .rule {
+  margin: 8rpx 0;
+}
+.nodata_cont {
+  width: 100%;
+  height: 100vh;
+}

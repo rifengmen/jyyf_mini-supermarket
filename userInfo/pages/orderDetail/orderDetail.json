@@ -1,5 +1,7 @@
 {
   "usingComponents": {
+    "orderDesc": "/component/orderDesc/orderDesc",
+    "buyEnd": "/component/buyEnd/buyEnd",
     "cancelBtn": "/component/cancelBtn/cancelBtn"
   },
   "navigationBarTitleText": "订单详情"

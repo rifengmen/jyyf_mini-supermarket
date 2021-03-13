@@ -2,7 +2,7 @@
 <view class="container color333333 font28 bgffffff">
   <view class="type">
     <view class="tit">满意度</view>
-    <view class="type_item {{EType === item.type ? 'colorffffff bg71d793 border_a71d793' : 'color999999 bgffffff border_a979797'}} border_r500 tc" wx:for="{{type}}" wx:key="index" data-type="{{item.type}}" bindtap="setEType">{{item.name}}</view>
+    <view class="type_item {{EType === item.type ? 'colorffffff bg71d793 border_a71d793' : 'color999999 bgffffff border_a999999'}} border_r500 tc" wx:for="{{type}}" wx:key="index" data-type="{{item.type}}" bindtap="setEType">{{item.name}}</view>
   </view>
   <textarea class="content border_be5e5e5" value="{{content}}" placeholder="请输入您的意见(最多140个字)" bindinput="setContent"></textarea>
   <view class="btn colorffffff font32 bg71d793 border_r500 tc" bindtap="sendContent">提交</view>

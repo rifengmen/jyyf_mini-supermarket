@@ -1,0 +1,4 @@
+<!--autoModule/pages/poster/poster.wxml-->
+<view class="container color333333 font28">
+  <rich-text nodes="{{deptDetail}}"></rich-text>
+</view>

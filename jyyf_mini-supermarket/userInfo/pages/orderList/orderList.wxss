@@ -1,0 +1,98 @@
+/* userInfo/pages/orderList/orderList.wxss */
+.order_tit {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px -1px 0px 0px #e5e5e5;
+}
+.order_tit .name {
+  width: 100rpx;
+  height: 84rpx;
+  line-height: 84rpx;
+  margin: 0 10rpx;
+  border-bottom: 6rpx solid #ffffff;
+}
+.order_tit .name:last-child {
+  width: 130rpx;
+}
+.order_tit .name.active {
+  border-bottom: 6rpx solid #71d793;
+}
+.order_cont {
+  width: 100%;
+  min-height: calc(100vh - 90rpx);
+  padding-top: 90rpx;
+  display: flex;
+}
+.order_cont .order_list {
+  width: calc(100% - 48rpx);
+  height: calc(100% - 24rpx);
+  margin: 0 auto;
+  padding-top: 24rpx;
+}
+.order_cont .item {
+  width: 100%;
+  /*height: 278rpx;*/
+  margin-bottom: 24rpx;
+  /*padding-bottom: 20rpx;*/
+}
+.order_cont .item .tit {
+  width: calc(100% - 60rpx);
+  height: 76rpx;
+  padding: 0 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.order_cont .tit .shop_name {
+  width: calc(100% - 100rpx);
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.order_cont .shop_name image {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+.order_cont .tit .type {
+  width: 100rpx;
+  height: 100%;
+  line-height: 76rpx;
+}
+.order_cont .order {
+  width: calc(100% - 60rpx);
+  height: auto;
+  padding: 30rpx;
+}
+.order_cont .no {
+  width: 100%;
+  height: 50rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.order_cont .order_btn {
+  width: 100%;
+  height: auto;
+  /*padding: 15rpx 0;*/
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.btn {
+  width: 170rpx;
+  height: 100%;
+  line-height: 50rpx;
+  margin-left: 20rpx;
+}
+.nodata_cont {
+  width: 100%;
+  height: calc(100vh - 114rpx);
+}

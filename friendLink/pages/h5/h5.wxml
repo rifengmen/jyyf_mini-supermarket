@@ -1,0 +1,2 @@
+<!--friendLink/pages/h5/h5.wxml-->
+<web-view src="{{friendLink.sitedescribe}}"></web-view>

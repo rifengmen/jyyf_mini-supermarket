@@ -1,35 +1,37 @@
 /**index.wxss**/
 @import "/pages/template/template.wxss";
-.banner_cont {
+.index_cont {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 1040rpx;
-  position: relative;
+  height: auto;
+}
+.index_loading {
+  width: 100vw;
+  height: 100vh;
 }
 .index_loading image {
   width: 100%;
   height: 100%;
 }
-.banner_bg {
-  position: absolute;
-  top: 0;
-  left: 0;
+/* 背景 start */
+.index_bg {
   width: 100%;
-  height: 100%;
+  height: 1200rpx;
 }
+/* 背景 end */
 /* 定位 搜索 start */
-.search_cont {
-  position: absolute;
-  top: 0;
-  left: 0;
+.gps_search_cont {
   width: calc(100% - 48rpx);
-  margin: 12rpx auto;
+  margin: 24rpx auto;
   padding: 0 24rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 /* 定位 start */
-.gps {
+.gps_cont {
   width: 60%;
   height: 100%;
   display: flex;
@@ -39,71 +41,48 @@
 .gps_img {
   width: 30rpx;
   height: 36rpx;
-  margin-right: 20rpx;
+  margin-right: 10rpx;
 }
 .gps_img image {
   width: 100%;
   height: 100%;
 }
-.gps text {
-  width: calc(100% - 50rpx);
+.gps .name {
+  max-width: calc(100% - 70rpx);
+  padding-right: 10rpx;
 }
 /* 定位 end */
 /* 搜索 start */
-.search_cont .search {
-  width: 35%;
-}
-.search_input form {
-  width: 60%;
+.search_cont {
+  width: 36%;
 }
 /* 搜索 end */
 /* 定位 搜索 end */
 /* banner start */
 .banner {
-  position: absolute;
-  top: 94rpx;
-  left: 0;
   width: 100%;
+  height: auto;
+  margin: 24rpx 0;
+  position: relative;
 }
 swiper.banner_swiper {
   width: 100%;
   height: 280rpx;
 }
 .banner_item {
-  position: relative;
+  position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - 48rpx);
   height: 100%;
 }
-.dots {
-  position: absolute;
-  right: 0;
-  bottom: 20rpx;
-  transform: translateX(-20%);
-  display: flex;
-  justify-content: center;
-}
-.dots .dot {
-  margin: 0 8rpx;
-  width: 12rpx;
-  height: 12rpx;
-  transition: all .5s;
-}
-.dots .dot.active{
-  width: 36rpx;
-}
 /* banner end */
 /* 公告 start */
 .notice_cont {
-  position: absolute;
-  top: 374rpx;
-  left: 50%;
-  transform: translateX(-50%);
   width: calc(100vw - 88rpx);
   height: 70rpx;
-  margin-top: 20rpx;
+  margin: 24rpx auto;
   padding: 0 20rpx;
   display: flex;
   justify-content: space-between;
@@ -133,75 +112,32 @@ swiper.notice_swiper {
 /* 公告 end */
 /* 自定义功能区 start */
 .auto_cate {
-  position: absolute;
-  top: 464rpx;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100vw - 36rpx);
-  margin: 12rpx auto;
+  width: calc(100% - 48rpx);
+  margin: 24rpx auto;
+  position: relative;
 }
-.cate_list {
+swiper.auto_swiper {
   width: 100%;
-  height: 400rpx;
+  height: 410rpx;
 }
-.cate_list1 {
-  height: 200rpx;
-}
-.auto_down {
+.auto_list {
   width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  white-space: nowrap;
+  padding-bottom: 16rpx;
 }
-.auto_up {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  white-space: nowrap;
-}
-.cate_list2 .auto_down .cate_item:last-child {
-  padding-right: 18rpx;
-}
-.cate_list2 .auto_up .cate_item:last-child {
-  padding-right: 18rpx;
-}
-.con-sc-line-one {
-  height: 12rpx;
-  width: 40rpx;
-  position: absolute;
-  top: 378rpx;
-  z-index: 10;
-}
-.con-sc-line-one-left {
-  left: 335rpx;
-}
-.con-sc-line-one-right {
-  left: 335rpx;
-}
-.con-sc-line-two {
-  width: 20rpx;
-  height: 12rpx;
-  position: absolute;
-  top: 378rpx;
-  left: 335rpx;
-}
-
 /* 自定义功能区 end */
-/* 外链banner区域 start */
+/* 友链banner区域 start */
 .link_cont {
-  position: absolute;
-  top: 890rpx;
-  left: 50%;
-  transform: translateX(-50%);
   width: 100%;
-  height: 124rpx;
-  margin:  auto;
+  height: 134rpx;
+  margin: 24rpx auto;
+  position: relative;
 }
 swiper.link_swiper {
   width: 100%;
-  height: 124rpx;
+  height: 134rpx;
 }
 .link_item {
   position: relative;
@@ -211,7 +147,18 @@ swiper.link_swiper {
   width: calc(100% - 48rpx);
   height: 100%;
 }
-/* 外链banner区域 end */
+/* 友链banner区域 end */
+/* 视频广告区 start */
+.advideo_cont {
+  width: 100%;
+  height: auto;
+  margin: 24rpx auto;
+}
+.advideo_cont .advideo {
+  width: 100%;
+  height: 300rpx;
+}
+/* 视频广告区 end */
 /* 海报区 start */
 .poster {
   width: calc(100% - 50rpx);
@@ -230,24 +177,28 @@ swiper.link_swiper {
 /* 专区 start */
 .zone {
   width: calc(100% - 48rpx);
-  margin: 0 auto;
+  margin: 24rpx auto;
 }
 .zone_item {
-  width: 316rpx;
+  width: 306rpx;
   height: 134rpx;
   box-shadow:0px 0px 4px 3px rgba(243,239,239,0.5);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 22rpx 24rpx 0;
-  padding-left: 24rpx;
+  margin: 0 14rpx 24rpx 0;
+  padding: 0 14rpx 0 24rpx;
 }
 .zone_item:nth-child(2n) {
   margin-right: unset;
 }
+.zone_item.lastItem {
+  margin-bottom: unset;
+}
 .zone_itemtit {
-  width: 200rpx;
+  width: 176rpx;
   height: 100%;
+  margin-right: 10rpx;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -263,8 +214,8 @@ swiper.link_swiper {
   line-height: 32rpx;
 }
 .zone_itemimg {
-  width: 110rpx;
-  height: 110rpx;
+  width: 120rpx;
+  height: 120rpx;
 }
 .zone_itemimg image {
   width: 100%;
@@ -275,11 +226,20 @@ swiper.link_swiper {
 .timeslimit {
   width: calc(100% - 48rpx);
   margin: 0 auto 24rpx auto;
+  padding-bottom: 14rpx;
+  box-shadow: 0px 0px 4px 3px rgba(243,239,239,0.5);
 }
 .timeslimit .tit {
   width: calc(100% - 48rpx);
   height: 42rpx;
   padding: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.timeslimit .tit_name {
+  width: auto;
+  height: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -294,7 +254,7 @@ swiper.link_swiper {
   height: 100%;
 }
 .goods_list3 {
-  height: 408rpx;
+  height: 424rpx;
 }
 swiper.timeslimit_swiper {
   width: 100%;
@@ -332,7 +292,7 @@ swiper.timeslimit_swiper {
 }
 .recommend_tit .tit_img {
   width: 100%;
-  height: 240rpx;
+  height: 280rpx;
 }
 .recommend_tit .tit_img image {
   width: 100%;
@@ -356,3 +316,29 @@ swiper.timeslimit_swiper {
   flex-flow: wrap;
 }
 /* 推荐商品 end */
+/* ad_dialog start */
+.ad_dialog {
+  position: fixed;
+  top: o;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+.ad_dialog .ad {
+  width: 100%;
+  height: 800rpx;
+}
+.ad_dialog .ad image {
+  width: 100%;
+  height: 100%;
+}
+.ad_dialog .closed {
+  width: 60rpx;
+  height: 60rpx;
+  margin-top: 50rpx;
+}
+/* ad_dialog end */

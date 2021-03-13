@@ -81,7 +81,4 @@
   height: 130rpx;
 }
 /* 地址列表 end */
-.nodata_cont {
-  width: 100%;
-  height: calc(100vh - 148rpx);
-}
+

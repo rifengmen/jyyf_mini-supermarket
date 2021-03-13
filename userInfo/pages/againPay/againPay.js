@@ -11,8 +11,6 @@ Page({
   data: {
     // 基础路径
     baseUrl: app.globalData.baseUrl,
-    // 订单编号
-    tradeno: '',
     // 订单详情
     orderDetail: '',
     // 储值卡支付方式开关
@@ -43,10 +41,14 @@ Page({
   onLoad: function (options) {
     let self = this
     self.setData({
-      tradeno: options.tradeno,
+      orderDetail: app.globalData.orderDetail,
+      paymode3Flag: app.globalData.paymodeFlag.paymode3Flag,
+      paymode4Flag: app.globalData.paymodeFlag.paymode4Flag,
+      paymode5Flag: app.globalData.paymodeFlag.paymode5Flag,
+      paymode7Flag: app.globalData.paymodeFlag.paymode7Flag,
     })
-    // 获取订单详情
-    self.getOrderDetail()
+    // 设置订单支付金额
+    self.setPayMoney()
   },
 
   /**
@@ -104,35 +106,6 @@ Page({
 
   // stops 阻止冒泡
   stops () {},
-
-  // 获取订单详情
-  getOrderDetail () {
-    let self = this
-    let data = {
-      Tradeno: self.data.tradeno
-    }
-    API.bill.buyend(data).then(result => {
-      let res = result.data
-      if (res.flag === 1) {
-        let orderDetail = res.data
-        let paymodelist = res.data.Paymodelist
-        orderDetail.tradeno = self.data.tradeno
-        self.setData({
-          orderDetail: orderDetail,
-          paymode3Flag: (paymodelist.filter(item => item.paymodeid === 3).length ? true : false),
-          paymode5Flag: (paymodelist.filter(item => item.paymodeid === 5).length ? true : false),
-          paymode7Flag: (paymodelist.filter(item => item.paymodeid === 7).length ? true : false),
-        })
-        app.globalData.addressId = res.data.sendId
-        // 设置订单支付金额
-        self.setPayMoney()
-      } else {
-        toast.toast(res.message)
-      }
-    }).catch(error => {
-      toast.toast(error.error)
-    })
-  },
 
   // 获取可用积分
   getScore () {

@@ -12,6 +12,7 @@
 				{{tickDetail.usemoney}}
 			</view>
 			<view class="type font24">
+				<view class="font30 ellipsis"wx:if="{{tickDetail.gettype === 2}}">{{tickDetail.score}}积分兑换</view>
 				<view class="ellipsis">{{tickDetail.tickettypename}}</view>
 				<view class="ellipsis">满{{tickDetail.minsalemoney}}元使用</view>
 			</view>
@@ -23,12 +24,6 @@
 			<view class="color666666">{{tickDetail.tickid}}</view>
 		</view>
 		<!-- 券码 end -->
-		<!-- 领用日期 start -->
-		<view class="section">
-			<view class="tit font_blod">领用日期</view>
-			<view class="color666666">{{tickDetail.panicstart}} —— {{tickDetail.panicend}}</view>
-		</view>
-		<!-- 领用日期 end -->
 		<!-- 有效期 start -->
 		<view class="section">
 			<view class="tit font_blod">有效期</view>
@@ -43,8 +38,8 @@
 		<!-- 发行量 end -->
 		<!-- 已领用 start -->
 		<view class="section">
-			<view class="tit font_blod">已领用</view>
-			<view class="color666666">{{tickDetail.havepaniccount}}张</view>
+			<view class="tit font_blod">剩余量</view>
+			<view class="color666666">{{tickDetail.residuecount}}张</view>
 		</view>
 		<!-- 已领用 end -->
 		<!-- 使用规则 start -->
@@ -61,9 +56,9 @@
 		<!-- 使用说明 end -->
 	</view>
 	<!-- 按钮 start -->
-	<view class="btn_cont">
-		<view class="btn colorffffff font32 border_r500 bg71d793 tc">
-			<getTickBtn tickid="{{tickDetail.tickid}}"></getTickBtn>
+	<view class="btn_cont" wx:if="{{from === 'auto'}}">
+		<view class="btn colorffffff font32 border_r500 {{tickDetail.residuecount ? 'bg71d793' : 'bgcecece'}} tc">
+			<getTickBtn tick="{{tickDetail}}"></getTickBtn>
 		</view>
 	</view>
 	<!-- 按钮 end -->

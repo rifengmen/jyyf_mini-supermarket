@@ -1,0 +1,142 @@
+<!--shopping/pages/goodsDetail/goodsDetail.wxml-->
+<import src="/pages/template/template.wxml" />
+<view class="container color333333 font28 bgf0f0f0" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
+	<block wx:if="{{goodsDetail}}">
+		<!-- banner start -->
+		<view class="banner border_r10 overflow bgffffff">
+			<swiper class="banner_swiper" indicator-color="#ffffff" indicator-active-color="#71d793" autoplay="true" circular="true" interval="4000" duration="500" current="{{swiperCurrent}}" bindchange="swiperChange">
+				<swiper-item wx:for="{{goodsDetail.images}}" wx:key="index" class="swiper_item">
+					<image src="{{item.image ? (baseUrl + item.image) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
+				</swiper-item>
+			</swiper>
+			<view class="dots" wx:if="{{goodsDetail.images.length > 1}}">
+				<block wx:for="{{goodsDetail.images}}" wx:key="index">
+					<view class="dot {{index === swiperCurrent ? 'active bg71d793' : 'bgffffff'}} border_r500"></view>
+				</block>
+			</view>
+		</view>
+		<!-- banner end -->
+		<!-- goodsname start -->
+		<view class="goods_desc1 bgffffff">
+			<view class="goods_name">
+				<view class="name font32 font_blod">{{goodsDetail.Name}}</view>
+				<view class="price color999999 font22" wx:if="{{goodsDetail.scaleflag}}">
+					<view class="actual_price">
+						<text class="colorfa6400">￥</text>
+						<text class="colorfa6400 font36">{{goodsDetail.preferential / 2}}</text>
+						<text class="">/斤</text>
+					</view>
+					<del class="" wx:if="{{goodsDetail.preferential !== goodsDetail.originalcost}}">
+						<text class="">￥</text>
+						<text class="font26">{{goodsDetail.originalcost / 2}}</text>
+						<text class="">/斤</text>
+					</del>
+				</view>
+				<view class="price color999999 font22" wx:else>
+					<view class="actual_price">
+						<text class="colorfa6400">￥</text>
+						<text class="colorfa6400 font36">{{goodsDetail.preferential}}</text>
+					</view>
+					<del class="" wx:if="{{goodsDetail.preferential !== goodsDetail.originalcost}}">
+						<text>￥</text>
+						<text class="font26">{{goodsDetail.originalcost}}</text>
+					</del>
+				</view>
+			</view>
+			<view class="goods_time">
+				<view class="goods_placeoforigin tr">产地：</view>
+				<view class="font_blod tr">{{goodsDetail.placeoforigin || '暂无'}}</view>
+			</view>
+		</view>
+		<!-- goodsname end -->
+		<!-- 秒杀信息 start -->
+		<view class="panicBuy bgffffff" wx:if="{{goodsDetail.promotemode === 101}}">
+			<view class="panicBuy_desc">秒杀时间：{{goodsDetail.startdate}} - {{goodsDetail.enddate}}</view>
+			<view class="panicBuy_desc">单人限量：{{goodsDetail.perlimit}}</view>
+			<view class="panicBuy_desc">总限量：{{goodsDetail.sumlimit}}</view>
+			<view class="panicBuy_desc">已购：{{goodsDetail.salelimit}}</view>
+		</view>
+		<!-- 秒杀信息 end -->
+		<!-- 销量 库存 好评 start -->
+		<view class="goods_desc2 bgffffff">
+			<view class="desc">
+				<view class="desc_name color666666 font24">月销量</view>
+				<view class="desc_num">{{goodsDetail.cumulativesales || 0}}</view>
+			</view>
+			<view class="desc">
+				<view class="desc_name color666666 font24">门店库存</view>
+				<view class="desc_num">{{goodsDetail.deptstock || 0}}</view>
+			</view>
+			<view class="desc">
+				<view class="desc_name color666666 font24">好评率</view>
+				<view class="desc_num">{{evaluation || 100}}%</view>
+			</view>
+		</view>
+		<!-- 销量 库存 好评 end -->
+		<!-- 评价 start -->
+		<view class="comment_cont {{describe ? '' : 'comment_conts'}} bgffffff">
+			<view class="tit">
+				<view class="font_blod">商品评价{{goodsDetail.EvaluationTC ? '(' + goodsDetail.EvaluationTC + ')' : ''}}</view>
+				<navigator class="more" hover-class="none" wx:if="{{goodsDetail.EvaluationTC}}" url="/autoModule/pages/commentList/commentList?title=商品评价&from=goodsDetail&gdscode={{Gdscode}}">查看全部 > </navigator>
+				<view class="color999999" wx:else>暂无评价</view>
+			</view>
+			<view class="comment_list">
+				<template is="comment" data="{{commentList}}"></template>
+			</view>
+		</view>
+		<!-- 评价 end -->
+		<!-- 详情 start -->
+		<view class="goods_desc3 bgffffff">
+			<view class="" wx:if="{{describe}}">
+				<rich-text class="" nodes="{{describe}}"></rich-text>
+			</view>
+		</view>
+		<!-- 详情 end -->
+		<!-- 导航 加购物车 start -->
+		<view class="nav_cart bgffffff">
+			<view class="nav">
+				<navigator class="nav_img" hover-class="none" open-type="switchTab" url="/pages/index/index">
+					<image src="/lib/images/index.png"></image>
+				</navigator>
+				<navigator class="nav_img cart" hover-class="none" open-type="switchTab" url="/pages/cart/cart">
+					<image src="/lib/images/cart.png"></image>
+					<view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{cartCount}}">{{cartCount}}</view>
+				</navigator>
+				<navigator class="nav_img" hover-class="none" open-type="switchTab" url="/pages/userInfo/userInfo">
+					<image src="/lib/images/userInfo.png"></image>
+				</navigator>
+			</view>
+			<view class="cart_cont colorffffff font32">
+				<view class="cart_btn btn bg71d793 border_r500 tc">
+					<addCart id="addCart" catchtap="addCart" bind:getCartCount="getCartCount" from="goodsDetail"></addCart>
+				</view>
+				<view class="often_btn btn bg329e56 border_r500 tc" bindtap="buyend">立即购买</view>
+			</view>
+		</view>
+		<!-- 导航 加购物车 end -->
+	</block>
+	<!-- 快捷按钮 start -->
+	<view class="shortcut_key colorffffff font22">
+		<view class="share_btn btn border_r500" bindtap="queryCanvas">
+			<image src="/lib/images/poster.png"></image>
+			<view class="">海报</view>
+		</view>
+		<button class="share_btn btn border_r500" open-type="share">
+			<image src="/lib/images/share.png"></image>
+			<view class="">分享</view>
+		</button>
+	</view>
+	<!-- 快捷按钮 end -->
+	<!-- dialog start -->
+	<view class="dialog" wx:if="{{dialogFlag}}">
+		<dialog goods="{{goods}}" bind:dialogClose="dialogClose" bind:dialogConfirm="dialogConfirm"></dialog>
+	</view>
+	<!-- dialog end -->
+	<!-- canvas start -->
+	<view class="canvas_cont {{posterFlag ? 'active' : ''}}" catchtouchmove="catchTouchMove">
+		<canvas type="2d" id="posterCanvas"></canvas>
+		<view class="btn colorffffff font32 bg71d793 border_r500 tc" catchtap="savePosterImg">保存图片</view>
+		<image src="/lib/images/closed.png" class="closed" mode="aspectFit" catchtap="closedPosterCanvas"></image>
+	</view>
+	<!-- canvas end -->
+</view>

@@ -49,17 +49,9 @@ Component({
       let self = this
       if (!self.data.startdate) {
         let date = new Date()
-        let year = date.getFullYear()
-        let month = date.getMonth()
-        let day = date.getDate()
-        if (month - 1 <= 0) {
-          year = year - 1;
-          month = month - 1 + 12;
-        } else {
-          month = month - 1;
-        }
-        // let startdate = year + '/' + month + '/' + day + ' ' + '00:0:00'
-        let startdate = year + '/' + month + '/' + day
+        let nowdate = date.getTime()
+        let time_length = 30 * 24 * 60 * 60 * 1000
+        let startdate = new Date(nowdate - time_length).toLocaleString().replace(/:\d{1,2}$/,' ').split(' ')[0]
         self.setData({
           startdate: startdate
         })

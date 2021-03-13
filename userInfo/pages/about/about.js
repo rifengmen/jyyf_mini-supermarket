@@ -9,16 +9,16 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // 商家logo
-    shoplogo: app.globalData.shoplogo,
     // app标题
     apptitle: app.globalData.apptitle,
-    // shopcode
-    shopcode: app.globalData.shopcode,
-    // about
-    about: '',
+    // 主题背景色
+    home_bgcolor: '#71d793',
     // 当前线上版本号
     version: app.globalData.version,
+    // 信息详情
+    detail: '',
+    // 富文本
+    nodes: '',
   },
 
   /**
@@ -26,8 +26,11 @@ Page({
    */
   onLoad: function (options) {
     let self = this
-    // 获取about
-    self.getAbout()
+    self.setData({
+      home_bgcolor: app.globalData.home_bgcolor,
+    })
+    // 获取联系我们
+    self.getNoticeDetail()
   },
 
   /**
@@ -79,23 +82,55 @@ Page({
   //
   // },
 
-  // 关于
-  getAbout () {
+  // 获取关于我们
+  getNoticeDetail () {
     let self = this
     let data = {
-      UserCode: self.data.shopcode
+      // msg_type,公告类别，0：根据id查询普通公告详情； 1：查询关于我们；  2：查询联系我们
+      msg_type: 1
     }
-    API.appversion.appAbout(data).then(result => {
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
+    API.info.listNoticeDtlForWX(data).then(result => {
       let res = result.data
-      if (res.flag === 1) {
-        self.setData({
-          about: res.data
-        })
-      } else {
-        toast.toast(res.message)
-      }
+      // 设置详情
+      self.setDetail(res)
     }).catch(error => {
       toast.toast(error.error)
+    })
+  },
+
+  // 设置详情
+  setDetail (res) {
+    let self = this
+    if (res.flag === 1) {
+      let nodes = res.data.content.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:block;float:left;margin: 0 auto"')
+      self.setData({
+        detail: res.data,
+        nodes: nodes,
+      })
+    } else {
+      toast.toast(res.message)
+    }
+    wx.hideLoading()
+  },
+
+  // 图片放大预览
+  previewImage (e) {
+    let self = this
+    let imgList = self.data.detail.content.match(/<img[^>]*src=['"]([^'"]+)[^>]*>/gi)
+    let srcList = []
+    imgList.forEach(item => {
+      item.replace(/<img[^>]*src=['"]([^'"]+)[^>]*>/gi, (match, capture) => {
+        srcList.push(capture)
+      })
+    })
+    let current = e.target.src
+    wx.previewImage({
+      current: current, // 当前显示图片的http链接
+      urls: srcList // 需要预览图片http链接列表
     })
   },
 })

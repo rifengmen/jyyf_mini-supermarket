@@ -13,7 +13,7 @@ Page({
     // 基础路径
     baseUrl: app.globalData.baseUrl,
     // 图片路径为空时默认图路径
-    errorImage: app.globalData.errorImage,
+    defgoodsimg: app.globalData.defgoodsimg,
     // 订单编号
     tradeno: '',
     // 订单详情
@@ -126,8 +126,9 @@ Page({
           })
           paymodename = paymodenameArr.join('、')
         }
-        if (orderDetail.billstatus === 40) {
+        if (orderDetail.billstatus === 4 || orderDetail.billstatus === 40) {
           orderDetail.freight = 0
+          orderDetail.Actprice = 0
         }
         self.setData({
           orderDetail: orderDetail,
@@ -150,6 +151,22 @@ Page({
   // 返回
   backs () {
     let self = this
+    app.globalData.ordernum = self.data.tradeno
     wx.navigateBack()
+  },
+
+  // 去结算
+  toBuyEnd() {
+    let self = this
+    let buyEnd = self.selectComponent('#buyEnd')
+    let goods = {
+      otc: '',
+      isotc: '',
+      orderType: '',
+      Gdscode: '',
+      amount: '',
+    }
+    // 调用子组件，传入商品信息
+    buyEnd.toBuyEnd(goods)
   },
 })

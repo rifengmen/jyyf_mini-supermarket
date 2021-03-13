@@ -14,12 +14,12 @@
 	<!-- 商品列表 start -->
 	<view class="main">
 		<view class="goods_cont bgffffff border_r10 overflow" wx:if="{{cartList.length}}">
-			<view class="goods_list1">
+			<view class="goods_list1 goodslist">
 				<view class="goods" wx:for="{{cartList}}" wx:key="index">
 					<radio value="" checked="{{item.check}}" bindtap="setCheck" data-index="{{index}}" wx:if="{{editorFlag}}"></radio>
-					<navigator class="goods_item border_be5e5e5" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&title={{item.Pname}}}&deptname={{deptname}}&deptcode={{deptcode}}">
+					<navigator class="goods_item border_be5e5e5" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&promotemode={{item.promotemode}}&title={{item.Pname}}}&deptname={{deptname}}&deptcode={{deptcode}}">
 						<view class="item_img overflow">
-							<image src="{{item.Pimg ? (baseUrl + item.Pimg) : errorImage}}" mode="aspectFit"></image>
+							<image src="{{item.Pimg ? (baseUrl + item.Pimg) : defgoodsimg}}" mode="aspectFit"></image>
 						</view>
 						<view class="item_desc">
 							<view class="item_name ellipsis2">{{item.Pname}}</view>
@@ -53,7 +53,7 @@
 		</view>
 		<view class="nodata_cont" wx:if="{{!cartList.length && getFlag}}">
 			<view class="nodata overflow">
-				<image src="/lib/images/cartNodata.png"></image>
+				<image src="/lib/images/cartNodata.png" mode="aspectFit"></image>
 			</view>
 			<view class="color999999 tc">您的购物车空空如也快去购物吧～</view>
 		</view>
@@ -68,10 +68,12 @@
 				<view class="color999999">优惠：￥{{discountMoney}}</view>
 			</view>
 			<block wx:if="{{cartList.length}}">
-				<view class="toEditorOrder colorffffff font32 border_r500 bg71d793 tc" bindtap="toEditorOrder">去结算({{cartCount}})</view>
+				<view class="toEditorOrder colorffffff font32 border_r500 bg71d793 tc" bindtap="toBuyEnd">
+					<buyEnd id="buyEnd" cartCount="{{cartCount}}"></buyEnd>
+				</view>
 			</block>
 			<block wx:else>
-				<view class="toEditorOrder colorffffff font32 border_r500 bgcecece tc">去结算(0)</view>
+				<view class="toEditorOrder colorffffff font32 border_r500 bgcecece tc">去结算</view>
 			</block>
 		</view>
 		<view class="group" wx:else>

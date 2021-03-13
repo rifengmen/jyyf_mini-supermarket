@@ -1,0 +1,69 @@
+/* userInfo/pages/againPay/againPay.wxss */
+.section {
+  width: calc(100% - 48rpx);
+  padding: 0 24rpx;
+}
+.order_score {
+  margin-bottom: 20rpx;
+}
+.remark {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.section_tit {
+  width: 150rpx;
+  margin-right: 20rpx;
+}
+.section_cont {
+  width: calc(100% - 170rpx);
+  padding: 24rpx 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.score_group {
+  height: 40rpx;
+  margin-bottom: unset;
+}
+
+/* 结算信息 start */
+.pay_desc {
+  width: calc(100% - 48rpx);
+  height: auto;
+  padding: 0 24rpx;
+}
+.pay_cont {
+  width: 100%;
+  padding: 20rpx 0;
+}
+.pay_cont > view {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+.pay_cont > view:last-child {
+  margin-bottom: unset;
+}
+/* 结算信息 end */
+.order_money {
+  width: calc(100% - 48rpx);
+  height: 90rpx;
+  line-height: 90rpx;
+  padding: 0 24rpx;
+}
+.btn_cont {
+  width: calc(100% - 48rpx);
+  height: auto;
+  padding: 30rpx 24rpx 60rpx 24rpx;
+}
+.btn_cont > view {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.btn_cont .card_btn {
+  margin-bottom: 30rpx;
+}

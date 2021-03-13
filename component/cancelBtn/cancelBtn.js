@@ -32,7 +32,8 @@ Component({
       wx.showModal({
         title: '提示',
         content: '您确定要取消此订单吗？',
-        success (res) {
+        success: res => {
+          // 确认
           if (res.confirm) {
             // 确认按钮
             self.confirm()

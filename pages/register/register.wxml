@@ -2,12 +2,10 @@
 <view class="container color333333 font28">
 	<!-- logo start -->
 	<view class="logo">
-		<view class="logo_cont border_r8 overflow bg71d793">
-				<view class="logo_img border_r500 overflow">
-				<image src="{{shoplogo}}"></image>
-			</view>
-			<text class="apptitle colorffffff font36 font_blod tc">{{apptitle}}</text>
+		<view class="logo_img overflow">
+			<image src="/baseimg/logo.png" mode="aspectFit"></image>
 		</view>
+		<view class="font40 font_blod">{{apptitle}}</view>
 	</view>
 	<!-- logo end -->
 	<!-- 手机号码 start -->

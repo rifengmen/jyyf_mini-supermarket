@@ -1,5 +1,5 @@
 <!--component/scanDialog/scanDialog.wxml-->
-<view class="goodsInfo" catchtouchmove="ture" xmlns:wx="http://www.w3.org/1999/xhtml">
+<view class="goodsInfo" catchtouchmove="catchTouchMove" xmlns:wx="http://www.w3.org/1999/xhtml">
   <view class="goodsInfo_cont bgffffff border_r20">
     <view class="goodsInfo_name goods_section font32">{{goodsInfo.productName}}</view>
     <view class="goods_section">{{goodsInfo.barcode}}</view>
@@ -10,7 +10,7 @@
       ￥{{goodsInfo.saleMoney}}
     </del>
     <view class="scan_btn_cont">
-      <view class="btn color999999 border_a979797 border_r500 tc" bindtap="addBack">加入返回</view>
+      <view class="btn color999999 border_a999999 border_r500 tc" bindtap="addBack">加入返回</view>
       <view class="btn colorffffff bg71d793 border_a71d793 border_r500 tc" bindtap="addGoOn">加入继续</view>
     </view>
     <image src="/lib/images/closed.png" class="closed bgfa6400 border_r500" mode="aspectFit" bindtap="cancel"></image>

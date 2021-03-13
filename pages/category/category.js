@@ -12,7 +12,7 @@ Page({
     // 基础路径
     baseUrl: app.globalData.baseUrl,
     // 图片路径为空时默认图路径
-    errorImage: app.globalData.errorImage,
+    defgoodsimg: app.globalData.defgoodsimg,
     // 门店名称
     deptname: '',
     // 门店code
@@ -21,14 +21,20 @@ Page({
     level1: [],
     // 选中分类下标
     level1ActiveIndex: 0,
+    // 一级类滚动数据
+    scroll1Data: 'level1_name0',
     // 二级分类列表
     level2: [],
     // 选中分类下标
     level2ActiveIndex: 0,
+    // 二级类全部显示开关
+    level2ShowFlag: false,
+    // 二级类滚动数据
+    scroll2Data: 'level2_name0',
     // 页数
     page: 1,
     // 每页条数
-    count: 15,
+    count: 16,
     // 商品总条数
     rowCount: 0,
     // 排序方式（1销量、2人气、3价格)
@@ -140,8 +146,18 @@ Page({
     API.system.listClass(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let level1 = res.data
+        let all = {
+          addtime: null,
+          classcode: -1,
+          classid: -1,
+          classname: "全部"
+        }
+        if (level1.length > 1) {
+          level1.unshift(all)
+        }
         self.setData({
-          level1: res.data
+          level1: level1
         })
         if (res.data.length) {
           // 获取二级分类
@@ -158,10 +174,10 @@ Page({
   // 获取二级分类
   getLevel2 () {
     let self = this
-    let index = self.data.level1ActiveIndex
+    let index1 = self.data.level1ActiveIndex
     let level1 = self.data.level1
     let data = {
-      classid: level1[index].classid
+      classid: level1[index1].classid
     }
     wx.showLoading({
       title: '正在加载',
@@ -174,10 +190,19 @@ Page({
     API.system.listSubClass(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let level2 = res.data
+        let all = {
+          addtime: null,
+          classcode: -1,
+          classid: -1,
+          classname: "全部",
+          ico: '/lib/images/category_all.png'
+        }
+        level2.unshift(all)
         self.setData({
-          level2: res.data
+          level2: level2
         })
-        if (res.data.length) {
+        if (res.data.length || level1[index1].classid === -1) {
           // 获取商品列表
         self.getGoodsList()
         } else {
@@ -198,10 +223,13 @@ Page({
   // 获取商品列表
   getGoodsList () {
     let self = this
-    let index = self.data.level2ActiveIndex
+    let index1 = self.data.level1ActiveIndex
+    let index2 = self.data.level2ActiveIndex
+    let level1 = self.data.level1
     let level2 = self.data.level2
     let data = {
-      Cateid: level2[index].classid,
+      classcode: level1[index1].classid,
+      Cateid: level2[index2].classid,
       Page: self.data.page,
       Count: self.data.count,
       Sortflg: self.data.sortflg,
@@ -234,6 +262,15 @@ Page({
   setLevel1ActiveIndex (e) {
     let self = this
     let index = e.currentTarget.dataset.index
+    // 设置二级类滚动数据
+    self.setData({
+      scroll1Data: 'level1_name' + (index - 1),
+      scroll2Data: 'level2_name0'
+    })
+    // 重复选择不发送请求
+    if (index === self.data.level1ActiveIndex) {
+      return false
+    }
     self.setData({
       level1ActiveIndex: index,
       level2ActiveIndex: 0,
@@ -249,6 +286,13 @@ Page({
     let self = this
     let index = e.currentTarget.dataset.index
     self.setData({
+      scroll2Data: 'level2_name' + index
+    })
+    // 重复选择不发送请求
+    if (index === self.data.level2ActiveIndex) {
+      return false
+    }
+    self.setData({
       level2ActiveIndex: index,
       page: 1,
       goodsList: [],
@@ -261,24 +305,31 @@ Page({
     self.setData({
       getFlag: false
     })
+    if (self.data.level2ShowFlag) {
+      // 设置二级类全部显示开关
+      self.setLevel2ShowFlag()
+    }
     // 获取商品列表
     self.getGoodsList()
+  },
+
+  // 设置二级类全部显示开关
+  setLevel2ShowFlag () {
+    let self = this
+    self.setData({
+      level2ShowFlag: !self.data.level2ShowFlag
+    })
   },
 
   // 添加购物车
   addCart (e) {
     let self = this
     let goods = e.currentTarget.dataset.goods
-    // 判断是否散称
-    if (goods.scaleflag) {
-      self.setData({
-        dialogFlag: true,
-        goods: goods,
-      })
-    } else {
-      // 调用子组件添加购物车方法
-      self.componentAddCart(goods)
-    }
+    // 调用数量/重量弹窗
+    self.setData({
+      dialogFlag: true,
+      goods: goods,
+    })
   },
 
   // 调用子组件添加购物车方法

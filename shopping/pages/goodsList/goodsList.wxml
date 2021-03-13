@@ -1,160 +1,235 @@
 <!--shopping/pages/goodsList/goodsList.wxml-->
+<import src="/pages/template/template.wxml" />
 <view class="container color333333 font28 bgf9f9f9">
-  <!-- 编辑栏 start -->
-  <view class="goods_list_edit bg000000 border_r500" catchtap="setListType">
-    <image src="/lib/images/listType1.png" mode="aspectFit" class="fixed_img border_r500 overflow" wx:if="{{listType === 1}}"></image>
-    <image src="/lib/images/listType2.png" mode="aspectFit" class="fixed_img border_r500 overflow" wx:if="{{listType === 2}}"></image>
+  <!-- 搜索 srtart -->
+  <view class="search_cont bgffffff z_index_1">
+    <template is="search" data="{{Sname}}"></template>
   </view>
-  <!-- 编辑栏 end -->
+  <!-- 搜索 end -->
   <!-- 内容部分 start -->
   <view class="main" wx:if="{{goodsList.length}}">
     <!-- 商品列表_1 start -->
-    <view class="goods_list1 bgffffff" wx:if="{{listType === 1}}">
-      <block wx:for="{{goodsList}}" wx:key="index">
-        <navigator class="goods_item bgffffff border_be5e5e5" hover-class="none"
-                   url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&title={{item.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
-          <view class="item_img overflow">
-            <image src="{{item.Defaultimage ? (baseUrl + item.Defaultimage) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
-            <view class="age colorffffff" wx:if="{{panicBuy && item.sumlimit === item.salelimit}}">已抢光</view>
-          </view>
-          <view class="item_desc">
-            <view class="item_name ellipsis2">{{item.Name}}</view>
-            <view class="panicBuy color999999 font24" wx:if="{{panicBuy}}">{{item.startdate}} - {{item.enddate}}
+    <block wx:if="{{listType === 1}}">
+      <view class="goods_list1 bgffffff">
+        <block wx:for="{{goodsList}}" wx:key="index">
+          <navigator class="goods_item bgffffff border_be5e5e5" hover-class="none"
+                     url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&promotemode={{item.promotemode}}&title={{item.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
+            <!-- 商品图片 start -->
+            <view class="item_img overflow">
+              <image src="{{item.Defaultimage ? (baseUrl + item.Defaultimage) : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
+              <block wx:if="{{item.promotemode === 101 && item.sumlimit === item.salelimit}}">
+                <view class="age colorffffff">已抢光</view>
+              </block>
             </view>
-            <view class="panicBuy color999999 font24" wx:if="{{panicBuy}}">总限量：{{item.sumlimit}}
-              已购：{{item.salelimit}}
+            <!-- 商品图片 end -->
+            <!-- 商品文字 start -->
+            <view class="item_desc">
+              <view class="item_name ellipsis2">{{item.Name}}</view>
+              <!-- 活动标签 start -->
+              <view class="tag_cont">
+                <block wx:if="{{item.promotemode === 100}}">
+                  <text class="tag color71d793 font24 bgffffff border_r500 border_a71d793 font22 tc">{{item.topamount}}人成团</text>
+                </block>
+                <block wx:elif="{{item.promotemode === 102}}">
+                  <text class="tag color71d793 font24 bgffffff border_r500 border_a71d793 font22 tc">{{item.topamount}}人砍价</text>
+                </block>
+              </view>
+              <!-- 活动标签 end -->
+              <!-- 秒杀信息 start -->
+              <block wx:if="{{item.promotemode === 101}}">
+                <view class="panicBuy color999999 font24">{{item.startdate}} - {{item.enddate}}</view>
+                <view class="panicBuy color999999 font24">
+                  <text>总数量：{{item.sumlimit}}</text>
+                  <text>剩余量：{{(item.sumlimit - item.salelimit) <= 0 ? 0 : (item.sumlimit - item.salelimit)}}</text>
+                </view>
+              </block>
+              <!-- 秒杀信息 end -->
+              <!-- 价格信息 start -->
+              <view class="price_cont">
+                <block wx:if="{{item.scaleflag}}">
+                  <view class="price color999999 font22">
+                    <view class="actual_price">
+                      <text class="colorfa6400">￥</text>
+                      <text class="colorfa6400 font36">{{item.Highpprice / 2}}</text>
+                      <text class="">/斤</text>
+                    </view>
+                    <block wx:if="{{item.Highoprice !== item.Highpprice}}">
+                      <del class="">
+                        <text class="">￥</text>
+                        <text class="font26">{{item.Highoprice / 2}}</text>
+                        <text class="">/斤</text>
+                      </del>
+                    </block>
+                  </view>
+                </block>
+                <block wx:else>
+                  <view class="price color999999 font22">
+                    <view class="actual_price">
+                      <text class="colorfa6400">￥</text>
+                      <text class="colorfa6400 font36">{{item.Highpprice}}</text>
+                    </view>
+                    <block wx:if="{{item.Highoprice !== item.Highpprice}}">
+                      <del class="">
+                        <text class="">￥</text>
+                        <text class="font26">{{item.Highoprice}}</text>
+                      </del>
+                    </block>
+                  </view>
+                </block>
+                <view class="cart">
+                  <block wx:if="{{item.promotemode < 100 || item.promotemode > 103}}">
+                    <view class="cart_img">
+                      <addCart id="addCart" catchtap="addCart" data-goods="{{item}}" bind:getCartCount="getCartCount"></addCart>
+                    </view>
+                  </block>
+                </view>
+              </view>
+              <!-- 价格信息 end -->
             </view>
-            <view class="price_cont">
-              <view class="price color999999 font22" wx:if="{{item.scaleflag}}">
-                <view class="actual_price">
-                  <text class="colorfa6400">￥</text>
-                  <text class="colorfa6400 font36">{{item.Highpprice / 2}}</text>
-                  <text class="">/斤</text>
-                </view>
-                <del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
-                  <text class="">￥</text>
-                  <text class="font26">{{item.Highoprice / 2}}</text>
-                  <text class="">/斤</text>
-                </del>
-              </view>
-              <view class="price color999999 font22" wx:else>
-                <view class="actual_price">
-                  <text class="colorfa6400">￥</text>
-                  <text class="colorfa6400 font36">{{item.Highpprice}}</text>
-                </view>
-                <del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
-                  <text class="">￥</text>
-                  <text class="font26">{{item.Highoprice}}</text>
-                </del>
-              </view>
-              <view class="cart">
-                <view class="cart_img">
-                  <addCart id="addCart" catchtap="addCart" data-goods="{{item}}"
-                           bind:getCartCount="getCartCount"></addCart>
-                </view>
-              </view>
-            </view>
-          </view>
-        </navigator>
-      </block>
-    </view>
+            <!-- 商品文字 end -->
+          </navigator>
+        </block>
+      </view>
+    </block>
     <!-- 商品列表_1 end -->
     <!-- 商品列表_2 start -->
-    <view class='goods_list2' wx:if="{{listType === 2}}">
-      <view class="goods_list2_cont">
-        <block wx:for="{{goodsList}}" wx:key="index" wx:if="{{index%2 === 0}}">
-          <navigator class="goods_item border_r10 bgffffff overflow" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&title={{item.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
-            <view class="item_img overflow">
-              <image src="{{item.Defaultimage ? (baseUrl + item.Defaultimage) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
-            </view>
-            <view class="item_name ellipsis2">{{item.Name}}</view>
-            <view class="price_cont">
-              <view class="price color999999 font22" wx:if="{{item.scaleflag}}">
-                <view class="actual_price">
-                  <text class="colorfa6400">￥</text>
-                  <text class="colorfa6400 font36">{{item.Highpprice / 2}}</text>
-                  <text class="">/斤</text>
+    <block wx:if="{{listType === 2}}">
+      <view class='goods_list2'>
+        <view class="goods_list2_cont">
+          <block wx:for="{{goodsList}}" wx:key="index" wx:if="{{index%2 === 0}}">
+            <navigator class="goods_item border_r10 bgffffff overflow" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&promotemode={{item.promotemode}}&title={{item.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
+              <!-- 商品图片 start -->
+              <view class="item_img overflow">
+                <image src="{{item.Defaultimage ? (baseUrl + item.Defaultimage) : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
+                <view class="age colorffffff" wx:if="{{item.promotemode === 101 && item.sumlimit === item.salelimit}}">已抢光</view>
+              </view>
+              <!-- 商品图片 end -->
+              <!-- 商品信息 start -->
+              <view class="item_desc">
+                <view class="item_name ellipsis2">{{item.Name}}</view>
+                <!-- 活动标签 start -->
+                <view class="tag_cont">
+                  <text class="tag color71d793 font24 bgffffff border_r500 border_a71d793 font22 tc" wx:if="{{item.promotemode === 100}}">{{item.topamount}}人成团</text>
+                  <text class="tag color71d793 font24 bgffffff border_r500 border_a71d793 font22 tc" wx:elif="{{item.promotemode === 102}}">{{item.topamount}}人砍价</text>
                 </view>
-                <del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
-                  <text class="">￥</text>
-                  <text class="font26">{{item.Highoprice / 2}}</text>
-                  <text class="">/斤</text>
-                </del>
-              </view>
-              <view class="price color999999 font22" wx:else>
-                <view class="actual_price">
-                  <text class="colorfa6400">￥</text>
-                  <text class="colorfa6400 font36">{{item.Highpprice}}</text>
+                <!-- 活动标签 end -->
+                <!-- 价格信息 start -->
+                <view class="price_cont">
+                  <view class="price color999999 font22" wx:if="{{item.scaleflag}}">
+                    <view class="actual_price">
+                      <text class="colorfa6400">￥</text>
+                      <text class="colorfa6400 font36">{{item.Highpprice / 2}}</text>
+                      <text class="">/斤</text>
+                    </view>
+                    <del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
+                      <text class="">￥</text>
+                      <text class="font26">{{item.Highoprice / 2}}</text>
+                      <text class="">/斤</text>
+                    </del>
+                  </view>
+                  <view class="price color999999 font22" wx:else>
+                    <view class="actual_price">
+                      <text class="colorfa6400">￥</text>
+                      <text class="colorfa6400 font36">{{item.Highpprice}}</text>
+                    </view>
+                    <del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
+                      <text class="">￥</text>
+                      <text class="font26">{{item.Highoprice}}</text>
+                    </del>
+                  </view>
+                  <view class="cart">
+                    <block wx:if="{{item.promotemode < 100 || item.promotemode > 103}}">
+                      <addCart id="addCart" catchtap="addCart" data-goods="{{item}}" bind:getCartCount="getCartCount"></addCart>
+                    </block>
+                  </view>
                 </view>
-                <del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
-                  <text class="">￥</text>
-                  <text class="font26">{{item.Highoprice}}</text>
-                </del>
+                <!-- 价格信息 end -->
               </view>
-              <view class="cart">
-                <addCart id="addCart" catchtap="addCart" data-goods="{{item}}" bind:getCartCount="getCartCount"></addCart>
+              <!-- 商品信息 end -->
+            </navigator>
+          </block>
+        </view>
+        <view class="goods_list2_cont">
+          <block wx:for="{{goodsList}}" wx:key="index" wx:if="{{index%2 !== 0}}">
+            <navigator class="goods_item border_r10 bgffffff overflow" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&promotemode={{item.promotemode}}&title={{item.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
+              <!-- 商品图片 start -->
+              <view class="item_img overflow">
+                <image src="{{item.Defaultimage ? (baseUrl + item.Defaultimage) : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
+                <view class="age colorffffff" wx:if="{{(item.promotemode === 101) && (item.sumlimit <= item.salelimit)}}">已抢光</view>
               </view>
-            </view>
-          </navigator>
-        </block>
+              <!-- 商品图片 end -->
+              <!-- 商品信息 start -->
+              <view class="item_desc">
+                <view class="item_name ellipsis2">{{item.Name}}</view>
+                <!-- 活动标签 start -->
+                <view class="tag_cont">
+                  <text class="tag color71d793 font24 bgffffff border_r500 border_a71d793 font22 tc" wx:if="{{item.promotemode === 100}}">{{item.topamount}}人成团</text>
+                  <text class="tag color71d793 font24 bgffffff border_r500 border_a71d793 font22 tc" wx:elif="{{item.promotemode === 102}}">{{item.topamount}}人砍价</text>
+                </view>
+                <!-- 活动标签 end -->
+                <!-- 价格信息 start -->
+                <view class="price_cont">
+                  <view class="price color999999 font22" wx:if="{{item.scaleflag}}">
+                    <view class="actual_price">
+                      <text class="colorfa6400">￥</text>
+                      <text class="colorfa6400 font36">{{item.Highpprice / 2}}</text>
+                      <text class="">/斤</text>
+                    </view>
+                    <del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
+                      <text class="">￥</text>
+                      <text class="font26">{{item.Highoprice / 2}}</text>
+                      <text class="">/斤</text>
+                    </del>
+                  </view>
+                  <view class="price color999999 font22" wx:else>
+                    <view class="actual_price">
+                      <text class="colorfa6400">￥</text>
+                      <text class="colorfa6400 font36">{{item.Highpprice}}</text>
+                    </view>
+                    <del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
+                      <text class="">￥</text>
+                      <text class="font26">{{item.Highoprice}}</text>
+                    </del>
+                  </view>
+                  <view class="cart">
+                    <block wx:if="{{item.promotemode < 100 || item.promotemode > 103}}">
+                      <addCart id="addCart" catchtap="addCart" data-goods="{{item}}" bind:getCartCount="getCartCount"></addCart>
+                    </block>
+                  </view>
+                </view>
+                <!-- 价格信息 end -->
+              </view>
+              <!-- 商品信息 end -->
+            </navigator>
+          </block>
+        </view>
       </view>
-      <view class="goods_list2_cont">
-        <block wx:for="{{goodsList}}" wx:key="index" wx:if="{{index%2 !== 0}}">
-          <navigator class="goods_item border_r10 bgffffff overflow" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.Gdscode}}&title={{item.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
-            <view class="item_img overflow">
-              <image src="{{item.Defaultimage ? (baseUrl + item.Defaultimage) : errorImage}}" mode="aspectFit" lazy-load="true"></image>
-            </view>
-            <view class="item_name ellipsis2">{{item.Name}}</view>
-            <view class="price_cont">
-              <view class="price color999999 font22" wx:if="{{item.scaleflag}}">
-                <view class="actual_price">
-                  <text class="colorfa6400">￥</text>
-                  <text class="colorfa6400 font36">{{item.Highpprice / 2}}</text>
-                  <text class="">/斤</text>
-                </view>
-                <del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
-                  <text class="">￥</text>
-                  <text class="font26">{{item.Highoprice / 2}}</text>
-                  <text class="">/斤</text>
-                </del>
-              </view>
-              <view class="price color999999 font22" wx:else>
-                <view class="actual_price">
-                  <text class="colorfa6400">￥</text>
-                  <text class="colorfa6400 font36">{{item.Highpprice}}</text>
-                </view>
-                <del class="" wx:if="{{item.Highoprice !== item.Highpprice}}">
-                  <text class="">￥</text>
-                  <text class="font26">{{item.Highoprice}}</text>
-                </del>
-              </view>
-              <view class="cart">
-                <addCart id="addCart" catchtap="addCart" data-goods="{{item}}" bind:getCartCount="getCartCount"></addCart>
-              </view>
-            </view>
-          </navigator>
-        </block>
-      </view>
-    </view>
+    </block>
     <!-- 商品列表_2 end -->
   </view>
   <!-- 内容部分 end -->
   <!-- 无数据 start -->
   <view class="nodata_cont" wx:if="{{!goodsList.length && getFlag}}">
     <view class="nodata overflow">
-      <image src="/lib/images/goodsNodata.png"></image>
+      <image src="/lib/images/goodsNodata.png" mode="aspectFit"></image>
     </view>
     <view class="color999999 tc">暂无相关商品～</view>
   </view>
   <!-- 无数据 end -->
   <!-- 购物车 start -->
   <!--<navigator class="tocart bg000000 border_r500" hover-class="none" url="/shopping/pages/cart2/cart2">-->
-  <navigator class="tocart bg000000 border_r500" hover-class="none" open-type="switchTab" url="/pages/cart/cart">
+  <navigator class="tocart {{scrollflag ? 'scroll' : ''}} bg000000 border_r500" hover-class="none" open-type="switchTab" url="/pages/cart/cart">
     <image src="/lib/images/toCart.png" class="fixed_img border_r500 overflow"></image>
     <view class="badge colorffffff font24 bgfa5151 border_r500 overflow tc" wx:if="{{cartCount}}">{{cartCount}}
     </view>
   </navigator>
   <!-- 购物车 end -->
+  <!-- 编辑栏 start -->
+  <!--<view class="goods_list_edit bg000000" catchtap="setListType">-->
+    <!--<image src="/lib/images/listType1.png" mode="aspectFit" class="fixed_img border_r500 overflow" wx:if="{{listType === 1}}"></image>-->
+    <!--<image src="/lib/images/listType2.png" mode="aspectFit" class="fixed_img border_r500 overflow" wx:if="{{listType === 2}}"></image>-->
+  <!--</view>-->
+  <!-- 编辑栏 end -->
   <!-- dialog start -->
   <view class="dialog" wx:if="{{dialogFlag}}">
     <dialog goods="{{goods}}" bind:dialogClose="dialogClose" bind:dialogConfirm="dialogConfirm"></dialog>

@@ -1,0 +1,26 @@
+<!--component/buyEnd/buyEnd.wxml-->
+<view class="buyEnd">
+  <view class="buyEnd_text" wx:if="{{from === 'order'}}">去支付</view>
+  <!-- 非拼团砍价时显示普通立即购买按钮 start -->
+  <view class="buyEnd_text" wx:elif="{{from === 'goodsDetail' && orderType === 2}}">立即购买</view>
+  <!-- 非拼团砍价时显示普通立即购买按钮 end -->
+  <!-- 发起拼团 start -->
+  <view class="buyEnd_text" wx:elif="{{from === 'goodsDetail' && orderType === 3}}">发起拼团</view>
+  <!-- 发起拼团 end -->
+  <!-- 参与拼团 start -->
+  <view class="buyEnd_text" wx:elif="{{from === 'goodsDetail' && orderType === 4}}">确认</view>
+  <!-- 参与拼团 end -->
+  <!-- 砍价成功立即购买 start -->
+  <view class="buyEnd_text" wx:elif="{{from === 'goodsDetail' && orderType === 5}}">立即购买</view>
+  <!-- 砍价成功立即购买 end -->
+  <!-- 预售时显示立即购买按钮 start -->
+  <view class="buyEnd_text" wx:elif="{{from === 'goodsDetail' && orderType === 6}}">立即购买</view>
+  <!-- 预售时显示立即购买按钮 end -->
+  <!-- 秒杀时显示立即购买按钮 start -->
+  <view class="buyEnd_text" wx:elif="{{from === 'goodsDetail' && orderType === 7}}">
+    立即购买
+    <payBtn id="paybtn" goodsDetail="{{goodsDetail}}"></payBtn>
+  </view>
+  <!-- 秒杀时显示立即购买按钮 end -->
+  <view class="buyEnd_text" wx:else>去结算({{cartCount}})</view>
+</view>

@@ -12,7 +12,7 @@ Page({
     // 基础路径
     baseUrl: app.globalData.baseUrl,
     // 图片路径为空时默认图路径
-    errorImage: app.globalData.errorImage,
+    defgoodsimg: app.globalData.defgoodsimg,
     // 门店名称
     deptname: '',
     // 门店code
@@ -25,8 +25,6 @@ Page({
     title: '',
     // 会员类型，1：批发；2：普通
     Utype: 2,
-    // 商品数量
-    amount: 1,
     // 商品详情
     goodsDetail: '',
     // evaluation 好评率
@@ -41,22 +39,26 @@ Page({
     cartCount: 0,
     // 弹框组件显示开关
     dialogFlag: false,
-    // 商品信息
-    goods: '',
-    // 画布对象
-    canvas: '',
-    // 绘图上下文
-    ctx: '',
-    // 绘图开关
-    drawFlag: true,
-    // 海报画布显示开关
-    posterFlag: false,
-    // 商品图信息
-    goodsPic: '',
-    // 商品小程序码图路径
-    qrCodePicPath: 'upload/cluster/6/6.jpg',
-    // 商品小程序码图信息
-    qrCodePic: '',
+    // 商品活动类别号码，用于获取商品拼团/砍价活动信息
+    promotemode: 0,
+    // 我的拼团/砍价号
+    groupno: '',
+    // 我的拼团/砍价信息
+    groupDetail: '',
+    // 拼团/砍价列表
+    groupList: [],
+    // 砍价成功标标识,默认0：不成功；1：成功
+    pay: 0,
+    // 拼团/砍价人数
+    groupnum: 9999,
+    // 参与弹窗显示开关
+    joinDialogFlag: false,
+    // 我的参与号
+    joinno: '',
+    // 参与号
+    pd: [{password: ''}, {password: ''}, {password: ''}, {password: ''}],
+    // focusFlag input框获取焦点开关
+    focusFlag: true,
   },
 
   /**
@@ -69,6 +71,8 @@ Page({
       deptcode: options.deptcode,
       Gdscode: options.Gdscode,
       title: options.title,
+      promotemode: Number(options.promotemode || 0),
+      scene: options,
     })
     // 从分享进来时设置门店信息
     app.globalData.deptname = self.data.deptname
@@ -81,6 +85,13 @@ Page({
     self.getGoodsDetail()
     // 获取商品评价列表
     self.getGoodsCommentList()
+    // 判断有活动时请求
+    if (self.data.promotemode) {
+      // 获取我的拼团/砍价信息
+      self.getGroupDetail()
+      // 获取拼团/砍价列表
+      self.getGroupList()
+    }
   },
 
   /**
@@ -124,6 +135,13 @@ Page({
     self.getGoodsDetail()
     // 获取商品评价列表
     self.getGoodsCommentList()
+    // 判断有活动时请求
+    if (self.data.promotemode) {
+      // 获取我的拼团/砍价信息
+      self.getGroupDetail()
+      // 获取拼团/砍价列表
+      self.getGroupList()
+    }
     // 关闭下拉刷新
     wx.stopPullDownRefresh()
   },
@@ -142,7 +160,7 @@ Page({
     let self = this
     return {
       title: self.data.title,
-      path: '/shopping/pages/goodsDetail/goodsDetail?Gdscode=' + self.data.Gdscode + '&title=' + self.data.title + '&deptname=' + self.data.deptname + '&deptcode=' + self.data.deptcode
+      path: '/shopping/pages/goodsDetail/goodsDetail?Gdscode=' + self.data.Gdscode + '&promotemode=' + self.data.promotemode + '&title=' + self.data.title + '&deptname=' + self.data.deptname + '&deptcode=' + self.data.deptcode
     }
   },
 
@@ -161,6 +179,8 @@ Page({
     API.info.getProductDetails(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let goodsDetail = res.data
+        // 设置评价相关
         let EvaluationGC = ''
         let EvaluationTC = ''
         let evaluation = ''
@@ -170,9 +190,10 @@ Page({
           evaluation = (((EvaluationGC / EvaluationTC) || 1) * 100).toFixed(2)
         }
         self.setData({
-          goodsDetail: res.data,
+          goodsDetail: goodsDetail,
           evaluation: evaluation,
         })
+        app.globalData.goodsDetail = goodsDetail
         // 渲染富文本内容
         self.setDescribe()
       } else {
@@ -223,37 +244,292 @@ Page({
   // 修改轮播点儿
   swiperChange (e) {
     let self = this
-    if (e.detail.source === 'autoplay' || e.detail.source === 'touch') {
+    let {source, current} = e.detail
+    if (source === 'autoplay' || source === 'touch') {
       self.setData({
-        swiperCurrent: e.detail.current
+        swiperCurrent: current
       })
     }
   },
 
-  // 添加购物车
-  addCart (e) {
+  // 获取拼团/砍价信息
+  getGroupDetail () {
+    let self = this
+    let promotemode = self.data.promotemode
+    let data = {
+      goodscode: self.data.Gdscode,
+      amount: 1,
+    }
+    // 页面加载获取顾客商品拼团信息
+    if (promotemode === 100) {
+      API.info.groupIncrease(data).then(result => {
+        let res = result.data
+        if (res.flag === 1) {
+          if (res.data && res.data.temlist.length) {
+            self.setData({
+              groupno: res.data.groupno,
+              groupDetail: res.data.temlist.reverse(),
+            })
+          }
+        }
+      }).catch(error => {
+        toast.toast(error.error)
+      })
+    }
+    // 页面加载获取顾客商品的砍价信息
+    if (promotemode === 102) {
+      API.info.generateHackBill(data).then(result => {
+        let res = result.data
+        if (res.flag === 1) {
+          if (res.data && res.data.list.length) {
+            self.setData({
+              groupno: res.data.list[0].groupno,
+              groupDetail: res.data.list.reverse(),
+              pay: res.data.pay,
+              flag: res.data.flag,
+            })
+          }
+        }
+      }).catch(error => {
+        toast.toast(error.error)
+      })
+    }
+  },
+
+  // 获取拼团/砍价列表
+  getGroupList () {
+    let self = this
+    let promotemode = self.data.promotemode
+    let data = {
+      goodscode: self.data.Gdscode,
+      amount: 1,
+    }
+    // 页面加载获取拼团列表
+    if (promotemode === 100) {
+      API.info.getGroupList(data).then(result => {
+        let res = result.data
+        if (res.flag === 1) {
+          if (res.data) {
+            self.setData({
+              groupList: res.data,
+            })
+          }
+        }
+      }).catch(error => {
+        toast.toast(error.error)
+      })
+    }
+    // 页面加载获取砍价列表
+    if (promotemode === 102) {
+      API.info.getHackList(data).then(result => {
+        let res = result.data
+        if (res.flag === 1) {
+          if (res.data) {
+            self.setData({
+              groupList: res.data,
+            })
+          }
+        }
+      }).catch(error => {
+        toast.toast(error.error)
+      })
+    }
+  },
+
+  // 发起砍价
+  hackAdd () {
+    let self = this
+    let data = {
+      goodscode: self.data.Gdscode,
+      amount: 1,
+    }
+    API.info.hackAdd(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        // 获取拼团/砍价信息
+        self.getGroupDetail()
+      }
+      toast.toast(res.message)
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 设置参与弹窗显示开关
+  setJoinDialogFlag () {
+    let self = this
+    let joinDialogFlag = self.data.joinDialogFlag
+    if (!joinDialogFlag) {
+      self.setData({
+        joinno: '',
+        pd: [{password: ''}, {password: ''}, {password: ''}, {password: ''}],
+      })
+    }
+    self.setData({
+      joinDialogFlag: !joinDialogFlag,
+    })
+  },
+
+  // stops 阻止冒泡
+  stops () {},
+
+  // input框获取焦点
+  focusInput () {
+    let self = this
+    self.setData({
+      focusFlag: !self.data.focusFlag,
+    })
+  },
+
+  // 设置参与号
+  setJoinno (e) {
+    let self = this
+    let _password = e.detail.value
+    self.setData({
+      joinno: _password,
+    })
+    _password = _password.split('')
+    if (_password.length) {
+      let pd = self.data.pd
+      for (let i = 0; i < 4; i++) {
+        if (_password[i]) {
+          pd[i].password = _password[i]
+          self.setData({
+            pd: pd
+          })
+        } else {
+          pd[i].password = ''
+          self.setData({
+            pd: pd
+          })
+        }
+      }
+    } else {
+      self.setData({
+        pd: [{password: ''}, {password: ''}, {password: ''}, {password: ''}],
+      })
+    }
+  },
+
+  // 我要参与
+  join (e) {
+    let self = this
+    let joinno = self.data.joinno
+    let goodsDetail = self.data.goodsDetail
+    let data = {
+      goodscode: self.data.Gdscode,
+      amount: 1,
+      groupno: self.data.joinno,
+    }
+    // 验证活动号输入
+    if (joinno.length < 4) {
+      toast.toast('请输入活动号')
+      return false
+    }
+    // 参与拼团
+    if (goodsDetail.promotemode === 100) {
+      // 验证团号是否可用
+      self.checkJoinno(e)
+    }
+    // 参与砍价
+    if (goodsDetail.promotemode === 102) {
+      API.info.hackIncrease(data).then(result => {
+        let res = result.data
+        if (res.flag === 1) {
+          // 设置参与弹窗显示开关
+          self.setJoinDialogFlag()
+        }
+        toast.toast(res.message)
+      }).catch(error => {
+        toast.toast(error.error)
+      })
+    }
+  },
+
+  // 验证团号是否可用
+  checkJoinno (e) {
+    let self = this
+    let data = {
+      goodscode: self.data.Gdscode,
+      amount: 1,
+      groupno: self.data.joinno,
+    }
+    API.info.getGroupInfo(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        // 添加购物车/立即购买(包括发起拼团、参与拼团)
+        self.add(e)
+        // 设置参与弹窗显示开关
+        self.setJoinDialogFlag()
+      } else {
+        toast.toast(res.message)
+      }
+    }).catch(error => {
+      toast.toast(error.error)
+    })
+  },
+
+  // 添加购物车/立即购买(包括发起拼团、参与拼团、砍价成功购买)
+  add (e) {
     let self = this
     let goods = self.data.goodsDetail
+    let orderTypeList = app.globalData.orderTypeList
+    goods.Defaultimage = goods.image
     goods.Highpprice = goods.preferential
+    goods.Highoprice = goods.originalcost
     goods.Gdscode = goods.gdscode
-    // 判断是否散称
-    if (goods.scaleflag) {
+    goods.addType = e.currentTarget.dataset.addtype
+    goods.orderType = Number(e.currentTarget.dataset.ordertype || 2)
+    goods.groupno = self.data.groupno
+    if (goods.addType === 'buyEnd') { // 立即购买时(包括发起拼团、参与拼团、砍价成功购买)
+      let orderType = ''
+      orderTypeList.forEach(item => {
+        if (item.promotemode === goods.promotemode && item.orderType === goods.orderType) {
+          orderType = item
+        }
+      })
+      if (orderType) {
+        goods.otc = orderType.otc
+        goods.isotc = orderType.isotc
+        goods.orderType = orderType.orderType
+        if (orderType.orderType === 4) {
+          goods.groupno = self.data.joinno
+        }
+      } else {
+        goods.otc = 'now'
+        goods.isotc = ''
+      }
+    } else if (goods.addType === 'addCart') { // 添加购物车
+      goods.otc = ''
+      goods.isotc = ''
+    }
+    if (goods.promotemode === 100 || goods.promotemode === 102) { // 拼团、砍价默认一份
+      goods.amount = 1
+      // 调用子组件方法
+      self.componentAdd(goods)
+    } else {
+      // 调用数量/重量弹窗
       self.setData({
         dialogFlag: true,
         goods: goods,
       })
-    } else {
-      // 调用子组件添加购物车方法
-      self.componentAddCart(goods)
     }
   },
 
-  // 调用子组件添加购物车方法
-  componentAddCart (goods) {
+  // 调用子组件方法
+  componentAdd (goods) {
     let self = this
-    let addcart = self.selectComponent('#addCart')
-    // 调用子组件，传入商品信息添加购物车
-    addcart.addCart(goods)
+    let addCart = self.selectComponent('#addCart')
+    let buyEnd = self.selectComponent('#buyEnd')
+    self.setData({
+      goodsDetail: goods
+    })
+    // 调用子组件，传入商品信息
+    if (goods.addType === 'addCart') {
+      addCart.addCart(goods)
+    } else if (goods.addType === 'buyEnd') {
+      buyEnd.toBuyEnd(goods)
+    }
   },
 
   // 弹窗关闭
@@ -268,302 +544,9 @@ Page({
   // 弹窗确认
   dialogConfirm (goods) {
     let self = this
-    // 判断是否立即购买
-    if (goods.detail.otc === 'now') {
-      // 去编辑订单页面
-      self.toEditorOrder(goods.detail)
-    } else {
-      // 调用子组件添加购物车方法
-      self.componentAddCart(goods.detail)
-    }
+    // 调用子组件方法
+    self.componentAdd(goods.detail)
     self.dialogClose()
-  },
-
-  // 立即购买
-  buyend () {
-    let self = this
-    let goods = self.data.goodsDetail
-    goods.Highpprice = goods.preferential
-    goods.Gdscode = goods.gdscode
-    goods.otc = 'now'
-    // 判断是否散称
-    if (goods.scaleflag) {
-      self.setData({
-        dialogFlag: true,
-        goods: goods,
-      })
-    } else {
-      // 去编辑订单页面
-      self.toEditorOrder(goods)
-    }
-  },
-
-  // 去编辑订单页面
-  toEditorOrder (goods) {
-    let self = this
-    wx.navigateTo({
-      url: '/shopping/pages/editorOrder/editorOrder?otc=now&goodscode=' + goods.gdscode + '&amount=' + (goods.count || self.data.amount)
-    })
-  },
-
-  // 查找画布
-  queryCanvas () {
-    let self = this
-    const query = wx.createSelectorQuery()
-    if (!self.data.drawFlag) {
-      self.setData({
-        posterFlag: true,
-      })
-      return
-    }
-    query.select('#posterCanvas').fields({
-      node: true,
-      size: true
-    }).exec(res => {
-      const canvas = res[0].node
-      const ctx = canvas.getContext('2d')
-      const dpr = wx.getSystemInfoSync().pixelRatio
-      // 新接口需显示设置画布宽高
-      canvas.width = res[0].width * dpr
-      canvas.height = res[0].height * dpr
-      ctx.scale(dpr, dpr)
-      self.setData({
-        canvas: canvas,
-        ctx: ctx,
-        dpr: dpr,
-      })
-      // 设置海报绘制基础参数
-      self.setCanvasOptions()
-      // 绘制海报
-      self.drawPoster(ctx)
-    })
-  },
-
-  // 设置海报绘制基础参数
-  setCanvasOptions () {
-    let self = this
-    let canvas = self.data.canvas
-    let dpr = self.data.dpr
-    let goodsDetail = self.data.goodsDetail
-    let goodsTitle = (goodsDetail.Name).split('')
-    let goodsTitleArray = []
-    // 为了防止标题过长，分割字符串
-    let breaknum = 16
-    goodsTitle.forEach((item, index) => {
-      if (index % breaknum === 0 && index / breaknum <= 1) {
-        goodsTitleArray.push(goodsTitle.slice(index, index + breaknum).join(''))
-      }
-    })
-    let canvasW = canvas.width
-    let canvasH = canvas.height
-    let rectW = 600
-    let rectH = 960
-    // 单位
-    let units = (canvasW / dpr) / (rectW / 2)
-    self.setData({
-      units: units,
-    })
-    let goodsPicWidth = 260 * units
-    let goodsPicHeight = 260 * units
-    let qrCodePicWidth = 80 * units
-    let qrCodePicHeight = 80 * units
-    let xOffset = 20 * units
-    let yOffset = 20 * units
-    let n_price = 0
-    let o_price = 0
-    if (goodsDetail.scaleflag) {
-      n_price = '￥' + goodsDetail.preferential / 2 + '/斤'
-      o_price = '原价:￥' + goodsDetail.originalcost / 2 + '/斤'
-    } else {
-      n_price = '￥' + goodsDetail.preferential
-      o_price = '原价:￥' + goodsDetail.originalcost
-    }
-    let codeTextArray = [
-      '长按识别小程序码',
-      '进入小程序下单购买',
-    ]
-    let canvasOptions = {
-      goodsTitleArray: goodsTitleArray,
-      rectW: rectW,
-      rectH: rectH,
-      goodsPicWidth: goodsPicWidth,
-      goodsPicHeight: goodsPicHeight,
-      qrCodePicWidth: qrCodePicWidth,
-      qrCodePicHeight: qrCodePicHeight,
-      xOffset: xOffset,
-      yOffset: yOffset,
-      n_price: n_price,
-      o_price: o_price,
-      codeTextArray: codeTextArray,
-    }
-    self.setData({
-      canvasOptions: canvasOptions
-    })
-  },
-
-  // 绘制海报
-  drawPoster (ctx) {
-    let self = this
-    wx.showLoading({
-      title: '正在生成海报...',
-      mask: true,
-    })
-    // 绘制海报背景
-    self.drawPosterBg(ctx)
-    // 绘制商品图片
-    self.drawPosterGoodsPic(ctx)
-  },
-
-  // 绘制海报背景
-  drawPosterBg (ctx) {
-    let self = this
-    let canvasOptions = self.data.canvasOptions
-    // 绘制背景
-    ctx.fillStyle = '#ffffff'
-    ctx.fillRect(0, 0, canvasOptions.rectW, canvasOptions.rectH)
-  },
-
-  // 绘制商品图片
-  drawPosterGoodsPic (ctx) {
-    let self = this
-    let canvas = self.data.canvas
-    let canvasOptions = self.data.canvasOptions
-    // 绘制图片边框
-    ctx.strokeStyle = '#e7e7e7'
-    ctx.strokeRect(canvasOptions.xOffset, canvasOptions.yOffset, canvasOptions.goodsPicWidth, canvasOptions.goodsPicHeight)
-    // 绘制商品图片
-    let goodsPic = canvas.createImage()
-    goodsPic.src = self.data.baseUrl + self.data.goodsDetail.image
-    goodsPic.onload = () => {
-      ctx.drawImage(goodsPic, canvasOptions.xOffset, canvasOptions.yOffset, canvasOptions.goodsPicWidth, canvasOptions.goodsPicHeight)
-      ctx.restore()
-      canvasOptions.yOffset += (canvasOptions.goodsPicHeight + (canvasOptions.yOffset / 2))
-      self.setData({
-        canvasOptions: canvasOptions
-      })
-      // 绘制商品名称
-      self.drawPosterGoodsName(ctx)
-    }
-
-  },
-
-  // 绘制商品名称
-  drawPosterGoodsName (ctx) {
-    let self = this
-    let units = self.data.units
-    let canvasOptions = self.data.canvasOptions
-    canvasOptions.goodsTitleArray.forEach(item => {
-      ctx.font = '15px sans-serif'
-      ctx.fillStyle = '#333333'
-      ctx.textBaseline = 'top'
-      ctx.textAlign = 'left'
-      ctx.fillText(item, canvasOptions.xOffset, canvasOptions.yOffset)
-      canvasOptions.yOffset += 24 * units
-    })
-    self.setData({
-      canvasOptions: canvasOptions
-    })
-    // 绘制商品小程序码
-    self.drawPosterQrCode(ctx)
-  },
-
-  // 绘制商品小程序码
-  drawPosterQrCode (ctx) {
-    let self = this
-    let units = self.data.units
-    let canvas = self.data.canvas
-    let canvasOptions = self.data.canvasOptions
-    let qrCodePic = canvas.createImage()
-    qrCodePic.src = self.data.baseUrl + self.data.qrCodePicPath
-    qrCodePic.onload = () => {
-      canvasOptions.yOffset += 35 * units
-      ctx.drawImage(qrCodePic, canvasOptions.xOffset + (180 * units), canvasOptions.yOffset, canvasOptions.qrCodePicWidth, canvasOptions.qrCodePicHeight)
-      ctx.restore()
-      self.setData({
-        canvasOptions: canvasOptions
-      })
-      // 绘制商品价格
-      self.drawPosterGoodsPrice(ctx)
-    }
-  },
-
-  // 绘制商品价格
-  drawPosterGoodsPrice (ctx) {
-    let self = this
-    let units = self.data.units
-    let canvasOptions = self.data.canvasOptions
-    // 绘制售价
-    canvasOptions.yOffset -= 20 * units
-    ctx.font = 'normal bold 24px sans-serif'
-    ctx.fillStyle = '#fa6400'
-    ctx.textBaseline = 'top'
-    ctx.textAlign = 'left'
-    ctx.fillText(canvasOptions.n_price, canvasOptions.xOffset, canvasOptions.yOffset)
-    // 绘制原价
-    ctx.font = '12px sans-serif'
-    ctx.fillStyle = '#999999'
-    ctx.textBaseline = 'top'
-    ctx.textAlign = 'left'
-    ctx.fillText(canvasOptions.o_price, canvasOptions.xOffset + canvasOptions.n_price.toString().length * 20, canvasOptions.yOffset)
-    // 绘制原价的删除线
-    ctx.lineWidth = 1
-    ctx.moveTo(canvasOptions.xOffset + canvasOptions.n_price.toString().length * 20 - 5 * units, canvasOptions.yOffset + 6 * units)
-    ctx.lineTo(canvasOptions.xOffset + canvasOptions.n_price.toString().length * 20 + canvasOptions.o_price.toString().length * 10, canvasOptions.yOffset + 6 * units)
-    ctx.strokeStyle = '#999999'
-    ctx.stroke()
-    // 绘制提示识别小程序码文字
-    canvasOptions.yOffset += 45 * units
-    canvasOptions.codeTextArray.forEach(item => {
-      ctx.font = '13px sans-serif'
-      ctx.fillStyle = '#666666'
-      ctx.textBaseline = 'top'
-      ctx.textAlign = 'left'
-      ctx.fillText(item, canvasOptions.xOffset, canvasOptions.yOffset)
-      canvasOptions.yOffset += 18 * units
-    })
-    wx.hideLoading()
-    self.setData({
-      posterFlag: true,
-      drawFlag: false,
-    })
-  },
-
-  // 保存海报图片
-  savePosterImg () {
-    let self = this
-    let units = self.data.units
-    // 将canvas生成图片
-    wx.canvasToTempFilePath({
-      canvas: self.data.canvas,
-      x: 0,
-      y: 0,
-      width: 300 * units,
-      height: 480 * units,
-      destWidth: 1200 * units,     // 截取canvas的宽度
-      destHeight: 1920 * units,   // 截取canvas的高度
-      success (res) {
-        // 保存图片到相册
-        wx.saveImageToPhotosAlbum({
-          filePath: res.tempFilePath,
-          success () {
-            toast.toast('保存图片成功！')
-            // 关闭画布
-            self.closedPosterCanvas()
-          },
-          fail (error) {
-            toast.toast('请截屏手动保存！')
-          }
-        })
-      },
-    })
-  },
-
-  // 关闭画布
-  closedPosterCanvas () {
-    let self = this
-    self.setData({
-      posterFlag: false,
-    })
   },
 
   // 手指触摸后移动(阻止冒泡)

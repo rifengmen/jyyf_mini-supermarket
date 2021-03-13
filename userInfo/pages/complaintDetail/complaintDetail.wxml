@@ -1,17 +1,20 @@
 <!--userInfo/pages/complaintDetail/complaintDetail.wxml-->
 <view class="container color333333 font28">
-  <view class="cont">
-    <view class="time color999999 tc">{{complaintDetail.addtime}}</view>
-    <view class="content font32 font_blod">{{complaintDetail.content}}</view>
+  <view class="cont bgf0f0f0">
+    <view class="content">{{complaintDetail.content}}</view>
+    <view class="time color999999 tr">{{complaintDetail.addtime}}</view>
   </view>
-  <view class="cont" wx:if="{{complaintDetail.retime}}">
-    <view class="tit colorfa6400">回复详情：</view>
-    <view class="time color999999 tc">{{complaintDetail.retime}}</view>
-    <view class="content font32 font_blod">{{complaintDetail.ReContent}}</view>
-  </view>
-  <view class="cont" wx:else>
-    <view class="tit colorfa6400">回复详情：</view>
-    <view class="content font32 font_blod">暂未回复</view>
-  </view>
+  <view class="tit">最新回复</view>
+  <block wx:if="{{complaintDetail.retime}}">
+    <view class="cont colorffffff bg71d793">
+      <view class="time color999999 tc">{{complaintDetail.retime}}</view>
+      <view class="content">{{complaintDetail.ReContent}}</view>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="cont colorffffff bg71d793">
+      <view class="content">暂未回复</view>
+    </view>
+  </block>
 </view>
 
