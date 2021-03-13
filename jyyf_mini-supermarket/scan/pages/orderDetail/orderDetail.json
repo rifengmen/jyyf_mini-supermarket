@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "scanCancelBtn": "/component/scanCancelBtn/scanCancelBtn"
-  },
-  "navigationBarTitleText": "订单详情"
-}

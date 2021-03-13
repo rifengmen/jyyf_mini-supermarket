@@ -1,2 +1,0 @@
-<!--userInfo/pages/cantacts/cantacts.wxml-->
-<web-view src="{{cantacts}}"></web-view>

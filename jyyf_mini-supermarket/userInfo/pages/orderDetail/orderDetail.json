@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "cancelBtn": "/component/cancelBtn/cancelBtn"
-  },
-  "navigationBarTitleText": "订单详情"
-}

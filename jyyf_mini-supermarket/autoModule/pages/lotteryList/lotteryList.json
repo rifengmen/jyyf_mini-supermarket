@@ -1,9 +1,0 @@
-{
-  "usingComponents": {
-    "startdate": "/component/startdate/startdate",
-    "messageList": "/component/messageList/messageList"
-  },
-  "navigationBarTitleText": "中奖记录",
-  "enablePullDownRefresh": true,
-  "onReachBottomDistance": 50
-}

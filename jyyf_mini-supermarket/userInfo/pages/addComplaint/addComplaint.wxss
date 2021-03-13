@@ -1,7 +1,0 @@
-/* userInfo/pages/addComplaint/addComplaint.wxss */
-.content {
-  width: calc(100% - 48rpx);
-  height: 300rpx;
-  margin: 0 auto;
-  padding-top: 40rpx;
-}

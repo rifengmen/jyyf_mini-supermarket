@@ -1,8 +1,0 @@
-{
-  "usingComponents": {
-    "startdate": "/component/startdate/startdate"
-  },
-  "navigationBarTitleText": "消费记录",
-  "enablePullDownRefresh": true,
-  "onReachBottomDistance": 50
-}

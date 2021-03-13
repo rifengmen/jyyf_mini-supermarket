@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "getTickBtn": "/component/getTickBtn/getTickBtn",
-    "useTickBtn": "/component/useTickBtn/useTickBtn"
-  }
-}

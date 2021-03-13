@@ -1,9 +1,0 @@
-/**app.wxss**/
-@import "/lib/style/base.wxss";
-@import "/lib/style/iconfont.wxss";
-@import "/lib/style/common.wxss";
-.container {
-  width: 100%;
-  height: auto;
-  min-height: 100vh;
-}

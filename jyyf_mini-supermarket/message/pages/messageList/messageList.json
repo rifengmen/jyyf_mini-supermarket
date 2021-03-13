@@ -1,8 +1,0 @@
-{
-  "usingComponents": {
-    "messageList": "/component/messageList/messageList"
-  },
-  "navigationBarTitleText": "消息列表",
-  "enablePullDownRefresh": true,
-  "onReachBottomDistance": 50
-}

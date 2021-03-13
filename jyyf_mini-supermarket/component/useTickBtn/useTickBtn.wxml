@@ -1,2 +1,0 @@
-<!--component/useTickBtn/useTickBtn.wxml-->
-<view catchtap="useTick">立即使用</view>

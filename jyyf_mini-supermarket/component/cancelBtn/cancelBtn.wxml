@@ -1,2 +1,0 @@
-<!--component/cancelBtn/cancelBtn.wxml-->
-<text catchtap="cancel">取消</text>

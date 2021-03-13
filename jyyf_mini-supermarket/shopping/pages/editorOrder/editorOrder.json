@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "payBtn": "/component/payBtn/payBtn",
-    "password": "/component/password/password"
-  },
-  "navigationBarTitleText": "编辑订单"
-}
