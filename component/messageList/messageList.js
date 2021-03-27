@@ -1,7 +1,7 @@
 // component/messageList/messageList.js
 require('../../app.js')
 const app = getApp()
-const toast = require('../../utils/toast.js')
+import toast from '../../utils/toast'
 import API from '../../api/index'
 
 Component({

@@ -1,6 +1,6 @@
 <!--component/dialog/dialog.wxml-->
 <!-- dialog start -->
-<view class="dialog_cont color999999 font28 bg000000_70 z_index_99999" catchtouchmove="catchTouchMove">
+<view class="dialog_cont {{dialogFlag ? 'dialog_show' : ''}} color999999 font28 bg000000_70 z_index_99999 overflow" catchtouchmove="catchTouchMove">
   <!--<view class="dialog border_r20 bgffffff ellipsis">-->
   <view class="dialog bgffffff">
     <!-- 商品 start -->
@@ -10,7 +10,7 @@
         <view class="goods_item bgffffff border_be5e5e5">
           <!-- 商品图片 start -->
           <view class="item_img overflow">
-            <image src="{{goods.Defaultimage ? (baseUrl + goods.Defaultimage) : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
+            <image class="img" src="{{goods.Defaultimage ? (baseUrl + goods.Defaultimage) : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
           </view>
           <!-- 商品图片 end -->
           <!-- 商品文字 start -->
@@ -23,13 +23,13 @@
                   <view class="actual_price">
                     <text class="colorfa6400">￥</text>
                     <text class="colorfa6400 font36">{{goods.Highpprice / 2}}</text>
-                    <text class="">/斤</text>
+                    <text>/斤</text>
                   </view>
                   <block wx:if="{{goods.Highoprice !== goods.Highpprice}}">
-                    <del class="">
-                      <text class="">￥</text>
+                    <del>
+                      <text>￥</text>
                       <text class="font26">{{goods.Highoprice / 2}}</text>
-                      <text class="">/斤</text>
+                      <text>/斤</text>
                     </del>
                   </block>
                 </view>
@@ -41,8 +41,8 @@
                     <text class="colorfa6400 font36">{{goods.Highpprice}}</text>
                   </view>
                   <block wx:if="{{goods.Highoprice !== goods.Highpprice}}">
-                    <del class="">
-                      <text class="">￥</text>
+                    <del>
+                      <text>￥</text>
                       <text class="font26">{{goods.Highoprice}}</text>
                     </del>
                   </block>
@@ -80,16 +80,16 @@
     <!-- 包装数量 start -->
     <block wx:else>
       <view class="dialog_section">
-        <view class="">购买数量：</view>
+        <view>购买数量：</view>
         <view class="editor_cart bgf0f0f0 border_r500">
           <view class="subtrack_cart btn border_r500 overflow" catchtap="subtrackCart">
-            <image src="/lib/images/subtrack.png"></image>
+            <image class="img" src="/lib/images/subtrack.png"></image>
           </view>
           <view class="input_cart font24 tc">
             <input type="number" value="{{dialogCount}}" bindinput="setDialogCount" />
           </view>
           <view class="add_cart btn border_r500 overflow" catchtap="addCart">
-            <image src="/lib/images/add.png"></image>
+            <image class="img" src="/lib/images/add.png"></image>
           </view>
         </view>
       </view>

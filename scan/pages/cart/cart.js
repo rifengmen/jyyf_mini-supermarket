@@ -1,6 +1,7 @@
 // scan/pages/cart/cart.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -117,6 +118,11 @@ Page({
     })
     let data = {}
     API.bill.getShoppingBagList(data).then(result => {
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
+      wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         let shopBagList = res.data.shoppingbaglist
@@ -126,19 +132,11 @@ Page({
         self.setData({
           shopBagList: shopBagList,
         })
-
-
-
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
-      wx.hideLoading()
-      // 设置请求开关
-      self.setData({
-        getFlag: true
-      })
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -168,19 +166,12 @@ Page({
   // 扫一扫
   scangoodscode () {
     let self = this
-    // 验证是否授权
-    if (!app.authorFlag()) {
-      wx.navigateTo({
-        url: '/pages/author/author',
-      })
-      return false
-    }
     // // 验证是否绑定手机号码
-    // if (!app.memcodeflag()) {
-    //   toast.toast('请注册绑定手机号码')
+    // if (!app.bindmobileFlag()) {
     //   wx.switchTab({
     //     url: '/pages/userInfo/userInfo',
     //   })
+    //   toast('请注册绑定手机号码')
     //   return false
     // }
     wx.scanCode({
@@ -195,7 +186,7 @@ Page({
           // 获取商品信息
           self.getGoodsInfo()
         } else {
-          toast.toast('请对准条形码扫码')
+          toast('请对准条形码扫码')
         }
       }
     })
@@ -216,10 +207,10 @@ Page({
           goodsInfoFlag: true,
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -350,7 +341,7 @@ Page({
     }
     // 判断购物车存在商品
     if (!self.data.scanCart.length) {
-      toast.toast('请添加商品')
+      toast('请添加商品')
       return false
     }
     let data = {
@@ -369,10 +360,10 @@ Page({
           url: '/scan/pages/editorOrder/editorOrder?flowno=' + self.data.flowno + '&deptcode=' + self.data.scanShopInfo.deptcode + '&deptname=' + self.data.scanShopInfo.deptname
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 })

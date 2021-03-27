@@ -22,7 +22,7 @@
   <!-- 订单信息 end -->
   <!-- 支付方式 start -->
   <view class="order_sections paymode_img bgffffff">
-    <view class="">支付方式</view>
+    <view>支付方式</view>
     <radio-group class="group" bindchange="radioChange">
       <view class="btn" wx:if="{{paymode7Flag}}">
         <radio id="wechat" value="7" checked="{{payFlag}}"></radio>

@@ -1,7 +1,7 @@
 // autoModule/pages/lottery/lottery.js
 const app = getApp()
-const toast = require("../../../utils/toast")
-const utils = require("../../../utils/util")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -156,7 +156,7 @@ Page({
         }
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -188,12 +188,12 @@ Page({
     let data = {}
     // 判断抽奖开始时间，拦截请求
     if (!self.data.startFlag) {
-      toast.toast('本次抽奖活动还未开始，请耐心等待！')
+      toast('本次抽奖活动还未开始，请耐心等待！')
       return false
     }
     // 判断抽奖结束时间，拦截请求
     if (self.data.endFlag) {
-      toast.toast('本次抽奖活动已经结束，下次活动正在准备中！')
+      toast('本次抽奖活动已经结束，下次活动正在准备中！')
       return false
     }
     // 判断是否获取到奖品列表
@@ -212,10 +212,10 @@ Page({
         // 设置抽奖结果下标
         self.setCentPrizeIndex(res.data)
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 

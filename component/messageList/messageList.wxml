@@ -1,9 +1,11 @@
 <!--component/messageList/messageList.wxml-->
-<view class="message_item border_be5e5e5" wx:for="{{messageList}}" wx:key="index" bindtap="toDetail" data-detail="{{item}}">
-  <view class="message_age bg71d793 border_r500" wx:if="{{item.readflag === 0}}"></view>
-  <view class="message_tit">
-    <view class="message_name font32 ellipsis">{{item.prizeName}}</view>
-    <view class="message_cent color666666 ellipsis" wx:if="{{item.prizeCent}}">{{item.prizeCent}}</view>
+<block wx:for="{{messageList}}" wx:key="index">
+  <view class="message_item border_be5e5e5" bindtap="toDetail" data-detail="{{item}}">
+    <view class="message_age bg71d793 border_r500" wx:if="{{item.readflag === 0}}"></view>
+    <view class="message_tit">
+      <view class="message_name font32 ellipsis">{{item.prizeName}}</view>
+      <view class="message_cent color666666 ellipsis" wx:if="{{item.prizeCent}}">{{item.prizeCent}}</view>
+    </view>
+    <view class="message_date color666666 tr">{{item.prizeDate}}</view>
   </view>
-  <view class="message_date color666666 tr">{{item.prizeDate}}</view>
-</view>
+</block>

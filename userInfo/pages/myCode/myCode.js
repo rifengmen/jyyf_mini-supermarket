@@ -1,6 +1,7 @@
 // userInfo/pages/myCode/myCode.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -130,10 +131,10 @@ Page({
           })
         }
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -151,10 +152,10 @@ Page({
           payQrcode: res.data.payQrcode,
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 

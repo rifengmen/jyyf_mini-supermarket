@@ -1,6 +1,7 @@
 // message/pages/noticeList/noticeList.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -89,7 +90,7 @@ Page({
       page: page
     })
     if (self.data.page > totalPage) {
-      toast.toast('暂无更多')
+      toast('暂无更多')
       return false
     }
     // 获取公告列表
@@ -120,6 +121,11 @@ Page({
       getFlag: false
     })
     API.info.listNotice(data).then(result => {
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
+      wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         let noticeList = res.data
@@ -134,15 +140,10 @@ Page({
           rowCount: res.rowCount
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
-      wx.hideLoading()
-      // 设置请求开关
-      self.setData({
-        getFlag: true
-      })
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 

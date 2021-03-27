@@ -1,7 +1,7 @@
 // component/dialog/dialog.js
 require('../../app.js')
 const app = getApp()
-const toast = require('../../utils/toast.js')
+import toast from '../../utils/toast'
 import API from '../../api/index'
 
 Component({
@@ -16,6 +16,11 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    // 加购物车弹框显示开关
+    dialogFlag: {
+      type: Boolean,
+      value: false
+    },
     // 商品信息
     goods: {
       type: Object,
@@ -59,13 +64,13 @@ Component({
     // 弹窗取消
     dialogClose () {
       let self = this
-      self.setData({
-        dialogJin: '',
-        dialogLiang: '',
-        dialogCount: '',
-        dialogTotalMoney: '',
-        goods: '',
-      })
+      // self.setData({
+      //   dialogJin: '',
+      //   dialogLiang: '',
+      //   dialogCount: '',
+      //   dialogTotalMoney: '',
+      //   goods: '',
+      // })
       self.triggerEvent('dialogClose')
     },
 
@@ -139,7 +144,7 @@ Component({
       }
       // 判断单人限量
       if (self.data.goods.perlimit && (dialogCount > self.data.goods.perlimit)) {
-        toast.toast('已达最大限购量!')
+        toast('已达最大限购量!')
         return false
       }
       self.setData({

@@ -24,19 +24,19 @@
     <!-- 订单信息 start -->
     <view class="section bgffffff border_be5e5e5">
       <view class="tit">门店编号：</view>
-      <text class="">{{deptcode}}</text>
+      <text>{{deptcode}}</text>
     </view>
     <view class="section bgffffff border_be5e5e5">
       <view class="tit">门店名称：</view>
-      <text class="">{{deptname}}</text>
+      <text>{{deptname}}</text>
     </view>
     <view class="section bgffffff border_be5e5e5">
       <view class="tit">流水号：</view>
-      <text class="">{{flowno}}</text>
+      <text>{{flowno}}</text>
     </view>
     <view class="section bgffffff">
       <view class="tit">下单时间：</view>
-      <text class="">{{saletime}}</text>
+      <text>{{saletime}}</text>
     </view>
     <!-- 订单信息 end -->
   </view>

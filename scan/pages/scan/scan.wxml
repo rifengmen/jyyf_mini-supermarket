@@ -13,7 +13,7 @@
       </view>
       <view class="step_tit tc">- 扫码购步骤 -</view>
       <view class="step_img">
-        <image class="" src="/lib/images/scanStep.png"></image>
+        <image src="/lib/images/scanStep.png"></image>
       </view>
     </view>
     <!-- 扫码购步骤 end -->

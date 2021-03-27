@@ -5,13 +5,13 @@
 		<view class="section_tit">地址类型</view>
 		<view class="section_desc">
 			<radio-group class="group" bindchange="setAddressType">
-				<view class="">
+				<view>
 					<radio id="address" value="1" checked></radio>
-					<label class="" for="address">配送地址</label>
+					<label for="address">配送地址</label>
 				</view>
-				<view class="">
+				<view>
 					<radio id="site" value="0"></radio>
-					<label class="" for="site">自提点地址</label>
+					<label for="site">自提点地址</label>
 				</view>
 			</radio-group>
 		</view>

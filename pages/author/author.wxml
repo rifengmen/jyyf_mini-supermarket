@@ -2,19 +2,28 @@
 <view class="container color333333 font28" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
 	<!-- logo start -->
 	<view class="logo">
-		<view class="logo_img overflow">
+		<view class="logo_img border_r500 overflow">
 			<image src="/baseimg/logo.png" mode="aspectFit"></image>
 		</view>
 		<view class="font40 font_blod">{{apptitle}}</view>
 	</view>
 	<!-- logo end -->
 	<!-- 授权 start -->
+	<!--<view class="author_cont">-->
+		<!--<view class="font24 color666666">您暂未授权{{apptitle}}小程序获取你的信息，将无法正常使用小程序的功能。如需要正常使用，请点击“授权登录”按钮，打开头像、昵称等信息的授权。</view>-->
+		<!--<view class="button">-->
+			<!--<button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" type="primary"> 授权登录 </button>-->
+			<!--<button plain="true" bindtap="cancelAuthor"> 取消 </button>-->
+		<!--</view>-->
+	<!--</view>-->
+	<!-- 授权 end -->
+	<!-- 绑定手机号码 start -->
 	<view class="author_cont">
-		<view class="font24 color666666">您暂未授权{{apptitle}}小程序获取你的信息，将无法正常使用小程序的功能。如需要正常使用，请点击“授权登录”按钮，打开头像、昵称等信息的授权。</view>
+		<view class="font24 color666666">您暂未授权{{apptitle}}小程序获取您的电话号码，将无法正常使用小程序的功能。如需要正常使用，请点击“注册”按钮，使用您的电话号码注册。</view>
 		<view class="button">
-			<button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" type="primary"> 授权登录 </button>
-			<button bindtap="cancelAuthor" plain="true"> 取消 </button>
+			<button type="primary" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"> 注册 </button>
+			<button plain="true" bindtap="cancelAuthor"> 取消 </button>
 		</view>
 	</view>
-	<!-- 授权 end -->
+	<!-- 绑定手机号码 end -->
 </view>

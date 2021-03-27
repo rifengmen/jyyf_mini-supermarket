@@ -4,16 +4,15 @@
 	<view class="userinfo_cont" style="background-color: {{home_bgcolor}}">
 		<view class="desc bgffffff border_be5e5e5">
 			<view class="picture border_r500 overflow" bindtap="isAuthor">
-				<image src="{{userImg ? userImg : '/lib/images/userInfo.png'}}"></image>
+				<open-data type="userAvatarUrl"></open-data>
 			</view>
 			<view class="nick_name">
-				<view class="name font32 font_blod" wx:if="{{!openid}}" bindtap="isAuthor">游客，请授权登录</view>
-				<view class="name font32 font_blod" wx:else>{{memname}}</view>
-				<navigator class="navs toregister color71d793" hover-class="none" url="/pages/register/register" wx:if="{{openid && !memcode}}">点此绑定手机，注册/登录</navigator>
-				<navigator class="navs color71d793 font24 bgffffff tc border_a71d793 border_r500" hover-class="none" url="/userInfo/pages/setPayPassword/setPayPassword?type=open" wx:if="{{memcode && !coflag}}">开通会员支付 > </navigator>
-				<navigator class="navs colorffffff font24 bg71d793 tc border_r500" hover-class="none" url="/userInfo/pages/payPassword/payPassword" wx:if="{{memcode && coflag}}">会员卡 > </navigator>
+				<view class="name font32 font_blod">{{memname}}</view>
+				<view class="navs toregister color71d793" wx:if="{{!bindmobileFlag}}" bindtap="isBindmobile">点此绑定手机，注册/登录</view>
+				<navigator class="navs color71d793 font24 bgffffff tc border_a71d793 border_r500" hover-class="none" url="/userInfo/pages/setPayPassword/setPayPassword?type=open" wx:if="{{bindmobileFlag && !coflag}}">开通会员支付 > </navigator>
+				<navigator class="navs colorffffff font24 bg71d793 tc border_r500" hover-class="none" url="/userInfo/pages/payPassword/payPassword" wx:if="{{bindmobileFlag && coflag}}">会员卡 > </navigator>
 			</view>
-			<navigator class="my_code" hover-class="none" url="/userInfo/pages/myCode/myCode" wx:if="{{memcode}}">
+			<navigator class="my_code" hover-class="none" url="/userInfo/pages/myCode/myCode" wx:if="{{bindmobileFlag}}">
 				<image src="/lib/images/myCode.png"></image>
 			</navigator>
 		</view>

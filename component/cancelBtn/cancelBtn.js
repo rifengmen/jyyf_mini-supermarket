@@ -1,7 +1,7 @@
 // component/cancelBtn/cancelBtn.js
 require('../../app.js')
 const app = getApp()
-const toast = require('../../utils/toast.js')
+import toast from '../../utils/toast'
 import API from '../../api/index'
 
 Component({
@@ -55,10 +55,10 @@ Component({
           self.triggerEvent('setOrderList', tradeno)
         }
         if (res.message) {
-          toast.toast(res.message)
+          toast(res.message)
         }
       }).catch(error => {
-        toast.toast(error.error)
+        toast(error.error)
       })
     },
   }

@@ -9,7 +9,7 @@
   </view>
   <!-- 公司简介 start -->
   <view class="shop_desc">
-    <rich-text class="" nodes="{{nodes}}"></rich-text>
+    <rich-text nodes="{{nodes}}"></rich-text>
   </view>
   <!-- 公司简介 end -->
   <!-- copyright start -->

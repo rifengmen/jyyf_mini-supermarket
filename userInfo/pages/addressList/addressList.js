@@ -1,6 +1,7 @@
 // userInfo/pages/addressList/addressList.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -111,7 +112,7 @@ Page({
       // 设置地址列表
       self.setAddressList(res)
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -134,25 +135,25 @@ Page({
       // 设置地址列表
       self.setAddressList(res)
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
   // 设置地址列表
   setAddressList (res) {
     let self = this
+    // 设置请求开关
+    self.setData({
+      getFlag: true
+    })
+    wx.hideLoading()
     if (res.flag === 1) {
       self.setData({
         addressList: res.data
       })
     } else {
-      toast.toast(res.message)
+      toast(res.message)
     }
-    wx.hideLoading()
-    // 设置请求开关
-    self.setData({
-      getFlag: true
-    })
   },
 
   // 设置收货地址
@@ -190,9 +191,9 @@ Page({
       let res = result.data
       // 设置默认地址
       self.setDefaultAddress(res, address)
-      toast.toast(res.message)
+      toast(res.message)
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -203,9 +204,9 @@ Page({
       let res = result.data
       // 设置默认地址
       self.setDefaultAddress(res, address)
-      toast.toast(res.message)
+      toast(res.message)
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -267,12 +268,12 @@ Page({
       if (res.flag === 1) {
         // 获取地址列表
         self.getAddressList()
-        toast.toast(res.message)
+        toast(res.message)
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -288,12 +289,12 @@ Page({
       if (res.flag === 1) {
         // 获取地址列表
         self.getAddressList()
-        toast.toast('删除成功!')
+        toast('删除成功!')
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 

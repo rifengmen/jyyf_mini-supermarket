@@ -1,6 +1,6 @@
 // autoModule/pages/addComment/addComment.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
 import API from '../../../api/index'
 
 Page({
@@ -109,7 +109,7 @@ Page({
     let content = self.data.content
     // 验证评价内容
     if (!content) {
-      toast.toast('请填写评价内容')
+      toast('请填写评价内容')
       return false
     }
     let data = {
@@ -130,13 +130,13 @@ Page({
       if (res.flag === 1) {
         wx.navigateBack()
       }
-      toast.toast(res.message)
+      toast(res.message)
       // 请求开关
       self.setData({
         flag: true
       })
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 })

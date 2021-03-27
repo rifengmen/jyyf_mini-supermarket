@@ -19,7 +19,9 @@
 			<!--<view class="color999999" bindtap="clearHistoryList">清空</view>-->
 		<!--</view>-->
 		<!--<view class="history colord0cfcf overflow">-->
-			<!--<view class="fl border_r500" wx:for="{{hostoryList}}" wx:key="index">{{item.name}}</view>-->
+			<!--<block wx:for="{{hostoryList}}" wx:key="index">-->
+				<!--<view class="fl border_r500">{{item.name}}</view>-->
+			<!--</block>-->
 		<!--</view>-->
 	<!--</view>-->
 	<!-- 搜索历史 end -->
@@ -29,7 +31,9 @@
 			<!--<view class="font32 font_blod">热门搜索：</view>-->
 		<!--</view>-->
 		<!--<view class="history colord0cfcf overflow">-->
-			<!--<view class="fl border_r500" wx:for="{{hotSearchList}}" wx:key="index">{{item.name}}</view>-->
+			<!--<block wx:for="{{hotSearchList}}" wx:key="index">-->
+				<!--<view class="fl border_r500">{{item.name}}</view>-->
+			<!--</block>-->
 		<!--</view>-->
 	<!--</view>-->
 	<!-- 热门搜索 end -->

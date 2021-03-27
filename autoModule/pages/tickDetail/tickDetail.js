@@ -1,7 +1,7 @@
 // autoModule/pages/tickDetail/tickDetail.js
 const app = getApp()
-const toast = require("../../../utils/toast")
-const utils = require("../../../utils/util")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -97,10 +97,10 @@ Page({
           tickDetail: tickDetail,
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 })

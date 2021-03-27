@@ -1,7 +1,7 @@
 {
   "usingComponents": {
-    "buyEnd": "/component/buyEnd/buyEnd",
-    "dialog": "/component/dialog/dialog"
+    "goods": "/component/goods/goods",
+    "buyEnd": "/component/buyEnd/buyEnd"
   },
   "navigationBarTitleText": "购物车",
   "enablePullDownRefresh": true

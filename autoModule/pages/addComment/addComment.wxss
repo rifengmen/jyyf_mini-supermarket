@@ -1,4 +1,10 @@
 /* autoModule/pages/addComment/addComment.wxss */
+.goods_name {
+  width: calc(100% - 48rpx);
+  height: 40rpx;
+  margin-bottom: 20rpx;
+  padding: 24rpx;
+}
 .type {
   width: calc(100% - 48rpx);
   height: 40rpx;
@@ -21,10 +27,4 @@
   width: calc(100% - 48rpx);
   height: 300rpx;
   margin: 0 auto;
-}
-.btn {
-  width: calc(100% - 60rpx);
-  height: 80rpx;
-  line-height: 80rpx;
-  margin: 200rpx auto 0 auto;
 }

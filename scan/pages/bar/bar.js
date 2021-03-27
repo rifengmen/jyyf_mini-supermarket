@@ -1,6 +1,7 @@
 // scan/pages/bar/bar.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -120,7 +121,7 @@ Page({
         self.getScanShopList()
       },
       fail () {
-        toast.toast('获取位置失败，请退出重进')
+        toast('获取位置失败，请退出重进')
       }
     })
   },
@@ -136,7 +137,7 @@ Page({
       let res = result.data
       if (res.flag === 1) {
         if (!res.data.length) {
-          toast.toast('附近暂无扫码购店铺')
+          toast('附近暂无扫码购店铺')
           return false
         } else if (res.data.length >= 1) {
           let scanShopInfo = res.data[0]
@@ -150,10 +151,10 @@ Page({
           self.getBar()
         }
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -173,10 +174,10 @@ Page({
         // 获取订单详情
         self.getOrderDetail()
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -205,10 +206,10 @@ Page({
           })
         }
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 

@@ -35,7 +35,8 @@
         "pages/recharge/recharge",
         "pages/addComment/addComment",
         "pages/commentList/commentList",
-        "pages/buyGoodsList/buyGoodsList"
+        "pages/buyGoodsList/buyGoodsList",
+        "pages/signIn/signIn"
       ]
     },
     {
@@ -103,7 +104,7 @@
     }
   ],
   "window": {
-    "backgroundTextStyle": "light",
+    "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTextStyle": "black",
     "onReachBottomDistance": -100
@@ -145,7 +146,7 @@
   },
   "plugins": {
     "live-player-plugin": {
-      "version": "1.2.8",
+      "version": "1.2.10",
       "provider": "wx2b03c6e691cd7370"
     }
   },

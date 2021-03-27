@@ -1,6 +1,7 @@
 // shopping/pages/drawPoster/drawPoster.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -122,10 +123,10 @@ Page({
         // 查找画布
         self.queryCanvas()
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -265,7 +266,7 @@ Page({
     }
     goodsPic.onerror = () => {
       wx.hideLoading()
-      toast.toast('海报生成错误！')
+      toast('海报生成错误！')
     }
   },
 
@@ -309,7 +310,7 @@ Page({
     }
     qrCodePic.onerror = () => {
       wx.hideLoading()
-      toast.toast('海报生成错误！')
+      toast('海报生成错误！')
     }
   },
 
@@ -370,10 +371,10 @@ Page({
           success () {
             // 关闭画布
             self.closedPosterCanvas()
-            toast.toast('保存图片成功！')
+            toast('保存图片成功！')
           },
           fail (error) {
-            toast.toast('请截屏手动保存！')
+            toast('请截屏手动保存！')
           }
         })
       },

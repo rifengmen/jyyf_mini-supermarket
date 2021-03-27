@@ -1,7 +1,7 @@
 // component/getTickBtn/getTickBtn.js
 require('../../app.js')
 const app = getApp()
-const toast = require('../../utils/toast.js')
+import toast from '../../utils/toast'
 import API from '../../api/index'
 
 Component({
@@ -59,14 +59,14 @@ Component({
         tickid: tick.tickid,
       }
       if (!tick.residuecount) {
-        toast.toast('此券已领完!')
+        toast('此券已领完!')
         return false
       }
       API.mem.panicCoupon(data).then(result => {
         let res = result.data
-        toast.toast(res.message)
+        toast(res.message)
       }).catch(error => {
-        toast.toast(error.error)
+        toast(error.error)
       })
     },
   }

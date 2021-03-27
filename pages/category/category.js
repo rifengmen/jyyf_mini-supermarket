@@ -1,6 +1,6 @@
 // pages/category/category.js
 const app = getApp()
-const toast = require("../../utils/toast")
+import toast from '../../utils/toast'
 import API from '../../api/index'
 
 Page({
@@ -47,10 +47,6 @@ Page({
     goodsList: [],
     // 请求开关
     getFlag: false,
-    // 弹框组件显示开关
-    dialogFlag: false,
-    // 商品信息
-    goods: '',
   },
 
   /**
@@ -84,9 +80,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    let self = this
-    // 弹窗关闭
-    self.dialogClose()
+
   },
 
   /**
@@ -117,7 +111,7 @@ Page({
       page: page
     })
     if (self.data.page > totalPage) {
-      toast.toast('暂无更多')
+      toast('暂无更多')
       return false
     }
     wx.showLoading({
@@ -164,10 +158,10 @@ Page({
           self.getLevel2()
         }
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -206,17 +200,17 @@ Page({
           // 获取商品列表
         self.getGoodsList()
         } else {
-          wx.hideLoading()
           // 设置请求开关
           self.setData({
             getFlag: true
           })
+          wx.hideLoading()
         }
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -246,15 +240,15 @@ Page({
           rowCount: res.rowCount
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
-      wx.hideLoading()
       // 设置请求开关
       self.setData({
         getFlag: true
       })
+      wx.hideLoading()
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -321,42 +315,6 @@ Page({
     })
   },
 
-  // 添加购物车
-  addCart (e) {
-    let self = this
-    let goods = e.currentTarget.dataset.goods
-    // 调用数量/重量弹窗
-    self.setData({
-      dialogFlag: true,
-      goods: goods,
-    })
-  },
-
-  // 调用子组件添加购物车方法
-  componentAddCart (goods) {
-    let self = this
-    let addcart = self.selectComponent('#addCart')
-    // 调用子组件，传入商品信息添加购物车
-    addcart.addCart(goods)
-  },
-
-  // 弹窗关闭
-  dialogClose () {
-    let self = this
-    self.setData({
-      dialogFlag: false,
-      goods: '',
-    })
-  },
-
-  // 弹窗确认
-  dialogConfirm (goods) {
-    let self = this
-    // 调用子组件添加购物车方法
-    self.componentAddCart(goods.detail)
-    self.dialogClose()
-  },
-
   // 更新购物车数量
   getCartCount () {
     let self = this
@@ -379,7 +337,7 @@ Page({
         }
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 })

@@ -3,7 +3,9 @@
 <view class="container color333333 font28 bgf0f0f0" data-weui-theme="dark">
   <!-- 评价类别 start -->
   <view class="comment_tit bgffffff">
-    <view class="name tc {{EType === item.type ? 'active' : ''}}" data-type="{{item.type}}" wx:for="{{EtypeList}}" wx:key="index" bindtap="setEType">{{item.name}}</view>
+    <block wx:for="{{EtypeList}}" wx:key="index">
+      <view class="name tc {{EType === item.type ? 'active' : ''}}" data-type="{{item.type}}" bindtap="setEType">{{item.name}}</view>
+    </block>
   </view>
   <!-- 评价类别 end -->
   <!-- 评价 start -->
@@ -13,7 +15,7 @@
     </view>
     <view class="nodata_cont" wx:if="{{!commentList.length && getFlag}}">
       <view class="nodata overflow">
-        <image src="/lib/images/orderNodata.png" mode="aspectFit"></image>
+        <image src="/lib/images/nodataOrder.png" mode="aspectFit"></image>
       </view>
       <view class="color999999 tc">评价记录空空如也～</view>
     </view>

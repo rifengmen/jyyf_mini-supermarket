@@ -1,6 +1,7 @@
 // shopping/pages/wxScene/wxScene.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -94,7 +95,7 @@ Page({
           url: '/shopping/pages/goodsDetail/goodsDetail?Gdscode=' + goodsData.Gdscode + '&promotemode=' + goodsData.promotemode + '&title=' + goodsData.title + '&deptname=' + goodsData.deptname + '&deptcode=' + goodsData.deptcode
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
         wx.switchTab({
           url: '/pages/index/index'
         })
@@ -103,7 +104,7 @@ Page({
         url: url
       })
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 })

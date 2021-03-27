@@ -1,6 +1,6 @@
 // pages/author/author.js
 const app = getApp()
-const toast = require("../../utils/toast")
+import toast from '../../utils/toast'
 import API from '../../api/index'
 
 Page({
@@ -9,15 +9,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // 是否授权
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
     // 商户名称
-    apptitle: app.globalData.apptitle,
-    // code
-    code: '',
+    apptitle: '',
     // openid
     openid: '',
+    // 是否短信校验,0：校验；1：不校验
+    isphonecode: 1,
   },
 
   /**
@@ -25,30 +22,10 @@ Page({
    */
   onLoad: function (options) {
     let self = this
-    if (self.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        self.setData({
-          hasUserInfo: true
-        })
-        app.globalData.userImg = res.userInfo.avatarUrl
-        wx.navigateBack()
-      }
-    } else {
-      let self = this
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          self.setData({
-            hasUserInfo: true
-          })
-          app.globalData.userImg = res.userInfo.avatarUrl
-          // 获取code
-          self.getCode()
-        }
-      })
-    }
+    self.setData({
+      apptitle: app.globalData.apptitle,
+      openid: app.globalData.openid,
+    })
   },
 
   /**
@@ -100,12 +77,33 @@ Page({
   //
   // },
 
-  // 获取用户信息
-  getUserInfo (e) {
+  // 获取手机号码
+  getPhoneNumber (e) {
     let self = this
-    app.globalData.userImg = e.detail.userInfo.avatarUrl
-    // 获取code
-    self.getCode()
+    let detail = e.detail
+    if (detail.errMsg === 'getPhoneNumber:ok' && detail.iv && detail.encryptedData) {
+      let data = {
+        iv: detail.iv,
+        encryptedData: detail.encryptedData
+      }
+      API.system.bindOpenID(data).then(result => {
+        let res = result.data
+        if (res.flag === 1) {
+          self.setData({
+            mobile: res.data.phone,
+          })
+          // 注册
+          self.perfectInfoForWX()
+        }
+        toast(res.message)
+      }).catch(error => {
+        toast(error.error)
+      })
+    } else {
+      // 取消授权
+      self.cancelAuthor()
+    }
+
   },
 
   // 取消授权
@@ -113,49 +111,24 @@ Page({
     wx.navigateBack()
   },
 
-  // 获取code
-  getCode () {
-    let self = this
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        if (res.code) {
-          self.setData({
-            code: res.code
-          })
-        } else {
-          toast.toast('登录失败！' + res.errMsg)
-        }
-      },
-      // 接口调用结束
-      complete () {
-        // 获取openid
-        self.getOpenID()
-      }
-    })
-  },
-
-  // 获取openid
-  getOpenID () {
+  // 注册
+  perfectInfoForWX () {
     let self = this
     let data = {
-      code: self.data.code
+      isphonecode: self.data.isphonecode,
+      mobile: self.data.mobile,
     }
-    API.system.getOpenID(data).then(result => {
+    API.system.perfectInfoForWX(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        app.globalData.openid = res.data.openid
-        self.setData({
-          openid: res.data.openid,
-          hasUserInfo: true
-        })
         // 获取用户信息
         self.login()
+        toast('注册成功!')
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -188,7 +161,7 @@ Page({
         let coflag = res.data.coflag
         // 只允许普通客户登录小程序(批发客户不能登录)
         if (iscustomer !== 1) {
-          toast.toast('当前帐号类型不正确,不可使用!')
+          toast('当前帐号类型不正确,不可使用!')
           return false
         }
         app.globalData.userid = userid
@@ -198,11 +171,11 @@ Page({
         app.globalData.role = role
         app.globalData.coflag = coflag
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
       wx.navigateBack()
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 })

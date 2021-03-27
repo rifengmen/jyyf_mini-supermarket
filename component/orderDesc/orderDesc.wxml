@@ -34,7 +34,7 @@
         <block wx:for="{{orderDetail.OrderDetail}}" wx:key="index">
             <view class="goods_item bgffffff">
                 <view class="item_img overflow">
-                    <image src="{{item.picture1 ? (baseUrl + item.picture1) : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
+                    <image class="img" src="{{item.picture1 ? (baseUrl + item.picture1) : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
                 </view>
                 <view class="item_desc">
                     <view class="item_name ellipsis2">{{item.productname}}</view>
@@ -45,8 +45,8 @@
                                 <text class="colorfa6400 font36">{{item.price}}</text>
                             </view>
                             <block wx:if="{{item.price !== item.saleprice}}">
-                                <del class="">
-                                    <text class="">￥</text>
+                                <del>
+                                    <text>￥</text>
                                     <text class="font26">{{item.saleprice}}</text>
                                 </del>
                             </block>
@@ -63,19 +63,19 @@
 <!-- 订单商品列表 end -->
 <!-- 订单信息 start -->
 <view class="order_desc bgffffff">
-    <view class="">
+    <view>
         <view class="tit color999999">订单编号：</view>
-        <text class=""> {{orderDetail.orderNum}}</text>
+        <text> {{orderDetail.orderNum}}</text>
     </view>
-    <view class="" wx:if="{{paymodename}}">
+    <view wx:if="{{paymodename}}">
         <view class="tit color999999">支付方式：</view>
-        <text class=""> {{paymodename}}</text>
+        <text> {{paymodename}}</text>
     </view>
-    <view class="">
+    <view>
         <view class="tit color999999">备注：</view>
-        <text class=""> {{orderDetail.comment || '无'}}</text>
+        <text> {{orderDetail.comment || '无'}}</text>
     </view>
-    <view class="" wx:if="{{orderDetail.pickoutcode !== '0'}}">
+    <view wx:if="{{orderDetail.pickoutcode !== '0'}}">
         <view class="tit color999999">取货码：</view>
         <text class="colorfa6400 font32"> {{orderDetail.pickoutcode}}</text>
     </view>

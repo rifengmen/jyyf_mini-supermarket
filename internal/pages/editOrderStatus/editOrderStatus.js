@@ -1,6 +1,7 @@
 // internal/pages/editOrderStatus/editOrderStatus.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -138,9 +139,14 @@ Page({
     // 获取当前位置信息
     API.bill.pickOrder(data).then(result => {
       let res = result.data
-      toast.toast(res.message)
+      if (res.flag === 1) {
+        self.setData({
+          orderDetail: '',
+        })
+      }
+      toast(res.message)
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -149,6 +155,7 @@ Page({
     let self = this
     self.setData({
       tradeno: '',
+      orderDetail: '',
     })
   },
 
@@ -167,7 +174,7 @@ Page({
           // 获取订单详情
           self.getOrderDetail()
         } else {
-          toast.toast('请对准条形码扫码')
+          toast('请对准条形码扫码')
         }
       }
     })
@@ -184,6 +191,7 @@ Page({
       mask: true,
     })
     API.bill.listOrderDetails(data).then(result => {
+      wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         let orderDetail = res.data
@@ -191,21 +199,22 @@ Page({
           orderDetail: orderDetail,
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
-      wx.hideLoading()
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
   // 确定按钮
   confrim () {
     let self = this
+    let orderDetail = self.data.orderDetail
+    let tradeno = self.data.tradeno
     // 判断订单编号不为空
-    if (self.data.tradeno) {
+    if (tradeno) {
       // 判断查询订单详情还是修改订单状态
-      if (self.data.orderDetail) {
+      if (orderDetail && orderDetail.orderNum === tradeno) {
         // 修改订单状态
         self.pickOrder()
       } else {

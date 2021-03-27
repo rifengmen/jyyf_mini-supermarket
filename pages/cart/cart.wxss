@@ -49,11 +49,11 @@
   width: 100%;
   height: auto;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
 }
 .goods radio {
-  width: 80rpx;
+  width: 60rpx;
 }
 .account {
   position: fixed;

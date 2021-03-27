@@ -3,7 +3,7 @@
  */
 require("../app.js")
 
-const http = (url, data, method = 'POST') => {
+const request = (url, data, method = 'POST') => {
   let app = getApp()
   let ContentType = 'application/x-www-form-urlencoded'
   // get方法设置ContentType类型
@@ -46,6 +46,4 @@ const http = (url, data, method = 'POST') => {
   })
 }
 
-module.exports = {
-  http: http
-}
+export default request

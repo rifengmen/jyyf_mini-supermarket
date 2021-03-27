@@ -112,24 +112,23 @@
   justify-content: space-between;
   align-items: center;
 }
-.goodslist {
-  width: 100%;
-  height: calc(100% - 24rpx);
-  padding: unset;
-}
 .delBtn {
   width: auto;
   height: auto;
 }
-.goods_list1 .goods_item {
-  margin-bottom: 24rpx;
+.goods_list1 .goods {
+  width: calc(100% - 48rpx);
+  margin-bottom: 12rpx;
+  padding: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.goods_list1 .goods_item:last-child {
+.goods_list1 .goods:last-child {
   margin-bottom: unset;
 }
-.goods_list1 .goods_item .item_desc {
-  width: calc(100% - 48rpx);
-  padding: 24rpx;
+.goods_list1 .goods .goods_item {
+  flex-flow: column;
 }
 .pay_cont {
   position: fixed;
@@ -223,7 +222,7 @@
 .closed {
   width: 40rpx;
   height: 40rpx;
-  margin-right: 20rpx;
+  margin-right: 30rpx;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -553,6 +552,8 @@
   min-height: unset;
 }
 .goods_list1 .goods_item .item_desc {
+  width: calc(100% - 48rpx);
   min-height: unset;
+  padding: 24rpx;
 }
 /* 商品列表样式 end */

@@ -1,6 +1,6 @@
 // pages/shopList/shopList.js
 const app = getApp()
-const toast = require("../../utils/toast")
+import toast from '../../utils/toast'
 import API from '../../api/index'
 
 Page({
@@ -127,6 +127,7 @@ Page({
       mask: true,
     })
     API.system.listDeptInfo(data).then(result => {
+      wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         let shopList = res.data
@@ -135,11 +136,10 @@ Page({
         })
         app.globalData.shopList = shopList
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
-      wx.hideLoading()
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -203,10 +203,10 @@ Page({
         })
         app.globalData.shopList = shopList
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -231,10 +231,10 @@ Page({
         })
         app.globalData.shopList = shopList
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 

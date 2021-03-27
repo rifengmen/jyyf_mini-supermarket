@@ -1,6 +1,6 @@
 // autoModule/pages/buyGoodsList/buyGoodsList.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
 import API from '../../../api/index'
 
 Page({
@@ -89,7 +89,7 @@ Page({
       page: page
     })
     if (self.data.page > totalPage) {
-      toast.toast('暂无更多')
+      toast('暂无更多')
       return false
     }
     // 获取购买商品列表
@@ -133,21 +133,21 @@ Page({
       getFlag: false
     })
     API.mem.listMemberConsumGdscode(data).then(result => {
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
+      wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         self.setData({
           buyGoodsList: res.data
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
-      wx.hideLoading()
-      // 设置请求开关
-      self.setData({
-        getFlag: true
-      })
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 })

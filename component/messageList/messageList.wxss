@@ -3,7 +3,8 @@
 .message_item {
   width: calc(100% - 48rpx);
   height: 120rpx;
-  margin: 20rpx auto;
+  margin: 0 auto;
+  padding: 20rpx 0;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -1,0 +1,117 @@
+<!--component/goods/goods.wxml-->
+<!-- 商品信息 start -->
+<view class="goods_item {{showTypeList[showType].title}} bgffffff border_r10 overflow">
+    <!-- 商品图片 start -->
+    <navigator class="item_img overflow" hover-class="none"
+               url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{goods.Gdscode}}&promotemode={{goods.promotemode}}&title={{goods.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
+        <image class="img" src="{{goods.Defaultimage ? (baseUrl + goods.Defaultimage) : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
+        <block wx:if="{{panicBuy && goods.sumlimit === goods.salelimit}}">
+            <view class="none colorffffff bg000000_40">已抢光</view>
+        </block>
+    </navigator>
+    <!-- 商品图片 end -->
+    <!-- 商品信息 start -->
+    <view class="item_desc">
+        <navigator class="item_name {{showTypeList[showType].namefont}} ellipsis2" hover-class="none"
+                   url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{goods.Gdscode}}&promotemode={{goods.promotemode}}&title={{goods.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">{{goods.Name}}</navigator>
+        <!-- 活动标签 start -->
+        <block wx:if="{{showType !== 3}}">
+            <view class="tag_cont">
+                <block wx:if="{{goods.promotemode === 100}}">
+                    <text class="tag color71d793 font24 bgffffff border_r500 border_a71d793 font22 tc">{{goods.topamount}}人成团</text>
+                </block>
+                <block wx:elif="{{goods.promotemode === 102}}">
+                    <text class="tag color71d793 font24 bgffffff border_r500 border_a71d793 font22 tc">{{goods.topamount}}人砍价</text>
+                </block>
+            </view>
+        </block>
+        <!-- 活动标签 end -->
+        <!-- 价格、购物车 start -->
+        <view class="price_cont">
+            <!-- 散称价格 start -->
+            <block wx:if="{{goods.scaleflag && cartType !== 1}}">
+                <view class="price color999999 font22">
+                    <view class="actual_price">
+                        <text class="colorfa6400">￥</text>
+                        <text class="colorfa6400 {{showTypeList[showType].pricefont}}">{{goods.Highpprice / 2}}</text>
+                        <text>/斤</text>
+                    </view>
+                    <block wx:if="{{goods.Highoprice !== goods.Highpprice}}">
+                        <del class="del">
+                            <text>￥</text>
+                            <text class="{{showTypeList[showType].delfont}}">{{goods.Highoprice / 2}}</text>
+                            <text>/斤</text>
+                        </del>
+                    </block>
+                </view>
+            </block>
+            <!-- 散称价格 end -->
+            <!-- 包装价格 start -->
+            <block wx:else>
+                <view class="price color999999 font22">
+                    <view class="actual_price">
+                        <text class="colorfa6400">￥</text>
+                        <text class="colorfa6400 {{showTypeList[showType].pricefont}}">{{goods.Highpprice}}</text>
+                    </view>
+                    <block wx:if="{{goods.Highoprice !== goods.Highpprice}}">
+                        <del class="del">
+                            <text>￥</text>
+                            <text class="{{showTypeList[showType].delfont}}">{{goods.Highoprice}}</text>
+                        </del>
+                    </block>
+                </view>
+            </block>
+            <!-- 包装价格 -->
+            <!-- 购物车 start -->
+            <view class="cart">
+                <!-- 购物车图片 start -->
+                <block wx:if="{{!cartType && (goods.promotemode < 100 || goods.promotemode > 103)}}">
+                    <view class="cart_img">
+                        <addCart
+                                id="addCart"
+                                bindtap="setDialogFlag"
+                                data-goods="{{goods}}"
+                                bind:getCartCount="getCartCount"></addCart>
+                    </view>
+                </block>
+                <!-- 购物车图片 end -->
+                <!-- 编辑数量 start -->
+                <block wx:if="{{cartType === 1 && !editorFlag}}">
+                    <view class="editor_cart bgf0f0f0 border_r500">
+                        <!-- 减 start -->
+                        <view
+                                class="subtrack_cart btn border_r500 overflow"
+                                bindtap="editorCartCount"
+                                data-type="subtrackCart">
+                            <image class="img" src="/lib/images/subtrack.png"></image>
+                        </view>
+                        <!-- 减 end -->
+                        <!-- 数量 start -->
+                        <view class="input_cart font24 tc">{{goods.buyAMT}}</view>
+                        <!-- 数量 end -->
+                        <!-- 加 start -->
+                        <view
+                                class="add_cart btn border_r500 overflow"
+                                bindtap="editorCartCount"
+                                data-type="increaseCart">
+                            <image class="img" src="/lib/images/add.png"></image>
+                        </view>
+                        <!-- 加 end -->
+                    </view>
+                </block>
+                <!-- 编辑数量 end -->
+            </view>
+            <!-- 购物车 end -->
+        </view>
+        <!-- 价格、购物车 end -->
+    </view>
+    <!-- 商品信息 end -->
+</view>
+<!-- 商品信息 end -->
+<!-- 加购物车弹框 start -->
+<dialog
+        dialogFlag="{{dialogFlag}}"
+        goods="{{goods}}"
+        bind:dialogClose="setDialogFlag"
+        bind:dialogConfirm="dialogConfirm"></dialog>
+<!-- 加购物车弹框 end -->

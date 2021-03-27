@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "addCart": "/component/addCart/addCart",
+    "dialog": "/component/dialog/dialog"
+  }
+}

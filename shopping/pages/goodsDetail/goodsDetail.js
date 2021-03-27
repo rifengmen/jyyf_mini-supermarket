@@ -1,6 +1,7 @@
 // shopping/pages/goodsDetail/goodsDetail.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -37,7 +38,7 @@ Page({
     commentList: [],
     // 购物车数量
     cartCount: 0,
-    // 弹框组件显示开关
+    // 加购物车弹框显示开关
     dialogFlag: false,
     // 商品活动类别号码，用于获取商品拼团/砍价活动信息
     promotemode: 0,
@@ -177,9 +178,13 @@ Page({
       mask: true,
     })
     API.info.getProductDetails(data).then(result => {
+      wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         let goodsDetail = res.data
+        // 数量保留两位小数
+        goodsDetail.cumulativesales = (goodsDetail.cumulativesales || 0).toFixed(2)
+        goodsDetail.deptstock = (goodsDetail.deptstock || 0).toFixed(2)
         // 设置评价相关
         let EvaluationGC = ''
         let EvaluationTC = ''
@@ -197,11 +202,10 @@ Page({
         // 渲染富文本内容
         self.setDescribe()
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
-      wx.hideLoading()
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -234,22 +238,11 @@ Page({
           })
         }
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
-  },
-
-  // 修改轮播点儿
-  swiperChange (e) {
-    let self = this
-    let {source, current} = e.detail
-    if (source === 'autoplay' || source === 'touch') {
-      self.setData({
-        swiperCurrent: current
-      })
-    }
   },
 
   // 获取拼团/砍价信息
@@ -273,7 +266,7 @@ Page({
           }
         }
       }).catch(error => {
-        toast.toast(error.error)
+        toast(error.error)
       })
     }
     // 页面加载获取顾客商品的砍价信息
@@ -291,7 +284,7 @@ Page({
           }
         }
       }).catch(error => {
-        toast.toast(error.error)
+        toast(error.error)
       })
     }
   },
@@ -316,7 +309,7 @@ Page({
           }
         }
       }).catch(error => {
-        toast.toast(error.error)
+        toast(error.error)
       })
     }
     // 页面加载获取砍价列表
@@ -331,7 +324,7 @@ Page({
           }
         }
       }).catch(error => {
-        toast.toast(error.error)
+        toast(error.error)
       })
     }
   },
@@ -349,9 +342,9 @@ Page({
         // 获取拼团/砍价信息
         self.getGroupDetail()
       }
-      toast.toast(res.message)
+      toast(res.message)
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -369,9 +362,6 @@ Page({
       joinDialogFlag: !joinDialogFlag,
     })
   },
-
-  // stops 阻止冒泡
-  stops () {},
 
   // input框获取焦点
   focusInput () {
@@ -423,7 +413,7 @@ Page({
     }
     // 验证活动号输入
     if (joinno.length < 4) {
-      toast.toast('请输入活动号')
+      toast('请输入活动号')
       return false
     }
     // 参与拼团
@@ -439,9 +429,9 @@ Page({
           // 设置参与弹窗显示开关
           self.setJoinDialogFlag()
         }
-        toast.toast(res.message)
+        toast(res.message)
       }).catch(error => {
-        toast.toast(error.error)
+        toast(error.error)
       })
     }
   },
@@ -462,15 +452,16 @@ Page({
         // 设置参与弹窗显示开关
         self.setJoinDialogFlag()
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
   // 添加购物车/立即购买(包括发起拼团、参与拼团、砍价成功购买)
   add (e) {
+    console.log(0)
     let self = this
     let goods = self.data.goodsDetail
     let orderTypeList = app.globalData.orderTypeList
@@ -481,6 +472,7 @@ Page({
     goods.addType = e.currentTarget.dataset.addtype
     goods.orderType = Number(e.currentTarget.dataset.ordertype || 2)
     goods.groupno = self.data.groupno
+    console.log(goods, 'goods')
     if (goods.addType === 'buyEnd') { // 立即购买时(包括发起拼团、参与拼团、砍价成功购买)
       let orderType = ''
       orderTypeList.forEach(item => {
@@ -499,9 +491,11 @@ Page({
         goods.otc = 'now'
         goods.isotc = ''
       }
+      console.log(goods, 'buyend')
     } else if (goods.addType === 'addCart') { // 添加购物车
       goods.otc = ''
       goods.isotc = ''
+      console.log(goods, 'addcart')
     }
     if (goods.promotemode === 100 || goods.promotemode === 102) { // 拼团、砍价默认一份
       goods.amount = 1
@@ -518,6 +512,7 @@ Page({
 
   // 调用子组件方法
   componentAdd (goods) {
+    console.log(2)
     let self = this
     let addCart = self.selectComponent('#addCart')
     let buyEnd = self.selectComponent('#buyEnd')
@@ -526,8 +521,10 @@ Page({
     })
     // 调用子组件，传入商品信息
     if (goods.addType === 'addCart') {
+      console.log(3)
       addCart.addCart(goods)
     } else if (goods.addType === 'buyEnd') {
+      console.log(4)
       buyEnd.toBuyEnd(goods)
     }
   },
@@ -543,6 +540,7 @@ Page({
 
   // 弹窗确认
   dialogConfirm (goods) {
+    console.log(1)
     let self = this
     // 调用子组件方法
     self.componentAdd(goods.detail)
@@ -563,12 +561,12 @@ Page({
       if (res.flag === 1) {
         if (res.data) {
           self.setData({
-            cartCount: res.data.data
+            cartCount: res.data.data || 0
           })
         }
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 })

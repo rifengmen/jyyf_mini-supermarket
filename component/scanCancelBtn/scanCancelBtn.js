@@ -1,7 +1,7 @@
 // component/scanCancelBtn/scanCancelBtn.js
 require('../../app.js')
 const app = getApp()
-const toast = require('../../utils/toast.js')
+import toast from '../../utils/toast'
 import API from '../../api/index'
 
 Component({
@@ -58,7 +58,7 @@ Component({
       API.invest.cancelSaleOrder(data).then(result => {
         let res = result.data
         if (res.flag === 1) {
-          toast.toast('取消成功!')
+          toast('取消成功!')
           if (self.route === '/scan/pages/orderList/orderList') {
             // 页面重载
             self.onLoad()
@@ -66,10 +66,10 @@ Component({
           }
           wx.navigateBack()
         } else {
-          toast.toast(res.message)
+          toast(res.message)
         }
       }).catch(error => {
-        toast.toast(error.error)
+        toast(error.error)
       })
     },
   }

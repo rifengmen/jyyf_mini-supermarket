@@ -1,6 +1,7 @@
 // shopping/pages/editorOrder/editorOrder.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -183,15 +184,15 @@ Page({
       mask: true,
     })
     API.info.getProductDetails(data).then(result => {
+      wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         self.setData({
           goodsDetail: res.data,
         })
       }
-      wx.hideLoading()
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -212,10 +213,10 @@ Page({
           })
         }
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -235,10 +236,10 @@ Page({
           // 获取运费
           self.getFreight()
         } else {
-          toast.toast(res.message)
+          toast(res.message)
         }
       }).catch(error => {
-        toast.toast(error.error)
+        toast(error.error)
       })
     } else { // 无配送地址清空运费重新计算
       self.setData({
@@ -279,12 +280,12 @@ Page({
         self.setData({
           freight: ''
         })
-        toast.toast(res.message)
+        toast(res.message)
       }
       // 设置订单支付金额
       self.setPayMoney()
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -307,7 +308,7 @@ Page({
         })
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -319,8 +320,6 @@ Page({
       self.setData({
         tick: tick,
       })
-      // // 获取可用积分
-      // self.getScore()
       // 设置订单支付金额
       self.setPayMoney()
     }
@@ -341,7 +340,7 @@ Page({
         })
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -349,7 +348,7 @@ Page({
   toTickList () {
     let self = this
     if (!self.data.address) {
-      toast.toast('请先选择收货地址')
+      toast('请先选择收货地址')
       return false
     }
     wx.navigateTo({
@@ -437,7 +436,7 @@ Page({
     let wechatBtn = self.selectComponent('#wechatBtn')
     // 验证收货地址
     if (!address) {
-      toast.toast('请选择收货地址')
+      toast('请选择收货地址')
       return false
     }
     if (from === 'card') {

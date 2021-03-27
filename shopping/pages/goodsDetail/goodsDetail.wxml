@@ -3,17 +3,8 @@
 <view class="container color333333 font28 bgf0f0f0" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
 	<block wx:if="{{goodsDetail}}">
 		<!-- banner start -->
-		<view class="banner border_r10 overflow bgffffff">
-			<swiper class="banner_swiper" indicator-color="#ffffff" indicator-active-color="#71d793" autoplay="true" circular="true" interval="4000" duration="500" current="{{swiperCurrent}}" bindchange="swiperChange">
-				<swiper-item wx:for="{{goodsDetail.images}}" wx:key="index" class="swiper_item">
-					<image src="{{item ? (baseUrl + item) : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
-				</swiper-item>
-			</swiper>
-			<view class="dots border_r500" wx:if="{{goodsDetail.images.length > 1}}">
-				<block wx:for="{{goodsDetail.images}}" wx:key="index">
-					<view class="dot border_a71d793 {{index === swiperCurrent ? 'active bg71d793' : 'bgffffff'}} border_r500"></view>
-				</block>
-			</view>
+		<view class="banner_goods border_r10 overflow bgffffff">
+			<banner bannerList="{{goodsDetail.images}}" bannerType="goodsDetail"></banner>
 		</view>
 		<!-- banner end -->
 		<!-- goodsname start -->
@@ -23,34 +14,46 @@
 				<!-- 活动人数 start -->
 				<view class="name_section">
 					<view class="tag_cont">
-						<text class="tag color71d793 font24 bgffffff border_r500 border_a71d793 tc" wx:if="{{goodsDetail.promotemode === 100}}">{{goodsDetail.topamount}}人拼团</text>
-						<text class="tag color71d793 font24 bgffffff border_r500 border_a71d793 tc" wx:elif="{{goodsDetail.promotemode === 102}}">{{goodsDetail.topamount}}人砍价</text>
+						<block wx:if="{{goodsDetail.promotemode === 100}}">
+							<text class="tag color71d793 font24 bgffffff border_r500 border_a71d793 tc">{{goodsDetail.topamount}}人拼团</text>
+						</block>
+						<block wx:elif="{{goodsDetail.promotemode === 102}}">
+							<text class="tag color71d793 font24 bgffffff border_r500 border_a71d793 tc">{{goodsDetail.topamount}}人砍价</text>
+						</block>
 					</view>
 				</view>
 				<!-- 活动人数 end -->
 				<!-- 价格显示 start -->
-				<view class="price color999999 font22" wx:if="{{goodsDetail.scaleflag}}">
-					<view class="actual_price">
-						<text class="colorfa6400">￥</text>
-						<text class="colorfa6400 font36">{{goodsDetail.preferential / 2}}</text>
-						<text class="">/斤</text>
+				<block wx:if="{{goodsDetail.scaleflag}}">
+					<view class="price color999999 font22">
+						<view class="actual_price">
+							<text class="colorfa6400">￥</text>
+							<text class="colorfa6400 font36">{{goodsDetail.preferential / 2}}</text>
+							<text>/斤</text>
+						</view>
+						<block wx:if="{{goodsDetail.preferential !== goodsDetail.originalcost}}">
+							<del>
+								<text>￥</text>
+								<text class="font26">{{goodsDetail.originalcost / 2}}</text>
+								<text>/斤</text>
+							</del>
+						</block>
 					</view>
-					<del class="" wx:if="{{goodsDetail.preferential !== goodsDetail.originalcost}}">
-						<text class="">￥</text>
-						<text class="font26">{{goodsDetail.originalcost / 2}}</text>
-						<text class="">/斤</text>
-					</del>
-				</view>
-				<view class="price color999999 font22" wx:else>
-					<view class="actual_price">
-						<text class="colorfa6400">￥</text>
-						<text class="colorfa6400 font36">{{goodsDetail.preferential}}</text>
+				</block>
+				<block wx:else>
+					<view class="price color999999 font22">
+						<view class="actual_price">
+							<text class="colorfa6400">￥</text>
+							<text class="colorfa6400 font36">{{goodsDetail.preferential}}</text>
+						</view>
+						<block wx:if="{{goodsDetail.preferential !== goodsDetail.originalcost}}">
+							<del>
+								<text>￥</text>
+								<text class="font26">{{goodsDetail.originalcost}}</text>
+							</del>
+						</block>
 					</view>
-					<del class="" wx:if="{{goodsDetail.preferential !== goodsDetail.originalcost}}">
-						<text>￥</text>
-						<text class="font26">{{goodsDetail.originalcost}}</text>
-					</del>
-				</view>
+				</block>
 				<!-- 价格显示 end -->
 			</view>
 			<!-- 产地、活动时间 start -->
@@ -62,12 +65,14 @@
 		</view>
 		<!-- goodsname end -->
 		<!-- 秒杀信息 start -->
-		<view class="goods_section bgffffff" wx:if="{{goodsDetail.promotemode === 101}}">
-			<view class="section_desc">秒杀时间：{{goodsDetail.startdate}} - {{goodsDetail.enddate}}</view>
-			<view class="section_desc">单人限量：{{goodsDetail.perlimit}}</view>
-			<view class="section_desc">总数量：{{goodsDetail.sumlimit}}</view>
-			<view class="section_desc">剩余量：{{(goodsDetail.sumlimit - goodsDetail.salelimit) <= 0 ? 0 : (goodsDetail.sumlimit - goodsDetail.salelimit)}}</view>
-		</view>
+		<block wx:if="{{goodsDetail.promotemode === 101}}">
+			<view class="goods_section bgffffff">
+				<view class="section_desc">秒杀时间：{{goodsDetail.startdate}} - {{goodsDetail.enddate}}</view>
+				<view class="section_desc">单人限量：{{goodsDetail.perlimit}}</view>
+				<view class="section_desc">总数量：{{goodsDetail.sumlimit}}</view>
+				<view class="section_desc">剩余量：{{(goodsDetail.sumlimit - goodsDetail.salelimit) <= 0 ? 0 : (goodsDetail.sumlimit - goodsDetail.salelimit)}}</view>
+			</view>
+		</block>
 		<!-- 秒杀信息 end -->
 		<!-- 销量 库存 好评 start -->
 		<view class="goods_desc2 bgffffff">
@@ -96,10 +101,10 @@
 				<block wx:for="{{groupDetail}}" wx:key="index">
 					<view class="section_desc font24">
 						<view class="name ellipsis">
-							<text class="">{{item.nickname}}</text>
+							<text>{{item.nickname}}</text>
 							<text class="tag colorffffff font20 bg329e56 border_r500 tc" wx:if="{{item.flag}}">发起人</text>
 						</view>
-						<view class="">{{item.phone}}</view>
+						<view>{{item.phone}}</view>
 					</view>
 				</block>
 				<!-- 拼团成功标识 start -->
@@ -132,7 +137,7 @@
 							<swiper-item wx:for="{{groupList}}" wx:key="index" catchtouchmove='catchTouchMove'>
 								<view class="section_desc font24">
 									<view class="name ellipsis">
-										<text class="">{{item.nickname}}</text>
+										<text>{{item.nickname}}</text>
 										<block wx:if="{{goodsDetail.promotemode === 100}}">
 											<text class="tag colorffffff font20 bge42837 border_r500 tc" wx:if="{{item.groupflag}}">拼团成功</text>
 											<text class="tag colorffffff font20 bge42837 border_r500 tc" wx:else>拼团中...</text>
@@ -142,8 +147,8 @@
 											<text class="tag colorffffff font20 bge42837 border_r500 tc" wx:else>砍价中...</text>
 										</block>
 									</view>
-									<view class="">{{item.groupno}}</view>
-									<view class="">{{item.hackdate}}</view>
+									<view>{{item.groupno}}</view>
+									<view>{{item.hackdate}}</view>
 								</view>
 							</swiper-item>
 						</swiper>
@@ -153,7 +158,7 @@
 					<block wx:else>
 						<view class="section_desc font24" wx:for="{{groupList}}" wx:key="index">
 							<view class="name ellipsis">
-								<text class="">{{item.nickname}}</text>
+								<text>{{item.nickname}}</text>
 								<block wx:if="{{goodsDetail.promotemode === 100}}">
 									<text class="tag colorffffff font20 bge42837 border_r500 tc" wx:if="{{item.groupflag}}">拼团成功</text>
 									<text class="tag colorffffff font20 bge42837 border_r500 tc" wx:else>拼团中...</text>
@@ -163,8 +168,8 @@
 									<text class="tag colorffffff font20 bge42837 border_r500 tc" wx:else>砍价中...</text>
 								</block>
 							</view>
-							<view class="">{{item.groupno}}</view>
-							<view class="">{{item.hackdate}}</view>
+							<view>{{item.groupno}}</view>
+							<view>{{item.hackdate}}</view>
 						</view>
 					</block>
 					<!-- 小于三条不滚动 end -->
@@ -188,8 +193,8 @@
 		<!-- 评价 end -->
 		<!-- 详情 start -->
 		<view class="goods_section bgffffff" wx:if="{{describe}}">
-			<view class="" wx:if="{{describe}}">
-				<rich-text class="" nodes="{{describe}}"></rich-text>
+			<view wx:if="{{describe}}">
+				<rich-text nodes="{{describe}}"></rich-text>
 			</view>
 		</view>
 		<!-- 详情 end -->
@@ -284,19 +289,23 @@
 	<view class="shortcut_key colorffffff font22">
         <navigator class="share_btn btn border_r500" hover-class="none" url="/shopping/pages/drawPoster/drawPoster?Gdscode={{Gdscode}}&promotemode={{promotemode}}&title={{title}}&deptname={{deptname}}&deptcode={{deptcode}}">
             <image src="/lib/images/poster.png"></image>
-            <view class="">海报</view>
+            <view>海报</view>
         </navigator>
 		<button class="share_btn btn border_r500" open-type="share">
 			<image src="/lib/images/share.png"></image>
-			<view class="">分享</view>
+			<view>分享</view>
 		</button>
 	</view>
 	<!-- 快捷按钮 end -->
-	<!-- dialog start -->
+	<!-- 加购物车弹框 start -->
 	<view class="dialog" wx:if="{{dialogFlag}}">
-		<dialog goods="{{goods}}" bind:dialogClose="dialogClose" bind:dialogConfirm="dialogConfirm"></dialog>
+		<dialog
+				dialogFlag="{{dialogFlag}}"
+				goods="{{goods}}"
+				bind:dialogClose="dialogClose"
+				bind:dialogConfirm="dialogConfirm"></dialog>
 	</view>
-	<!-- dialog end -->
+	<!-- 加购物车弹框 end -->
 	<!-- 拼团/砍价参与弹窗 start -->
 	<view class="password_cont" catchtouchmove="catchTouchMove" wx:if="{{joinDialogFlag}}">
 		<view class="password bgffffff border_r20">

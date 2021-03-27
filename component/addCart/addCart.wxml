@@ -4,6 +4,6 @@
         <view class="addcart_text">加入购物车</view>
     </block>
     <block wx:else>
-        <image src="/lib/images/addcart.png" class="addcart_img"></image>
+        <image class="img" src="/lib/images/addcart.png" class="addcart_img"></image>
     </block>
 </view>

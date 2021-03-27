@@ -1,5 +1,5 @@
 // app.js
-const toast = require('./utils/toast.js')
+import toast from './utils/toast'
 
 App({
   onLaunch: function () {
@@ -22,43 +22,23 @@ App({
             })
           })
           updateManager.onUpdateFailed(function() {
-            toast.toast('新版本已经上线啦~，请您删除当前小程序，重新搜索打开哟~')
+            toast('新版本已经上线啦~，请您删除当前小程序，重新搜索打开哟~')
           })
         }
       })
     } else {
-      toast.toast('当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。')
+      toast('当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。')
     }
-
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              self.globalData.userImg = res.userInfo.avatarUrl
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
-            }
-          })
-        }
-      }
-    })
   },
 
   // 全局变量
   globalData: {
+    // 应用名称
+    apptitle: '',
     // 当前线上版本号
     version: '',
     // openid
     openid: '',
-    // 会员头像
-    userImg: '',
     // sessionId
     sessionId: '',
     // 用户id
@@ -110,11 +90,19 @@ App({
     addressDetail: '',
     // 订单编号，用来处理订单取消返回，订单列表对应数据刷新
     ordernum: '',
+    // 商品显示类型列表
+    showTypeList: [
+      {name: '一行一条商品       ', title: 'goods_item ', namefont: 'font28', pricefont: 'font30', delfont: 'font22', type: 0},
+      {name: '一行一条商品（放大）', title: 'goods_item1', namefont: 'font32', pricefont: 'font36', delfont: 'font26', type: 1},
+      {name: '一行两条商品       ', title: 'goods_item2', namefont: 'font32', pricefont: 'font36', delfont: 'font26', type: 2},
+      {name: '一行三条商品       ', title: 'goods_item3', namefont: 'font24', pricefont: 'font30', delfont: 'font22', type: 3},
+    ],
     // banner类型列表
     bannerTypeList: [
       {name: '首页banner', businessflag: 1, list: []},
       {name: '充值banner', businessflag: 2, list: []},
       {name: '海  报  区', businessflag: 3, list: []},
+      {name: '视  频  区', businessflag: 4, list: []},
     ],
     // 各种类别商品轮播列表
     promotemodeList: [
@@ -122,7 +110,7 @@ App({
       {label: '拼团', name: '一起拼团', promotemode: 100, list: []},
       {label: '秒杀', name: '限时秒杀', promotemode: 101, list: []},
       {label: '砍价', name: '一砍到底', promotemode: 102, list: []},
-      // {label: '预售', name: '热品预售', promotemode: 103, list: []},
+      {label: '预售', name: '热品预售', promotemode: 103, list: []},
     ],
     // 结算订单类型，otc区分购物车与立即购买，now:正常立即购买
     orderTypeList: [
@@ -171,22 +159,19 @@ App({
 
     // 测试开发
     // 基础路径
-    // baseUrl: 'http://192.168.1.107:8089/eshop/',
+    // baseUrl: 'http://192.168.1.107:8089/simple-eshop/',
     baseUrl: 'https://www.91jyrj.com/shop/',
-    // 商家code
-    shopcode: '',
-    // 联系我们
-    cantacts: 'https://www.91jyrj.com/shop/upload/text/front/lianxinus.html',
-    // app标题
-    apptitle: '嘉元科技',
 
-    // // 美美优选 牙克石美廉美超市
+
+    // // 金威快购 长治金威超市
+    // baseUrl: 'http://www.jwkgou.com:8088/simple-eshop/', // 2.1.35版以前前路径
+    // baseUrl: 'https://www.jwkgou.com:8443/simple-eshop/', // 2.1.35版路径
+
+    // // 美廉美优选 牙克石美廉美超市
     // baseUrl: 'https://www.mlmcs2021.com:58443/eshop/',
-    // apptitle: '美美优选',
 
     // // 田森优选 盂县田森超市
     // baseUrl: 'https://www.tianshenyouxuan.com:58443/eshop/',
-    // apptitle: '盂县田森优选',
   },
 
   // 新版本校验
@@ -210,32 +195,27 @@ App({
             })
           })
           updateManager.onUpdateFailed(function() {
-            toast.toast('新版本已经上线啦~，请您删除当前小程序，重新搜索打开哟~')
+            toast('新版本已经上线啦~，请您删除当前小程序，重新搜索打开哟~')
           })
         }
       })
     } else {
-      toast.toast('当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。')
+      toast('当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。')
     }
   },
 
-  // 是否授权
-  authorFlag () {
-    let self = this
-    return self.globalData.openid
- },
-
   // 是否注册
-  memcodeflag () {
+  bindmobileFlag () {
     let self = this
-    return self.globalData.memcode
+    let memcode = (self.globalData.mobile).slice(0, 2)
+    return memcode !== 'WX'
   },
 
   // 支付开通提醒
   coflagTip () {
     let self = this
-    if (self.globalData.openid && !self.globalData.coflag) {
-      toast.toast('您还未开通会员支付！请开通！')
+    if (!self.globalData.coflag) {
+      toast('您还未开通会员支付！请开通！')
     }
   },
 
@@ -286,6 +266,79 @@ App({
       return colorChange.join(",")
     } else {
       return color
+    }
+  },
+
+  // 去banner详情
+  toBannerDetail (banner) {
+    let self = this
+    // let banner = e.currentTarget.dataset.banner
+    let linktype = banner.linktype
+    switch (linktype) {
+      case 1:
+        // 限时秒杀
+        wx.navigateTo({
+          url: '/shopping/pages/goodsList/goodsList?panicBuy=' + 'panicBuy' + '&title=' + '限时秒杀' + '&promotemode=101'
+        })
+        break
+      case 2:
+        // 轮播图(分类)
+        wx.navigateTo({
+          url: '/shopping/pages/goodsList/goodsList?Classcode=' + banner.linkcode + '&title=' + '商品列表'
+        })
+        break
+      case 3:
+        // 单分类/集群
+        wx.navigateTo({
+          url: '/shopping/pages/goodsList/goodsList?Cateid=' + banner.linkcode + '&title=' + '商品列表'
+        })
+        break
+      case 4:
+        // 公告详情
+        wx.navigateTo({
+          url: '/message/pages/detail/detail?id=' + banner.linkcode + '&type=notice',
+        })
+        break
+      case 5:
+        // 充值中心
+        wx.navigateTo({
+          url: '/autoModule/pages/recharge/recharge',
+        })
+        break
+      case 6:
+        // 积分抽奖
+        wx.navigateTo({
+          url: '/autoModule/pages/lottery/lottery',
+        })
+        break
+      case 7:
+        // 领券中心
+        wx.navigateTo({
+          url: '/autoModule/pages/tickList/tickList?from=auto',
+        })
+        break
+      case 8:
+        // 直播
+        let roomid = banner.linkcode;
+        // 存在直播间直接进房间，否则去直播间列表
+        if (!roomid) {
+          wx.navigateTo({
+            url: '/pages/roomplayList/roomplayList',
+          })
+        } else {
+          let customParams = encodeURIComponent(JSON.stringify({ path: 'pages/index/index', pid: 1 }))
+          wx.navigateTo({
+            url: "plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=" + roomid + "&custom_params=" + customParams
+          })
+        }
+        break
+      case 10:
+        // 签到
+        wx.navigateTo({
+          url: '/autoModule/pages/signIn/signIn',
+        })
+        break
+      default:
     }
   },
 })

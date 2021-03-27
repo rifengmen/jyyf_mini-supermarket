@@ -90,8 +90,9 @@
 /* 门店名称 end */
 /* 订单商品列表 start */
 .goodslist {
-    width: 100%;
+    width: calc(100% - 48rpx);
     height: auto;
+    padding: 0 24rpx;
 }
 .goods_list1 {
     padding-top: 20rpx;

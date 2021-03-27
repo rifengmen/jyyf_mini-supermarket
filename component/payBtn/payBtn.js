@@ -1,7 +1,7 @@
 // component/payBtn/payBtn.js
 require('../../app.js')
 const app = getApp()
-const toast = require('../../utils/toast.js')
+import toast from '../../utils/toast'
 import API from '../../api/index'
 
 Component({
@@ -207,13 +207,13 @@ Component({
           wx.redirectTo({
             url: '/shopping/pages/payEnd/payEnd?text=支付失败&type=0',
           })
-          toast.toast(res.message)
+          toast(res.message)
         }
-        toast.toast(res.message)
+        toast(res.message)
         // 清除结算信息
         self.clearOrderDetail()
       }).catch(error => {
-        toast.toast(error.error)
+        toast(error.error)
       })
     },
 
@@ -235,10 +235,10 @@ Component({
           })
           self.wechatPayment()
         } else {
-          toast.toast(res.message)
+          toast(res.message)
         }
       }).catch(error => {
-        toast.toast(error.error)
+        toast(error.error)
       })
     },
 

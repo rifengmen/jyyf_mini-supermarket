@@ -1,6 +1,6 @@
 // pages/register/register.js
 const app = getApp()
-const toast = require("../../utils/toast")
+import toast from '../../utils/toast'
 import API from '../../api/index'
 
 Page({
@@ -14,7 +14,7 @@ Page({
     // 基础路径
     baseUrl: app.globalData.baseUrl,
     // 主题背景色
-    home_bgcolor: '#71d793',
+    home_bgcolor: '',
     // 手机号码
     mobile: '',
     // 图片
@@ -35,7 +35,7 @@ Page({
   onLoad: function (options) {
     let self = this
     self.setData({
-      home_bgcolor: app.globalData.home_bgcolor,
+      home_bgcolor: app.globalData.home_bgcolor || '#71d793',
     })
   },
 
@@ -53,7 +53,7 @@ Page({
     let self = this
     // 验证是否授权
     if (app.globalData.openid === app.globalData.defaultOpenid) {
-      toast.toast('当前为游客,不允许注册,请授权登录再注册!')
+      toast('当前为游客,不允许注册,请授权登录再注册!')
       return false
     }
     // 获取图形验证码
@@ -108,10 +108,10 @@ Page({
           img: img
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -147,12 +147,12 @@ Page({
     let countdownnum = app.globalData.countdownnum
     // 验证手机号
     if (!mobile) {
-      toast.toast('请填写手机号!')
+      toast('请填写手机号!')
       return false
     }
     // 验证图形验证码
     if (!imgcode) {
-      toast.toast('请填写图形验证码!')
+      toast('请填写图形验证码!')
       return false
     }
     self.setData({
@@ -189,9 +189,9 @@ Page({
       mobilecode: imgcode
     }
     API.system.getCheckCode180126(data).then(result => {
-      toast.toast(result.data.message)
+      toast(result.data.message)
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -202,12 +202,12 @@ Page({
     let code = self.data.code
     // 验证手机号
     if (!mobile) {
-     toast.toast('请填写手机号!')
+     toast('请填写手机号!')
       return false
     }
     // 验证图形验证码
     if (!code) {
-      toast.toast('请填写短信验证码!')
+      toast('请填写短信验证码!')
       return false
     }
     let data = {
@@ -219,12 +219,12 @@ Page({
       if (res.flag === 1) {
         // 获取用户信息
         self.login()
-        toast.toast('注册成功!', 'userInfo')
+        toast('注册成功!', 'userInfo')
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -257,7 +257,7 @@ Page({
         let coflag = res.data.coflag
         // 只允许普通客户登录小程序(批发客户不能登录)
         if (iscustomer !== 1) {
-          toast.toast('当前帐号类型不正确,不可使用!')
+          toast('当前帐号类型不正确,不可使用!')
           return false
         }
         app.globalData.userid = userid
@@ -267,10 +267,10 @@ Page({
         app.globalData.role = role
         app.globalData.coflag = coflag
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 })

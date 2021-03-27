@@ -1,10 +1,17 @@
 /* dialog start */
 .dialog_cont {
   position: fixed;
-  top: 0;
+  bottom: 0;
   left: 0;
   width: 100vw;
+  height: 0;
+  transition: linear .3s;
+}
+.dialog_cont.dialog_show {
   height: 100vh;
+}
+.dialog_cont.dialog_hide {
+  height: 0;
 }
 .dialog_cont .dialog {
   position: absolute;

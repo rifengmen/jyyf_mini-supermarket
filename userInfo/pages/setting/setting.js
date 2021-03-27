@@ -1,6 +1,7 @@
 // userInfo/pages/setting/setting.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -96,13 +97,20 @@ Page({
     API.system.unBindOpenID(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        // 清空基础信息
+        app.globalData.openid = ''
+        app.globalData.userid = ''
+        app.globalData.memcode = ''
+        app.globalData.memname = ''
+        app.globalData.mobile = ''
+        app.globalData.role = ''
         wx.reLaunch({
           url: "/pages/index/index"
         })
       }
-      toast.toast(res.message)
+      toast(res.message)
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 })

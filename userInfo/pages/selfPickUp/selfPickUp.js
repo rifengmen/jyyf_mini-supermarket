@@ -1,6 +1,7 @@
 // userInfo/pages/selfPickUp/selfPickUp.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -95,12 +96,12 @@ Page({
     let self = this
     // 验证名字
     if (!self.data.username) {
-      toast.toast('请填写名字')
+      toast('请填写名字')
       return false
     }
     // 验证手机号
     if (!self.data.phone) {
-      toast.toast('请填写手机号')
+      toast('请填写手机号')
       return false
     }
     app.globalData.address = {

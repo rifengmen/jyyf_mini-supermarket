@@ -2,6 +2,6 @@
 <!--<web-view src="{{cantacts}}"></web-view>-->
 <view class="container color333333 font28 bgffffff">
     <view class="cantacts_cont">
-        <rich-text class="" nodes="{{nodes}}" bindtap="previewImage"></rich-text>
+        <rich-text nodes="{{nodes}}" bindtap="previewImage"></rich-text>
     </view>
 </view>

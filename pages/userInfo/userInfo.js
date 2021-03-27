@@ -1,7 +1,7 @@
 // pages/userInfo/userInfo.js
 const app = getApp()
-const toast = require("../../utils/toast")
-const utils = require("../../utils/util")
+import toast from '../../utils/toast'
+import utils from '../../utils/util'
 import API from '../../api/index'
 
 Page({
@@ -13,21 +13,19 @@ Page({
     // 导航栏前景颜色值，包括按钮、标题、状态栏的颜色，仅支持 #ffffff 和 #000000
     frontColor: '#ffffff',
     // 主题背景色
-    home_bgcolor: '#71d793',
+    home_bgcolor: '',
     // 身份信息，0：顾客；1：配送员；2：团长
     role: 0,
     // 身份标识列表
     roleList: app.globalData.roleList,
-    // 用户头像
-    userImg: '',
     // 支付开通标志
     coflag: '',
-    // openid
-    openid: '',
     // 用户名称
     memname: '',
     // 会员号
     memcode: '',
+    // 是否注册
+    bindmobileFlag: false,
     // 余额
     cardInfo: '',
     // 电子券
@@ -53,14 +51,14 @@ Page({
    */
   onLoad: function (options) {
     let self = this
-    let openid = app.globalData.openid
-    if (openid) {
-      self.setData({
-        openid: openid
-      })
-    }
-    // 是否授权登录
-    self.isAuthor()
+    self.setData({
+      home_bgcolor: app.globalData.home_bgcolor || '#71d793',
+    })
+    // 设置主题背景色
+    wx.setNavigationBarColor({
+      frontColor: self.data.frontColor,
+      backgroundColor: self.data.home_bgcolor,
+    })
   },
 
   /**
@@ -75,31 +73,15 @@ Page({
    */
   onShow: function () {
     let self = this
-    let home_bgcolor = app.globalData.home_bgcolor || '#71d793'
-    let openid = app.globalData.openid
-    let memcode = app.globalData.memcode
-    let userImg = app.globalData.userImg
-    let memname = app.globalData.memname
-    let coflag = app.globalData.coflag
-    let role = Number(app.globalData.role)
     self.setData({
-      home_bgcolor: home_bgcolor,
-      openid: openid,
-      memcode: memcode,
-      userImg: userImg,
-      memname: memname,
-      coflag: coflag,
-      role: role,
+      memname: app.globalData.memname,
+      memcode: app.globalData.memcode,
+      bindmobileFlag: app.bindmobileFlag(),
+      coflag: app.globalData.coflag,
+      role: Number(app.globalData.role),
     })
-    // 设置主题背景色
-    wx.setNavigationBarColor({
-      frontColor: self.data.frontColor,
-      backgroundColor: self.data.home_bgcolor,
-    })
-    if (openid) {
-      // 初始化
-      self.init()
-    }
+    // 初始化
+    self.init()
   },
 
   /**
@@ -137,10 +119,10 @@ Page({
   //
   // },
 
-  // 是否需要授权
-  isAuthor () {
+  // 是否绑定手机号码
+  isBindmobile () {
     let self = this
-    if (!self.data.openid) {
+    if (!self.data.bindmobileFlag) {
       wx.navigateTo({
         url: '/pages/author/author'
       })
@@ -186,7 +168,7 @@ Page({
         })
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -202,7 +184,7 @@ Page({
         })
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -218,7 +200,7 @@ Page({
         })
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -237,7 +219,7 @@ Page({
         })
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -271,7 +253,7 @@ Page({
         })
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -289,7 +271,7 @@ Page({
         })
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -308,7 +290,7 @@ Page({
         })
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -334,7 +316,7 @@ Page({
         }
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 })

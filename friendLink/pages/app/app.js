@@ -1,6 +1,7 @@
 // friendLink/pages/app/app.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -82,7 +83,7 @@ Page({
   // 跳转App错误
   launchAppError (e) {
     let self = this
-    toast.toast(e.detail.errMsg)
+    toast(e.detail.errMsg)
     console.log(e.detail, 'launchAppError')
   },
 })

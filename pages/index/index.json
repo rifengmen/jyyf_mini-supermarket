@@ -1,7 +1,7 @@
 {
   "usingComponents": {
-    "addCart": "/component/addCart/addCart",
-    "dialog": "/component/dialog/dialog"
+    "banner": "/component/banner/banner",
+    "goods": "/component/goods/goods"
   },
   "enablePullDownRefresh": true
 }

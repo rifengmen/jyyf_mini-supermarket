@@ -25,6 +25,4 @@ const toast = (message, url, duration = 4000, closetime = 5000) => {
   }, closetime)
 }
 
-module.exports = {
-  toast: toast
-}
+export default toast

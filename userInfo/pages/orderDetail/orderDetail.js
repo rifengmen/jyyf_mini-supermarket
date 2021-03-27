@@ -1,7 +1,7 @@
 // userInfo/pages/orderDetail/orderDetail.js
 const app = getApp()
-const toast = require("../../../utils/toast")
-const utils = require("../../../utils/util")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -102,6 +102,7 @@ Page({
       mask: true,
     })
     API.bill.listOrderDetails(data).then(result => {
+      wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         let orderDetail = res.data
@@ -140,11 +141,10 @@ Page({
           againPaymoney: (orderDetail.shouldmoney - orderDetail.paymoney).toFixed(2)
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
-      wx.hideLoading()
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 

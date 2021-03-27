@@ -1,7 +1,7 @@
 // message/pages/detail/detail.js
 const app = getApp()
-const toast = require("../../../utils/toast")
-const utils = require("../../../utils/util")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -111,7 +111,7 @@ Page({
       // 设置详情
       self.setDetail(res)
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -130,13 +130,14 @@ Page({
       // 设置详情
       self.setDetail(res)
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
   // 设置详情
   setDetail (res) {
     let self = this
+    wx.hideLoading()
     if (res.flag === 1) {
       let nodes = res.data.content.replace(/\<img/gi, '<img style="max-width:100%;height:auto;display:block;float:left;margin: 0 auto"')
       self.setData({
@@ -144,9 +145,8 @@ Page({
         nodes: nodes,
       })
     } else {
-      toast.toast(res.message)
+      toast(res.message)
     }
-    wx.hideLoading()
   },
 
   // 图片放大预览

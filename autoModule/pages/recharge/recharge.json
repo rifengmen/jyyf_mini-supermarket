@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "banner": "/component/banner/banner"
+  },
   "navigationBarTitleText": "充值中心"
 }

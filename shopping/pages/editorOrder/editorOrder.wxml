@@ -11,7 +11,7 @@
 			<view class="color666666 font24">{{address.address}}</view>
 		</view>
 		<view class="address" wx:else>
-			<view class="">请选择收提地址</view>
+			<view>请选择收提地址</view>
 		</view>
 		<view class="more colorc7c7c7 tr"> > </view>
 	</view>
@@ -39,9 +39,9 @@
 		<view class="goods_list1">
 			<!-- 单一商品结算 start -->
 			<block wx:if="{{goodscode}}">
-				<view class="goods_item bgffffff" hover-class="none" >
+				<view class="goods_item bgffffff">
 					<view class="item_img overflow">
-						<image src="{{goodsDetail.image ? baseUrl + goodsDetail.image : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
+						<image class="img" src="{{goodsDetail.image ? baseUrl + goodsDetail.image : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
 					</view>
 					<view class="item_desc">
 						<view class="item_name ellipsis2">{{goodsDetail.Name}}</view>
@@ -51,8 +51,8 @@
 									<text class="colorfa6400">￥</text>
 									<text class="colorfa6400 font36">{{goodsDetail.preferential}}</text>
 								</view>
-								<del class="" wx:if="{{goodsDetail.preferential !== goodsDetail.originalcost}}">
-									<text class="">￥</text>
+								<del wx:if="{{goodsDetail.preferential !== goodsDetail.originalcost}}">
+									<text>￥</text>
 									<text class="font26">{{goodsDetail.originalcost}}</text>
 								</del>
 							</view>
@@ -66,9 +66,9 @@
 			<!-- 单一商品结算 end -->
 			<!-- 购物车结算 start -->
 			<block wx:else>
-				<view class="goods_item bgffffff" hover-class="none" wx:for="{{cartList}}" wx:key="index">
+				<view class="goods_item bgffffff" wx:for="{{cartList}}" wx:key="index">
 					<view class="item_img overflow">
-						<image src="{{item.Pimg ? baseUrl + item.Pimg : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
+						<image class="img" src="{{item.Pimg ? baseUrl + item.Pimg : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
 					</view>
 					<view class="item_desc">
 						<view class="item_name ellipsis2">{{item.Pname}}</view>
@@ -78,8 +78,8 @@
 									<text class="colorfa6400">￥</text>
 									<text class="colorfa6400 font36">{{item.actualprice}}</text>
 								</view>
-								<del class="" wx:if="{{item.actualprice !== item.saleprice}}">
-									<text class="">￥</text>
+								<del wx:if="{{item.actualprice !== item.saleprice}}">
+									<text>￥</text>
 									<text class="font26">{{item.saleprice}}</text>
 								</del>
 							</view>
@@ -115,7 +115,7 @@
 			<view class="section_cont" bindtap="setScoreFlag">
 				<radio-group class="score_group">
 					<view class="tr">
-						<label class="" for="score">
+						<label for="score">
 							可用
 							<text class="colorfa6400">{{score.useScore || 0}}</text>
 							积分可抵
@@ -134,7 +134,7 @@
 		<view class="remark">
 			<view class="section_tit color666666">备注</view>
 			<view class="section_cont">
-				<textarea class="" bindblur="setRemark" auto-height maxlength="40" placeholder="备注信息(最多输入40个字)" disabled="{{remarkFlag}}"/>
+				<textarea bindblur="setRemark" auto-height maxlength="40" placeholder="备注信息(最多输入40个字)" disabled="{{remarkFlag}}"/>
 			</view>
 		</view>
 	</view>
@@ -142,19 +142,19 @@
 	<!-- 结算信息 start -->
 	<view class="pay_desc order_score bgffffff">
 		<view class="pay_cont border_be5e5e5">
-			<view class="">
+			<view>
 				<view>商品总额</view>
 				<view class="font_blod">￥{{orderDetail.needpaymoney || 0}}</view>
 			</view>
-			<view class="" wx:if="{{paymode4Flag}}">
+			<view wx:if="{{paymode4Flag}}">
 				<view>电子券</view>
 				<view class="colorfa6400 font_blod">-￥{{tick.paymoney || 0}}</view>
 			</view>
-			<view class="" wx:if="{{paymode5Flag}}">
+			<view wx:if="{{paymode5Flag}}">
 				<view>积分抵扣</view>
 				<view class="colorfa6400 font_blod">-￥{{useScoreMoney}}</view>
 			</view>
-			<view class="">
+			<view>
 				<view>运费+配送服务费</view>
 				<view class="colorfa6400 font_blod">+￥{{freight.freight || 0}}</view>
 			</view>

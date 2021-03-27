@@ -1,7 +1,7 @@
 // component/addCart/addCart.js
 require('../../app.js')
 const app = getApp()
-const toast = require('../../utils/toast.js')
+import toast from '../../utils/toast'
 import API from '../../api/index'
 
 Component({
@@ -38,32 +38,25 @@ Component({
         Buyprice: goods.Highpprice,
         Actuslmoney: goods.Highpprice,
       }
-      // 验证是否授权
-      if (!app.authorFlag()) {
-        wx.navigateTo({
-          url: '/pages/author/author',
-        })
-        return false
-      }
       // // 验证是否绑定手机号码
-      // if (!app.memcodeflag()) {
+      // if (!app.bindmobileFlag()) {
       //   wx.switchTab({
       //     url: '/pages/userInfo/userInfo',
       //   })
-      //   toast.toast('请注册绑定手机号码')
+      //   toast('请注册绑定手机号码')
       //   return false
       // }
       API.bill.inputIntoCar(data).then(result => {
         let res = result.data
         if (res.flag === 1) {
-          toast.toast('添加成功')
+          toast('添加成功')
           // 更新购物车数量
           self.triggerEvent('getCartCount')
         } else {
-          toast.toast(res.message)
+          toast(res.message)
         }
       }).catch(error => {
-        toast.toast(error.error)
+        toast(error.error)
       })
     },
   }

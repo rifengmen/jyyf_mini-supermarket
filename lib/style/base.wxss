@@ -172,6 +172,9 @@
 .bgcecece {
   background-color: #cecece;
 }
+.bgd8d8d8 {
+  background-color: #d8d8d8;
+}
 .bge7e7e7 {
   background-color: #e7e7e7;
 }
@@ -361,6 +364,12 @@
 }
 .overflow {
   overflow: hidden;
+}
+.scroll_x {
+  overflow-x: scroll;
+}
+.scroll_y {
+  overflow-y: scroll;
 }
 /* 布局方式 end */
 /* 取消微信默认样式 start */

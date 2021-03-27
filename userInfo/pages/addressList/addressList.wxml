@@ -13,7 +13,7 @@
           <view class="address_item border_be5e5e5">
             <view class="item_desc" bindtap="setAddress" data-address="{{item}}">
               <view class="name">
-                <text class="">{{item.username + ' ' + item.phone}}</text>
+                <text>{{item.username + ' ' + item.phone}}</text>
                 <text class="tag colorffffff font24 bge42837 border_r500 tc" wx:if="{{item.isdefault}}">默认</text>
               </view>
               <view class="name color999999 font24">
@@ -36,7 +36,7 @@
       </view>
       <view class="nodata_cont" wx:if="{{!addressList.length && getFlag}}">
         <view class="nodata overflow">
-          <image src="/lib/images/orderNodata.png" mode="aspectFit"></image>
+          <image src="/lib/images/nodataOrder.png" mode="aspectFit"></image>
         </view>
         <view class="color999999 tc">您的地址空空如也～</view>
       </view>

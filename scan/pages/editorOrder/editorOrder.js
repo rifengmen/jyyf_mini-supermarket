@@ -1,6 +1,7 @@
 // scan/pages/editorOrder/editorOrder.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -116,10 +117,10 @@ Page({
           totalMoney: res.data.totalMoney.toFixed(2),
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -156,10 +157,10 @@ Page({
           paymode7Flag: (paymodeList.filter(item => item.paymodeid === 7).length ? true : false),
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -242,14 +243,14 @@ Page({
           self.wechatPayment()
         }
       } else {
-        toast.toast(res.message)
+        toast(res.message)
         wx.redirectTo({
           url: '/shopping/pages/payEnd/payEnd?text=支付失败&type=0',
         })
       }
-      toast.toast(res.message)
+      toast(res.message)
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 

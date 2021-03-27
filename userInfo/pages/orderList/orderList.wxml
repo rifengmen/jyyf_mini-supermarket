@@ -1,7 +1,9 @@
 <!--userInfo/pages/orderList/orderList.wxml-->
 <view class="container color333333 font28 bgf0f0f0">
   <view class="order_tit bgffffff">
-    <view class="name tc {{statusType === item.type ? 'active' : ''}}" data-type="{{item.type}}" wx:for="{{statusList}}" wx:key="index" bindtap="setStatusType">{{item.name}}</view>
+    <block wx:for="{{statusList}}" wx:key="index">
+      <view class="name tc {{statusType === item.type ? 'active' : ''}}" data-type="{{item.type}}" bindtap="setStatusType">{{item.name}}</view>
+    </block>
   </view>
   <view class="order_cont">
     <view class="order_list">
@@ -10,7 +12,7 @@
           <view class="tit border_be5e5e5">
             <view class="shop_name font_blod">
               <image src="/lib/images/shop.png"></image>
-              <view class="">{{item.bmname}}</view>
+              <view>{{item.bmname}}</view>
             </view>
             <view class="type color71d793 tr">{{item.paystatedescribe}}</view>
           </view>
@@ -22,7 +24,7 @@
             <view class="no">
               <view class="color999999 font24">{{item.Recordtime}}</view>
               <view class="colorfa6400 font24" wx:if="{{item.pickoutcode !== '0'}}">
-                <text class="">取货码</text>
+                <text>取货码</text>
                 <text class="font32">{{item.pickoutcode}}</text>
               </view>
             </view>
@@ -39,7 +41,7 @@
       </block>
       <view class="nodata_cont" wx:if="{{!orderList.length && getFlag}}">
         <view class="nodata overflow">
-          <image src="/lib/images/orderNodata.png" mode="aspectFit"></image>
+          <image src="/lib/images/nodataOrder.png" mode="aspectFit"></image>
         </view>
         <view class="color999999 tc">您的订单空空如也～</view>
       </view>

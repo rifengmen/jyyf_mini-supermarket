@@ -1,6 +1,7 @@
 // scan/pages/manual/manual.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -103,12 +104,12 @@ Page({
     }
     // 验证条码不为空
     if (!self.data.goodscode) {
-      toast.toast('请输入商品条码！')
+      toast('请输入商品条码！')
       return false
     }
     // 验证店铺不为空
     if (!self.data.scanShopInfo) {
-      toast.toast('请选择店铺！')
+      toast('请选择店铺！')
       return false
     }
     API.invest.getProductDetailsByBarcode(data).then(result => {
@@ -119,10 +120,10 @@ Page({
           goodsInfoFlag: true,
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 

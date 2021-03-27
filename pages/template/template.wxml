@@ -4,8 +4,12 @@
     <image class="card_bg" src="/lib/images/cardBg.png"></image>
     <view class="card">
       <view class="card_desc">
-        <view class="name font32" wx:if="{{type === 'balance'}}">金币余额(元)</view>
-        <view class="name font32" wx:if="{{type === 'score'}}">账户积分(分)</view>
+        <block wx:if="{{type === 'balance'}}">
+          <view class="name font32">金币余额(元)</view>
+        </block>
+        <block wx:if="{{type === 'score'}}">
+          <view class="name font32">账户积分(分)</view>
+        </block>
         <view class="num font70">{{cardData || 0}}</view>
       </view>
       <navigator class="toRecharge bg329e56" hover-class="none" url="/autoModule/pages/recharge/recharge" wx:if="{{type === 'balance'}}">
@@ -16,32 +20,36 @@
   </view>
 </template>
 <template name="list">
-  <view class="item {{(index + 1) === list.length ? '' : 'border_be5e5e5'}}" wx:for="{{list}}" wx:key="index">
-    <view class="name_cont">
-      <view class="name">{{item.name}}</view>
-      <view class="color999999">{{item.time}}</view>
+  <block wx:for="{{list}}" wx:key="index">
+    <view class="item {{(index + 1) === list.length ? '' : 'border_be5e5e5'}}">
+      <view class="name_cont">
+        <view class="name">{{item.name}}</view>
+        <view class="color999999">{{item.time}}</view>
+      </view>
+      <view class="desc">{{item.desc}}</view>
     </view>
-    <view class="desc">{{item.desc}}</view>
-  </view>
+  </block>
 </template>
 <!-- 卡信息列表 end -->
 <!-- 商品评价 start -->
 <template name="comment">
-  <view class="comment_item font24 border_bf0f0f0" wx:for="{{commentList}}" wx:key="index">
-    <view class="user border_r500 overflow">
-      <image src="/lib/images/userInfo.png" mode="aspectFit"></image>
+  <block wx:for="{{commentList}}" wx:key="index">
+    <view class="comment_item font24 border_bf0f0f0">
+      <view class="user border_r500 overflow">
+        <image src="/lib/images/userInfo.png" mode="aspectFit"></image>
+      </view>
+      <view class="desc">
+        <view class="name">{{item.username}}</view>
+        <view class="color999999">{{item.Etime}}</view>
+        <view class="text">{{item.content}}</view>
+        <!-- <view class="desc_img overflow">
+          <view class="img fl overflow">
+            <image src="/lib/images/ceshi001.png" mode="aspectFit"></image>
+          </view>
+        </view> -->
+      </view>
     </view>
-    <view class="desc">
-      <view class="name">{{item.username}}</view>
-      <view class="color999999">{{item.Etime}}</view>
-      <view class="text">{{item.content}}</view>
-      <!-- <view class="desc_img overflow">
-        <view class="img fl overflow">
-          <image src="/lib/images/ceshi001.png" mode="aspectFit"></image>
-        </view>
-      </view> -->
-    </view>
-  </view>
+  </block>
 </template>
 <!-- 商品评价 end -->
 <!-- 首页活动样式一 start -->
@@ -72,68 +80,6 @@
   </view>
 </template>
 <!-- 首页活动样式一 end -->
-<!-- 商品列表3 start -->
-<view class="recommendList overflow">
-  <view class="recommend bgffffff border_r10 overflow" wx:for="{{recommendList}}" wx:key="index" data-index='{{index}}'>
-    <!-- 标题 start -->
-    <navigator class="recommend_tit bgffffff" hover-class="none" url="/shopping/pages/goodsList/goodsList?Cateid={{item.Id}}&title={{item.storecategoryname}}">
-      <view class="tit_img overflow" wx:if="{{item.showway === 1}}">
-        <image src="{{baseUrl + item.ico}}"></image>
-      </view>
-      <view class="tit_text" wx:if="{{item.showway === 2}}">
-        <view class="font32 font_blod">{{item.storecategoryname}}</view>
-        <navigator class="more color71d793" hover-class="none" url="/shopping/pages/goodsList/goodsList?Cateid={{item.Id}}&title={{item.storecategoryname}}">查看更多...</navigator>
-      </view>
-    </navigator>
-    <!-- 标题 end -->
-    <!-- 商品列表 start -->
-    <view class='goods_list3'>
-      <block wx:for-item="goods" wx:for-index="gindex" wx:for="{{item.gdscodelist}}" wx:key="gindex">
-        <navigator class="goods_item border_r10 overflow" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{goods.Gdscode}}&promotemode={{goods.promotemode}}&title={{goods.Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
-          <view class="item_img overflow">
-            <image src="{{goods.Defaultimage ? (baseUrl + goods.Defaultimage) : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
-          </view>
-          <view class="item_name ellipsis2 font24">{{goods.Name}}</view>
-          <!-- 活动标签 start -->
-          <view class="tag_cont">
-            <text class="tag color71d793 font24 bgffffff border_r500 border_a71d793 font22 tc" wx:if="{{goods.promotemode === 100}}">{{goods.topamount}}人成团</text>
-            <text class="tag color71d793 font24 bgffffff border_r500 border_a71d793 font22 tc" wx:elif="{{goods.promotemode === 102}}">{{goods.topamount}}人砍价</text>
-          </view>
-          <!-- 活动标签 end -->
-          <view class="price_cont">
-            <view class="price color999999 font22" wx:if="{{goods.scaleflag}}">
-              <view class="actual_price">
-                <text class="colorfa6400">￥</text>
-                <text class="colorfa6400 font36">{{goods.Highpprice / 2}}</text>
-                <text class="">/斤</text>
-              </view>
-              <del class="" wx:if="{{goods.Highoprice !== goods.Highpprice}}">
-                <text class="">￥</text>
-                <text class="font26">{{goods.Highoprice / 2}}</text>
-                <text class="">/斤</text>
-              </del>
-            </view>
-            <view class="price color999999 font22" wx:else>
-              <view class="actual_price">
-                <text class="colorfa6400">￥</text>
-                <text class="colorfa6400 font36">{{goods.Highpprice}}</text>
-              </view>
-              <del class="" wx:if="{{goods.Highoprice !== goods.Highpprice}}">
-                <text class="">￥</text>
-                <text class="font26">{{goods.Highoprice}}</text>
-              </del>
-            </view>
-            <view class="cart">
-              <addCart id="addCart" catchtap="addCart" data-goods="{{goods}}" bind:getCartCount="getCartCount"></addCart>
-            </view>
-          </view>
-        </navigator>
-      </block>
-    </view>
-    <!-- 商品列表 end -->
-  </view>
-</view>
-<!-- 商品列表3 end -->
 <!-- 搜索 start -->
 <template name="search">
   <navigator class="search bgf9f9f9 border_r500" hover-class="none" url="/shopping/pages/search/search">

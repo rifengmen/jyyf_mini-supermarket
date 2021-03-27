@@ -1,7 +1,7 @@
 // component/password/password.js
 require('../../app.js')
 const app = getApp()
-const toast = require('../../utils/toast.js')
+import toast from '../../utils/toast'
 import API from '../../api/index'
 
 Component({
@@ -84,7 +84,7 @@ Component({
       let self = this
       let password = self.data.password
       if (password.length < 6) {
-        toast.toast('请输入支付密码')
+        toast('请输入支付密码')
         return false
       }
       // 触发父组件方法

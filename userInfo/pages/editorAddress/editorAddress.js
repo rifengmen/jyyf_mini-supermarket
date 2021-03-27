@@ -1,6 +1,7 @@
 // userInfo/pages/editorAddress/editorAddress.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -182,10 +183,10 @@ Page({
           siteList: res.data
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -211,22 +212,22 @@ Page({
     let self = this
     // 验证名字
     if (!self.data.addressUsername) {
-      toast.toast('请填写名字')
+      toast('请填写名字')
       return false
     }
     // 验证手机号
     if (!self.data.addressPhone) {
-      toast.toast('请填写手机号')
+      toast('请填写手机号')
       return false
     }
     // 验证定位
     if (!self.data.mapaddress) {
-      toast.toast('请选择收货地址')
+      toast('请选择收货地址')
       return false
     }
     // 验证详细地址
     if (!self.data.addressAddress) {
-      toast.toast('请填写详细地址')
+      toast('请填写详细地址')
       return false
     }
     let data = {
@@ -243,12 +244,12 @@ Page({
       let res = result.data
       if (res.flag === 1) {
         wx.navigateBack()
-        toast.toast(res.message)
+        toast(res.message)
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -257,7 +258,7 @@ Page({
     let self = this
     // 验证选择自提点
     if (!self.data.siteid) {
-      toast.toast('请选择自提点')
+      toast('请选择自提点')
       return false
     }
     let data = {
@@ -268,12 +269,12 @@ Page({
       let res = result.data
       if (res.flag === 1) {
         wx.navigateBack()
-        toast.toast(res.message)
+        toast(res.message)
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 })

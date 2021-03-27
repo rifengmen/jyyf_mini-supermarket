@@ -1,7 +1,7 @@
 // component/buyEnd/buyEnd.js
 require('../../app.js')
 const app = getApp()
-const toast = require('../../utils/toast.js')
+import toast from '../../utils/toast'
 import API from '../../api/index'
 
 Component({
@@ -41,8 +41,6 @@ Component({
     otc: '',
     // isotc,区分拼团砍价的普通立即购买还是活动立即购买
     isotc: '',
-    // // orderType,订单类型
-    // orderType: 0,
     // 商品code(立即购买)
     goodscode: '',
     // 商品数量(立即购买)
@@ -97,13 +95,6 @@ Component({
     // 结算buyend
     buyend (data, goods) {
       let self = this
-      // 验证是否授权
-      if (!app.authorFlag()) {
-        wx.navigateTo({
-          url: '/pages/author/author',
-        })
-        return false
-      }
       API.bill.buyend(data).then(result => {
         let res = result.data
         if (res.flag === 1) {
@@ -137,10 +128,10 @@ Component({
             })
           }
         } else {
-          toast.toast(res.message)
+          toast(res.message)
         }
       }).catch(error => {
-        toast.toast(error.error)
+        toast(error.error)
       })
     },
   }

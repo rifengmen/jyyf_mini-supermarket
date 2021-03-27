@@ -7,7 +7,7 @@
       <view class="section_cont" bindtap="setScoreFlag">
         <radio-group class="score_group">
           <view class="tr">
-            <label class="" for="score">
+            <label for="score">
               可用
               <text class="colorfa6400">{{score.useScore || 0}}</text>
               积分可抵
@@ -24,15 +24,15 @@
   <!-- 结算信息 start -->
   <view class="pay_desc bgffffff">
     <view class="pay_cont border_be5e5e5">
-      <view class="">
+      <view>
         <view>商品总额</view>
         <view class="font_blod">￥{{orderDetail.actmoney || 0}}</view>
       </view>
-      <view class="" wx:if="{{paymode5Flag}}">
+      <view wx:if="{{paymode5Flag}}">
         <view>积分抵扣</view>
         <view class="colorfa6400 font_blod">-￥{{useScoreMoney}}</view>
       </view>
-      <view class="">
+      <view>
         <view>运费+配送服务费</view>
         <view class="colorfa6400 font_blod">+￥{{orderDetail.freight}}</view>
       </view>

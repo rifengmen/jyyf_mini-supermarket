@@ -1,5 +1,5 @@
-@import "/pages/template/template.wxss";
 /* shopping/pages/goodsList/goodsList.wxss */
+@import "/pages/template/template.wxss";
 .search_cont {
   position: fixed;
   top: 0;
@@ -32,6 +32,10 @@
   min-height: calc(100vh - 90rpx);
   margin: 0 auto;
   padding-top: 90rpx;
+}
+.goods_list1plus {
+  width: calc(100% - 48rpx);
+  padding: 0 24rpx;
 }
 .goods_list2 {
   width: calc(100% - 48rpx);

@@ -1,6 +1,7 @@
 //index.js
 const app = getApp()
-const toast = require("../../utils/toast")
+import toast from '../../utils/toast'
+import utils from '../../utils/util'
 import API from '../../api/index'
 
 Page({
@@ -29,22 +30,12 @@ Page({
     noticeList: [],
     // banner类型列表
     bannerTypeList: app.globalData.bannerTypeList,
-    // 轮播点儿下标
-    swiperCurrent_banner: 0,
-    swiperCurrent_module: 0,
-    swiperCurrent_friend: 0,
     // 自定义模块列表
     modulePictureList: [],
     // 友链列表
     friendLinkList: [],
-    // 视频广告列表
-    advideoList: [
-      {url: 'https://vd4.bdstatic.com/mda-kitkpymkcp9yqnq3/sc/mda-kitkpymkcp9yqnq3.mp4?playlist=%5B%22hd%22%2C%22sc%22%5D&v_from_s=tc_videoui_4135&auth_key=1614913046-0-0-ad552e0f3e7fd577495efed051d87c9e&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=8_2'},
-      {url: 'https://vd2.bdstatic.com/mda-mc3zhgxb0pzn62zb/v1-cae/sc/mda-mc3zhgxb0pzn62zb.mp4?v_from_s=tc_haokanvideoui_5488&auth_key=1614913460-0-0-680133311ef4ab5a3ab1a4aaca45d0b7&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=8_2'},
-      {url: 'https://vd2.bdstatic.com/mda-mc4cvdgiqwb35kd7/fhd/cae_h264_nowatermark/1614907296/mda-mc4cvdgiqwb35kd7.mp4?v_from_s=tc_haokanvideoui_5488&auth_key=1614913494-0-0-877f7e7709e22cb23cb05c3318d7a413&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=8_2'},
-    ],
     // 推荐商品列表
-    recommendList: [],
+    clusterList: [],
     // indexHotList
     indexHotList: [],
     // 专区列表
@@ -59,14 +50,12 @@ Page({
     home_bgcolor: '#71d793',
     // 秒杀/特价背景色
     home_promotebg: '#f68e74',
-    // 弹框组件显示开关
+    // 加购物车弹框显示开关
     dialogFlag: false,
-    // 广告弹框显示开关
-    addialogFlag: true,
-    // 商品信息
-    goods: '',
-    // 投诉类别列表
-    typeList: app.globalData.typeList,
+    // 弹框广告显示开关
+    addialogFlag: false,
+    // 弹窗广告图
+    adDialogImg: '',
     // 分享门店名称
     shareDeptname: '',
     // 分享门店code
@@ -96,33 +85,15 @@ Page({
       // 初始化
       self.init()
     }
-    // 查看授权，authSetting授权列表，scope.userInfo：openid授权，
-    wx.getSetting({
-      success (res){
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-          self.getCode()
-        } else {
-          // 没有门店
-          if (!deptname && !deptcode) {
-            // 获取定位
-            self.getLocation()
-          }
-        }
-      }
-    })
+    // 获取code
+    self.getCode()
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    let self = this
-    let animation = wx.createAnimation({
-      duration: 200,
-      timingFunction: 'linear'
-    })
-    self.animation = animation
+
   },
 
   /**
@@ -130,8 +101,8 @@ Page({
    */
   onShow: function () {
     let self = this
-    let openid = app.globalData.openid
-    if (openid) {
+    // 校验是否首次登陆，非首次登录才更新购物车数量
+    if (self.data.openid) {
       // 更新购物车数量
       self.getCartCount()
     }
@@ -141,9 +112,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    let self = this
-    // 弹窗关闭
-    self.dialogClose()
+
   },
 
   /**
@@ -218,15 +187,11 @@ Page({
           frontColor: self.data.frontColor,
           backgroundColor: res.data.home_bgcolor || '#71d793',
         })
-        // // 设置tabbar选中字体颜色
-        // wx.setTabBarStyle({
-        //   selectedColor: res.data.home_bgcolor || '#71d793',
-        // })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -240,16 +205,10 @@ Page({
           self.setData({
             code: res.code
           })
-          // 获取用户头像
-          wx.getUserInfo({
-            success: res => {
-              app.globalData.userImg = res.userInfo.avatarUrl
-            }
-          })
           // 获取openid
           self.getOpenID()
         } else {
-          toast.toast('登录失败！' + res.errMsg)
+          toast('登录失败！' + res.errMsg)
         }
       }
     })
@@ -266,16 +225,16 @@ Page({
       if (res.flag === 1) {
         self.setData({
           openid: res.data.openid,
-          hasUserInfo: true
+          hasUserInfo: true,
         })
         app.globalData.openid = res.data.openid
         // 获取用户信息
         self.login()
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -308,7 +267,7 @@ Page({
         let coflag = res.data.coflag
         // 只允许普通客户登录小程序(批发客户不能登录)
         if (iscustomer !== 1) {
-          toast.toast('当前帐号类型不正确,不可使用')
+          toast('当前帐号类型不正确,不可使用')
           return
         }
         app.globalData.userid = userid
@@ -342,10 +301,10 @@ Page({
         // 更新购物车数量
         self.getCartCount()
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -401,15 +360,21 @@ Page({
         }
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
   // 初始化
   init () {
     let self = this
-    // 发送各种banner类型请求
-    self.sendBusinessflag()
+    let bannerTypeList = self.data.bannerTypeList
+    let promotemodeList = self.data.promotemodeList
+    // 清空list
+    bannerTypeList.forEach(item => item.list = [])
+    // 清空list
+    promotemodeList.forEach(item => item.list = [])
+    // 获取各种banner图列表
+    self.getBannerList()
     // 获取自定义功能列表
     self.getModulePictureList()
     // 获取公告列表
@@ -420,148 +385,51 @@ Page({
     self.getTheme()
     // 获取专区列表
     self.getHotList()
-    // 各种类别商品轮播列表
-    self.data.promotemodeList.forEach(item => {
-      if (item.promotemode !== 999) {
-        // 获取各种类别商品轮播列表
-        self.getProductListByPromote(item)
-      }
-    })
-    // 获取特价商品列表
+    // 获取特价商品轮播列表
     self.getProductList()
+    // 获取各种类别商品轮播列表
+    self.getProductListByPromote()
+    // 获取弹窗广告图
+    self.getAdDialogImg()
   },
 
   // 手指触摸后移动(阻止冒泡)
-  catchTouchMove (res) {
+  catchTouchMove () {
     return false
   },
 
-  // 发送各种banner类型请求
-  sendBusinessflag () {
-    let self = this
-    let bannerTypeList = self.data.bannerTypeList
-    let data = {}
-    bannerTypeList.forEach(item => {
-      data = {
-        businessflag: item.businessflag,
-      }
-      // 获取各种banner图列表
-      self.getBannerList (data)
-    })
-  },
-
   // 获取各种banner图列表
-  getBannerList (data) {
+  getBannerList () {
     let self = this
+    let data = {
+      businessflag: 0,
+    }
     API.system.listShopHomeSlide(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let bannerList = res.data
         let bannerTypeList = self.data.bannerTypeList
-        bannerTypeList.forEach(item => {
-          if (item.businessflag === data.businessflag) {
-            item.list = res.data
-          }
+        bannerList.forEach(item => {
+          item.linkcode = item.objectcode
+          bannerTypeList[item.businessflag - 1].list.push(item)
         })
         self.setData({
           bannerTypeList: bannerTypeList,
         })
         app.globalData.bannerTypeList = bannerTypeList
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
-  },
-
-  // 修改轮播点儿
-  swiperChange (e) {
-    let self = this
-    let {swiper} = e.currentTarget.dataset
-    let {source, current} = e.detail
-    if (source === 'autoplay' || source === 'touch') {
-      if (swiper === 'banner') {
-        self.setData({
-          swiperCurrent_banner: current
-        })
-      } else if (swiper === 'module') {
-        self.setData({
-          swiperCurrent_module: current
-        })
-      } else if (swiper === 'friend') {
-        self.setData({
-          swiperCurrent_friend: current
-        })
-      }
-    }
   },
 
   // 去banner详情
   toBannerDetail (e) {
     let self = this
     let banner = e.currentTarget.dataset.banner
-    let linktype = banner.linktype
-    banner.linkcode = banner.objectcode
-    switch (linktype) {
-      case 1:
-        // 限时秒杀
-        wx.navigateTo({
-          url: '/shopping/pages/goodsList/goodsList?panicBuy=' + 'panicBuy' + '&title=' + '限时秒杀' + '&promotemode=101'
-        })
-        break
-      case 2:
-        // 轮播图(分类)
-        wx.navigateTo({
-          url: '/shopping/pages/goodsList/goodsList?Classcode=' + banner.linkcode + '&title=' + '商品列表'
-        })
-        break
-      case 3:
-        // 单分类/集群
-        wx.navigateTo({
-          url: '/shopping/pages/goodsList/goodsList?Cateid=' + banner.linkcode + '&title=' + '商品列表'
-        })
-        break
-      case 4:
-        // 公告详情
-        wx.navigateTo({
-          url: '/message/pages/detail/detail?id=' + banner.linkcode + '&type=notice',
-        })
-        break
-      case 5:
-        // 充值中心
-        wx.navigateTo({
-          url: '/autoModule/pages/recharge/recharge',
-        })
-        break
-      case 6:
-        // 积分抽奖
-        wx.navigateTo({
-          url: '/autoModule/pages/lottery/lottery',
-        })
-        break
-      case 7:
-        // 领券中心
-        wx.navigateTo({
-          url: '/autoModule/pages/tickList/tickList?from=auto',
-        })
-        break
-      case 8:
-        // 直播
-        let roomid = banner.linkcode;
-        // 存在直播间直接进房间，否则去直播间列表
-        if (!roomid) {
-          wx.navigateTo({
-            url: '/pages/roomplayList/roomplayList',
-          })
-        } else {
-          let customParams = encodeURIComponent(JSON.stringify({ path: 'pages/index/index', pid: 1 }))
-          wx.navigateTo({
-            url: "plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=" + roomid + "&custom_params=" + customParams
-          })
-        }
-        break
-      default:
-    }
+    app.toBannerDetail(banner)
   },
 
   // 获取公告列表
@@ -577,205 +445,43 @@ Page({
           noticeList: res.data
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
   // 获取自定义功能列表
   getModulePictureList () {
     let self = this
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = (date.getMonth() + 1).toString();
-    if(month.length === 1){
-      month = '0' + month;
-    }
-    let day = date.getDate().toString()
-    if (day.length === 1) {
-      day = '0' + day
-    }
-    let end = year.toString()+ month.toString() + day.toString();
+    let date = utils.formatDate(new Date()).split('/').join('')
     let data = {
-      version: end
+      version: date
     }
     API.system.getModulePictureList(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         if (res.data) {
           let modulePictureList = res.data.picturenamelist
-          let arr1_startindex = 0
-          let arr1_endindex = 5
-          let arr2_startindex = 0
-          let arr2_endindex = 2
-          let arr1 = []
-          let arr2 = []
+          let list_startindex = 0
+          let list_endindex = 10
+          let list = []
           modulePictureList.forEach(item => {
-            if (modulePictureList.length > arr1_startindex) {
-              arr1.push(modulePictureList.slice(arr1_startindex, arr1_startindex += arr1_endindex))
-            }
-          })
-          arr1.forEach(item => {
-            if (arr1.length > arr2_startindex) {
-              arr2.push(arr1.slice(arr2_startindex, arr2_startindex += arr2_endindex))
+            if (modulePictureList.length > list_startindex) {
+              list.push(modulePictureList.slice(list_startindex, list_startindex += list_endindex))
             }
           })
           self.setData({
-            modulePictureList: arr2
+            modulePictureList: list
           })
         }
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
-  },
-
-  // 前往自定义功能区
-  toAutoModuleDetail (e) {
-    let self = this;
-    let automodule = e.currentTarget.dataset.automodule
-    let moduletype = automodule.moduletype
-    if (moduletype) {
-      switch (moduletype) {
-        case 2:
-          // 电子会员
-          wx.navigateTo({
-            url: '/userInfo/pages/myCode/myCode',
-          })
-          break;
-        case 3:
-          // 分类选品
-          wx.switchTab({
-            url: '/pages/category/category',
-          })
-          break;
-        case 4:
-          // 购买记录
-          wx.navigateTo({
-            url: '/userInfo/pages/recordList/recordList',
-          })
-          break;
-        case 6:
-          // 扫码购
-          wx.navigateTo({
-            url: '/scan/pages/scan/scan',
-          })
-          break;
-        case 8:
-          // 商品建议
-            let typeList = self.data.typeList
-            let type = 1
-          wx.navigateTo({
-            url: '/userInfo/pages/complaintList/complaintList?type=' + type + '&title=' + typeList[type],
-          })
-          break;
-        case 10:
-          // 我的订单
-          wx.navigateTo({
-            url: '/userInfo/pages/orderList/orderList',
-          })
-          break;
-        case 11:
-          // 我的积分
-          wx.navigateTo({
-            url: '/userInfo/pages/score/score',
-          })
-          break;
-        // case 12:
-        //   // 直接录入
-        //   break;
-
-        // case 13:
-        //   // 周边看看
-        //   wx.navigateTo({
-        //     url: '/autoModule/pages/nearby/nearby',
-        //   })
-        //   break;
-        case 15:
-          // 领券中心
-          wx.navigateTo({
-            url: '/autoModule/pages/tickList/tickList?from=auto',
-          })
-          break;
-        case 16:
-          // 购物评价
-          wx.navigateTo({
-            url: '/autoModule/pages/buyGoodsList/buyGoodsList',
-          })
-          break;
-        case 17:
-          // 我的余额
-          wx.navigateTo({
-            url: '/userInfo/pages/balance/balance',
-          })
-          break;
-        case 18:
-          // 我的电子券
-          wx.navigateTo({
-            url: '/autoModule/pages/tickList/tickList?from=userInfo',
-          })
-          break;
-        case 19:
-          // 积分抽奖
-          wx.navigateTo({
-            url: '/autoModule/pages/lottery/lottery',
-          })
-          break;
-        case 20:
-          // 在线充值
-          wx.navigateTo({
-            url: '/autoModule/pages/recharge/recharge',
-          })
-          break;
-        case 14:
-          // 限时秒杀
-          wx.navigateTo({
-            url: '/shopping/pages/goodsList/goodsList?panicBuy=' + 'panicBuy' + '&title=' + automodule.modulename + '&promotemode=101'
-          })
-          break;
-        case 7:
-          // 特价商品
-          wx.navigateTo({
-            url: '/shopping/pages/goodsList/goodsList?Datatype=' + '1' + '&title=' + automodule.modulename,
-          })
-          break;
-        case 5:
-          // 会员特价
-          wx.navigateTo({
-            url: '/shopping/pages/goodsList/goodsList?Datatype=' + '2' + '&title=' + automodule.modulename,
-          })
-          break;
-        case 9:
-          // 推荐商品
-          wx.navigateTo({
-            url: '/shopping/pages/goodsList/goodsList?Datatype=' + '3' + '&title=' + automodule.modulename,
-          })
-          break;
-        // case 1:
-        //   // 常购商品
-        //   wx.navigateTo({
-        //     url: '/shopping/pages/goodsList/goodsList?Datatype=' + '4' + '&title=' + automodule.modulename,
-        //   })
-        //   break;
-        case 21:
-          // 门店优选（多分类）
-          wx.navigateTo({
-            url: '/shopping/pages/goodsList/goodsList?Datatype=' + '6' + '&title=' + automodule.modulename + '&Classid=' + automodule.Classid,
-          })
-          break;
-        case 22:
-          // 单分类/集群
-          wx.navigateTo({
-            url: '/shopping/pages/goodsList/goodsList?Cateid=' + automodule.Classid + '&title=' + automodule.modulename
-          })
-          break;
-        default:
-      }
-    }
   },
 
   // 获取专区列表
@@ -805,39 +511,45 @@ Page({
           hotList: hotList,
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
   // 获取各种类别商品轮播列表
-  getProductListByPromote (promotemode) {
+  getProductListByPromote () {
     let self = this
     let data = {
-      promotemode: promotemode.promotemode,
+      promotemode: 0,
       Page: 1,
       pageSize: 15,
     }
     API.info.getProductListByPromote(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        let goodsList = {
-          promotemode: promotemode.promotemode,
-          list: res.data,
-        }
-        // 设置各种类别商品轮播列表
-        self.setPromotemodeList(goodsList)
+        let goodsList = res.data
+        let promotemodeList = self.data.promotemodeList
+        goodsList.forEach(item => {
+          promotemodeList.forEach(modeitem => {
+            if (item.promotemode === modeitem.promotemode) {
+              modeitem.list.push(item)
+            }
+          })
+        })
+        self.setData({
+          promotemodeList: promotemodeList,
+        })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
-  // 获取特价商品列表
+  // 获取特价商品轮播列表
   getProductList () {
     let self = this
     let data = {
@@ -868,24 +580,10 @@ Page({
           promotemodeList: promotemodeList
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
-    })
-  },
-
-  // 设置各种类别商品轮播列表
-  setPromotemodeList (goodsList) {
-    let self = this
-    let promotemodeList = self.data.promotemodeList
-    promotemodeList.forEach(item => {
-      if (item.promotemode === goodsList.promotemode) {
-        item.list = goodsList.list
-      }
-    })
-    self.setData({
-      promotemodeList: promotemodeList,
+      toast(error.error)
     })
   },
 
@@ -896,53 +594,17 @@ Page({
     API.system.getFriendLinks(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let friendLinkList = res.data
+        friendLinkList.forEach(item => item.Imageurl = item.siteurl)
         self.setData({
           friendLinkList: res.data
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
-  },
-
-  // 去友链详情
-  toLinkDetail(e) {
-    let self = this
-    let friendLink = e.currentTarget.dataset.friendlink
-    let sitetype = friendLink.sitetype
-    switch (sitetype) {
-      // 跳转小程序
-      case 1:
-        wx.navigateToMiniProgram({
-          appId: friendLink.appId,
-          path: friendLink.sitedescribe,
-          extraData: '',
-          envVersion: '',
-          success(res) {},
-          fail (res) {},
-        })
-        break
-      // 跳转H5
-      case 2:
-        app.globalData.friendLink = friendLink
-        wx.navigateTo({
-          url: '/friendLink/pages/h5/h5'
-        })
-        break
-      // // 跳转App
-      // case 3:
-      //   app.globalData.friendLink = friendLink
-      //   wx.navigateTo({
-      //     url: '/links/pages/app/app'
-      //   })
-      //   break
-      // 其他（做为副banner）
-      case 4:
-        break
-      default:
-    }
   },
 
   // 获取推荐商品列表(集群)
@@ -959,14 +621,14 @@ Page({
       let res = result.data
       if (res.flag === 1) {
         if (res.data.length) {
-          let recommendList = res.data
+          let clusterList = res.data
           self.setData({
-            recommendList: recommendList.filter(item => item.showway !== 3),
-            indexHotList: recommendList.filter(item => item.showway === 3),
+            clusterList: clusterList.filter(item => item.showway !== 3),
+            indexHotList: clusterList.filter(item => item.showway === 3),
           })
         }
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
       if (self.data.loadingFlag) {
         wx.hideLoading()
@@ -976,51 +638,40 @@ Page({
         loadingFlag: true
       })
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
-  // 添加购物车
-  addCart (e) {
+  // 获取弹窗广告图
+  getAdDialogImg () {
     let self = this
-    let goods = e.currentTarget.dataset.goods
-    // 调用数量/重量弹窗
-    self.setData({
-      dialogFlag: true,
-      goods: goods,
+    let adDialogImg = self.data.adDialogImg
+    let data = {}
+    // 检验是否首次登录，首次登录请求弹框广告并显示
+    if (adDialogImg) {
+      return false
+    }
+    API.system.getHomeAds(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        if (res.data.length) {
+          self.setData({
+            adDialogImg: res.data[0]
+          })
+          // 设置弹框广告开关
+          self.setAddialogFlag()
+        }
+      }
+    }).catch(error => {
+      toast(error.error)
     })
   },
 
-  // 调用子组件添加购物车方法
-  componentAddCart (goods) {
-    let self = this
-    let addcart = self.selectComponent('#addCart')
-    // 调用子组件，传入商品信息添加购物车
-    addcart.addCart(goods)
-  },
-
-  // 弹窗关闭
-  dialogClose () {
-    let self = this
-    self.setData({
-      dialogFlag: false,
-      goods: '',
-    })
-  },
-
-  // 弹窗确认
-  dialogConfirm (goods) {
-    let self = this
-    // 调用子组件添加购物车方法
-    self.componentAddCart(goods.detail)
-    self.dialogClose()
-  },
-
-  // 设置广告弹窗开关
+  // 设置弹框广告开关
   setAddialogFlag () {
     let self = this
     self.setData({
-      addialogFlag: !self.data.addialogFlag
+      addialogFlag: !self.data.addialogFlag,
     })
   },
 
@@ -1046,7 +697,7 @@ Page({
         }
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 })

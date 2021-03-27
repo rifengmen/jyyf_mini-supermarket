@@ -1,7 +1,7 @@
 // autoModule/pages/recharge/recharge.js
 const app = getApp()
-const toast = require("../../../utils/toast")
-const utils = require("../../../utils/util")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -14,8 +14,6 @@ Page({
     baseUrl: app.globalData.baseUrl,
     // banner类型列表
     bannerTypeList: [],
-    // banner图 图片
-    // bannerList: [],
     // 轮播点儿下标
     swiperCurrent: 0,
     // 卡号
@@ -102,6 +100,13 @@ Page({
     }
   },
 
+  // 去banner详情
+  toBannerDetail (e) {
+    let self = this
+    let banner = e.currentTarget.dataset.banner
+    app.toBannerDetail(banner)
+  },
+
   // 获取卡余额
   getCardInfo () {
     let self = this
@@ -113,10 +118,10 @@ Page({
           cardInfo: res.data
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -134,7 +139,7 @@ Page({
     let money = self.data.money
     // 验证金额是否填写
     if (!money) {
-      toast.toast('请填写充值金额')
+      toast('请填写充值金额')
       return false
     }
     let data = {
@@ -147,10 +152,10 @@ Page({
         // 充值支付
         self.toPay(res.data)
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -170,10 +175,10 @@ Page({
         // 微信支付
         self.wechatPay(res.data.beecloud.miniPayStr)
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -189,10 +194,10 @@ Page({
       paySign: wechatstr.paySign,
       success: function (res) {
         wx.navigateBack()
-        toast.toast('充值成功，充值金额五分钟内到账')
+        toast('充值成功，充值金额五分钟内到账')
       },
       fail: function (res) {
-        toast.toast('充值失败')
+        toast('充值失败')
       }
     })
   },

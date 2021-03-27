@@ -1,7 +1,6 @@
 {
   "usingComponents": {
-    "addCart": "/component/addCart/addCart",
-    "dialog": "/component/dialog/dialog"
+    "goods": "/component/goods/goods"
   },
   "enablePullDownRefresh": true,
   "onReachBottomDistance": 50

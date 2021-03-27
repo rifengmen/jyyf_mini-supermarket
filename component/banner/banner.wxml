@@ -1,0 +1,67 @@
+<!--component/banner/banner.wxml-->
+<view class="banner">
+    <!-- 自定义功能块 start -->
+    <block wx:if="{{bannerType === 'autoModule'}}">
+        <swiper class="banner_swiper" bindchange="swiperChange">
+            <block wx:for="{{bannerList}}" wx:key="index">
+                <swiper-item>
+                    <view class="auto">
+                        <block
+                                wx:for-item="auto"
+                                wx:for-index="lindex"
+                                wx:for="{{item}}"
+                                wx:key="lindex">
+                            <view class="auto_item down" data-banner="{{auto}}" bindtap="toBannerDetail">
+                                <view class="auto_img overflow">
+                                    <image class="img" src="{{baseUrl + auto.picturename}}" mode="aspectFit" lazy-load="true"></image>
+                                </view>
+                                <view class="auto_name font22 tc">{{auto.modulename}}</view>
+                            </view>
+                        </block>
+                    </view>
+                </swiper-item>
+            </block>
+        </swiper>
+    </block>
+    <!-- 自定义功能块 end -->
+    <!-- banner start -->
+    <block wx:else>
+        <swiper class="banner_swiper" autoplay="true" circular="true" interval="4000" duration="500" bindchange="swiperChange">
+            <block wx:for="{{bannerList}}" wx:key="index">
+                <swiper-item>
+                    <!-- 商品详情banner start -->
+                    <block wx:if="{{bannerType === 'goodsDetail'}}">
+                        <image
+                                class="banner_item banner_item_goods border_r10 overflow"
+                                src="{{baseUrl + item}}"
+                                mode="aspectFit"
+                                lazy-load="true"
+                                bindtap="preview"></image>
+                    </block>
+                    <!-- 商品详情banner end -->
+                    <!-- 可跳转banner start -->
+                    <block wx:else>
+                        <image
+                                class="banner_item border_r10 overflow"
+                                src="{{baseUrl + item.Imageurl}}"
+                                mode="aspectFit"
+                                lazy-load="true"
+                                bindtap="toBannerDetail"
+                                data-banner="{{item}}"></image>
+                    </block>
+                    <!-- 可跳转banner end -->
+                </swiper-item>
+            </block>
+        </swiper>
+    </block>
+    <!-- banner end -->
+    <!-- 轮播点 start -->
+    <block wx:if="{{bannerList.length > 1}}">
+        <view class="dots border_r500">
+            <block wx:for="{{bannerList}}" wx:key="index">
+                <view class="dot border_a71d793 {{index === swiperCurrent ? 'active bg71d793' : 'bgffffff'}} border_r500"></view>
+            </block>
+        </view>
+    </block>
+    <!-- 轮播点 end -->
+</view>

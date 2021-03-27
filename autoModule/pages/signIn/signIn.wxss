@@ -1,0 +1,110 @@
+/* autoModule/pages/signIn/signIn.wxss */
+.sign_cont {
+    width: 100%;
+    height: auto;
+}
+/* 签到信息 start */
+.sign_cont .sign_desc {
+    width: 100%;
+    height: 300rpx;
+}
+.sign_cont .sign_desc .desc {
+    width: 100%;
+    height: 200rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.sign_desc .desc .desc_item {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+.sign_desc .desc_item .num {
+    height: 50rpx;
+    line-height: 50rpx;
+    padding: 10rpx 0;
+}
+.sign_cont .sign_desc .sign {
+    position: relative;
+    width: calc(100% - 48rpx);
+    height: 100rpx;
+    margin: 0 auto;
+    border-radius: 16rpx 16rpx 0 0;
+}
+.sign_desc .sign .success {
+    position: absolute;
+    top: -74rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 108rpx;
+    height: 108rpx;
+    padding: 20rpx;
+}
+.sign_desc .sign .text {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* 签到信息 end */
+/* 签到记录 start */
+.sign_cont .signlist {
+    width: calc(100% - 48rpx - 92rpx);
+    height: 100rpx;
+    margin: 0 auto;
+    padding: 20rpx 46rpx;
+    border-radius: 0 0 16rpx 16rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sign_cont .signlist .list_item {
+    width: auto;
+    height: 100%;
+}
+.signlist .list_item .cont {
+    width: auto;
+    height: 52rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.signlist .cont .img {
+    width: 52rpx;
+    height: 52rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.signlist .cont image {
+    width: 20rpx;
+    height: 24rpx;
+}
+.signlist .cont .line {
+    width: 50rpx;
+    height: 8rpx;
+    margin: 0 -4rpx;
+}
+.signlist .text {
+    height: calc(100% - 52rpx);
+    display: flex;
+    align-items: center;
+}
+/* 签到记录 end */
+/* 推荐商品模块 start */
+.recommend_cont {
+    width: 100%;
+    height: auto;
+    padding: 20rpx 0;
+}
+.recommend_cont .recommend_tit {
+    width: 100%;
+    height: 80rpx;
+    line-height: 80rpx;
+}
+/* 推荐商品模块 end */

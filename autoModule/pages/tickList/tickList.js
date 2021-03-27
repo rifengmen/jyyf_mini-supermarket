@@ -1,7 +1,7 @@
 // autoModule/pages/tickList/tickList.js
 const app = getApp()
-const toast = require("../../../utils/toast")
-const utils = require("../../../utils/util")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -130,7 +130,7 @@ Page({
       // 设置电子券列表
       self.setListCoupon(res)
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -151,7 +151,7 @@ Page({
       // 设置电子券列表
       self.setListCoupon(res)
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -172,13 +172,18 @@ Page({
       // 设置电子券列表
       self.setListCoupon(res)
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
   // 设置电子券列表
   setListCoupon (res) {
     let self = this
+    // 设置请求开关
+    self.setData({
+      getFlag: true
+    })
+    wx.hideLoading()
     if (res.flag === 1) {
       let tickList = res.data
       tickList.forEach(item => {
@@ -205,13 +210,8 @@ Page({
         self.setDays()
       }
     } else {
-      toast.toast(res.message)
+      toast(res.message)
     }
-    wx.hideLoading()
-    // 设置请求开关
-    self.setData({
-      getFlag: true
-    })
   },
 
   // 设置到期剩余天数

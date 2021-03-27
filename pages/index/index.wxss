@@ -59,23 +59,10 @@
 /* 搜索 end */
 /* 定位 搜索 end */
 /* banner start */
-.banner {
-  width: 100%;
-  height: auto;
-  margin: 24rpx 0;
-  position: relative;
-}
-swiper.banner_swiper {
+.banner_cont {
   width: 100%;
   height: 280rpx;
-}
-.banner_item {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 48rpx);
-  height: 100%;
+  margin: 24rpx auto;
 }
 /* banner end */
 /* 公告 start */
@@ -111,21 +98,10 @@ swiper.notice_swiper {
 }
 /* 公告 end */
 /* 自定义功能区 start */
-.auto_cate {
-  width: calc(100% - 48rpx);
+.auto_cont {
+  width: 100%;
+  height: 400rpx;
   margin: 24rpx auto;
-  position: relative;
-}
-swiper.auto_swiper {
-  width: 100%;
-  height: 410rpx;
-}
-.auto_list {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding-bottom: 16rpx;
 }
 /* 自定义功能区 end */
 /* 友链banner区域 start */
@@ -133,24 +109,11 @@ swiper.auto_swiper {
   width: 100%;
   height: 134rpx;
   margin: 24rpx auto;
-  position: relative;
-}
-swiper.link_swiper {
-  width: 100%;
-  height: 134rpx;
-}
-.link_item {
-  position: relative;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 48rpx);
-  height: 100%;
 }
 /* 友链banner区域 end */
 /* 视频广告区 start */
 .advideo_cont {
-  width: 100%;
+  width: calc(100% - 48rpx);
   height: auto;
   margin: 24rpx auto;
 }
@@ -222,7 +185,7 @@ swiper.link_swiper {
   height: 100%;
 }
 /* 专区 end */
-/* 限时秒杀 start */
+/* 商品轮播 start */
 .timeslimit {
   width: calc(100% - 48rpx);
   margin: 0 auto 24rpx auto;
@@ -253,14 +216,11 @@ swiper.link_swiper {
   width: 100%;
   height: 100%;
 }
-.goods_list3 {
-  height: 424rpx;
-}
 swiper.timeslimit_swiper {
   width: 100%;
   height: 100%;
 }
-/* 限时抢购 end */
+/* 商品轮播 end */
 /* 首页活动样式一 start */
 .index_hot1 {
   width: calc(100% - 48rpx);
@@ -268,37 +228,37 @@ swiper.timeslimit_swiper {
   margin: 0 auto 24rpx auto;
 }
 /* 首页活动样式一 end */
-/* 推荐商品 start */
-.recommendList {
+/* 集群商品 start */
+.clusterList {
   width: calc(100% - 48rpx);
   height: auto;
   margin: 0 auto;
 }
-.recommendList .tit {
+.clusterList .tit {
   width: 100%;
   height: 40rpx;
   line-height: 40rpx;
   padding: 24rpx 0;
 }
-.recommend {
+.cluster {
   width: 100%;
   height: auto;
   margin-bottom: 24rpx;
 }
-.recommend_tit {
+.cluster_tit {
   width: 100%;
   height: auto;
   margin-bottom: 18rpx;
 }
-.recommend_tit .tit_img {
+.cluster_tit .tit_img {
   width: 100%;
   height: 280rpx;
 }
-.recommend_tit .tit_img image {
+.cluster_tit .tit_img image {
   width: 100%;
   height: 100%;
 }
-.recommend_tit .tit_text {
+.cluster_tit .tit_text {
   width: calc(100% - 48rpx);
   height: 80rpx;
   line-height: 80rpx;
@@ -308,14 +268,14 @@ swiper.timeslimit_swiper {
   justify-content: space-between;
   align-items: center;
 }
-.recommend .goods_list3 {
+.cluster .goods_list3 {
   height: auto;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-flow: wrap;
 }
-/* 推荐商品 end */
+/* 集群商品 end */
 /* ad_dialog start */
 .ad_dialog {
   position: fixed;

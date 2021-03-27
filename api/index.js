@@ -2,13 +2,13 @@
  * api出口
  */
 
-import system from './system'
-import info from './info'
-import bill from './bill'
-import mem from './mem'
-import invest from './invest'
-import appversion from './appversion'
-import miniLiveInfo from './miniLiveInfo'
+import system from './module/system'
+import info from './module/info'
+import bill from './module/bill'
+import mem from './module/mem'
+import invest from './module/invest'
+import appversion from './module/appversion'
+import miniLiveInfo from './module/miniLiveInfo'
 
 const api = {
   system,

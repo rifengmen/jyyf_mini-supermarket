@@ -32,7 +32,7 @@
 						</view>
 					</view>
 					<view class="mapimg border_a71d793 border_r10" catchtap="showMap" data-shop="{{item}}" wx:if="{{item.Longitude || item.Latitude}}">
-						<image class="" src="/lib/images/mapimg.png"></image>
+						<image src="/lib/images/mapimg.png"></image>
 					</view>
 				</view>
 			</view>

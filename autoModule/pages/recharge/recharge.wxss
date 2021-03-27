@@ -1,27 +1,11 @@
 /* autoModule/pages/recharge/recharge.wxss */
-/* banner start */
-.banner {
-  width: 100%;
-  height: auto;
-  padding: 20rpx 0;
-  position: relative;
-}
-swiper.banner_swiper {
+/* banner_recharge start */
+.banner_recharge {
   width: 100%;
   height: 280rpx;
+  padding: 20rpx 0;
 }
-.banner_item {
-  /*width: calc(100% - 48rpx);*/
-  /*height: 100%;*/
-  /*padding: 0 24rpx;*/
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 48rpx);
-  height: 100%;
-}
-/* banner end */
+/* banner_recharge end */
 /* 卡信息 start */
 .card_cont {
   width: calc(100% - 48rpx);

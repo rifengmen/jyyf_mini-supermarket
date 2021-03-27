@@ -1,6 +1,7 @@
 // userInfo/pages/setPayPassword/setPayPassword.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -129,17 +130,17 @@ Page({
     let againPassword = self.data.againPassword
     // 验证密码填写
     if (password.length < 6) {
-      toast.toast('请填写支付密码')
+      toast('请填写支付密码')
       return false
     }
     // 验证确认密码填写
     if (againPassword.length < 6) {
-      toast.toast('请再次填写支付密码')
+      toast('请再次填写支付密码')
       return false
     }
     // 验证密码一致
     if (password !== againPassword) {
-      toast.toast('两次输入密码不一致，请重新输入')
+      toast('两次输入密码不一致，请重新输入')
       return false
     }
     let data = {
@@ -154,9 +155,9 @@ Page({
         app.globalData.coflag = 1
         wx.navigateBack()
       }
-      toast.toast(res.message)
+      toast(res.message)
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -189,10 +190,10 @@ Page({
           imgCodeUrl: imgCodeUrl
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -203,7 +204,7 @@ Page({
     let countdownnum = app.globalData.countdownnum
     // 验证图形验证码填写
     if (!imgCode) {
-      toast.toast('请填写图形验证码')
+      toast('请填写图形验证码')
       return false
     }
     self.setData({
@@ -235,9 +236,9 @@ Page({
       mobilecode: self.data.imgCode,
     }
     API.system.getCheckCode180126(data).then(result => {
-      toast.toast(result.data.message)
+      toast(result.data.message)
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -250,27 +251,27 @@ Page({
     let messageCode = self.data.messageCode
     // 验证图形验证码填写
     if (!imgCode) {
-      toast.toast('请填写图形验证码')
+      toast('请填写图形验证码')
       return false
     }
     // 验证短信验证码填写
     if (!messageCode) {
-      toast.toast('请填写短信验证码')
+      toast('请填写短信验证码')
       return false
     }
     // 验证密码填写
     if (password.length < 6) {
-      toast.toast('请填写支付密码')
+      toast('请填写支付密码')
       return false
     }
     // 验证确认密码填写
     if (againPassword.length < 6) {
-      toast.toast('请再次填写支付密码')
+      toast('请再次填写支付密码')
       return false
     }
     // 验证密码一致
     if (password !== againPassword) {
-      toast.toast('两次输入密码不一致，请重新输入')
+      toast('两次输入密码不一致，请重新输入')
       return false
     }
     let data = {
@@ -282,9 +283,9 @@ Page({
       if (res.flag === 1) {
         wx.navigateBack()
       }
-      toast.toast(res.message)
+      toast(res.message)
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 })

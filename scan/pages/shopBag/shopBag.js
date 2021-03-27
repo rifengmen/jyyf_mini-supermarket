@@ -1,6 +1,7 @@
 // pages/shopBag/shopBag.js
 const app = getApp()
-const toast = require("../../../utils/toast")
+import toast from '../../../utils/toast'
+import utils from '../../../utils/util'
 import API from '../../../api/index'
 
 Page({
@@ -98,6 +99,11 @@ Page({
     })
     let data = {}
     API.bill.getShoppingBagList(data).then(result => {
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
+      wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         let shopBagList = res.data.shoppingbaglist
@@ -109,15 +115,10 @@ Page({
           shopBagList: shopBagList,
         })
       } else {
-        toast.toast(res.message)
+        toast(res.message)
       }
-      wx.hideLoading()
-      // 设置请求开关
-      self.setData({
-        getFlag: true
-      })
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 
@@ -155,7 +156,7 @@ Page({
         })
       }
     }).catch(error => {
-      toast.toast(error.error)
+      toast(error.error)
     })
   },
 

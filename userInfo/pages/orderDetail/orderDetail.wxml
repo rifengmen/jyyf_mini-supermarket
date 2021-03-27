@@ -7,7 +7,7 @@
         <image src="/lib/images/orderType11.png"></image>
       </view>
       <view class="text colorffffff">
-        <view class="">待付款</view>
+        <view>待付款</view>
         <view class="font24">请尽快付款</view>
       </view>
     </view>
@@ -17,29 +17,29 @@
     <!-- 订单信息 end -->
     <!-- 订单结算信息 start -->
     <view class="order_pay bgffffff">
-      <view class="">
-        <view class="">商品总额</view>
-        <view class="">￥{{orderDetail.Actprice}}</view>
+      <view>
+        <view>商品总额</view>
+        <view>￥{{orderDetail.Actprice}}</view>
       </view>
-      <view class="">
-        <view class="">电子券</view>
+      <view>
+        <view>电子券</view>
         <view class="colorfa6400">-￥{{tick.paymoney || 0}}</view>
       </view>
-      <view class="">
-        <view class="">积分抵扣</view>
+      <view>
+        <view>积分抵扣</view>
         <view class="colorfa6400">-￥{{score.paymoney || 0}}</view>
       </view>
-      <view class="">
-        <view class="">运费</view>
+      <view>
+        <view>运费</view>
         <view class="colorfa6400">+￥{{orderDetail.freight}}</view>
       </view>
-      <view class="">
-        <view class="">配送服务费</view>
+      <view>
+        <view>配送服务费</view>
         <view class="colorfa6400">+￥{{orderDetail.delivermoney}}</view>
       </view>
-      <view class="">
-        <view class=""></view>
-        <view class="">实付金额：
+      <view>
+        <view></view>
+        <view>实付金额：
           <text class="colorfa6400 font32 font_blod">￥{{paymoney}}</text>
         </view>
       </view>
@@ -47,8 +47,8 @@
     <!-- 订单结算信息 end -->
     <!-- 还需支付 start -->
     <view class="order_pay bgffffff" wx:if="{{orderDetail.payflag}}">
-      <view class="">
-        <view class="">还需支付：</view>
+      <view>
+        <view>还需支付：</view>
         <view class="colorfa6400 font32 font_blod">￥{{againPaymoney}}</view>
       </view>
     </view>

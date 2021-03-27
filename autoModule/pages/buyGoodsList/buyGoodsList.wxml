@@ -3,16 +3,16 @@
   <view class="buy_cont">
     <block wx:if="{{buyGoodsList.length}}" wx:for="{{buyGoodsList}}" wx:key="index">
       <view class="item bgffffff border_r10">
-        <view class="">{{item.gdscode}}</view>
-        <view class="">{{item.gdsname}}</view>
-        <view class="">
-          <navigator class="btn colorffffff bg71d793 tc" hover-class="none" url="/autoModule/pages/addComment/addComment?Gdscode={{item.gdscode}}&Gdsname={{item.gdsname}}">去评价</navigator>
+        <view>{{item.gdscode}}</view>
+        <view>{{item.gdsname}}</view>
+        <view>
+          <navigator class="btn colorffffff bg71d793 border_r8 tc" hover-class="none" url="/autoModule/pages/addComment/addComment?Gdscode={{item.gdscode}}&Gdsname={{item.gdsname}}">去评价</navigator>
         </view>
       </view>
     </block>
     <view class="nodata_cont" wx:if="{{!buyGoodsList.length && getFlag}}">
       <view class="nodata overflow">
-        <image src="/lib/images/goodsNodata.png" mode="aspectFit"></image>
+        <image src="/lib/images/nodataGoods.png" mode="aspectFit"></image>
       </view>
       <view class="color999999 tc">暂无相关商品～</view>
     </view>

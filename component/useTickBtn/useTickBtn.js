@@ -1,7 +1,7 @@
 // component/useTickBtn/useTickBtn.js
 require('../../app.js')
 const app = getApp()
-const toast = require('../../utils/toast.js')
+import toast from '../../utils/toast'
 import API from '../../api/index'
 
 Component({
@@ -61,10 +61,10 @@ Component({
           app.globalData.tick = tick
           wx.navigateBack()
         } else {
-          toast.toast(res.message)
+          toast(res.message)
         }
       }).catch(error => {
-        toast.toast(error.error)
+        toast(error.error)
       })
     },
   }
