@@ -104,11 +104,6 @@ Page({
       getFlag: false
     })
     API.miniLiveInfo.listLiveInfo(data).then(result => {
-      // 设置请求开关
-      self.setData({
-        getFlag: true
-      })
-      wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         let roomplayList = self.data.roomplayList
@@ -119,6 +114,11 @@ Page({
       } else {
         toast(res.message)
       }
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
+      wx.hideLoading()
     }).catch(error => {
       toast(error.error)
     })

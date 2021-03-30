@@ -142,11 +142,6 @@ Page({
   // 设置地址列表
   setAddressList (res) {
     let self = this
-    // 设置请求开关
-    self.setData({
-      getFlag: true
-    })
-    wx.hideLoading()
     if (res.flag === 1) {
       self.setData({
         addressList: res.data
@@ -154,6 +149,11 @@ Page({
     } else {
       toast(res.message)
     }
+    // 设置请求开关
+    self.setData({
+      getFlag: true
+    })
+    wx.hideLoading()
   },
 
   // 设置收货地址

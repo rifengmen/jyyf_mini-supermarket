@@ -461,7 +461,6 @@ Page({
 
   // 添加购物车/立即购买(包括发起拼团、参与拼团、砍价成功购买)
   add (e) {
-    console.log(0)
     let self = this
     let goods = self.data.goodsDetail
     let orderTypeList = app.globalData.orderTypeList
@@ -472,7 +471,6 @@ Page({
     goods.addType = e.currentTarget.dataset.addtype
     goods.orderType = Number(e.currentTarget.dataset.ordertype || 2)
     goods.groupno = self.data.groupno
-    console.log(goods, 'goods')
     if (goods.addType === 'buyEnd') { // 立即购买时(包括发起拼团、参与拼团、砍价成功购买)
       let orderType = ''
       orderTypeList.forEach(item => {
@@ -491,11 +489,9 @@ Page({
         goods.otc = 'now'
         goods.isotc = ''
       }
-      console.log(goods, 'buyend')
     } else if (goods.addType === 'addCart') { // 添加购物车
       goods.otc = ''
       goods.isotc = ''
-      console.log(goods, 'addcart')
     }
     if (goods.promotemode === 100 || goods.promotemode === 102) { // 拼团、砍价默认一份
       goods.amount = 1
@@ -512,7 +508,6 @@ Page({
 
   // 调用子组件方法
   componentAdd (goods) {
-    console.log(2)
     let self = this
     let addCart = self.selectComponent('#addCart')
     let buyEnd = self.selectComponent('#buyEnd')
@@ -521,10 +516,8 @@ Page({
     })
     // 调用子组件，传入商品信息
     if (goods.addType === 'addCart') {
-      console.log(3)
       addCart.addCart(goods)
     } else if (goods.addType === 'buyEnd') {
-      console.log(4)
       buyEnd.toBuyEnd(goods)
     }
   },
@@ -540,7 +533,6 @@ Page({
 
   // 弹窗确认
   dialogConfirm (goods) {
-    console.log(1)
     let self = this
     // 调用子组件方法
     self.componentAdd(goods.detail)

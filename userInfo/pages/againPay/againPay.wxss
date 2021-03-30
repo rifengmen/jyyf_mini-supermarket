@@ -3,9 +3,6 @@
   width: calc(100% - 48rpx);
   padding: 0 24rpx;
 }
-.order_score {
-  margin-bottom: 20rpx;
-}
 .remark {
   width: 100%;
   display: flex;

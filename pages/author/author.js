@@ -94,8 +94,9 @@ Page({
           })
           // 注册
           self.perfectInfoForWX()
+        } else {
+          toast(res.message)
         }
-        toast(res.message)
       }).catch(error => {
         toast(error.error)
       })

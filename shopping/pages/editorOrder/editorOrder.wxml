@@ -22,7 +22,7 @@
 	</view>
 	<!-- 分割线 end -->
 	<!-- 门店名称 start -->
-	<view class="deptname_cont bgffffff">
+	<view class="deptname_cont margin_b20 bgffffff">
 		<view class="deptname_border border_be5e5e5">
 			<view class="deptname">
 				<view class="img overflow">
@@ -34,8 +34,31 @@
 		</view>
 	</view>
 	<!-- 门店名称 end -->
+	<!-- 配送时间 start -->
+	<view class="section margin_b20 bgffffff">
+		<view class="remark border_be5e5e5">
+			<view class="section_tit color666666">配送时间</view>
+			<view class="section_cont">
+				<picker
+						mode="multiSelector"
+						value="{{deliverytimeIndex}}"
+						range="{{deliverytimeList}}"
+						range-key="sendtime"
+						bindchange="deliverytimeChange"
+						bindcolumnchange="bindMultiPickerColumnChange" >
+					<block wx:if="{{!deliverydate && !deliverytime}}">
+						<view class="color999999">请选择配送时间  ></view>
+					</block>
+					<block wx:else>
+						<view class="colorfa6400">{{deliverydate + ' ' + deliverytime}}</view>
+					</block>
+				</picker>
+			</view>
+		</view>
+	</view>
+	<!-- 配送时间 end -->
 	<!-- 订单商品列表 start -->
-	<view class="goodslist order_score bgffffff">
+	<view class="goodslist margin_b20 bgffffff">
 		<view class="goods_list1">
 			<!-- 单一商品结算 start -->
 			<block wx:if="{{goodscode}}">
@@ -95,42 +118,46 @@
 	</view>
 	<!-- 订单商品列表 end -->
 	<!-- 电子券 start -->
-	<view class="section order_score bgffffff" wx:if="{{paymode4Flag}}">
-		<view class="remark border_be5e5e5">
-			<view class="section_tit color666666">电子券</view>
-			<view class="section_cont" bindtap="toTickList" wx:if="{{isUseTickflag}}">
-				<view class="color999999" wx:if="{{!tick}}">请选择电子券  ></view>
-				<view wx:else>优惠<text class="colorfa6400">￥{{tick.paymoney}}</text></view>
-			</view>
-			<view class="section_cont" wx:else>
-				<view class="color999999" wx:if="{{!tick}}">暂无可用电子券</view>
+	<block wx:if="{{paymode4Flag}}">
+		<view class="section margin_b20 bgffffff">
+			<view class="remark border_be5e5e5">
+				<view class="section_tit color666666">电子券</view>
+				<view class="section_cont" bindtap="toTickList" wx:if="{{isUseTickflag}}">
+					<view class="color999999" wx:if="{{!tick}}">请选择电子券  ></view>
+					<view wx:else>优惠<text class="colorfa6400">￥{{tick.paymoney}}</text></view>
+				</view>
+				<view class="section_cont" wx:else>
+					<view class="color999999" wx:if="{{!tick}}">暂无可用电子券</view>
+				</view>
 			</view>
 		</view>
-	</view>
+	</block>
 	<!-- 电子券 end -->
 	<!-- 积分抵扣 startt -->
-	<view class="section order_score bgffffff" wx:if="{{paymode5Flag}}">
-		<view class="remark">
-			<view class="section_tit color666666">积分抵扣</view>
-			<view class="section_cont" bindtap="setScoreFlag">
-				<radio-group class="score_group">
-					<view class="tr">
-						<label for="score">
-							可用
-							<text class="colorfa6400">{{score.useScore || 0}}</text>
-							积分可抵
-							<text class="colorfa6400">{{score.Money || 0}}</text>
-							元
-						</label>
-						<radio id="score" value="" checked="{{scoreFlag}}"></radio>
-					</view>
-				</radio-group>
+	<block wx:if="{{paymode5Flag}}">
+		<view class="section margin_b20 bgffffff">
+			<view class="remark">
+				<view class="section_tit color666666">积分抵扣</view>
+				<view class="section_cont" bindtap="setScoreFlag">
+					<radio-group class="score_group">
+						<view class="tr">
+							<label for="score">
+								可用
+								<text class="colorfa6400">{{score.useScore || 0}}</text>
+								积分可抵
+								<text class="colorfa6400">{{score.Money || 0}}</text>
+								元
+							</label>
+							<radio id="score" value="" checked="{{scoreFlag}}"></radio>
+						</view>
+					</radio-group>
+				</view>
 			</view>
 		</view>
-	</view>
+	</block>
 	<!-- 积分抵扣 end -->
 	<!-- 备注 start -->
-	<view class="section order_score bgffffff">
+	<view class="section margin_b20 bgffffff">
 		<view class="remark">
 			<view class="section_tit color666666">备注</view>
 			<view class="section_cont">
@@ -140,7 +167,7 @@
 	</view>
 	<!-- 备注 end -->
 	<!-- 结算信息 start -->
-	<view class="pay_desc order_score bgffffff">
+	<view class="pay_desc margin_b20 bgffffff">
 		<view class="pay_cont border_be5e5e5">
 			<view>
 				<view>商品总额</view>
@@ -170,12 +197,62 @@
 	<!-- 实付金额 end -->
 	<!-- 支付按钮 start -->
 	<view class="btn_cont">
-		<view class="btn card_btn colorffffff font32 border_r500 bgf7b500 tc" wx:if="{{paymode3Flag}}">
-			<payBtn id="cardBtn" data-from="card" from="card" payMoney="{{payMoney}}" scoreFlag="{{scoreFlag}}" score="{{score}}" tick="{{tick}}" freight="{{freight.freight}}" orderDetail="{{orderDetail}}" remark="{{remark}}" otc="{{otc}}" isotc="{{isotc}}" orderType="{{orderType}}" goodscode="{{goodscode}}" amount="{{amount}}" groupno="{{groupno}}" password="{{password}}" bindtap="payVerify" bind:setPasswordFlag="setPasswordFlag"></payBtn>
-		</view>
-		<view class="btn wechat_btn colorffffff font32 border_r500 bg71d793 tc" wx:if="{{paymode7Flag}}">
-			<payBtn id="wechatBtn" data-from="wechat" from="wechat" payMoney="{{payMoney}}" scoreFlag="{{scoreFlag}}" score="{{score}}" tick="{{tick}}" freight="{{freight.freight}}" orderDetail="{{orderDetail}}" remark="{{remark}}" otc="{{otc}}" isotc="{{isotc}}" orderType="{{orderType}}" goodscode="{{goodscode}}" amount="{{amount}}" groupno="{{groupno}}" password="{{password}}" bindtap="payVerify" bind:setPasswordFlag="setPasswordFlag"></payBtn>
-		</view>
+		<!-- 储值卡支付 start -->
+		<block wx:if="{{paymode3Flag}}">
+			<view class="btn card_btn colorffffff font32 border_r500 bgf7b500 tc">
+				<payBtn
+						id="cardBtn"
+						data-from="card"
+						from="card"
+						payMoney="{{payMoney}}"
+						scoreFlag="{{scoreFlag}}"
+						score="{{score}}"
+						tick="{{tick}}"
+						freight="{{freight.freight}}"
+						orderDetail="{{orderDetail}}"
+						remark="{{remark}}"
+						otc="{{otc}}"
+						isotc="{{isotc}}"
+						orderType="{{orderType}}"
+						goodscode="{{goodscode}}"
+						amount="{{amount}}"
+						groupno="{{groupno}}"
+						password="{{password}}"
+						deliverydate="{{deliverydate}}"
+						deliverytime="{{deliverytime}}"
+						bindtap="payVerify"
+						bind:setPasswordFlag="setPasswordFlag"></payBtn>
+			</view>
+		</block>
+		<!-- 储值卡支付 end -->
+		<!-- 微信支付 start -->
+		<block wx:if="{{paymode7Flag}}">
+			<view class="btn wechat_btn colorffffff font32 border_r500 bg71d793 tc">
+				<payBtn
+						id="wechatBtn"
+						data-from="wechat"
+						from="wechat"
+						payMoney="{{payMoney}}"
+						scoreFlag="{{scoreFlag}}"
+						score="{{score}}"
+						tick="{{tick}}"
+						freight="{{freight.freight}}"
+						orderDetail="{{orderDetail}}"
+						remark="{{remark}}"
+						otc="{{otc}}"
+						isotc="{{isotc}}"
+						orderType="{{orderType}}"
+						goodscode="{{goodscode}}"
+						amount="{{amount}}"
+						groupno="{{groupno}}"
+						password="{{password}}"
+						deliverydate="{{deliverydate}}"
+						deliverytime="{{deliverytime}}"
+						bindtap="payVerify"
+						bind:setPasswordFlag="setPasswordFlag"></payBtn>
+			</view>
+		</block>
+		<!-- 微信支付 end -->
 	</view>
 	<!-- 支付按钮 end -->
 	<!-- 密码组件 start -->

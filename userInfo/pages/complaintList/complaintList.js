@@ -132,11 +132,6 @@ Page({
       getFlag: false
     })
     API.system.listSuggestion(data).then(result => {
-      // 设置请求开关
-      self.setData({
-        getFlag: true
-      })
-      wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         let complaintList = self.data.complaintList
@@ -148,6 +143,11 @@ Page({
       } else {
         toast(res.message)
       }
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
+      wx.hideLoading()
     }).catch(error => {
       toast(error.error)
     })

@@ -46,9 +46,7 @@ Page({
       self.scangoodscode()
     }
     // 获取购物袋列表
-    // self.getShopBagList()
-    // 计算商品总价
-    self.setTotalmoney()
+    self.getShopBagList()
   },
 
   /**
@@ -118,16 +116,12 @@ Page({
     })
     let data = {}
     API.bill.getShoppingBagList(data).then(result => {
-      // 设置请求开关
-      self.setData({
-        getFlag: true
-      })
-      wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         let shopBagList = res.data.shoppingbaglist
         shopBagList.forEach(item => {
           item.quantity = 0
+          item.actualPrice = item.memprice
         })
         self.setData({
           shopBagList: shopBagList,
@@ -135,25 +129,32 @@ Page({
       } else {
         toast(res.message)
       }
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
+      wx.hideLoading()
     }).catch(error => {
       toast(error.error)
     })
   },
 
   // 购物袋数量操作
-  updateShopBag(goods, types) {
+  updateShopBag(e) {
     let self = this
+    let {goods, types} = e.currentTarget.dataset
     let shopBagList = self.data.shopBagList
     shopBagList.forEach(item =>{
-      if (item.barcode === goodscode.barcode) {
+      if (item.goodscode === goods.goodscode) {
         // 判断加减
-        if (types === 'addCart') {
-          goods.quantity++
-        } else if (types === 'subtrackCart') {
-          if (shopBagList[index].amount <= 0) {
-            goods.amount = 0
+        if (types === 'add') {
+          item.quantity++
+        } else if (types === 'subtrack') {
+          if (item.quantity <= 0) {
+            item.quantity = 0
+            return false
           } else {
-            goods.quantity--
+            item.quantity--
           }
         }
       }
@@ -161,6 +162,8 @@ Page({
     self.setData({
       shopBagList: shopBagList
     })
+    // 计算商品总价
+    self.setTotalmoney()
   },
 
   // 扫一扫
@@ -316,7 +319,12 @@ Page({
   setTotalmoney () {
     let self = this
     let totalmoney = 0
-    self.data.scanCart.forEach(item => {
+    let scanCart = self.data.scanCart
+    let shopBagList = self.data.shopBagList
+    let cart = []
+    // 商品、购物袋合计
+    cart.push(...scanCart, ...shopBagList)
+    cart.forEach(item => {
       let _money
       if (item.scalageScanProduct) {
         _money = parseFloat(item.actualSaleMoney)

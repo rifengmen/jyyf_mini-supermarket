@@ -181,8 +181,14 @@ Page({
     let self = this
     let scanShopList = self.data.scanShopList
     let shopIndex = self.data.shopIndex
+    let deptname = scanShopList[shopIndex].deptname
     wx.setNavigationBarTitle({
-      title: scanShopList[shopIndex].deptname
+      title: deptname
+    })
+    wx.showModal({
+      title: '提示',
+      content: '您当前扫码门店是' + deptname + "，请确认后扫码!",
+      showCancel: false,
     })
   },
 })

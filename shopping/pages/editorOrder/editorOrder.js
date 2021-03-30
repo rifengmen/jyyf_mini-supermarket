@@ -38,6 +38,16 @@ Page({
     orderCount: 0,
     // 购物车列表
     cartList: [],
+    // 配送时间树
+    sendTimeList: [],
+    // 配送时间列表
+    deliverytimeList: [],
+    // 配送时间下标
+    deliverytimeIndex: [0, 0],
+    // 配送日期
+    deliverydate: '',
+    // 配送时间
+    deliverytime: '',
     // 订单备注
     remark: '',
     // 备注禁用开关
@@ -102,8 +112,8 @@ Page({
       // 获取购物车列表
       self.getCartList()
     }
-    // 获取收货地址
-    // self.getAddress()
+    // 获取配送时间列表
+    self.getSendTime()
   },
 
   /**
@@ -286,6 +296,71 @@ Page({
       self.setPayMoney()
     }).catch(error => {
       toast(error.error)
+    })
+  },
+
+  // 获取配送时间树
+  getSendTime () {
+    let self= this
+    let data = {}
+    API.bill.getSendTime(data).then(result =>{
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          sendTimeList: res.data
+        })
+        // 设置配送时间列表
+        self.setDeliverytimeList()
+      }
+    }).catch(error => {
+      toast(error.error)
+    })
+  },
+
+  // 设置配送时间列表
+  setDeliverytimeList () {
+    let self = this
+    let sendTimeList = self.data.sendTimeList
+    let deliverytimeList = []
+    let timeList = []
+    sendTimeList.forEach((item, index) => {
+      if (index === self.data.deliverytimeIndex[0]) {
+        timeList = item.time
+      }
+    })
+    deliverytimeList[0] = sendTimeList
+    deliverytimeList[1] = timeList
+    self.setData({
+      deliverytimeList: deliverytimeList,
+    })
+  },
+
+  // 配送时间picker变更
+  bindMultiPickerColumnChange (e) {
+    let self = this
+    let {column, value} = e.detail
+    let deliverytimeIndex = self.data.deliverytimeIndex
+    let arr = []
+    if (column === 0) {
+      arr = [value, 0]
+    } else {
+      arr = [deliverytimeIndex[0], value]
+    }
+    self.setData({
+      deliverytimeIndex: arr
+    })
+    // 设置配送时间列表
+    self.setDeliverytimeList()
+  },
+
+  // 配送时间变更
+  deliverytimeChange (e) {
+    let self = this
+    let {value} = e.detail
+    let deliverytimeList = self.data.deliverytimeList
+    self.setData({
+      deliverydate: deliverytimeList[0][value[0]].sendtime,
+      deliverytime: deliverytimeList[1][value[1]].sendtime,
     })
   },
 

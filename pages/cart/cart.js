@@ -132,11 +132,6 @@ Page({
       getFlag: false
     })
     API.bill.listMyCar(data).then(result => {
-      // 设置请求开关
-      self.setData({
-        getFlag: true
-      })
-      wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         if (res.data && res.data.carList) {
@@ -164,6 +159,11 @@ Page({
       } else {
         toast(res.message)
       }
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
+      wx.hideLoading()
     }).catch(error => {
       toast(error.error)
     })

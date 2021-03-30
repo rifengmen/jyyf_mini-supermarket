@@ -277,12 +277,12 @@
 .shopbag_item .shopbag_image {
   width: 140px;
   height: 100%;
-  margin: 0 20rpx;
+  padding-left: 20rpx;
 }
 .shopbag_item .shopbag_desc {
-  width: calc(100% - 210rpx);
+  width: calc(100% - 190rpx);
   height: 100%;
-  padding-right: 50rpx;
+  padding-right: 30rpx;
   display: flex;
   justify-content: space-around;
   align-items: center;

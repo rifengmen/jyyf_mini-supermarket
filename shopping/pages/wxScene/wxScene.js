@@ -21,7 +21,6 @@ Page({
    */
   onLoad: function (options) {
     let self = this
-    console.log(options, 'wxscene.options')
     self.setData({
       scene: options.scene,
     })

@@ -177,11 +177,6 @@ Page({
       getFlag: false
     })
     API.bill.getProductEvaluation(data).then(result => {
-      // 设置请求开关
-      self.setData({
-        getFlag: true
-      })
-      wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         if (self.data && self.data.commentList) {
@@ -195,6 +190,11 @@ Page({
       } else {
         toast(res.message)
       }
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
+      wx.hideLoading()
     }).catch(error => {
       toast(error.error)
     })
@@ -205,11 +205,6 @@ Page({
     let self = this
     let data = {}
     API.bill.getProductEvaluation(data).then(result => {
-      // 设置请求开关
-      self.setData({
-        getFlag: true
-      })
-      wx.hideLoading()
       let res = result.data
       if (res.flag === 1) {
         if (self.data && self.data.commentList) {
@@ -223,6 +218,11 @@ Page({
       } else {
         toast(res.message)
       }
+      // 设置请求开关
+      self.setData({
+        getFlag: true
+      })
+      wx.hideLoading()
     }).catch(error => {
       toast(error.error)
     })

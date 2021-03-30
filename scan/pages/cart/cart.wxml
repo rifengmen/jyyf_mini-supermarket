@@ -96,56 +96,39 @@
                 </view>
                 <!-- 购物袋列表 start -->
                 <view class="shopbag overflow">
-                    <!-- 购物袋简介 start -->
-                    <view class="shopbag_item bgffffff">
-                        <image src="/lib/images/shopbag1.png" mode="aspectFit"
-                               class="shopbag_image"></image>
-                        <view class="shopbag_desc">
-                            <view class="name font24">小号￥{{shopBagList[0].memprice}}</view>
-                            <view class="cart">
-                                <view class="editor_cart bgf0f0f0 border_r500">
-                                    <view class="subtrack_cart btn border_r500 overflow"
-                                          catchtap="updateShopBag" data-goods="{{item}}"
-                                          data-types="count">
-                                        <image src="/lib/images/subtrack.png"></image>
-                                    </view>
-                                    <view class="input_cart font24 tc">{{shopBagList[0].quantity}}
-                                    </view>
-                                    <view class="add_cart btn border_r500 overflow"
-                                          catchtap="updateShopBag" data-goods="{{item}}"
-                                          data-types="add">
-                                        <image src="/lib/images/add.png"></image>
+                    <!-- 购物袋 start -->
+                    <block wx:if="{{index <= 1}}" wx:for="{{shopBagList}}" wx:key="index">
+                        <view class="shopbag_item bgffffff">
+                            <image class="shopbag_image" src="/lib/images/shopbag2.png" mode="aspectFit"></image>
+                            <view class="shopbag_desc">
+                                <view class="name">
+                                    <view class="tc ellipsis">{{item.gdsname}}</view>
+                                    <view class="colorfa6400 font24 tc">￥{{item.memprice}}</view>
+                                </view>
+                                <view class="cart">
+                                    <view class="editor_cart bgf0f0f0 border_r500">
+                                        <view
+                                                class="subtrack_cart btn border_r500 overflow"
+                                                bindtap="updateShopBag"
+                                                data-goods="{{item}}"
+                                                data-types="subtrack">
+                                            <image class="img" src="/lib/images/subtrack.png"></image>
+                                        </view>
+                                        <view class="input_cart font24 tc">{{item.quantity}}
+                                        </view>
+                                        <view
+                                                class="add_cart btn border_r500 overflow"
+                                                bindtap="updateShopBag"
+                                                data-goods="{{item}}"
+                                                data-types="add">
+                                            <image class="img" src="/lib/images/add.png"></image>
+                                        </view>
                                     </view>
                                 </view>
                             </view>
                         </view>
-                    </view>
-                    <!-- 购物袋简介 end -->
-                    <!-- 购物袋简介 start -->
-                    <view class="shopbag_item bgffffff">
-                        <image src="/lib/images/shopbag2.png" mode="aspectFit"
-                               class="shopbag_image"></image>
-                        <view class="shopbag_desc">
-                            <view class="name font24">大号￥{{shopBagList[1].memprice}}</view>
-                            <view class="cart">
-                                <view class="editor_cart bgf0f0f0 border_r500">
-                                    <view class="subtrack_cart btn border_r500 overflow"
-                                          catchtap="updateShopBag" data-goods="{{item}}"
-                                          data-types="count">
-                                        <image src="/lib/images/subtrack.png"></image>
-                                    </view>
-                                    <view class="input_cart font24 tc">{{shopBagList[1].quantity}}
-                                    </view>
-                                    <view class="add_cart btn border_r500 overflow"
-                                          catchtap="updateShopBag" data-goods="{{item}}"
-                                          data-types="add">
-                                        <image src="/lib/images/add.png"></image>
-                                    </view>
-                                </view>
-                            </view>
-                        </view>
-                    </view>
-                    <!-- 购物袋简介 end -->
+                    </block>
+                    <!-- 购物袋 end -->
                 </view>
                 <!-- 购物袋列表 end -->
             </view>

@@ -179,11 +179,6 @@ Page({
   // 设置电子券列表
   setListCoupon (res) {
     let self = this
-    // 设置请求开关
-    self.setData({
-      getFlag: true
-    })
-    wx.hideLoading()
     if (res.flag === 1) {
       let tickList = res.data
       tickList.forEach(item => {
@@ -212,6 +207,11 @@ Page({
     } else {
       toast(res.message)
     }
+    // 设置请求开关
+    self.setData({
+      getFlag: true
+    })
+    wx.hideLoading()
   },
 
   // 设置到期剩余天数

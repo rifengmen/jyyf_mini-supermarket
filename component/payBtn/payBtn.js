@@ -93,7 +93,17 @@ Component({
     goodsDetail: {
       type: Object,
       value: null,
-    }
+    },
+    // 配送日期
+    deliverydate: {
+      type: String,
+      value: '',
+    },
+    // 配送时间
+    deliverytime: {
+      type: String,
+      value: '',
+    },
   },
 
   /**
@@ -174,6 +184,8 @@ Component({
         Sendid: globalData.addressId || 0,
         Usernote: self.data.remark,
         Memcode: globalData.memcode,
+        deliverydate: self.data.deliverydate,
+        deliverytime: self.data.deliverytime,
         paylist: self.data.paylist,
         channel: "WX_MINI",
         otc: self.data.otc,

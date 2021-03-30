@@ -23,6 +23,8 @@ const bill = {
   buyend: data => request('bill/shoppingcar.do?method=buyend', data),
   // 获取运费
   getFreight: data => request('bill/shoppingcar.do?method=getFreight', data),
+  // 获取配送时间
+  getSendTime: data => request('bill/shoppingcar.do?method=getSendTime', data),
   // 设置支付密码
   cardpayopen: data => request('bill/pay.do?method=cardpayopen', data),
   // 重置支付密码

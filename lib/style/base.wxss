@@ -345,8 +345,10 @@
   -webkit-box-orient: vertical;
 }
 /* 文本溢出隐藏 end */
-
 /* 布局方式 start */
+.margin_b20 {
+  margin-bottom: 20rpx;
+}
 .fl {
   float: left;
 }
