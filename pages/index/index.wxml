@@ -73,9 +73,13 @@
 						<video
 								class="advideo"
 								autoplay
-								controls="false"
+								controls="{{false}}"
 								loop
 								muted
+								show-progress="{{false}}"
+								show-fullscreen-btn="{{false}}"
+								show-play-btn="{{false}}"
+								show-center-play-btn="{{false}}"
 								src="{{baseUrl + item.videourl}}"
 								bindtap="toBannerDetail"
 								data-banner="{{item}}"></video>

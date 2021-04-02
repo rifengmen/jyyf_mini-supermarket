@@ -119,7 +119,7 @@ swiper.notice_swiper {
 }
 .advideo_cont .advideo {
   width: 100%;
-  height: 300rpx;
+  height: calc(702rpx * 9 / 16);
 }
 /* 视频广告区 end */
 /* 海报区 start */
