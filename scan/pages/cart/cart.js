@@ -119,13 +119,17 @@ Page({
       let res = result.data
       if (res.flag === 1) {
         let shopBagList = res.data.shoppingbaglist
-        shopBagList.forEach(item => {
-          item.quantity = 0
-          item.actualPrice = item.memprice
-        })
-        self.setData({
-          shopBagList: shopBagList,
-        })
+        if (shopBagList.length)  {
+          shopBagList.forEach(item => {
+            item.quantity = 0
+            item.salePrice = item.saleprice
+            item.actualPrice = item.memprice
+            item.productCode = item.goodscode
+          })
+          self.setData({
+            shopBagList: shopBagList,
+          })
+        }
       } else {
         toast(res.message)
       }
@@ -284,9 +288,9 @@ Page({
   // 删除购物车商品
   delBtn (e) {
     let self = this
-    let goods = e.currentTarget.dataset.goods
+    let {goods, gindex} = e.currentTarget.dataset
     let scanCart = self.data.scanCart
-    scanCart = scanCart.filter(item => item.barcode !== goods.barcode)
+    scanCart = scanCart.filter((item, index) => index !== gindex)
     app.globalData.scanCart = scanCart
     self.setData({
       scanCart: scanCart
@@ -341,20 +345,31 @@ Page({
   // 去结算
   setTlement () {
     let self = this
+    let scanShopInfo = self.data.scanShopInfo
     // 购物袋加入购物车
-    let shopBagList = self.data.shopBagList
-    if (shopBagList.length) {
-      shopBagList = self.data.shopBagList.filter(item => item.quantity)
-      self.data.scanCart.push(...shopBagList)
-    }
+    let shopBagList = self.data.shopBagList.filter(item => item.quantity)
+    let productList = []
+    productList.push(...self.data.scanCart, ...shopBagList)
     // 判断购物车存在商品
-    if (!self.data.scanCart.length) {
+    if (!productList.length) {
       toast('请添加商品')
       return false
     }
+    let goodsList = productList.map(item => {
+      return {
+        productCode: item.productCode,
+        bagflag: item.bagflag || '',
+        quantity: item.quantity,
+        actualPrice: item.actualPrice,
+        scalageScanProduct: item.scalageScanProduct,
+        barcode: item.barcode,
+        limitamount: item.limitamount || '',
+        salePrice: item.salePrice,
+      }
+    })
     let data = {
-      productList: self.data.scanCart,
-      deptcode: self.data.scanShopInfo.deptcode
+      productList: goodsList,
+      deptcode: scanShopInfo.deptcode
     }
     API.invest.saveFlow(data).then(result => {
       let res = result.data
@@ -365,7 +380,7 @@ Page({
         })
         app.globalData.scanCart = []
         wx.redirectTo({
-          url: '/scan/pages/editorOrder/editorOrder?flowno=' + self.data.flowno + '&deptcode=' + self.data.scanShopInfo.deptcode + '&deptname=' + self.data.scanShopInfo.deptname
+          url: '/scan/pages/editorOrder/editorOrder?deptcode=' + scanShopInfo.deptcode + '&deptname=' + scanShopInfo.deptname + '&flowno=' + self.data.flowno
         })
       } else {
         toast(res.message)

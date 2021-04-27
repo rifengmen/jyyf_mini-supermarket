@@ -118,12 +118,25 @@ Page({
   // 获取推荐商品列表
   getRecommendList () {
     let self = this
-    let data = {}
-    API.mem.getMyCardInfo(data).then(result => {
+    let data = {
+      Datatype: '1',
+      Page: 1,
+      pageSize: 15,
+      Sortflg: 1,
+      sorttype: 0
+    }
+    API.info.getProductList(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        // 商品code统一字段
+        let recommendList = res.data
+        recommendList.forEach(item => {
+          if (item.goodscode && !item.Gdscode) {
+            item.Gdscode = item.goodscode
+          }
+        })
         self.setData({
-          recommendList: res.data
+          recommendList: recommendList,
         })
       } else {
         toast(res.message)

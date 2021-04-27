@@ -33,8 +33,6 @@ App({
 
   // 全局变量
   globalData: {
-    // 应用名称
-    apptitle: '',
     // 当前线上版本号
     version: '',
     // openid
@@ -152,26 +150,42 @@ App({
     scanShopInfo: '',
     // 扫码购购物车
     scanCart: [],
+    // 扫码购优惠券
+    scanTick: '',
     // 友链详情
     friendLink: '',
     // 商品详情(海报分享用)
     goodsDetail: '',
 
     // 测试开发
+    // 应用名称
+    apptitle: '嘉元科技',
     // 基础路径
     // baseUrl: 'http://192.168.1.107:8089/simple-eshop/',
     baseUrl: 'https://www.91jyrj.com/shop/',
 
 
     // // 金威快购 长治金威超市
-    // baseUrl: 'http://www.jwkgou.com:8088/simple-eshop/', // 2.1.35版以前前路径
-    // baseUrl: 'https://www.jwkgou.com:8443/simple-eshop/', // 2.1.35版路径
+    // // baseUrl: 'http://www.jwkgou.com:8088/simple-eshop/', // 2.1.35版以前前路径
+    // apptitle: '金威快购',
+    // // baseUrl: 'https://www.jwkgou.com:8443/simple-eshop/', // 2.1.35版路径
+    // baseUrl: 'https://jw.jwkgou.com:9443/eshop/', // 2.5.0版路径
 
     // // 美廉美优选 牙克石美廉美超市
+    // apptitle: '美廉美优选',
     // baseUrl: 'https://www.mlmcs2021.com:58443/eshop/',
 
     // // 田森优选 盂县田森超市
+    // apptitle: '田森优选',
     // baseUrl: 'https://www.tianshenyouxuan.com:58443/eshop/',
+
+    // // 三晋帮扶 三晋消费帮扶超市
+    // apptitle: '三晋帮扶',
+    // baseUrl: 'https://www.sjxfbf.cn:8443/eshop/',
+
+    // // 科飞连锁超市 陵川县科飞连锁超市
+    // apptitle: '科飞连锁超市',
+    // baseUrl: 'https://www.kefeichaoshi.com/eshop/',
   },
 
   // 新版本校验
@@ -226,7 +240,7 @@ App({
     let flag = true
     let scanCart = self.globalData.scanCart
     scanCart.forEach(item => {
-      if (item.barcode === goods.barcode) {
+      if ((item.barcode === goods.barcode) && !item.scalageScanProduct) {
         flag = false
         if (types === 'add') {
           item.quantity++

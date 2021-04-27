@@ -17,7 +17,7 @@
                         <!-- 商品简介 start -->
                         <view class="goods bgffffff border_be5e5e5">
                             <block wx:if="{{editflag}}">
-                                <view class="delBtn" bindtap="delBtn" data-goods="{{item}}">
+                                <view class="delBtn" bindtap="delBtn" data-goods="{{item}}" data-gindex="{{index}}">
                                     <image src="/lib/images/closed.png" class="closed bge42837 border_r500" mode="aspectFit"></image>
                                 </view>
                             </block>
@@ -90,12 +90,12 @@
         <!-- 商品 end -->
         <!-- 购物袋 start -->
         <block wx:if="{{shopBagList.length}}">
-            <view class="section bgffffff">
+            <view class="section">
                 <view class="section_tit">
                     <view class="section_name">购物袋</view>
                 </view>
                 <!-- 购物袋列表 start -->
-                <view class="shopbag overflow">
+                <view class="shopbag bgffffff overflow">
                     <!-- 购物袋 start -->
                     <block wx:if="{{index <= 1}}" wx:for="{{shopBagList}}" wx:key="index">
                         <view class="shopbag_item bgffffff">

@@ -317,10 +317,12 @@
 }
 /* 购物袋 end */
 /* 结算页样式 start */
+.editororder {
+  padding-bottom: 112rpx;
+}
 .order_section {
   width: calc(100% - 48rpx);
   height: auto;
-  margin-bottom: 24rpx;
   padding: 30rpx 24rpx;
   display: flex;
   justify-content: space-between;
@@ -333,7 +335,7 @@
 .orderdesc {
   width: 100%;
   height: auto;
-  padding: 20rpx 0;
+  padding: 10rpx 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -349,6 +351,11 @@
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
+}
+.paydesc {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .group {
   width: calc(100% - 200rpx);
@@ -415,24 +422,32 @@
 .item_btn {
   width: 100%;
   height: 60rpx;
+  margin-top: 40rpx;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
-.pay_btn {
+.item_btn .pay_btn {
   width: 45%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.cancel_btn {
+.item_btn .cancel_btn {
   width: 45%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-left: 10%;
+}
+.item_btn .btn {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /* 订单列表样式 end */
 /* 订单详情样式 start */

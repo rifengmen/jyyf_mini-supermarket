@@ -107,4 +107,8 @@
     height: 80rpx;
     line-height: 80rpx;
 }
+.goods_list2 {
+    width: calc(100% - 48rpx);
+    padding: 0 24rpx;
+}
 /* 推荐商品模块 end */

@@ -38,16 +38,16 @@
   justify-content: flex-start;
   align-items: center;
 }
-.gps_img {
+.gps_cont .gps_img {
   width: 30rpx;
   height: 36rpx;
   margin-right: 10rpx;
 }
-.gps_img image {
+.gps_cont .gps_img image {
   width: 100%;
   height: 100%;
 }
-.gps .name {
+.gps_cont .name {
   max-width: calc(100% - 70rpx);
   padding-right: 10rpx;
 }

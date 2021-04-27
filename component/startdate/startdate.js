@@ -1,8 +1,9 @@
 // component/startdate/startdate.js
 require('../../app.js')
 const app = getApp()
-import toast from '../../utils/toast'
 import API from '../../api/index'
+import util from '../../utils/util'
+import toast from '../../utils/toast'
 
 Component({
   /**
@@ -51,9 +52,8 @@ Component({
         let date = new Date()
         let nowdate = date.getTime()
         let time_length = 30 * 24 * 60 * 60 * 1000
-        let startdate = new Date(nowdate - time_length).toLocaleString().replace(/:\d{1,2}$/,' ').split(' ')[0]
         self.setData({
-          startdate: startdate
+          startdate: util.formatDate(new Date(nowdate - time_length))
         })
       }
       self.triggerEvent('getList', self.data.startdate)
@@ -62,9 +62,9 @@ Component({
     // 修改时间
     dateChange (e) {
       let self = this
-      let startdate = e.detail.value
+      let startdate = new Date(e.detail.value)
       self.setData({
-        startdate: startdate
+        startdate: util.formatDate(new Date(startdate.getTime()))
       })
       // 设置开始时间
       self.setStartdate()

@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "goods": "/component/goods/goods"
+  },
   "navigationBarTitleText": "签到",
   "navigationBarTextStyle": "white"
 }

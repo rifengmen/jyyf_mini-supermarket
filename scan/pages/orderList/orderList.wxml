@@ -3,21 +3,21 @@
   <!-- 订单列表 start -->
   <view class="order_list">
     <block wx:for="{{orderList}}" wx:key="index">
-      <navigator class="order_item bgffffff border_be5e5e5" hover-class="none" url="/scan/pages/orderDetail/orderDetail?flowno={{item.flowno}}&deptcode={{item.shopCode}}">
+      <navigator class="order_item bgffffff border_be5e5e5" hover-class="none" url="/scan/pages/orderDetail/orderDetail?deptcode={{item.bmcode}}&deptname={{item.bmname}}&flowno={{item.ordernum}}&recordtime={{item.Recordtime}}">
         <view class="order_item_desc">
-          <view class="font32 font_blod ellipsis">{{item.shopName}}</view>
-          <view>订单编号：{{item.flowno}}</view>
-          <view class="font24">订单金额：<text class="colorfa2a2a">{{item.totalMoney}}</text></view>
-          <view class="font24 color666666">{{item.saletime}}</view>
+          <view class="font32 font_blod ellipsis">{{item.bmname}}</view>
+          <view>订单编号：{{item.ordernum}}</view>
+          <view class="font24">订单金额：<text class="colorfa2a2a">{{item.Totalprice}}</text></view>
+          <view class="font24 color666666">{{item.Recordtime}}</view>
         </view>
         <view class="order_item_status">
-          <view class="font24 colorfa6400">{{item.stausdescribe}}</view>
-          <view class="item_btn" wx:if="{{item.payFLag || item.cancelFlag}}">
-            <view class="pay_btn border_r4 bg71d793 colorffffff border_a71d793" wx:if="{{item.payFLag}}">
-              <navigator hover-class="none" url="/scan/pages/editorOrder/editorOrder?flowno={{item.flowno}}&deptcode={{item.shopCode}}&deptname={{item.shopName}}">付款</navigator>
+          <view class="font24 colorfa6400">{{item.paystatedescribe}}</view>
+          <view class="item_btn" wx:if="{{item.payflag || item.cancelflag}}">
+            <view class="pay_btn border_r4 bg71d793 colorffffff border_a71d793" wx:if="{{item.payflag}}">
+              <navigator class="btn" hover-class="none" url="/scan/pages/editorOrder/editorOrder?flowno={{item.ordernum}}&deptcode={{item.bmcode}}&deptname={{item.bmname}}">付款</navigator>
             </view>
-            <view class="cancel_btn border_r4 bgffffff color666666 border_a999999" wx:if="{{item.cancelFlag}}" catchtap="cancelBtn" data-index="{{index}}">
-              <scanCancelBtn id="scanCancelBtn{{index}}" flowno="{{item.flowno}}" deptcode="{{item.shopCode}}">取消</scanCancelBtn>
+            <view class="cancel_btn border_r4 bgffffff color666666 border_a999999" wx:if="{{item.cancelflag}}" catchtap="cancelBtn" data-index="{{index}}">
+              <scanCancelBtn id="scanCancelBtn{{index}}" class="btn" flowno="{{item.ordernum}}">取消</scanCancelBtn>
             </view>
           </view>
         </view>

@@ -9,6 +9,16 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    // 调用的地方
+    from: {
+      type: String,
+      value: 'editorOrder',
+    },
+    // tradeno，订单编号
+    tradeno: {
+      type: String,
+      value: '',
+    },
     // tick
     tick: {
       type: Object,
@@ -36,9 +46,12 @@ Component({
     // 使用电子券
     useTick (e) {
       let self = this
+      let from = self.data.from
       let tick = self.data.tick
       tick.paymode = 4
       let data = {
+        fromwhere: from,
+        tradeno: self.data.tradeno,
         limitcode: tick.limitcode,
         limittype: tick.limittype,
         tickid: tick.ticketid,
@@ -58,7 +71,11 @@ Component({
           } else {
             tick.paymoney = tick.usemoney
           }
-          app.globalData.tick = tick
+          if (from === 'editorOrder') {
+            app.globalData.tick = tick
+          } else if (from === 'scanEditorOrder') {
+            app.globalData.scanTick = tick
+          }
           wx.navigateBack()
         } else {
           toast(res.message)

@@ -14,11 +14,6 @@ Component({
       type: String,
       value: ''
     },
-    // 门店编号
-    deptcode: {
-      type: String,
-      value: ''
-    }
   },
 
   /**
@@ -53,17 +48,11 @@ Component({
       let self = this
       let data = {
         flowno: self.data.flowno,
-        deptcode: self.data.deptcode
       }
       API.invest.cancelSaleOrder(data).then(result => {
         let res = result.data
         if (res.flag === 1) {
           toast('取消成功!')
-          if (self.route === '/scan/pages/orderList/orderList') {
-            // 页面重载
-            self.onLoad()
-            return false
-          }
           wx.navigateBack()
         } else {
           toast(res.message)

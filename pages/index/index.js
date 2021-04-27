@@ -74,6 +74,10 @@ Page({
     self.getShopOptions()
     // 新版本校验
     app.checkUpdateVersion()
+    // 设置title
+    wx.setNavigationBarTitle({
+      title: app.globalData.apptitle
+    })
     if (deptname && deptcode) {
       self.setData({
         loadingFlag: false,
@@ -178,10 +182,6 @@ Page({
         app.globalData.cent_turnurl = res.data.cent_turnurl
         app.globalData.cent_btnurl = res.data.cent_btnurl
         app.globalData.moneyType = res.data.moneyType
-        // 设置title
-        wx.setNavigationBarTitle({
-          title: app.globalData.apptitle
-        })
         // 设置主题背景色
         wx.setNavigationBarColor({
           frontColor: self.data.frontColor,

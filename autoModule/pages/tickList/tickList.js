@@ -20,6 +20,8 @@ Page({
     tickList: [],
     // 从哪里来/组件使用的地方
     from: '',
+    // 订单编号
+    tradeno: '',
     // 支付金额
     payMoney: 0,
     // 订单商品金额
@@ -33,12 +35,13 @@ Page({
     let self = this
     self.setData({
       from: options.from || '',
+      tradeno: options.tradeno || '',
       payMoney: options.payMoney || 0,
       Totalmoney: options.Totalmoney || 0,
     })
     // 设置title
     let title = ''
-    if (self.data.from === 'editorOrder') {
+    if (self.data.from === 'editorOrder' || self.data.from === 'scanEditorOrder') {
       title = '选择电子券'
       // 可用电子券
       self.payMoneytick()
@@ -246,7 +249,7 @@ Page({
     let self = this
     let { tick } = e.currentTarget.dataset
     wx.navigateTo({
-      url: '/autoModule/pages/tickDetail/tickDetail?from=' + self.data.from + '&tickid=' + tick.onlinetickid,
+      url: '/autoModule/pages/tickDetail/tickDetail?from=' + self.data.from + '&tick=' + JSON.stringify(tick)
     })
   }
 

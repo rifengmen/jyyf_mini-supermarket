@@ -1,51 +1,62 @@
 <!--autoModule/pages/tickDetail/tickDetail.wxml-->
+<!-- 数据格式化工具 start -->
+<wxs module="util">
+	doubleFormat = function (value, num) {
+	var v = parseFloat(value)
+	return v.toFixed(num)
+	}
+	module.exports = {
+	doubleFormat: doubleFormat
+	}
+</wxs>
+<!-- 数据格式化工具 end -->
 <view class="container color333333 font28 bgffffff" data-weui-theme="dark" xmlns:wx="http://www.w3.org/1999/XSL/Transform">
 	<view class="tick_cont">
 		<!-- 卡片 start -->
 		<view class="card color71d793 border_r20">
-			<view class="face_value font60" wx:if="{{tickDetail.tickettype === 2}}">
+			<view class="face_value font60" wx:if="{{tickettype === 2}}">
 				<text class="font30 font_blod">折</text>
-				{{tickDetail.usemoney * 10}}
+				{{util.doubleFormat(usemoney * 10, 2)}}
 			</view>
 			<view class="face_value font60" wx:else>
 				<text class="font40 font_blod">￥</text>
-				{{tickDetail.usemoney}}
+				{{usemoney}}
 			</view>
 			<view class="type font24">
-				<view class="font30 ellipsis"wx:if="{{tickDetail.gettype === 2}}">{{tickDetail.score}}积分兑换</view>
-				<view class="ellipsis">{{tickDetail.tickettypename}}</view>
-				<view class="ellipsis">满{{tickDetail.minsalemoney}}元使用</view>
+				<view class="font30 ellipsis"wx:if="{{tickDetail.gettype && (tickDetail.gettype === 2)}}">{{tickDetail.score}}积分兑换</view>
+				<view class="ellipsis">{{tickname}}</view>
+				<view class="ellipsis">满{{minsalemoney}}元使用</view>
 			</view>
 		</view>
 		<!-- 卡片 end -->
 		<!-- 券码 start -->
 		<view class="section">
 			<view class="tit font_blod">券码</view>
-			<view class="color666666">{{tickDetail.tickid}}</view>
+			<view class="color666666">{{tickid}}</view>
 		</view>
 		<!-- 券码 end -->
 		<!-- 有效期 start -->
 		<view class="section">
 			<view class="tit font_blod">有效期</view>
-			<view class="color666666">{{tickDetail.startdate}} —— {{tickDetail.enddate}}</view>
+			<view class="color666666">{{startdate}} —— {{enddate}}</view>
 		</view>
 		<!-- 有效期 end -->
 		<!-- 发行量 start -->
 		<view class="section">
 			<view class="tit font_blod">发行量</view>
-			<view class="color666666">{{tickDetail.totalcount}}张</view>
+			<view class="color666666">{{tickDetail.totalcount || 0}}张</view>
 		</view>
 		<!-- 发行量 end -->
 		<!-- 已领用 start -->
 		<view class="section">
 			<view class="tit font_blod">剩余量</view>
-			<view class="color666666">{{tickDetail.residuecount}}张</view>
+			<view class="color666666">{{tickDetail.residuecount || 0}}张</view>
 		</view>
 		<!-- 已领用 end -->
 		<!-- 使用规则 start -->
 		<view class="section">
 			<view class="tit font_blod">使用规则</view>
-			<view class="color666666">{{tickDetail.dealflagdescription}}，{{tickDetail.limitdeptcode}}，{{tickDetail.tickname}}，每月禁用日（{{tickDetail.notuseday || '无'}}）</view>
+			<view class="color666666">{{dealflagdescription}}，{{limitdeptcode}}，{{tickname}}，每月禁用日（{{notuseday || '无'}}）</view>
 		</view>
 		<!-- 使用规则 end -->
 		<!-- 使用说明 start -->

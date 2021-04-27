@@ -169,7 +169,7 @@ Page({
       if (res.flag === 1) {
         self.setData({
           barimg: res.data.barimg,
-          flowno: res.data.orderInfo.flowno,
+          flowno: res.data.orderInfo.ordernum,
         })
         // 获取订单详情
         self.getOrderDetail()
@@ -193,8 +193,8 @@ Page({
   getOrderDetail () {
     let self = this
     let data = {
-      flowno: self.data.flowno,
-      deptcode: self.data.deptcode,
+      ordernum: self.data.flowno,
+      bmcode: self.data.deptcode
     }
     API.invest.listMicroFlowDtl(data).then(result => {
       let res = result.data
@@ -202,7 +202,7 @@ Page({
         if (res.data) {
           self.setData({
             orderDetail: res.data,
-            goodsList: res.data.gdscodeList
+            goodsList: res.data.OrderDetail
           })
         }
       } else {

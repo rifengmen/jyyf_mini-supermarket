@@ -10,21 +10,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // 支付方式,true:微信，false：储值卡
-    payFlag: true,
-    // 支付密码
-    password: '',
-    // 密码弹框开关
-    passwordFlag: false,
-    // 流水号
-    flowno: '',
     // 店铺信息
     deptcode: '',
     deptname: '',
+    // 流水号
+    flowno: '',
     // 订单详情
     scanOrderDetail: '',
+    // 订单商品列表
+    goodsList: [],
     // 订单金额
-    totalMoney: '',
+    totalMoney: 0,
+    // 支付金额
+    payMoney: 0,
     // 支付方式列表
     paymodeList: [],
     // 支付信息
@@ -33,8 +31,30 @@ Page({
     paymode: 7,
     // 储值卡支付方式开关
     paymode3Flag: false,
+    // 优惠券支付方式开关
+    paymode4Flag: false,
+    // 积分支付方式开关
+    paymode5Flag: false,
     // 微信支付方式开关
     paymode7Flag: false,
+    // 积分
+    score: '',
+    // 积分抵扣金额
+    useScoreMoney: 0,
+    // 积分使用开关
+    scoreFlag: false,
+    // 电子券
+    scanTick: '',
+    // 电子券可用标识请求开关
+    getUseTickflag: true,
+    // 电子券可用标识
+    isUseTickflag: true,
+    // 支付方式,true:微信，false：储值卡
+    payFlag: true,
+    // 支付密码
+    password: '',
+    // 密码弹框开关
+    passwordFlag: false,
   },
 
   /**
@@ -43,14 +63,14 @@ Page({
   onLoad: function (options) {
     let self = this
     self.setData({
-      flowno: options.flowno,
       deptcode: options.deptcode,
       deptname: options.deptname,
+      flowno: options.flowno,
     })
     // 获取订单详情
     self.getScanOrderDetail()
     // 获取支付方式列表
-    self.getPaymodeList()
+    self.getMicroFlowPayMoney()
   },
 
   /**
@@ -64,21 +84,32 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let self = this
+    if (self.data.scanOrderDetail) {
+      // 获取电子券信息
+      self.getScanTick()
+    }
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    let self = this
+    self.setData({
+      scanTick: '',
+    })
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    let self = this
+    app.globalData.scanTick = ''
+    self.setData({
+      scanTick: '',
+    })
   },
 
   /**
@@ -106,22 +137,213 @@ Page({
   getScanOrderDetail () {
     let self = this
     let data = {
-      flowno: self.data.flowno,
-      deptcode: self.data.deptcode
+      ordernum: self.data.flowno,
+      bmcode: self.data.deptcode
     }
     API.invest.listMicroFlowDtl(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let order = res.data
         self.setData({
-          sacnOrderDetail: res.data,
-          totalMoney: res.data.totalMoney.toFixed(2),
+          scanOrderDetail: order,
+          goodsList: order.OrderDetail,
+          totalMoney: order.shouldmoney.toFixed(2),
+          payMoney: (order.shouldmoney - order.paymoney).toFixed(2),
         })
+        // 获取电子券信息
+        self.getScanTick()
       } else {
         toast(res.message)
       }
     }).catch(error => {
       toast(error.error)
     })
+  },
+
+  // 获取支付方式列表
+  getMicroFlowPayMoney () {
+    let self = this
+    let data = {
+      shopCode: self.data.deptcode,
+      flowno: self.data.flowno,
+    }
+    API.invest.getMicroFlowPayMoney(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        let paymodelist = res.data
+        let paymode3Flag = paymodelist.filter(item => item.paymodeid === 3).length ? true : false
+        let paymode4Flag = paymodelist.filter(item => item.paymodeid === 4).length ? true : false
+        let paymode5Flag = paymodelist.filter(item => item.paymodeid === 5).length ? true : false
+        let paymode7Flag = paymodelist.filter(item => item.paymodeid === 7).length ? true : false
+        // 保存信息
+        self.setData({
+          paymode3Flag: paymode3Flag,
+          paymode4Flag: paymode4Flag,
+          paymode5Flag: paymode5Flag,
+          paymode7Flag: paymode7Flag,
+        })
+      }
+    }).catch(error => {
+      toast(error.error)
+    })
+  },
+
+  // 获取可用积分
+  getScore () {
+    let self = this
+    let data = {
+      payMoney: Number(self.data.payMoney),
+      TotalMoney: Number(self.data.totalMoney),
+    }
+    self.setData({
+      scoreFlag: false,
+      useScoreMoney: 0,
+    })
+    API.bill.payMoneyjf(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          score: res.data,
+        })
+      }
+    }).catch(error => {
+      toast(error.error)
+    })
+  },
+
+  // 获取电子券信息
+  getScanTick () {
+    let self = this
+    let scanTick = app.globalData.scanTick
+    self.setData({
+      scanTick: scanTick,
+      scoreFlag: false,
+      useScoreMoney: 0,
+    })
+    // 设置订单支付金额
+    self.setPaymoney()
+  },
+
+  // 设置电子券可用标识
+  getEditorOrder () {
+    let self = this
+    let data = {
+      payMoney: Number(self.data.payMoney),
+      Totalmoney: Number(self.data.totalMoney),
+    }
+    API.bill.payMoneytick(data).then(result => {
+      let res = result.data
+      if (res.flag === 1) {
+        self.setData({
+          isUseTickflag: res.data.length
+        })
+      }
+    }).catch(error => {
+      toast(error.error)
+    })
+  },
+
+  // 去电子券列表
+  toTickList () {
+    let self = this
+    wx.navigateTo({
+      url: '/autoModule/pages/tickList/tickList?from=scanEditorOrder&tradeno=' + self.data.flowno + '&payMoney=' + self.data.payMoney + '&Totalmoney=' + self.data.totalMoney,
+    })
+  },
+
+  // 设置积分使用开关
+  setScoreFlag (e) {
+    let self = this
+    let scoreFlag = self.data.scoreFlag
+    let score = self.data.score
+    if (scoreFlag) {
+      self.setData({
+        scoreFlag: false,
+        useScoreMoney: 0
+      })
+    } else {
+      self.setData({
+        scoreFlag: true,
+        useScoreMoney: score.Money,
+      })
+    }
+    // 设置订单支付金额
+    self.setPaymoney()
+  },
+
+  // 设置订单支付金额
+  setPaymoney () {
+    let self = this
+    // 商品总金额
+    let totalMoney = self.data.totalMoney
+    // 积分抵扣金额
+    let useScoreMoney = self.data.useScoreMoney
+    // 电子券
+    let tickMoney = self.data.scanTick.paymoney || ''
+    // 已支付金额
+    let paymoney = self.data.scanOrderDetail.paymoney || ''
+    self.setData({
+      payMoney: (totalMoney - useScoreMoney - (tickMoney || 0) - paymoney).toFixed(2)
+    })
+    // 仅首次进入时用查询有无可用电子券
+    if (self.data.getUseTickflag) {
+      // 设置电子券可用标识
+      self.getEditorOrder()
+      // 请求后关闭，不允许再次请求
+      self.setData({
+        getUseTickflag: false
+      })
+    }
+    // 使用积分时不重新请求可用积分
+    if (!self.data.scoreFlag) {
+      // 获取可用积分
+      self.getScore()
+    }
+  },
+
+  // 设置支付信息
+  setPaylist () {
+    let self = this
+    let paymode = self.data.paymode
+    let scanTick = self.data.scanTick
+    let score = self.data.score
+    let payMoney = self.data.payMoney
+    // 组合支付方式列表
+    let paylist = [
+      {paymode: paymode, paymoney: payMoney},
+    ]
+    // 电子券
+    if (scanTick) {
+      let paydesc = {
+        paymode: scanTick.paymode,
+        paymoney: Number(scanTick.paymoney),
+        ticketid: scanTick.tickid,
+        limittype: scanTick.limittype,
+        limitcode: scanTick.limitcode,
+        specialflag: scanTick.specialflag,
+        minsalemoney: scanTick.minsalemoney,
+        tickettype: scanTick.tickettype,
+        tickgdscode: scanTick.tickgdscode,
+      }
+      paylist.push(paydesc)
+    }
+    // 积分抵扣
+    if (self.data.scoreFlag) {
+      let paydesc = {score: score.useScore, paymoney: score.Money, memcode: app.globalData.memcode, paymode: 5}
+      paylist.push(paydesc)
+    }
+    self.setData({
+      paylist: paylist
+    })
+    let passwordShow = paylist.filter(item => item.paymode !== 7)
+    // 验证是否调用密码弹框
+    if (passwordShow.length && !self.data.password) {
+      // 设置密码弹框开关
+      self.setPasswordFlag()
+      return false
+    }
+    // 立即支付
+    self.pay()
   },
 
   // 切换支付方式
@@ -140,82 +362,6 @@ Page({
     })
   },
 
-  // 获取支付方式列表
-  getPaymodeList () {
-    let self = this
-    let data = {
-      flowno: self.data.flowno,
-      shopCode: self.data.deptcode
-    }
-    API.invest.getMicroFlowPayMoney(data).then(result => {
-      let res = result.data
-      if (res.flag === 1) {
-        let paymodeList = res.data
-        self.setData({
-          paymodeList: paymodeList,
-          paymode3Flag: (paymodeList.filter(item => item.paymodeid === 3).length ? true : false),
-          paymode7Flag: (paymodeList.filter(item => item.paymodeid === 7).length ? true : false),
-        })
-      } else {
-        toast(res.message)
-      }
-    }).catch(error => {
-      toast(error.error)
-    })
-  },
-
-  // 是否显示密码弹框
-  isSetPasswordShow () {
-    let self = this
-    if (self.data.paymode === 3) {
-      // 设置密码弹框开关
-      self.setPasswordFlag()
-      return false
-    }
-    // 设置支付信息
-    self.setPaylist()
-  },
-
-  // 设置支付信息
-  setPaylist () {
-    let self = this
-    let globalData = app.globalData
-    let paymode = self.data.paymode
-    let tick = self.data.tick
-    let score = self.data.score
-    let orderDetail = self.data.orderDetail
-    let totalMoney = self.data.totalMoney
-    // 组合支付方式列表
-    let paylist = [
-      {paymode: paymode, paymoney: totalMoney},
-    ]
-    // 电子券
-    if (tick) {
-      let paydesc = {
-        paymode: tick.paymode,
-        paymoney: Number(tick.paymoney),
-        ticketid: tick.tickid,
-        limittype: tick.limittype,
-        limitcode: tick.limitcode,
-        specialflag: tick.specialflag,
-        minsalemoney: tick.minsalemoney,
-        tickettype: tick.tickettype,
-        tickgdscode: tick.tickgdscode,
-      }
-      paylist.push(paydesc)
-    }
-    // 积分抵扣
-    if (self.data.scoreFlag) {
-      let paydesc = {score: score.useScore, paymoney: score.Money, memcode: globalData.memcode, paymode: 5}
-      paylist.push(paydesc)
-    }
-    self.setData({
-      paylist: paylist
-    })
-    // 立即支付
-    self.pay()
-  },
-
   // 立即支付
   pay () {
     let self = this
@@ -230,25 +376,24 @@ Page({
     API.invest.microFlowToPay(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        if (paymode === 3) {
-          wx.redirectTo({
-            url: '/shopping/pages/payEnd/payEnd?text=支付成功&type=1',
-          })
-        } else if (paymode === 7) {
-          // 微信支付
+        // 微信支付
+        if (res.data) {
           let payStr = res.data.beecloud.miniPayStr
           self.setData({
             payStr: payStr,
           })
           self.wechatPayment()
+        } else {
+          wx.redirectTo({
+            url: '/shopping/pages/payEnd/payEnd?text=支付成功&type=1',
+          })
         }
       } else {
-        toast(res.message)
         wx.redirectTo({
           url: '/shopping/pages/payEnd/payEnd?text=支付失败&type=0',
         })
+        toast(res.message)
       }
-      toast(res.message)
     }).catch(error => {
       toast(error.error)
     })
@@ -294,7 +439,7 @@ Page({
       password: e.detail,
       passwordFlag: false,
     })
-    // 设置支付信息
-    self.setPaylist()
+    // 立即支付
+    self.pay()
   },
 })

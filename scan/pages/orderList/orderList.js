@@ -126,7 +126,7 @@ Page({
       getFlag: false
     })
     let data = {
-      startDate: self.data.startdate,
+      Starttime: self.data.startdate,
       Page: self.data.page,
       pageSize: self.data.count,
     }

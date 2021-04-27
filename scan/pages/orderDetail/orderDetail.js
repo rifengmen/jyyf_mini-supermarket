@@ -12,12 +12,17 @@ Page({
   data: {
     // 店铺信息
     deptcode: '',
+    deptname: '',
     // 流水号
     flowno: '',
+    // 下单日期
+    recordtime: '',
     // 扫码购订单详情
     orderDetail: '',
     // 订单商品列表
     goodsList: '',
+    // 还需支付金额
+    shouldpaymoney: 0,
   },
 
   /**
@@ -27,7 +32,9 @@ Page({
     let self = this
     self.setData({
       deptcode: options.deptcode,
+      deptname: options.deptname,
       flowno: options.flowno,
+      recordtime: options.recordtime,
     })
     // 获取扫码购订单详情
     self.getOrderDetail()
@@ -86,15 +93,17 @@ Page({
   getOrderDetail () {
     let self = this
     let data = {
-      flowno: self.data.flowno,
-      deptcode: self.data.deptcode
+      ordernum: self.data.flowno,
+      bmcode: self.data.deptcode
     }
     API.invest.listMicroFlowDtl(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
+        let orderDetail = res.data
         self.setData({
-          orderDetail: res.data,
-          goodsList: res.data.gdscodeList
+          orderDetail: orderDetail,
+          goodsList: orderDetail.OrderDetail,
+          shouldpaymoney: (orderDetail.shouldmoney - orderDetail.paymoney).toFixed(2)
         })
       } else {
         toast(res.message)

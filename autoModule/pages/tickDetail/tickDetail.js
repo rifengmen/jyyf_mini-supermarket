@@ -10,10 +10,32 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // tickid
+    // 券id
     tickid: '',
+    // 开始使用时间
+    startdate: '',
+    // 结束使用时间
+    enddate: '',
+    // 限用名称
+    limitname: '',
+    // 限用门店
+    limitdeptcode: '',
+    // 禁用日
+    notuseday: '',
+    // 券名称
+    tickname: '',
+    // 起用金额
+    minsalemoney: '',
+    // 券面额
+    usemoney: '',
+    // 券类别
+    tickettype: '',
+    // 券类别名称
+    tickettypename: '',
+    // 使用规则
+    dealflagdescription: '',
     // 电子券详情
-    tickDetail: ''
+    tickDetail: '',
   },
 
   /**
@@ -21,9 +43,21 @@ Page({
    */
   onLoad: function (options) {
     let self = this
+    let tick = JSON.parse(options.tick)
     self.setData({
       from: options.from,
-      tickid: options.tickid,
+      tickid: tick.onlinetickid,
+      startdate: tick.startdate,
+      enddate: tick.enddate,
+      limitname: tick.limitname,
+      limitdeptcode: tick.limitdeptcode,
+      notuseday: tick.notuseday,
+      tickname: tick.tickname,
+      minsalemoney: tick.minsalemoney,
+      usemoney: tick.usemoney,
+      tickettype: tick.tickettype,
+      tickettypename: tick.tickettypename,
+      dealflagdescription: tick.dealflagdescription,
     })
     // 获取电子券详情
     self.getTickDetail()
@@ -96,8 +130,6 @@ Page({
         self.setData({
           tickDetail: tickDetail,
         })
-      } else {
-        toast(res.message)
       }
     }).catch(error => {
       toast(error.error)

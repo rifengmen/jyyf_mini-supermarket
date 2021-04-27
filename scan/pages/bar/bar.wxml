@@ -26,20 +26,20 @@
         <view class="goods_list1 goodslist">
           <view class="goods_item bgffffff border_be5e5e5" wx:for="{{goodsList}}" wx:key="index">
             <view class="item_desc">
-              <view class="item_name ellipsis2">{{item.goodsName}}</view>
+              <view class="item_name ellipsis2">{{item.productname}}</view>
               <view class="price_cont">
                 <view class="price color999999 font22">
                   <view class="actual_price">
                     <text class="colorfa6400">￥</text>
-                    <text class="colorfa6400 font36">{{item.actualPrice}}</text>
+                    <text class="colorfa6400 font36">{{item.price}}</text>
                   </view>
-                  <del wx:if="{{item.actualPrice !== item.salePrice}}">
+                  <del wx:if="{{item.price !== item.saleprice}}">
                     <text>￥</text>
-                    <text class="font26">{{item.salePrice}}</text>
+                    <text class="font26">{{item.saleprice}}</text>
                   </del>
                 </view>
                 <view class="cart">
-                  <view class="cart_img tr">×{{item.saleAmount}}</view>
+                  <view class="cart_img tr">×{{item.amount}}</view>
                 </view>
               </view>
             </view>

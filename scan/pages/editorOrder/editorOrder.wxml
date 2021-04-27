@@ -1,7 +1,7 @@
 <!--scan/pages/editorOrder/editorOrder.wxml-->
-<view class="container color333333 font28 bgf0f0f0">
+<view class="container editororder color333333 font28 bgf0f0f0">
   <!-- 订单信息 start -->
-  <view class="order_section bgffffff">
+  <view class="order_section margin_b20 bgffffff">
     <view class="orderdesc">
       <view>门店名称</view>
       <view class="font24 color666666">{{deptname}}</view>
@@ -20,25 +20,132 @@
     </view>
   </view>
   <!-- 订单信息 end -->
+  <!-- 订单商品列表 start -->
+  <view class="goodslist margin_b20 bgffffff">
+    <view class="goods_list1">
+      <block wx:for="{{goodsList}}" wx:key="index" wx:if="{{goodsList.length}}">
+        <view class="goods_item bgffffff">
+          <view class="item_desc">
+            <view class="item_name ellipsis2">{{item.productname}}</view>
+            <view class="price_cont">
+              <view class="price color999999 font22">
+                <view class="actual_price">
+                  <text class="colorfa6400">￥</text>
+                  <text class="colorfa6400 font36">{{item.price}}</text>
+                </view>
+                <block wx:if="{{item.price !== item.saleprice}}">
+                  <del>
+                    <text>￥</text>
+                    <text class="font26">{{item.saleprice}}</text>
+                  </del>
+                </block>
+              </view>
+              <view class="cart">
+                <view>× {{item.amount}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+  <!-- 订单商品列表 end -->
+  <!-- 电子券 start -->
+  <block wx:if="{{paymode4Flag}}">
+    <view class="order_sections margin_b20 bgffffff">
+      <view>电子券</view>
+      <view class="section_cont" bindtap="toTickList" wx:if="{{isUseTickflag}}">
+        <view class="color999999" wx:if="{{!scanTick}}">请选择电子券  ></view>
+        <view wx:else>优惠<text class="colorfa6400">￥{{scanTick.paymoney}}</text></view>
+      </view>
+      <view class="section_cont" wx:else>
+        <view class="color999999" wx:if="{{!scanTick}}">暂无可用电子券</view>
+      </view>
+    </view>
+  </block>
+  <!-- 电子券 end -->
+  <!-- 积分抵扣 startt -->
+  <block wx:if="{{paymode5Flag}}">
+    <view class="order_sections margin_b20 bgffffff">
+      <view>积分抵扣</view>
+      <view class="section_cont" bindtap="setScoreFlag">
+        <radio-group class="score_group">
+          <view class="tr">
+            <label for="score">
+              可用
+              <text class="colorfa6400">{{score.useScore || 0}}</text>
+              积分可抵
+              <text class="colorfa6400">{{score.Money || 0}}</text>
+              元
+            </label>
+            <radio id="score" value="" checked="{{scoreFlag}}"></radio>
+          </view>
+        </radio-group>
+      </view>
+    </view>
+  </block>
+  <!-- 积分抵扣 end -->
   <!-- 支付方式 start -->
-  <view class="order_sections paymode_img bgffffff">
+  <view class="order_sections margin_b20 bgffffff">
     <view>支付方式</view>
     <radio-group class="group" bindchange="radioChange">
-      <view class="btn" wx:if="{{paymode7Flag}}">
-        <radio id="wechat" value="7" checked="{{payFlag}}"></radio>
-        <label class="font24" for="wechat"><text>微信</text></label>
-      </view>
-      <view class="btn" wx:if="{{paymode3Flag}}">
-        <radio id="card" value="3" checked="{{!payFlag}}"></radio>
-        <label class="font24" for="card"><text>储值卡</text></label>
-      </view>
+      <block wx:if="{{paymode7Flag}}">
+        <view class="btn">
+          <radio id="wechat" value="7" checked="{{payFlag}}"></radio>
+          <label class="font24" for="wechat"><text>微信</text></label>
+        </view>
+      </block>
+      <block wx:if="{{paymode3Flag}}">
+        <view class="btn">
+          <radio id="card" value="3" checked="{{!payFlag}}"></radio>
+          <label class="font24" for="card"><text>储值卡</text></label>
+        </view>
+      </block>
     </radio-group>
   </view>
   <!-- 支付方式 end -->
+  <!-- 结算信息 start -->
+  <block wx:if="{{!scanOrderDetail.PayDetail.length}}">
+    <view class="order_section margin_b20 bgffffff">
+      <view class="paydesc">
+        <view>商品总额</view>
+        <view class="font_blod">￥{{totalMoney || 0}}</view>
+      </view>
+      <block wx:if="{{paymode4Flag}}">
+        <view class="paydesc">
+          <view>电子券</view>
+          <view class="colorfa6400 font_blod">-￥{{scanTick.paymoney || 0}}</view>
+        </view>
+      </block>
+      <block wx:if="{{paymode5Flag}}">
+        <view class="paydesc">
+          <view>积分抵扣</view>
+          <view class="colorfa6400 font_blod">-￥{{useScoreMoney}}</view>
+        </view>
+      </block>
+    </view>
+  </block>
+  <!-- 结算信息 end -->
+  <!-- 已支付 start -->
+  <block wx:if="{{scanOrderDetail.PayDetail.length}}">
+    <view class="order_section margin_b20 bgffffff">
+      <view class="paydesc">
+        <view>商品总额</view>
+        <view class="font_blod">￥{{totalMoney || 0}}</view>
+      </view>
+      <block wx:for="{{scanOrderDetail.PayDetail}}" wx:key="index">
+        <view class="paydesc">
+          <view>{{item.paymodename}}</view>
+          <view class="colorfa6400 font_blod">-￥{{item.paymoney}}</view>
+        </view>
+      </block>
+    </view>
+  </block>
+  <!-- 已支付 end -->
   <!-- 支付 start -->
   <view class="order_money bgffffff">
-    <view class="order_money_totalMoney font24 ellipsis">实付：<span class="colorfa6400 font34">￥{{totalMoney || 0}}</span></view>
-    <view class="pay colorffffff bg71d793" bindtap="isSetPasswordShow" wx:if="{{paymode3Flag || paymode7Flag}}">立即支付</view>
+    <view class="order_money_totalMoney font24 ellipsis">实付：<span class="colorfa6400 font34">￥{{payMoney || 0}}</span></view>
+    <view class="pay colorffffff bg71d793" bindtap="setPaylist" wx:if="{{paymode3Flag || paymode7Flag}}">立即支付</view>
     <view class="pay colorffffff bgcecece" wx:else>立即支付</view>
   </view>
   <!-- 支付 end -->
