@@ -1,26 +1,9 @@
 /* shopping/pages/goodsDetail/goodsDetail.wxss */
-@import "/pages/template/template.wxss";
+@import '/pages/template/template.wxss';
 .banner_goods {
   width: 100%;
   height: 562rpx;
 }
-/*.banner {*/
-  /*width: 100%;*/
-  /*height: 562rpx;*/
-  /*position: relative;*/
-/*}*/
-/*swiper.banner_swiper {*/
-  /*width: 100%;*/
-  /*height: 100%;*/
-/*}*/
-/*swiper.banner_swiper .swiper_item {*/
-  /*width: 100%;*/
-  /*height: 100%;*/
-/*}*/
-/*swiper.banner_swiper .swiper_item image {*/
-  /*width: 100%;*/
-  /*height: 100%;*/
-/*}*/
 .goods_desc1 {
   width: calc(100% - 48rpx);
   height: auto;
@@ -197,7 +180,7 @@ swiper.group_swiper {
   align-items: center;
   flex-flow: column;
   margin-bottom: 24rpx;
-  background-color: rgba(0, 0, 0, .7);
+  background-color: rgba(0, 0, 0, 0.7);
   padding: unset;
   font-size: unset;
   color: unset;
@@ -214,6 +197,15 @@ swiper.group_swiper {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, .7);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 /* 参与弹窗 end */
+/* 分享图 start */
+#shareCanvas {
+  position: fixed;
+  top: 0;
+  left: -200%;
+  width: 600rpx;
+  height: 960rpx;
+}
+/* 分享图 end */

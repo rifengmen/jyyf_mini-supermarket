@@ -65,6 +65,7 @@ Page({
   onPullDownRefresh: function () {
     let self = this
     self.setData({
+      getFlag: false,
       page: 1,
       lotteryList: [],
     })

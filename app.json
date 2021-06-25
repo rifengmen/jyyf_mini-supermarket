@@ -5,6 +5,7 @@
     "pages/register/register",
     "pages/shopList/shopList",
     "pages/category/category",
+    "pages/scan/scan",
     "pages/cart/cart",
     "pages/userInfo/userInfo",
     "pages/roomplayList/roomplayList"
@@ -104,7 +105,7 @@
     }
   ],
   "window": {
-    "backgroundTextStyle": "light",
+    "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTextStyle": "black",
     "onReachBottomDistance": -100
@@ -122,6 +123,12 @@
         "iconPath": "./lib/images/category.png",
         "selectedIconPath": "./lib/images/categoryActive.png",
         "text": "分类"
+      },
+      {
+        "pagePath": "pages/scan/scan",
+        "iconPath": "./lib/images/scan.png",
+        "selectedIconPath": "./lib/images/scanActive.png",
+        "text": "扫码购"
       },
       {
         "pagePath": "pages/cart/cart",
@@ -156,4 +163,3 @@
   },
   "sitemapLocation": "sitemap.json"
 }
-

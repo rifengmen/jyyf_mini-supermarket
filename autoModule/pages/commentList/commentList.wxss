@@ -25,7 +25,7 @@
   border-bottom: 6rpx solid #71d793;
 }
 .comment_cont {
-  padding: 90rpx 24rpx 0 24rpx;
+  padding-top: 90rpx;
   margin-bottom: unset;
 }
 

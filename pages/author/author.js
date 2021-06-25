@@ -78,7 +78,7 @@ Page({
   // },
 
   // 获取手机号码
-  getPhoneNumber (e) {
+  getPhoneNumber(e) {
     let self = this
     let detail = e.detail
     if (detail.errMsg === 'getPhoneNumber:ok' && detail.iv && detail.encryptedData) {
@@ -86,6 +86,10 @@ Page({
         iv: detail.iv,
         encryptedData: detail.encryptedData
       }
+      wx.showLoading({
+        title: '请求等待中...',
+        mask: true,
+      });
       API.system.bindOpenID(data).then(result => {
         let res = result.data
         if (res.flag === 1) {
@@ -98,6 +102,7 @@ Page({
           toast(res.message)
         }
       }).catch(error => {
+        wx.hideLoading();
         toast(error.error)
       })
     } else {
@@ -108,12 +113,12 @@ Page({
   },
 
   // 取消授权
-  cancelAuthor () {
+  cancelAuthor() {
     wx.navigateBack()
   },
 
   // 注册
-  perfectInfoForWX () {
+  perfectInfoForWX() {
     let self = this
     let data = {
       isphonecode: self.data.isphonecode,
@@ -129,12 +134,13 @@ Page({
         toast(res.message)
       }
     }).catch(error => {
+      wx.hideLoading();
       toast(error.error)
     })
   },
 
   // 获取用户信息
-  login () {
+  login() {
     let self = this
     let data = {
       wxID: self.data.openid,
@@ -178,5 +184,6 @@ Page({
     }).catch(error => {
       toast(error.error)
     })
+    wx.hideLoading();
   },
 })

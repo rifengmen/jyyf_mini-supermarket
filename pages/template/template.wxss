@@ -108,8 +108,9 @@
 
 }
 .comment_cont .comment_list {
-  width: 100%;
+  width: calc(100% - 48rpx);
   height: auto;
+  padding: 0 24rpx;
 }
 .comment_cont .comment_item {
   width: 100%;
@@ -215,7 +216,7 @@
   width: 180rpx;
   height: 100%;
 }
-.hot1_cont .item2 .goods_cont {
+.hot1_cont .item2 .goods_desc {
   width: 278rpx;
   height: 100%;
   display: flex;

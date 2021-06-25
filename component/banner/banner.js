@@ -43,9 +43,9 @@ Component({
    */
   methods: {
     // 修改轮播点儿
-    swiperChange (e) {
+    swiperChange(e) {
       let self = this
-      let {source, current} = e.detail
+      let { source, current } = e.detail
       if (source === 'autoplay' || source === 'touch') {
         self.setData({
           swiperCurrent: current
@@ -54,9 +54,9 @@ Component({
     },
 
     // 去banner详情
-    toBannerDetail (e) {
+    toBannerDetail(e) {
       let self = this
-      let {banner} = e.currentTarget.dataset
+      let { banner } = e.currentTarget.dataset
       let bannerType = self.data.bannerType
       if (bannerType === 'friendLink') {
         // 去友链，friendLink
@@ -70,7 +70,7 @@ Component({
     },
 
     // 去自定义功能区，autoModule
-    toAutoModule (autoModule) {
+    toAutoModule(autoModule) {
       let self = this;
       let moduletype = autoModule.moduletype
       if (moduletype) {
@@ -96,7 +96,10 @@ Component({
           case 6:
             // 扫码购
             wx.navigateTo({
-              url: '/scan/pages/scan/scan',
+              // url: '/scan/pages/scan/scan',
+            })
+            wx.switchTab({
+              url: '/pages/scan/scan',
             })
             break;
           case 8:
@@ -219,7 +222,7 @@ Component({
     },
 
     // 去友链，friendLink
-    toFriendLink (friendLink) {
+    toFriendLink(friendLink) {
       let self = this
       let sitetype = friendLink.sitetype
       switch (sitetype) {
@@ -230,8 +233,8 @@ Component({
             path: friendLink.sitedescribe,
             extraData: '',
             envVersion: '',
-            success(res) {},
-            fail (res) {},
+            success(res) { },
+            fail(res) { },
           })
           break
         // 跳转H5
@@ -257,7 +260,7 @@ Component({
     },
 
     // 预览图片
-    preview () {
+    preview() {
       let self = this
       let bannerList = self.data.bannerList
       let list = []

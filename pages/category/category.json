@@ -3,5 +3,6 @@
     "goods": "/component/goods/goods"
   },
   "navigationBarTitleText": "全部商品",
+  "enablePullDownRefresh": true,
   "onReachBottomDistance": 50
 }

@@ -62,6 +62,7 @@ Page({
   onPullDownRefresh: function () {
     let self = this
     self.setData({
+      getFlag: false,
       curStart: 0,
       roomplayList: [],
     })

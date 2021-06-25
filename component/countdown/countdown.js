@@ -29,6 +29,8 @@ Component({
   data: {
     // 剩余时长
     time: 1,
+    // 天
+    days: '00',
     // 小时
     hours: '00',
     // 分钟
@@ -87,10 +89,12 @@ Component({
       })
       // 倒计时进行
       if (self.data.time !== null && self.data.time !== '' && self.data.time > 0) {
-        let h = parseInt(self.data.time / (60 * 60))
+        let d = parseInt(self.data.time / (60 * 60 * 24))
+        let h = parseInt(self.data.time / (60 * 60) % 24)
         let m = parseInt(self.data.time / 60 % 60)
         let s = parseInt(self.data.time % 60)
         self.setData({
+          days: self.checkTime(d),
           hours: self.checkTime(h),
           minutes: self.checkTime(m),
           second: self.checkTime(s),

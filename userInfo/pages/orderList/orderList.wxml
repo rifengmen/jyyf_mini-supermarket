@@ -1,45 +1,51 @@
 <!--userInfo/pages/orderList/orderList.wxml-->
 <view class="container color333333 font28 bgf0f0f0">
   <view class="order_tit bgffffff">
-    <block wx:for="{{statusList}}" wx:key="index">
-      <view class="name tc {{statusType === item.type ? 'active' : ''}}" data-type="{{item.type}}" bindtap="setStatusType">{{item.name}}</view>
+    <block wx:for="{{ statusList }}" wx:key="index">
+      <view class="name tc {{ statusType === item.type ? 'active' : '' }}" data-type="{{ item.type }}"
+        bindtap="setStatusType">{{ item.name }}</view>
     </block>
   </view>
   <view class="order_cont">
     <view class="order_list">
-      <block wx:for="{{orderList}}" wx:key="index">
-        <navigator class="item bgffffff border_r10" hover-class="none" url="/userInfo/pages/orderDetail/orderDetail?tradeno={{item.ordernum}}">
+      <block wx:for="{{ orderList }}" wx:key="index">
+        <navigator class="item bgffffff border_r10" hover-class="none"
+          url="/userInfo/pages/orderDetail/orderDetail?tradeno={{item.ordernum}}">
           <view class="tit border_be5e5e5">
             <view class="shop_name font_blod">
               <image src="/lib/images/shop.png"></image>
-              <view>{{item.bmname}}</view>
+              <view>{{ item.bmname }}</view>
             </view>
-            <view class="type color71d793 tr">{{item.paystatedescribe}}</view>
+            <view class="type color71d793 tr">{{ item.paystatedescribe }}</view>
           </view>
           <view class="order">
             <view class="no">
-              <view class="font24">{{item.billstatusdescribe}}</view>
-              <view class="color999999 font24">共{{item.Count}}类 <text class="color333333 font28 font_blod">￥{{item.Actprice}}</text></view>
+              <view class="font24">{{ item.billstatusdescribe }}</view>
+              <view class="color999999 font24">
+                <text>共{{ item.Count }}类</text>
+                <text class="color333333 font28 font_blod">￥{{ item.Actprice }}</text>
+              </view>
             </view>
             <view class="no">
-              <view class="color999999 font24">{{item.Recordtime}}</view>
-              <view class="colorfa6400 font24" wx:if="{{item.pickoutcode !== '0'}}">
+              <view class="color999999 font24">{{ item.Recordtime }}</view>
+              <view class="colorfa6400 font24" wx:if="{{ item.pickoutcode && item.pickoutcode !== '0' }}">
                 <text>取货码</text>
-                <text class="font32">{{item.pickoutcode}}</text>
+                <text class="font32">{{ item.pickoutcode }}</text>
               </view>
             </view>
-            <view class="order_btn" wx:if="{{item.payflag || item.cancelflag}}">
-              <view class="btn colorffffff bg71d793 border_r500 border_a71d793 tc" data-tradeno="{{item.ordernum}}" catchtap="toBuyEnd" wx:if="{{item.payflag}}">
-                <buyEnd id="buyEnd{{item.ordernum}}" tradeno="{{item.ordernum}}" from="order"></buyEnd>
+            <view class="order_btn" wx:if="{{ item.payflag || item.cancelflag }}">
+              <view class="btn colorffffff bg71d793 border_r500 border_a71d793 tc" data-tradeno="{{ item.ordernum }}"
+                catchtap="toBuyEnd" wx:if="{{ item.payflag }}">
+                <buyEnd id="buyEnd{{ item.ordernum }}" tradeno="{{ item.ordernum }}" from="order"></buyEnd>
               </view>
-              <view class="btn color666666 bgffffff border_r500 border_acecece tc" wx:if="{{item.cancelflag}}">
-                <cancelBtn bind:setOrderList="setOrderList" tradeno="{{item.ordernum}}"></cancelBtn>
+              <view class="btn color666666 bgffffff border_r500 border_acecece tc" wx:if="{{ item.cancelflag }}">
+                <cancelBtn bind:setOrderList="setOrderList" tradeno="{{ item.ordernum }}"></cancelBtn>
               </view>
             </view>
           </view>
         </navigator>
       </block>
-      <view class="nodata_cont" wx:if="{{!orderList.length && getFlag}}">
+      <view class="nodata_cont" wx:if="{{ !orderList.length && getFlag }}">
         <view class="nodata overflow">
           <image src="/lib/images/nodataOrder.png" mode="aspectFit"></image>
         </view>

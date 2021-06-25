@@ -37,7 +37,7 @@ Component({
   data: {
     // 商品详情
     goodsDetail: '',
-    // otc,区分购物车与立即购买now:正常立即购买
+    // otc,区分购物车与立即购买,now:正常立即购买
     otc: '',
     // isotc,区分拼团砍价的普通立即购买还是活动立即购买
     isotc: '',
@@ -54,7 +54,7 @@ Component({
    */
   methods: {
     // 去结算
-    toBuyEnd (goods) {
+    toBuyEnd(goods) {
       let self = this
       let data = ''
       // 设置商品详情
@@ -93,8 +93,12 @@ Component({
     },
 
     // 结算buyend
-    buyend (data, goods) {
+    buyend(data, goods) {
       let self = this
+      wx.showLoading({
+        title: '请求等待中...',
+        mask: true,
+      });
       API.bill.buyend(data).then(result => {
         let res = result.data
         if (res.flag === 1) {
@@ -130,7 +134,9 @@ Component({
         } else {
           toast(res.message)
         }
+        wx.hideLoading();
       }).catch(error => {
+        wx.hideLoading();
         toast(error.error)
       })
     },

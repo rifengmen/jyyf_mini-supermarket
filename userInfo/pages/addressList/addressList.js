@@ -18,6 +18,8 @@ Page({
     getFlag: false,
     // 团秒标志，0：非团秒商品
     tmFlag: 0,
+    // 商品code
+    gdscode: '',
   },
 
   /**
@@ -27,6 +29,7 @@ Page({
     let self = this
     self.setData({
       from: options.from || '',
+      gdscode: options.gdscode || ''
     })
   },
 
@@ -82,7 +85,7 @@ Page({
   // },
 
   // 获取地址列表
-  getAddressList () {
+  getAddressList() {
     let self = this
     if (self.data.from === 'editorOrder') {
       // 当前门店可用地址列表
@@ -94,7 +97,7 @@ Page({
   },
 
   // 我的地址列表
-  listUserAdress () {
+  listUserAdress() {
     let self = this
     let data = {
       tmFlag: self.data.tmFlag
@@ -117,10 +120,12 @@ Page({
   },
 
   // 当前门店可用地址列表
-  listUserAdressForDept () {
+  listUserAdressForDept() {
     let self = this
+    let { tmFlag, gdscode } = self.data
     let data = {
-      tmFlag: self.data.tmFlag
+      tmFlag: tmFlag,
+      gdscode: gdscode
     }
     wx.showLoading({
       title: '正在加载',
@@ -140,7 +145,7 @@ Page({
   },
 
   // 设置地址列表
-  setAddressList (res) {
+  setAddressList(res) {
     let self = this
     if (res.flag === 1) {
       self.setData({
@@ -157,7 +162,7 @@ Page({
   },
 
   // 设置收货地址
-  setAddress (e) {
+  setAddress(e) {
     let self = this
     let address = e.currentTarget.dataset.address
     if (address.sendflag && self.data.from === 'editorOrder') {
@@ -167,7 +172,7 @@ Page({
   },
 
   // 修改是否默认地址
-  setIsdefault (e) {
+  setIsdefault(e) {
     let self = this
     let address = e.currentTarget.dataset.address
     let data = {
@@ -185,7 +190,7 @@ Page({
   },
 
   // 保存默认地址
-  saveDefaultAddress (data, address) {
+  saveDefaultAddress(data, address) {
     let self = this
     API.system.SetDefaultAddress(data).then(result => {
       let res = result.data
@@ -198,7 +203,7 @@ Page({
   },
 
   // 取消默认地址
-  cancelDefaultAddress (data, address) {
+  cancelDefaultAddress(data, address) {
     let self = this
     API.system.CancelDefaultAddress(data).then(result => {
       let res = result.data
@@ -211,10 +216,10 @@ Page({
   },
 
   // 设置默认地址
-  setDefaultAddress (res, address) {
+  setDefaultAddress(res, address) {
     let self = this
+    let { addressList } = self.data
     if (res.flag === 1) {
-      let addressList = self.data.addressList
       addressList.forEach(item => {
         item.isdefault = 0
       })
@@ -227,20 +232,20 @@ Page({
           }
         }
       })
-      self.setData({
-        addressList: addressList
-      })
     }
+    self.setData({
+      addressList: addressList
+    })
   },
 
   // 删除按钮
-  delete (e) {
+  delete(e) {
     let self = this
     let address = e.currentTarget.dataset.address
     // 确认弹窗
     wx.showModal({
       title: '提示',
-      content: '您确定要删除这个地址吗？',
+      content: '您确定要删除此收货地址吗？',
       success: res => {
         // 确认
         if (res.confirm) {
@@ -258,7 +263,7 @@ Page({
   },
 
   // 删除收货地址
-  delAddress (address) {
+  delAddress(address) {
     let self = this
     let data = {
       Id: address.id
@@ -278,7 +283,7 @@ Page({
   },
 
   // 取消收藏自提点
-  collectDept (address) {
+  collectDept(address) {
     let self = this
     let data = {
       flag: 1, // 0:收藏；1：取消
@@ -299,7 +304,7 @@ Page({
   },
 
   // 去编辑地址页面
-  toEditorAddress (e) {
+  toEditorAddress(e) {
     let self = this
     app.globalData.addressDetail = e.currentTarget.dataset.address
     wx.navigateTo({

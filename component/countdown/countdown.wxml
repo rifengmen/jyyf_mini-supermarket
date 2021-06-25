@@ -1,5 +1,6 @@
 <!--component/countdown/countdown.wxml-->
 <view class="countdown_time">
+    <view class="time bg2c2c2c border_r4">{{days}}</view>天
     <view class="time bg2c2c2c border_r4">{{hours}}</view>:
     <view class="time bg2c2c2c border_r4">{{minutes}}</view>:
     <view class="time bg2c2c2c border_r4">{{second}}</view>

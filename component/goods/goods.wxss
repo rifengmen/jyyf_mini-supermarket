@@ -14,7 +14,7 @@
 .goods_item2 {
     width: 100%;
     height: auto;
-    margin: 0 0 20rpx 0;
+    margin: 0 0 12rpx 0;
     flex-flow: column;
     box-shadow: 0 0 4px 3px rgba(243, 239, 239, 0.5);
 }

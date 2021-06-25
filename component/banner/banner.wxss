@@ -36,8 +36,8 @@
 }
 .banner .auto .auto_item {
     width: 20%;
-    height: 180rpx;
-    padding-bottom: 20rpx;
+    height: 160rpx;
+    padding-bottom: 10rpx;
     display: flex;
     justify-content: space-between;
     align-items: center;

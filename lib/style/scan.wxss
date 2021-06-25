@@ -42,7 +42,7 @@
   height: 100%;
 }
 .scan {
-  width:calc(100% - 48rpx);
+  width: calc(100% - 48rpx);
   height: calc(100% - 548rpx);
   margin: 0 auto;
   display: flex;
@@ -54,7 +54,7 @@
   width: 276rpx;
   height: 276rpx;
   margin: 0 auto;
-  box-shadow: 0px 2px 4px 0px #B3F8CA;
+  box-shadow: 0px 2px 4px 0px #b3f8ca;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -84,6 +84,7 @@
   flex-flow: column;
 }
 .scan .scan_nav .nav_img {
+  position: relative;
   width: 80rpx;
   height: 80rpx;
   margin-bottom: 10rpx;
@@ -148,7 +149,7 @@
   width: 172rpx;
   height: 172rpx;
   margin-top: 88rpx;
-  box-shadow:0px -4px 20px 0px rgba(217,217,217,0.5);
+  box-shadow: 0px -4px 20px 0px rgba(217, 217, 217, 0.5);
 }
 .manual {
   width: 388rpx;
@@ -162,7 +163,7 @@
   width: calc(100% - 24rpx);
   height: 88rpx;
   padding-left: 24rpx;
-  box-shadow:0px -4px 20px 0px rgba(217,217,217,0.5);
+  box-shadow: 0px -4px 20px 0px rgba(217, 217, 217, 0.5);
   display: flex;
   justify-content: flex-end;
 }
@@ -172,7 +173,7 @@
   left: 48rpx;
   width: 124rpx;
   height: 124rpx;
-  box-shadow: 0px 2px 4px 0px #A7FFC4;
+  box-shadow: 0px 2px 4px 0px #a7ffc4;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -402,7 +403,7 @@
   align-items: center;
 }
 .order_item:last-child {
-  border-bottom:  unset;
+  border-bottom: unset;
 }
 .order_item_desc {
   width: 440rpx;

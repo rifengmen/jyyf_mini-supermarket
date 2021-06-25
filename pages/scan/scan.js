@@ -1,8 +1,8 @@
-// scan/pages/scan/scan.js
+// pages/scan/scan.js
 const app = getApp()
-import toast from '../../../utils/toast'
-import utils from '../../../utils/util'
-import API from '../../../api/index'
+import toast from '../../utils/toast'
+import utils from '../../utils/util'
+import API from '../../api/index'
 
 Page({
 
@@ -47,6 +47,8 @@ Page({
     self.setData({
       scanCart: app.globalData.scanCart,
     })
+    // 扫码购显示小红点
+    self.showBage()
   },
 
   /**
@@ -60,9 +62,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    let self = this
-    // 离开扫码购清空购物车
-    app.globalData.scanCart = []
+
   },
 
   /**
@@ -150,16 +150,38 @@ Page({
     let old_scanShopInfo = app.globalData.scanShopInfo
     let new_scanShopInfo = self.data.scanShopList[shopIndex]
     if (scanCart.length && old_scanShopInfo.deptcode !== new_scanShopInfo.deptcode) {
-      toast('购物车存在商品，请重新进入扫码购！')
-      return false
+      wx.showModal({
+        title: '提示',
+        content: '购物车存在商品，确认清空扫码购购物车吗？',
+        success: res => {
+          // 确认
+          if (res.confirm) {
+            // 确认按钮
+            self.confirm(shopIndex, new_scanShopInfo)
+          }
+        }
+      })
+    } else {
+      // 确认按钮
+      self.confirm(shopIndex, new_scanShopInfo)
     }
+
+  },
+
+  // 确认按钮
+  confirm(shopIndex, new_scanShopInfo) {
+    let self = this
     self.setData({
+      scanCart: [],
       shopIndex: shopIndex,
       scanShopInfo: new_scanShopInfo,
     })
+    app.globalData.scanCart = []
     app.globalData.scanShopInfo = new_scanShopInfo
     // 设置title
     self.setTitle()
+    // 扫码购显示小红点
+    self.showBage()
   },
 
   // 获取出场码
@@ -196,5 +218,22 @@ Page({
       content: '您当前扫码门店是' + deptname + "，请确认后扫码!",
       showCancel: false,
     })
+  },
+
+  // 扫码购显示小红点
+  showBage() {
+    let self = this
+    let index = 2
+    let { scanCart } = self.data
+    if (scanCart.length) {
+      wx.setTabBarBadge({
+        index: index,
+        text: scanCart.length.toString(),
+      });
+    } else {
+      wx.removeTabBarBadge({
+        index: index,
+      });
+    }
   },
 })

@@ -29,7 +29,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 120rpx!important;
+  margin-bottom: 120rpx !important;
 }
 .goods_item_more .more {
   width: 120rpx;
@@ -122,6 +122,9 @@
 .goods_list2 .goods_list2_cont {
   width: 344rpx;
 }
+.goods_list2 .goods_item .item_desc {
+  min-height: unset;
+}
 /* 商品列表_2 end */
 /* 商品列表_3 start */
 .goods_list3 {
@@ -133,10 +136,6 @@
   align-items: center;
 }
 /* 商品列表_3 end */
-/*.goodslist {*/
-  /*width: 100%;*/
-  /*padding: unset;*/
-/*}*/
 /* 购物车 start */
 /* 购物车图片 start */
 .goods_item .cart {
@@ -231,7 +230,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, .1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .setdate .startdate {
   width: 100%;
@@ -247,7 +246,7 @@
   padding: 0 12rpx;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
 }
 /* 提示角标 end */
 /* 标签 start */
@@ -274,7 +273,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, .7);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 .password_cont .password {
   width: 540rpx;
@@ -324,4 +323,3 @@
   align-items: center;
 }
 /* 密码弹框 end */
-

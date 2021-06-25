@@ -22,6 +22,10 @@ Page({
     Utype: 2,
     // 收货地址
     address: '',
+    // 商品code
+    goodscode: '',
+    // 商品数量
+    amount: '',
     // 商品详情,非购物车结算用
     goodsDetail: '',
     // 订单详情
@@ -182,7 +186,7 @@ Page({
   // },
 
   // 获取商品详情
-  getGoodsDetail () {
+  getGoodsDetail() {
     let self = this
     let data = {
       Gdscode: self.data.goodscode,
@@ -207,7 +211,7 @@ Page({
   },
 
   // 获取购物车列表
-  getCartList () {
+  getCartList() {
     let self = this
     let data = {}
     // 设置请求开关
@@ -231,7 +235,7 @@ Page({
   },
 
   // 获取收货地址
-  getAddress () {
+  getAddress() {
     let self = this
     let addressId = app.globalData.addressId
     if (addressId) {
@@ -261,7 +265,7 @@ Page({
   },
 
   // 获取运费
-  getFreight () {
+  getFreight() {
     let self = this
     let data = {
       otc: self.data.otc,
@@ -300,10 +304,10 @@ Page({
   },
 
   // 获取配送时间树
-  getSendTime () {
-    let self= this
+  getSendTime() {
+    let self = this
     let data = {}
-    API.bill.getSendTime(data).then(result =>{
+    API.bill.getSendTime(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
         self.setData({
@@ -318,7 +322,7 @@ Page({
   },
 
   // 设置配送时间列表
-  setDeliverytimeList () {
+  setDeliverytimeList() {
     let self = this
     let sendTimeList = self.data.sendTimeList
     let deliverytimeList = []
@@ -336,9 +340,9 @@ Page({
   },
 
   // 配送时间picker变更
-  bindMultiPickerColumnChange (e) {
+  bindMultiPickerColumnChange(e) {
     let self = this
-    let {column, value} = e.detail
+    let { column, value } = e.detail
     let deliverytimeIndex = self.data.deliverytimeIndex
     let arr = []
     if (column === 0) {
@@ -354,9 +358,9 @@ Page({
   },
 
   // 配送时间变更
-  deliverytimeChange (e) {
+  deliverytimeChange(e) {
     let self = this
-    let {value} = e.detail
+    let { value } = e.detail
     let deliverytimeList = self.data.deliverytimeList
     self.setData({
       deliverydate: deliverytimeList[0][value[0]].sendtime,
@@ -365,7 +369,7 @@ Page({
   },
 
   // 获取可用积分
-  getScore () {
+  getScore() {
     let self = this
     let data = {
       payMoney: parseFloat(self.data.payMoney),
@@ -388,7 +392,7 @@ Page({
   },
 
   // 获取电子券信息
-  getTick () {
+  getTick() {
     let self = this
     let tick = app.globalData.tick
     if (tick) {
@@ -401,7 +405,7 @@ Page({
   },
 
   // 设置电子券可用标识
-  getEditorOrder () {
+  getEditorOrder() {
     let self = this
     let data = {
       payMoney: parseFloat(self.data.payMoney),
@@ -420,7 +424,7 @@ Page({
   },
 
   // 去电子券列表
-  toTickList () {
+  toTickList() {
     let self = this
     if (!self.data.address) {
       toast('请先选择收货地址')
@@ -432,7 +436,7 @@ Page({
   },
 
   // 设置订单备注
-  setRemark (e) {
+  setRemark(e) {
     let self = this
     self.setData({
       remark: e.detail.value,
@@ -440,15 +444,15 @@ Page({
   },
 
   // 去地址列表
-  toAddressList () {
+  toAddressList() {
     let self = this
     wx.navigateTo({
-      url: '/userInfo/pages/addressList/addressList?from=' + 'editorOrder',
+      url: '/userInfo/pages/addressList/addressList?from=' + 'editorOrder' + '&gdscode=' + self.data.goodscode,
     })
   },
 
   // 设置积分使用开关
-  setScoreFlag (e) {
+  setScoreFlag(e) {
     let self = this
     let scoreFlag = self.data.scoreFlag
     let score = self.data.score
@@ -468,7 +472,7 @@ Page({
   },
 
   // 设置订单支付金额
-  setPayMoney () {
+  setPayMoney() {
     let self = this
     // 商品总金额
     let totalMoney = self.data.orderDetail.needpaymoney
@@ -498,7 +502,7 @@ Page({
   },
 
   // 验证支付信息完整以及是否调用密码弹框
-  payVerify (e) {
+  payVerify(e) {
     let self = this
     let address = app.globalData.address || ''
     let orderDetail = self.data.orderDetail
@@ -524,7 +528,7 @@ Page({
   },
 
   // 设置密码弹框开关
-  setPasswordFlag () {
+  setPasswordFlag() {
     let self = this
     self.setData({
       passwordFlag: !self.data.passwordFlag,
@@ -533,7 +537,7 @@ Page({
   },
 
   // 获取子组件支付密码
-  getPassword (e) {
+  getPassword(e) {
     let self = this
     let from = self.data.frombtn
     // 获取支付按钮

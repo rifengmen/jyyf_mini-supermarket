@@ -120,18 +120,28 @@ Page({
   // },
 
   // 是否绑定手机号码
-  isBindmobile () {
+  async isBindmobile() {
     let self = this
     if (!self.data.bindmobileFlag) {
-      wx.navigateTo({
-        url: '/pages/author/author'
+      wx.showLoading({
+        title: '请求等待中...',
+        mask: true,
+      });
+      // 获取openid、session_key
+      await app.getOpenID().then(result => {
+        wx.navigateTo({
+          url: '/pages/author/author'
+        })
+      }).catch(error => {
+        toast(error.msg)
       })
+      wx.hideLoading();
       return false
     }
   },
 
   // 初始化
-  init () {
+  init() {
     let self = this
     // 获取订单数量（内部功能用）
     self.getOrderNum()
@@ -152,7 +162,7 @@ Page({
   },
 
   // 获取订单数量（内部功能用）
-  getOrderNum () {
+  getOrderNum() {
     let self = this
     let role = self.data.role
     let data = {
@@ -173,7 +183,7 @@ Page({
   },
 
   // 获取电子券数量
-  getTickNum () {
+  getTickNum() {
     let self = this
     let data = {}
     API.mem.listCoupon(data).then(result => {
@@ -189,7 +199,7 @@ Page({
   },
 
   // 获取卡余额
-  getCardInfo () {
+  getCardInfo() {
     let self = this
     let data = {}
     API.mem.getMyCardInfo(data).then(result => {
@@ -205,7 +215,7 @@ Page({
   },
 
   // 获取积分
-  getScore () {
+  getScore() {
     let self = this
     let data = {
       memcode: app.globalData.memcode,
@@ -224,7 +234,7 @@ Page({
   },
 
   // 更新订单状态列表
-  getStatusList () {
+  getStatusList() {
     let self = this
     let statusList = self.data.statusList
     statusList.forEach(item => {
@@ -233,7 +243,7 @@ Page({
   },
 
   // 获取订单数量
-  getOrderList (type) {
+  getOrderList(type) {
     let self = this
     let data = {
       Starttime: '2020-01-01',
@@ -258,7 +268,7 @@ Page({
   },
 
   // 设置未读消息数量
-  setMessageNum () {
+  setMessageNum() {
     let self = this
     let data = {
       messageFlag: 0,
@@ -276,7 +286,7 @@ Page({
   },
 
   // 设置内部功能未读消息数量
-  setInternalMessageList () {
+  setInternalMessageList() {
     let self = this
     let data = {
       businessflag: self.data.businessflag,
@@ -295,13 +305,13 @@ Page({
   },
 
   // 更新购物车
-  getCartCount () {
+  getCartCount() {
     let self = this
     let data = {}
     API.bill.getCarProductCount(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        let index = 2
+        let index = 3
         if (res.data) {
           if (res.data.data) {
             wx.setTabBarBadge({

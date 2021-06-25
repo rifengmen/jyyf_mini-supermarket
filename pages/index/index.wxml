@@ -11,15 +11,17 @@
 			<!-- 背景图 end -->
 			<!-- 背景色 start -->
 			<block wx:else>
-				<view class="index_bg" style="background: linear-gradient(180deg, RGB({{home_bgcolor}}) 0%, RGBA({{home_bgcolor + ', .5'}}) 50%, #f9f9f9 90%);"></view>
+				<view class="index_bg"
+					style="background: linear-gradient(180deg, RGB({{home_bgcolor}}) 0%, RGBA({{home_bgcolor + ', .5'}}) 50%, #f9f9f9 90%);">
+				</view>
 			</block>
 			<!-- 背景色 end -->
 		</view>
 		<!-- 背景 end -->
 		<!-- 内容部分 start -->
-		<view class="index_cont overflow">
+		<view class="index_cont">
 			<!-- 定位 搜索 start -->
-			<view class="gps_search_cont">
+			<view class="gps_search_cont margin_tb12">
 				<!-- 定位 start -->
 				<navigator class="gps_cont" hover-class="none" url="/pages/shopList/shopList">
 					<view class="gps_img overflow">
@@ -38,13 +40,13 @@
 			<!-- 定位 搜索 end -->
 			<!-- banner start -->
 			<block wx:if="{{bannerTypeList[0].list.length}}">
-				<view class="banner_cont">
+				<view class="banner_cont margin_tb12">
 					<banner id="banner" bannerList="{{bannerTypeList[0].list}}"></banner>
 				</view>
 			</block>
 			<!-- banner end -->
 			<!-- 公告 start -->
-			<view class="notice_cont border_r500 overflow bgffffff">
+			<view class="notice_cont colorffffff border_r500 overflow margin_tb12">
 				<navigator class="notice_img overflow" hover-class="none" url="/message/pages/noticeList/noticeList">
 					<image src="/lib/images/notice.png"></image>
 				</navigator>
@@ -52,7 +54,9 @@
 					<swiper class="notice_swiper" autoplay="true" circular="true" interval="5000" vertical="true">
 						<block wx:for="{{noticeList}}" wx:key="index">
 							<swiper-item catchtouchmove='catchTouchMove'>
-								<navigator class="notice_item ellipsis" hover-class="none" url="/message/pages/detail/detail?id={{item.id}}&type=notice&time={{item.Pubdate}}">{{item.title}}</navigator>
+								<navigator class="notice_item font24 ellipsis" hover-class="none"
+									url="/message/pages/detail/detail?id={{item.id}}&type=notice&time={{item.Pubdate}}">{{item.title}}
+								</navigator>
 							</swiper-item>
 						</block>
 					</swiper>
@@ -61,35 +65,25 @@
 			<!-- 公告 end -->
 			<!-- 自定义功能区 start -->
 			<block wx:if="{{modulePictureList.length}}">
-				<view class="auto_cont">
+				<view class="auto_cont margin_tb12">
 					<banner id="autoModule" bannerList="{{modulePictureList}}" bannerType="autoModule"></banner>
 				</view>
 			</block>
 			<!-- 自定义功能区 end -->
 			<!-- 视频广告区 start -->
 			<block wx:if="{{bannerTypeList[3].list.length}}">
-				<view class="advideo_cont">
+				<view class="advideo_cont margin_tb12">
 					<block wx:for="{{bannerTypeList[3].list}}" wx:key="index">
-						<video
-								class="advideo"
-								autoplay
-								controls="{{false}}"
-								loop
-								muted
-								show-progress="{{false}}"
-								show-fullscreen-btn="{{false}}"
-								show-play-btn="{{false}}"
-								show-center-play-btn="{{false}}"
-								src="{{baseUrl + item.videourl}}"
-								bindtap="toBannerDetail"
-								data-banner="{{item}}"></video>
+						<video class="advideo" autoplay controls="{{false}}" loop muted show-progress="{{false}}"
+							show-fullscreen-btn="{{false}}" show-play-btn="{{false}}" show-center-play-btn="{{false}}"
+							src="{{baseUrl + item.videourl}}" bindtap="toBannerDetail" data-banner="{{item}}"></video>
 					</block>
 				</view>
 			</block>
 			<!-- 视频广告区 end -->
 			<!-- 友链banner区域 start -->
 			<block wx:if="{{friendLinkList.length}}">
-				<view class="link_cont">
+				<view class="link_cont margin_tb12">
 					<banner id="friendLink" bannerList="{{friendLinkList}}" bannerType="friendLink"></banner>
 				</view>
 			</block>
@@ -107,9 +101,10 @@
 			<!-- 海报区 end -->
 			<!-- 专区 start -->
 			<block wx:if="{{hotList.length}}">
-				<view class="zone overflow">
+				<view class="zone overflow margin_tb12">
 					<block wx:for="{{hotList}}" wx:key="index">
-						<navigator class="zone_item {{item.lastItem ? 'lastItem' : ''}} border_r10 bgfbd2af fl" hover-class="none" url="/shopping/pages/goodsList/goodsList?Cateid={{item.Id}}&title={{item.storecategoryname}}">
+						<navigator class="zone_item {{item.lastItem ? 'lastItem' : ''}} border_r10 bgfbd2af fl" hover-class="none"
+							url="/shopping/pages/goodsList/goodsList?Cateid={{item.Id}}&title={{item.storecategoryname}}">
 							<view class="zone_itemtit">
 								<view class="zone_itemname colorfa6400 font32 font_blod ellipsis">{{item.storecategoryname}}</view>
 								<view class="tozone border_r500 colorffffff font24 bgd17537 tc">去看看</view>
@@ -124,9 +119,10 @@
 			<!-- 专区 end -->
 			<!-- 各种类别商品轮播列表 start -->
 			<block wx:for="{{promotemodeList}}" wx:key="index" wx:if="{{item.list.length}}">
-				<view class="timeslimit border_r10"
-					  style="background: linear-gradient(180deg, {{home_promotebg}} 0%, #f9f9f9 100%);">
-					<navigator class="tit" hover-class="none" url="/shopping/pages/goodsList/goodsList?title={{item.name}}&{{item.promotemode === 999 ? 'Datatype=1' : ('panicBuy=panicbuy&promotemode=' + item.promotemode)}}">
+				<view class="timeslimit border_r10 margin_tb12"
+					style="background: linear-gradient(180deg, {{home_promotebg}} 0%, #f9f9f9 100%);">
+					<navigator class="tit" hover-class="none"
+						url="/shopping/pages/goodsList/goodsList?title={{item.name}}&{{item.promotemode === 999 ? 'Datatype=1' : ('panicBuy=panicbuy&promotemode=' + item.promotemode)}}">
 						<view class="tit_name">
 							<image class="tit_img overflow" src="/lib/images/timeslimit.png" mode="aspectFit"></image>
 							<view class="colorffffff font32 font_blod">{{item.name}}</view>
@@ -134,15 +130,8 @@
 						<view class="more colorffffff">查看更多...</view>
 					</navigator>
 					<view class="goods_list3 scroll_x">
-						<block
-								wx:for-item="goods"
-								wx:key-index="gindex"
-								wx:for="{{item.list}}"
-								wx:key="gindex">
-							<goods
-									goods="{{goods}}"
-									showType="{{3}}"
-									bind:getCartCount="getCartCount"></goods>
+						<block wx:for-item="goods" wx:key-index="gindex" wx:for="{{item.list}}" wx:key="gindex">
+							<goods goods="{{goods}}" showType="{{3}}" bind:getCartCount="getCartCount"></goods>
 						</block>
 					</view>
 				</view>
@@ -150,65 +139,63 @@
 			<!-- 各种类别商品轮播列表 end -->
 			<!-- 首页活动样式一 start -->
 			<block wx:if="{{indexHotList.length}}">
-				<view class="index_hot1">
+				<view class="index_hot1 margin_tb12">
 					<block wx:for="{{indexHotList}}" wx:key="index">
 						<template is="index_hot1" data="{{item, baseUrl, deptname, deptcode, defgoodsimg}}"></template>
 					</block>
 				</view>
 			</block>
 			<!-- 首页活动样式一 end -->
-			<!-- clusterList_2 start -->
+			<!-- clusterList start -->
 			<view class="clusterList overflow">
 				<block wx:for="{{clusterList}}" wx:key="index">
-					<view class="cluster border_r10 overflow" data-index='{{index}}'>
+					<view class="cluster apply-section border_r10 overflow" data-index='{{index}}'>
 						<!-- 标题 start -->
-						<navigator class="cluster_tit" hover-class="none" url="/shopping/pages/goodsList/goodsList?Cateid={{item.Id}}&title={{item.storecategoryname}}">
+						<navigator class="cluster_tit" hover-class="none"
+							url="/shopping/pages/goodsList/goodsList?Cateid={{item.Id}}&title={{item.storecategoryname}}">
 							<block wx:if="{{item.showway === 1}}">
 								<view class="tit_img overflow">
 									<image src="{{baseUrl + item.ico}}"></image>
 								</view>
 							</block>
-							<block wx:elif="{{item.showway === 2}}">
-								<view class="tit_text" >
-									<view class="font32 font_blod">{{item.storecategoryname}}</view>
-									<view class="more color71d793">查看更多...</view>
-								</view>
-							</block>
+							<!--<block wx:elif="{{item.showway === 2}}">-->
+							<!--<view class="tit_text" >-->
+							<!--<view class="font32 font_blod">{{item.storecategoryname}}</view>-->
+							<!--<view class="more color71d793">查看更多...</view>-->
+							<!--</view>-->
+							<!--</block>-->
 						</navigator>
 						<!-- 标题 end -->
-						<block wx:if="{{item.showway === 2}}">
-							<!-- 商品列表_1plus start -->
-							<view class="goods_list1plus goodslist">
-								<block
-										wx:for-item="goods"
-										wx:for-index="gindex"
-										wx:for="{{item.gdscodelist}}"
-										wx:key="gindex">
-									<goods
-											goods="{{goods}}"
-											showType="{{1}}"
-											bind:getCartCount="getCartCount"></goods>
-								</block>
-							</view>
-							<!-- 商品列表_1plus end -->
-						</block>
-						<block wx:if="{{item.showway === 1}}">
+						<!--<block wx:if="{{item.showway === 2}}">-->
+						<!--&lt;!&ndash; 商品列表_1plus start &ndash;&gt;-->
+						<!--<view class="goods_list1plus goodslist">-->
+						<!--<block-->
+						<!--wx:for-item="goods"-->
+						<!--wx:for-index="gindex"-->
+						<!--wx:for="{{item.gdscodelist}}"-->
+						<!--wx:key="gindex">-->
+						<!--<goods-->
+						<!--goods="{{goods}}"-->
+						<!--showType="{{1}}"-->
+						<!--bind:getCartCount="getCartCount"></goods>-->
+						<!--</block>-->
+						<!--</view>-->
+						<!--&lt;!&ndash; 商品列表_1plus end &ndash;&gt;-->
+						<!--</block>-->
+						<block
+							wx:if="{{(item.showway === 1) && clusterApplyList.length && (clusterApplyList[index].top < 750) && ((index > 0 && clusterApplyList[index - 1].top < 0) || index === 0)}}">
 							<!-- 商品列表_2 start -->
 							<view class="goods_list2">
 								<view class="goods_list2_cont">
-									<block wx:for-item="goods" wx:for-index="gindex" wx:for="{{item.gdscodelist}}" wx:key="gindex" wx:if="{{gindex%2 === 0}}">
-										<goods
-												goods="{{goods}}"
-												showType="{{2}}"
-												bind:getCartCount="getCartCount"></goods>
+									<block wx:for-item="goods" wx:for-index="gindex" wx:for="{{item.gdscodelist}}" wx:key="gindex"
+										wx:if="{{gindex%2 === 0}}">
+										<goods goods="{{goods}}" showType="{{2}}" bind:getCartCount="getCartCount"></goods>
 									</block>
 								</view>
 								<view class="goods_list2_cont">
-									<block wx:for-item="goods" wx:for-index="gindex" wx:for="{{item.gdscodelist}}" wx:key="gindex" wx:if="{{gindex%2 !== 0}}">
-										<goods
-												goods="{{goods}}"
-												showType="{{2}}"
-												bind:getCartCount="getCartCount"></goods>
+									<block wx:for-item="goods" wx:for-index="gindex" wx:for="{{item.gdscodelist}}" wx:key="gindex"
+										wx:if="{{gindex%2 !== 0}}">
+										<goods goods="{{goods}}" showType="{{2}}" bind:getCartCount="getCartCount"></goods>
 									</block>
 								</view>
 							</view>
@@ -217,13 +204,46 @@
 					</view>
 				</block>
 			</view>
-			<!-- clusterList_2 end -->
+			<!-- clusterList end -->
+			<!-- tabs_clusterList start -->
+			<view class="tabs_cont apply-section">
+				<!-- tit start -->
+				<view class="tabs_tit bgffffff z_index_99999">
+					<scroll-view class="scroll_tabs_tit" scroll-x="true" scroll-with-animation="true"
+						scroll-into-view="{{scrollTabsData}}">
+						<block wx:for="{{tabsList}}" wx:key="index">
+							<view id="{{'tabs_name' + index}}"
+								class="tabs_name font32 font_blod {{tabsActiveIndex === index ? 'color71d793 border_b71d793_3' : 'border_bffffff_3'}}"
+								data-index="{{index}}" bindtap="setTabsActiveIndex">{{item.storecategoryname}}</view>
+						</block>
+					</scroll-view>
+				</view>
+				<!-- tit end -->
+				<!-- 商品列表_2 start -->
+				<block
+					wx:if="{{(clusterApplyList[clusterApplyList.length - 1].top < 750) && clusterApplyList[clusterApplyList.length - 2].top < 0}}">
+					<view class="goods_list2">
+						<view class="goods_list2_cont">
+							<block wx:for="{{goodsList}}" wx:key="index" wx:if="{{index%2 === 0}}">
+								<goods goods="{{item}}" showType="{{2}}" bind:getCartCount="getCartCount"></goods>
+							</block>
+						</view>
+						<view class="goods_list2_cont">
+							<block wx:for="{{goodsList}}" wx:key="gindex" wx:if="{{index%2 !== 0}}">
+								<goods goods="{{item}}" showType="{{2}}" bind:getCartCount="getCartCount"></goods>
+							</block>
+						</view>
+					</view>
+				</block>
+				<!-- 商品列表_2 end -->
+			</view>
+			<!-- tabs_clusterList end -->
 		</view>
 		<!-- 内容部分 end -->
 	</block>
 	<!-- 加载动画 start -->
 	<block wx:else>
-		<view class="index_loading bgffffff overflow">
+		<view class="index_loading overflow">
 			<image src="/lib/images/loading.gif" mode="widthFix"></image>
 		</view>
 	</block>

@@ -83,16 +83,14 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    let self = this
-    // 关闭下拉刷新
-    wx.stopPullDownRefresh()
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    let self = this
+
   },
 
   /**
@@ -136,7 +134,6 @@ Page({
       longitude: self.data.longitude,
       latitude: self.data.latitude,
     }
-    // 获取当前位置信息
     API.bill.pickOrder(data).then(result => {
       let res = result.data
       if (res.flag === 1) {

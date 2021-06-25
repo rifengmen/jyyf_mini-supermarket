@@ -168,14 +168,18 @@ Component({
    * 组件的属性监听器
    */
   observers: {
+    // 监听商品信息
     'goods': function(field) {
       let self = this
       if (field) {
+        let dialogCount = 0
+        // 判断非散称商品
         if (!field.scaleflag) {
-          self.setData({
-            dialogCount: 1
-          })
+          dialogCount = 1
         }
+        self.setData({
+          dialogCount: dialogCount,
+        })
         // 设置合计金额
         self.setDialogTotalMoney()
       }

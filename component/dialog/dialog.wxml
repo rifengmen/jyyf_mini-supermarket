@@ -1,6 +1,6 @@
 <!--component/dialog/dialog.wxml-->
 <!-- dialog start -->
-<view class="dialog_cont {{dialogFlag ? 'dialog_show' : ''}} color999999 font28 bg000000_70 z_index_99999 overflow" catchtouchmove="catchTouchMove">
+<view class="dialog_cont {{dialogFlag ? 'dialog_show z_index_99999' : 'z_index_-2'}} color999999 font28 bg000000_70 overflow" catchtouchmove="catchTouchMove">
   <!--<view class="dialog border_r20 bgffffff ellipsis">-->
   <view class="dialog bgffffff">
     <!-- 商品 start -->
@@ -62,13 +62,13 @@
       <view class="dialog_section">
         <view class="dialog_section_tit">斤数(500g)：</view>
         <view class="dialog_section_cont color333333">
-          <input class="dialog_input bge7e7e7 border_r500" type="number" placeholder="请输入斤数" value="{{dialogJin}}" bindinput="setDialogJin" />
+          <input class="dialog_input bge7e7e7 border_r500" type="number" placeholder="请输入斤数" value="{{dialogJin}}" disabled="{{!dialogFlag}}" bindinput="setDialogJin" />
         </view>
       </view>
       <view class="dialog_section">
         <view class="dialog_section_tit">两数(50g)：</view>
         <view class="dialog_section_cont color333333">
-          <input class="dialog_input bge7e7e7 border_r500" type="number" placeholder="请输入两数" value="{{dialogLiang}}" bindinput="setDialogLiang" />
+          <input class="dialog_input bge7e7e7 border_r500" type="number" placeholder="请输入两数" value="{{dialogLiang}}" disabled="{{!dialogFlag}}" bindinput="setDialogLiang" />
         </view>
       </view>
       <view class="dialog_section">
@@ -86,7 +86,7 @@
             <image class="img" src="/lib/images/subtrack.png"></image>
           </view>
           <view class="input_cart font24 tc">
-            <input type="number" value="{{dialogCount}}" bindinput="setDialogCount" />
+            <input type="number" value="{{dialogCount}}" disabled="{{!dialogFlag}}" bindinput="setDialogCount" />
           </view>
           <view class="add_cart btn border_r500 overflow" catchtap="addCart">
             <image class="img" src="/lib/images/add.png"></image>
@@ -104,10 +104,12 @@
       </view>
     </view>
     <!-- 合计金额 end -->
+    <!-- 弹框按钮部分 start -->
     <view class="dialog_btn">
       <view class="dialog_cancel color999999 bgffffff border_a999999 border_r500 tc" bindtap="dialogClose">取消</view>
       <view class="dialog_confirm colorffffff bg71d793 border_a71d793 border_r500 tc" bindtap="dialogConfirm">确认</view>
     </view>
+    <!-- 弹框按钮部分 end -->
   </view>
 </view>
 <!-- dialog end -->

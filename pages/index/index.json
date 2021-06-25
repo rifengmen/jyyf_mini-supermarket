@@ -3,5 +3,6 @@
     "banner": "/component/banner/banner",
     "goods": "/component/goods/goods"
   },
-  "enablePullDownRefresh": true
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 50
 }

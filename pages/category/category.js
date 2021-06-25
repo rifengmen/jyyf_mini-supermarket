@@ -94,7 +94,16 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    let self = this
+    self.setData({
+      getFlag: false,
+      page: 1,
+      goodsList: [],
+    })
+    // 获取商品列表
+    self.getGoodsList()
+    // 关闭下拉刷新
+    wx.stopPullDownRefresh()
   },
 
   /**
@@ -134,7 +143,7 @@ Page({
   // },
 
   // 获取一级分类
-  getLevel1 () {
+  getLevel1() {
     let self = this
     let data = {}
     API.system.listClass(data).then(result => {
@@ -166,7 +175,7 @@ Page({
   },
 
   // 获取二级分类
-  getLevel2 () {
+  getLevel2() {
     let self = this
     let index1 = self.data.level1ActiveIndex
     let level1 = self.data.level1
@@ -198,7 +207,7 @@ Page({
         })
         if (res.data.length || level1[index1].classid === -1) {
           // 获取商品列表
-        self.getGoodsList()
+          self.getGoodsList()
         } else {
           // 设置请求开关
           self.setData({
@@ -215,7 +224,7 @@ Page({
   },
 
   // 获取商品列表
-  getGoodsList () {
+  getGoodsList() {
     let self = this
     let index1 = self.data.level1ActiveIndex
     let index2 = self.data.level2ActiveIndex
@@ -253,7 +262,7 @@ Page({
   },
 
   // 设置选中一级分类
-  setLevel1ActiveIndex (e) {
+  setLevel1ActiveIndex(e) {
     let self = this
     let index = e.currentTarget.dataset.index
     // 设置二级类滚动数据
@@ -276,7 +285,7 @@ Page({
   },
 
   // 设置选中二级分类
-  setLevel2ActiveIndex (e) {
+  setLevel2ActiveIndex(e) {
     let self = this
     let index = e.currentTarget.dataset.index
     self.setData({
@@ -308,7 +317,7 @@ Page({
   },
 
   // 设置二级类全部显示开关
-  setLevel2ShowFlag () {
+  setLevel2ShowFlag() {
     let self = this
     self.setData({
       level2ShowFlag: !self.data.level2ShowFlag
@@ -316,13 +325,13 @@ Page({
   },
 
   // 更新购物车数量
-  getCartCount () {
+  getCartCount() {
     let self = this
     let data = {}
     API.bill.getCarProductCount(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        let index = 2
+        let index = 3
         if (res.data) {
           if (res.data.data) {
             wx.setTabBarBadge({

@@ -51,7 +51,7 @@ Component({
     },
     // 卡支付密码
     password: {
-      type:String,
+      type: String,
       value: '',
     },
     // otc,区分购物车与立即购买
@@ -119,7 +119,7 @@ Component({
    */
   methods: {
     // 是否显示密码弹框
-    isSetPasswordShow () {
+    isSetPasswordShow() {
       let self = this
       if (self.data.from === 'card' || self.data.scoreFlag || self.data.tick) {
         // 设置密码弹框开关
@@ -131,7 +131,11 @@ Component({
     },
 
     // 设置支付信息
-    setPaylist () {
+    setPaylist() {
+      wx.showLoading({
+        title: '请求等待中...',
+        mask: true,
+      });
       let self = this
       let globalData = app.globalData
       let paymode = ''
@@ -147,7 +151,7 @@ Component({
       let score = self.data.score
       // 组合支付方式列表
       let paylist = [
-        {paymode: paymode, paymoney: self.data.payMoney},
+        { paymode: paymode, paymoney: self.data.payMoney },
       ]
       // 电子券
       if (tick) {
@@ -166,7 +170,7 @@ Component({
       }
       // 积分抵扣
       if (self.data.scoreFlag) {
-        let paydesc = {score: score.useScore, paymoney: score.Money, memcode: globalData.memcode, paymode: 5}
+        let paydesc = { score: score.useScore, paymoney: score.Money, memcode: globalData.memcode, paymode: 5 }
         paylist.push(paydesc)
       }
       self.setData({
@@ -177,7 +181,7 @@ Component({
     },
 
     // 立即支付
-    pay () {
+    pay() {
       let self = this
       let globalData = app.globalData
       let data = {
@@ -221,22 +225,28 @@ Component({
           })
           toast(res.message)
         }
+        wx.hideLoading();
         toast(res.message)
         // 清除结算信息
         self.clearOrderDetail()
       }).catch(error => {
+        wx.hideLoading();
         toast(error.error)
       })
     },
 
     // 秒杀立即支付
-    panicPay () {
+    panicPay() {
       let self = this
       let goodsDetail = self.data.goodsDetail
       let data = {
         goodscode: goodsDetail.gdscode,
         amount: goodsDetail.amount,
       }
+      wx.showLoading({
+        title: '请求等待中...',
+        mask: true,
+      });
       API.mem.payOrderComit(data).then(result => {
         let res = result.data
         if (res.flag === 1) {
@@ -249,38 +259,40 @@ Component({
         } else {
           toast(res.message)
         }
+        wx.hideLoading();
       }).catch(error => {
+        wx.hideLoading();
         toast(error.error)
       })
     },
 
     // 微信支付
-    wechatPayment () {
+    wechatPayment() {
       let self = this
       let payStr = self.data.payStr
       wx.requestPayment({
-          appId: payStr.appID,
-          timeStamp: payStr.timeStamp,
-          nonceStr: payStr.nonceStr,
-          package: payStr.package,
-          signType: payStr.signType,
-          paySign: payStr.paySign,
-          success:function(res){
-            wx.redirectTo({
-              url: '/shopping/pages/payEnd/payEnd?text=支付成功&type=1',
-            })
-          },
-          fail:function(res){
-            wx.redirectTo({
-              url: '/shopping/pages/payEnd/payEnd?text=支付失败&type=0',
-            })
-          },
-          complete:function(res){}
-        })
+        appId: payStr.appID,
+        timeStamp: payStr.timeStamp,
+        nonceStr: payStr.nonceStr,
+        package: payStr.package,
+        signType: payStr.signType,
+        paySign: payStr.paySign,
+        success: function (res) {
+          wx.redirectTo({
+            url: '/shopping/pages/payEnd/payEnd?text=支付成功&type=1',
+          })
+        },
+        fail: function (res) {
+          wx.redirectTo({
+            url: '/shopping/pages/payEnd/payEnd?text=支付失败&type=0',
+          })
+        },
+        complete: function (res) { }
+      })
     },
 
     // 清除结算信息
-    clearOrderDetail () {
+    clearOrderDetail() {
       let self = this
       app.globalData.address = ''
       app.globalData.addressId = ''

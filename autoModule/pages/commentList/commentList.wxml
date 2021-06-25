@@ -1,6 +1,6 @@
 <!--autoModule/pages/commentList/commentList.wxml-->
 <import src="/pages/template/template.wxml" />
-<view class="container color333333 font28 bgf0f0f0" data-weui-theme="dark">
+<view class="container color333333 font28" data-weui-theme="dark">
   <!-- 评价类别 start -->
   <view class="comment_tit bgffffff">
     <block wx:for="{{EtypeList}}" wx:key="index">
@@ -9,8 +9,8 @@
   </view>
   <!-- 评价类别 end -->
   <!-- 评价 start -->
-  <view class="comment_cont bgffffff">
-    <view class="comment_list">
+  <view class="comment_cont">
+    <view class="comment_list bgffffff">
       <template is="comment" data="{{commentList}}"></template>
     </view>
     <view class="nodata_cont" wx:if="{{!commentList.length && getFlag}}">

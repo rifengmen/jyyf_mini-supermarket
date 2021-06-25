@@ -16,8 +16,8 @@
 					</view>
 					<view class="distance" wx:if="{{distanceFlag}}">
 						<view class="dist">
-							<text class="ellipsis">{{item.distance}}</text>
-							<text>m</text>
+							<text class="ellipsis">{{item.distancekm ? item.distancekm : item.distance}}</text>
+							<text>{{item.distancekm ? 'km' : 'm'}}</text>
 						</view>
 						<view class="colord94242 font24" wx:if="{{!index}}">离我最近</view>
 					</view>

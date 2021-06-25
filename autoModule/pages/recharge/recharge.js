@@ -90,9 +90,9 @@ Page({
   // },
 
   // 修改轮播点儿
-  swiperChange (e) {
+  swiperChange(e) {
     let self = this
-    let {source, current} = e.detail
+    let { source, current } = e.detail
     if (source === 'autoplay' || source === 'touch') {
       self.setData({
         swiperCurrent: current
@@ -101,14 +101,14 @@ Page({
   },
 
   // 去banner详情
-  toBannerDetail (e) {
+  toBannerDetail(e) {
     let self = this
     let banner = e.currentTarget.dataset.banner
     app.toBannerDetail(banner)
   },
 
   // 获取卡余额
-  getCardInfo () {
+  getCardInfo() {
     let self = this
     let data = {}
     API.mem.getMyCardInfo(data).then(result => {
@@ -126,7 +126,7 @@ Page({
   },
 
   // 设置充值金额
-  setMoney (e) {
+  setMoney(e) {
     let self = this
     self.setData({
       money: e.detail.value
@@ -134,7 +134,7 @@ Page({
   },
 
   // 发送充值信息
-  sendPay () {
+  sendPay() {
     let self = this
     let money = self.data.money
     // 验证金额是否填写
@@ -146,8 +146,12 @@ Page({
       card_no: self.data.memcode,
       toMoney: money,
     }
+    wx.showLoading({
+      title: '请求等待中...',
+      mask: true,
+    });
     API.mem.reChargeToPay(data).then(result => {
-      let res = result .data
+      let res = result.data
       if (res.flag === 1) {
         // 充值支付
         self.toPay(res.data)
@@ -155,12 +159,13 @@ Page({
         toast(res.message)
       }
     }).catch(error => {
+      wx.hideLoading();
       toast(error.error)
     })
   },
 
   // 充值支付
-  toPay (datas) {
+  toPay(datas) {
     let self = this
     let data = {
       presentmoney: datas.presentmoney,
@@ -178,12 +183,13 @@ Page({
         toast(res.message)
       }
     }).catch(error => {
+      wx.hideLoading();
       toast(error.error)
     })
   },
 
   // 微信支付
-  wechatPay (wechatstr) {
+  wechatPay(wechatstr) {
     let self = this
     wx.requestPayment({
       appId: wechatstr.appId,
@@ -198,7 +204,8 @@ Page({
       },
       fail: function (res) {
         toast('充值失败')
-      }
+      },
     })
+    wx.hideLoading();
   },
 })

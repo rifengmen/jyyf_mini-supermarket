@@ -30,7 +30,7 @@ Page({
     latitude: 0,
     // 扫码购门店信息
     scanShopInfo: '',
-},
+  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -107,27 +107,33 @@ Page({
   // },
 
   // 获取定位
-  getLocation () {
+  getLocation() {
     let self = this
     wx.getLocation({
       type: 'gcj02',
       altitude: false,
-      success (res) {
+      success(res) {
         self.setData({
           longitude: res.longitude,
-          latitude: res.latitude
+          latitude: res.latitude,
+          // 科飞
+          // longitude: 113.292463,
+          // latitude: 35.770223,
+          // 金威
+          // longitude: 113.115401,
+          // latitude: 36.206141,
         })
         // 获取门店列表
         self.getScanShopList()
       },
-      fail () {
+      fail() {
         toast('获取位置失败，请退出重进')
       }
     })
   },
 
   // 获取门店列表
-  getScanShopList () {
+  getScanShopList() {
     let self = this
     let data = {
       Longitude: self.data.longitude,
@@ -159,7 +165,7 @@ Page({
   },
 
   // 获取出场码
-  getBar () {
+  getBar() {
     let self = this
     let data = {
       deptcode: self.data.deptcode
@@ -182,7 +188,7 @@ Page({
   },
 
   // 切换出场码和详情
-  toggleFlag () {
+  toggleFlag() {
     let self = this
     self.setData({
       flag: !self.data.flag
@@ -190,7 +196,7 @@ Page({
   },
 
   // 获取订单详情
-  getOrderDetail () {
+  getOrderDetail() {
     let self = this
     let data = {
       ordernum: self.data.flowno,
@@ -214,7 +220,7 @@ Page({
   },
 
   // 关闭出场码
-  closeBar () {
+  closeBar() {
     wx.navigateBack()
   }
 })

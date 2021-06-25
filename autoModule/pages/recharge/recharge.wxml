@@ -1,9 +1,11 @@
 <!--autoModule/pages/recharge/recharge.wxml-->
 <view class="container color333333 font28 bgf0f0f0">
   <!-- banner start -->
-  <view class="banner_recharge bgffffff">
-    <banner bannerList="{{bannerTypeList[1].list}}"></banner>
-  </view>
+  <block wx:if="{{bannerTypeList[1].list.length}}">
+    <view class="banner_recharge bgffffff">
+      <banner bannerList="{{bannerTypeList[1].list}}"></banner>
+    </view>
+  </block>
   <!-- banner end -->
   <!-- 卡信息 start -->
   <view class="card_cont bgffffff">
@@ -21,7 +23,7 @@
     <view class="tit">充值金额</view>
     <view class="money font60 font_blod">
       <view>￥</view>
-      <input class="input" type="number" value="{{money}}" bindinput="setMoney" placeholder="请填写充值金额" />
+      <input class="input" type="digit" value="{{money}}" bindinput="setMoney" placeholder="请填写充值金额" />
     </view>
   </view>
   <!-- 充值金额 end -->

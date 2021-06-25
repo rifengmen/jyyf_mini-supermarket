@@ -257,7 +257,7 @@ Page({
   },
 
   // 设置购物车
-  setCartList (e) {
+  setCartList(e) {
     let self = this
     let cartdesc = e.detail
     let cartList = self.data.cartList
@@ -336,7 +336,7 @@ Page({
     API.bill.getCarProductCount(data).then(result => {
       let res = result.data
       if (res.flag === 1) {
-        let index = 2
+        let index = 3
         if (res.data) {
           self.setData({
             cartCount: res.data.data

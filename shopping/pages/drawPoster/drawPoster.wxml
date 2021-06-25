@@ -1,6 +1,4 @@
 <!--shopping/pages/drawPoster/drawPoster.wxml-->
-<!--<image id="goodspic" class="imgpic" src="{{baseUrl + goodsDetail.image}}" mode="aspectFit"></image>-->
-<!--<image id="qrpic" class="imgpic" src="{{baseUrl + qrCodePicPath}}" mode="aspectFit"></image>-->
 <!-- canvas start -->
 <view class="canvas_cont" catchtouchmove="catchTouchMove">
     <canvas type="2d" id="posterCanvas"></canvas>

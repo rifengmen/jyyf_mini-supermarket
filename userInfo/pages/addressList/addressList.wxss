@@ -51,6 +51,11 @@
   line-height: 1.5;
   margin-bottom: 10rpx;
 }
+.address_item .name .img {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
 .address_item .item_editor {
   width: 90rpx;
   height: 100%;
@@ -70,7 +75,7 @@
 .address_item .item_editor .isdefault {
   width: 100%;
   margin-top: 30rpx;
-  scale: .7;
+  scale: 0.7;
 }
 .address_item .no_send {
   position: absolute;
@@ -81,4 +86,3 @@
   height: 130rpx;
 }
 /* 地址列表 end */
-

@@ -43,26 +43,6 @@
 }
 /* 一级分类 end */
 /* 二级分类 start */
-/*.cate_list {*/
-  /*width: 100%;*/
-  /*height: 100%;*/
-  /*display: flex;*/
-/*}*/
-/*.cate_item {*/
-  /*width: unset;*/
-/*}*/
-/*.cate_img {*/
-  /*width: 106rpx;*/
-  /*height: 106rpx;*/
-  /*border: 8rpx solid #ffffff;*/
-/*}*/
-/*.cate_img.active {*/
-  /*border: 8rpx solid #71d793*/
-/*}*/
-/*.cate_name {*/
-  /*display: unset;*/
-  /*line-height: 58rpx;*/
-/*}*/
 .level2 {
   position: fixed;
   top: 88rpx;

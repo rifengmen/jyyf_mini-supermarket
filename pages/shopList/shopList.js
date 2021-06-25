@@ -89,17 +89,19 @@ Page({
   // },
 
   // 获取定位
-  getLocation () {
+  getLocation() {
     let self = this
     wx.getLocation({
       type: 'gcj02',
       altitude: false,
-      success (res) {
+      success(res) {
         app.globalData.longitude = res.longitude
         app.globalData.latitude = res.latitude
+        // app.globalData.longitude = 113.292463
+        // app.globalData.latitude = 35.770223
       },
       // 接口调用结束
-      complete () {
+      complete() {
         // 获取门店列表
         self.getShopList()
       }
@@ -107,7 +109,7 @@ Page({
   },
 
   // 获取门店列表
-  getShopList () {
+  getShopList() {
     let self = this
     let longitude = app.globalData.longitude || 0
     let latitude = app.globalData.latitude || 0
@@ -131,6 +133,19 @@ Page({
       let res = result.data
       if (res.flag === 1) {
         let shopList = res.data
+        shopList.forEach(item => {
+          // 科飞
+          // longitude: 113.292463,
+          // latitude: 35.770223,
+          // 金威
+          // longitude: 113.115401,
+          // latitude: 36.206141,
+          if (item.distance > 1000) {
+            item.distancekm = (item.distance / 1000).toFixed(2)
+          } else {
+            item.distancekm = 0
+          }
+        })
         self.setData({
           shopList: shopList,
         })
@@ -144,7 +159,7 @@ Page({
   },
 
   // 选择门店
-  changeDept (e) {
+  changeDept(e) {
     let self = this
     let shop = e.currentTarget.dataset.shop
     let o_deptcode = app.globalData.deptcode
@@ -165,7 +180,7 @@ Page({
   },
 
   // 修改默认门店
-  changeDefaultFlag (e) {
+  changeDefaultFlag(e) {
     let self = this
     let shop = e.currentTarget.dataset.shop
     let deptcode = shop.deptcode
@@ -181,16 +196,16 @@ Page({
   },
 
   // 设置默认门店
-  setDefaultFlag (deptcode) {
+  setDefaultFlag(deptcode) {
     let self = this
     let data = {
       deptcode: deptcode
     }
     API.system.setDefaultFlag(data).then(result => {
       let res = result.data
+      let { shopList } = self.data
       // 更新页面默认按钮
       if (res.flag === 1) {
-        let shopList = self.data.shopList
         shopList.forEach((item) => {
           if (item.deptcode === deptcode) {
             item.defaultflag = 1
@@ -198,20 +213,20 @@ Page({
             item.defaultflag = 0
           }
         })
-        self.setData({
-          shopList: shopList
-        })
         app.globalData.shopList = shopList
       } else {
         toast(res.message)
       }
+      self.setData({
+        shopList: shopList
+      })
     }).catch(error => {
       toast(error.error)
     })
   },
 
   // 取消默认门店
-  cancelDefaultFlag (deptcode) {
+  cancelDefaultFlag(deptcode) {
     let self = this
     let data = {
       deptcode: deptcode
@@ -239,7 +254,7 @@ Page({
   },
 
   // 显示地图
-  showMap (e) {
+  showMap(e) {
     let self = this
     let shop = e.currentTarget.dataset.shop
     wx.openLocation({

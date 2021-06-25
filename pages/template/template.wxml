@@ -71,7 +71,7 @@
       </view>
       <navigator class="item2 border_r10 bgffffff overflow" hover-class="none" url="/shopping/pages/goodsDetail/goodsDetail?Gdscode={{item.gdscodelist[2].Gdscode}}&promotemode={{item.gdscodelist[2].promotemode}}&title={{item.gdscodelist[2].Name}}&deptname={{deptname}}&deptcode={{deptcode}}">
         <image src="{{item.gdscodelist[2].Defaultimage ? baseUrl + item.gdscodelist[2].Defaultimage : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
-        <view class="goods_cont">
+        <view class="goods_desc">
           <view class="goods_name font24 ellipsis2 tc">{{item.gdscodelist[2].Name}}</view>
           <view class="goods_btn colorffffff bg71d793 border_r500 tc">点击购买</view>
         </view>

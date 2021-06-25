@@ -27,7 +27,7 @@ Component({
       type: Number,
       value: 0
     },
-    // cartType，购物车类型
+    // cartType，购物车类型,0：加入购物车；1：购物车编辑数量，
     cartType: {
       type: Number,
       value: 0

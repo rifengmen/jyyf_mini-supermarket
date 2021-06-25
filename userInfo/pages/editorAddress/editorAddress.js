@@ -54,7 +54,11 @@ Page({
         addressUsername: address.username,
         addressPhone: address.phone,
         addressAddress: address.address,
-        mapaddress: address.house
+        mapaddress: address.house,
+        gps: {
+          longitude: address.longitude,
+          latitude: address.latitude,
+        }
       })
     }
   },
@@ -110,7 +114,7 @@ Page({
   // },
 
   // 设置名字
-  setUsername (e) {
+  setUsername(e) {
     let self = this
     self.setData({
       addressUsername: e.detail.value
@@ -118,7 +122,7 @@ Page({
   },
 
   // 设置手机号
-  setPhone (e) {
+  setPhone(e) {
     let self = this
     self.setData({
       addressPhone: e.detail.value
@@ -126,7 +130,7 @@ Page({
   },
 
   // 设置地址类型
-  setAddressType (e) {
+  setAddressType(e) {
     let self = this
     let addressType = parseFloat(e.detail.value)
     self.setData({
@@ -135,17 +139,17 @@ Page({
   },
 
   // 获取当前位置
-  getGps () {
+  getGps() {
     let self = this
     wx.getLocation({
       type: 'gcj02',
-      success (res) {
+      success(res) {
         self.setData({
           latitude: res.latitude,
           longitude: res.longitude
         })
       },
-      complete () {
+      complete() {
         // 打开地图
         self.chooseLocation()
       },
@@ -153,12 +157,12 @@ Page({
   },
 
   // 打开地图
-  chooseLocation () {
+  chooseLocation() {
     let self = this
     wx.chooseLocation({
       latitude: self.data.latitude,
       longitude: self.data.longitude,
-      success (res) {
+      success(res) {
         self.setData({
           gps: res,
           mapaddress: res.address + res.name
@@ -170,7 +174,7 @@ Page({
   },
 
   // 获取附近自提点
-  getSiteList () {
+  getSiteList() {
     let self = this
     let data = {
       Latitude: self.data.gps.latitude,
@@ -191,7 +195,7 @@ Page({
   },
 
   // 设置自提点id
-  setSiteid (e) {
+  setSiteid(e) {
     let self = this
     let siteid = e.detail.value
     self.setData({
@@ -200,7 +204,7 @@ Page({
   },
 
   // 设置详细地址
-  setAddressAddress (e) {
+  setAddressAddress(e) {
     let self = this
     self.setData({
       addressAddress: e.detail.value
@@ -208,7 +212,7 @@ Page({
   },
 
   // 保存收货地址
-  save () {
+  save() {
     let self = this
     // 验证名字
     if (!self.data.addressUsername) {
@@ -254,7 +258,7 @@ Page({
   },
 
   // 收藏自提点
-  collectDept () {
+  collectDept() {
     let self = this
     // 验证选择自提点
     if (!self.data.siteid) {
