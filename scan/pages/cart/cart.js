@@ -36,7 +36,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let self= this
+    let self = this
     self.setData({
       type: parseFloat(options.type),
       scanShopInfo: app.globalData.scanShopInfo,
@@ -60,7 +60,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let self= this
+    let self = this
     self.setData({
       scanCart: app.globalData.scanCart,
     })
@@ -104,7 +104,7 @@ Page({
   // },
 
   // 获取购物袋列表
-  getShopBagList () {
+  getShopBagList() {
     let self = this
     wx.showLoading({
       title: '正在加载',
@@ -119,7 +119,7 @@ Page({
       let res = result.data
       if (res.flag === 1) {
         let shopBagList = res.data.shoppingbaglist
-        if (shopBagList.length)  {
+        if (shopBagList.length) {
           shopBagList.forEach(item => {
             item.quantity = 0
             item.salePrice = item.saleprice
@@ -146,9 +146,9 @@ Page({
   // 购物袋数量操作
   updateShopBag(e) {
     let self = this
-    let {goods, types} = e.currentTarget.dataset
+    let { goods, types } = e.currentTarget.dataset
     let shopBagList = self.data.shopBagList
-    shopBagList.forEach(item =>{
+    shopBagList.forEach(item => {
       if (item.goodscode === goods.goodscode) {
         // 判断加减
         if (types === 'add') {
@@ -171,7 +171,7 @@ Page({
   },
 
   // 扫一扫
-  scangoodscode () {
+  scangoodscode() {
     let self = this
     // // 验证是否绑定手机号码
     // if (!app.bindmobileFlag()) {
@@ -182,7 +182,7 @@ Page({
     //   return false
     // }
     wx.scanCode({
-      success (res) {
+      success(res) {
         // 扫码后获取结果参数赋值给Input
         let result = res.result
         if (result) {
@@ -200,7 +200,7 @@ Page({
   },
 
   // 获取商品信息
-  getGoodsInfo () {
+  getGoodsInfo() {
     let self = this
     let data = {
       barcode: self.data.goodscode,
@@ -222,7 +222,7 @@ Page({
   },
 
   // 加入返回
-  addBack () {
+  addBack() {
     let self = this
     // 加入购物车
     self.addScancart()
@@ -231,7 +231,7 @@ Page({
   },
 
   // 加入继续
-  addGoOn () {
+  addGoOn() {
     let self = this
     // 加入购物车
     self.addScancart('goOn')
@@ -240,10 +240,10 @@ Page({
   },
 
   // 加入购物车
-  addScancart (goOn) {
+  addScancart(goOn) {
     let self = this
     // 扫码购购物车操作,goods:商品信息;types:操作方法(add:加，count:减)
-    app.setScanCart (self.data.goodsInfo, 'add')
+    app.setScanCart(self.data.goodsInfo, 'add')
     self.setData({
       scanCart: app.globalData.scanCart,
     })
@@ -256,7 +256,7 @@ Page({
   },
 
   // 关闭购物车弹窗
-  cancel () {
+  cancel() {
     let self = this
     self.setData({
       goodsInfoFlag: false,
@@ -264,12 +264,12 @@ Page({
   },
 
   // 修改购物车数量
-  updateAmount (e) {
+  updateAmount(e) {
     let self = this
     let goods = e.currentTarget.dataset.goods
     let types = e.currentTarget.dataset.types
     // 扫码购购物车操作,goods:商品信息;types:操作方法(add:加，count:减)
-    app.setScanCart (goods, types)
+    app.setScanCart(goods, types)
     self.setData({
       scanCart: app.globalData.scanCart
     })
@@ -278,7 +278,7 @@ Page({
   },
 
   // 设置编辑开关
-  setEditflag () {
+  setEditflag() {
     let self = this
     self.setData({
       editflag: !self.data.editflag
@@ -286,9 +286,9 @@ Page({
   },
 
   // 删除购物车商品
-  delBtn (e) {
+  delBtn(e) {
     let self = this
-    let {goods, gindex} = e.currentTarget.dataset
+    let { goods, gindex } = e.currentTarget.dataset
     let scanCart = self.data.scanCart
     scanCart = scanCart.filter((item, index) => index !== gindex)
     app.globalData.scanCart = scanCart
@@ -300,7 +300,7 @@ Page({
   },
 
   // 清空购物车
-  clearBtn () {
+  clearBtn() {
     let self = this
     wx.showModal({
       title: '提示',
@@ -320,7 +320,7 @@ Page({
   },
 
   // 计算商品总价
-  setTotalmoney () {
+  setTotalmoney() {
     let self = this
     let totalmoney = 0
     let scanCart = self.data.scanCart
@@ -343,7 +343,11 @@ Page({
   },
 
   // 去结算
-  setTlement () {
+  setTlement() {
+    wx.showLoading({
+      title: '请求等待中...',
+      mask: true,
+    });
     let self = this
     let scanShopInfo = self.data.scanShopInfo
     // 购物袋加入购物车
@@ -385,7 +389,9 @@ Page({
       } else {
         toast(res.message)
       }
+      wx.hideLoading()
     }).catch(error => {
+      wx.hideLoading()
       toast(error.error)
     })
   },

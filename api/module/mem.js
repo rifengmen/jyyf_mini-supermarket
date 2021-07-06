@@ -5,11 +5,11 @@ import request from '../../utils/request'
 import toast from '../../utils/toast'
 
 const mem = {
-  // 获取积分详情
+  // 获取积分记录
   listScoreDtl: data => request('mem/card.do?method=listScoreDtl', data),
-  // 获取卡余额
+  // 获取余额
   getMyCardInfo: data => request('mem/card.do?method=getMyCardInfo', data),
-  // 获取余额详情
+  // 获取余额记录
   listMoneyCardDtl: data => request('mem/card.do?method=listMoneyCardDtl', data),
   // 获取购买商品列表
   listMemberConsumGdscode: data => request('mem/member.do?method=listMemberConsumGdscode', data),

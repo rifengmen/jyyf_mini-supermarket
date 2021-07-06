@@ -38,7 +38,7 @@
             <view>微信支付</view>
           </view>
           <view class="weui-cell__hd">
-            <radio value="" checked="true"/>
+            <radio value="" checked="true" />
           </view>
         </label>
       </radio-group>

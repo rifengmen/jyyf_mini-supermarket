@@ -16,7 +16,7 @@ Page({
     defgoodsimg: app.globalData.defgoodsimg,
     // 订单详情
     orderDetail: '',
-    // 身份标识，默认0,0:顾客,1:拣货,2:配送,3:取货
+    // 身份标识，默认0,0:顾客,1:配送员,2:团长,3:核销员
     role: 0,
     // 身份标识列表
     roleList: [],
@@ -29,7 +29,7 @@ Page({
     // 定位
     longitude: '',
     latitude: '',
-},
+  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -101,12 +101,12 @@ Page({
   // },
 
   // 获取定位
-  getLocation () {
+  getLocation() {
     let self = this
     wx.getLocation({
       type: 'gcj02',
       altitude: false,
-      success (res) {
+      success(res) {
         self.setData({
           longitude: res.longitude,
           latitude: res.latitude,
@@ -116,7 +116,7 @@ Page({
   },
 
   // 设置订单号
-  setTradeno (e) {
+  setTradeno(e) {
     let self = this
     let tradeno = e.detail.value
     self.setData({
@@ -125,7 +125,7 @@ Page({
   },
 
   // 变更订单状态
-  pickOrder () {
+  pickOrder() {
     let self = this
     let data = {
       role: self.data.role,
@@ -148,7 +148,7 @@ Page({
   },
 
   // 重置订单编号
-  resetTradeno () {
+  resetTradeno() {
     let self = this
     self.setData({
       tradeno: '',
@@ -157,10 +157,10 @@ Page({
   },
 
   // 扫一扫
-  scanTradeno () {
+  scanTradeno() {
     let self = this
     wx.scanCode({
-      success (res) {
+      success(res) {
         // 扫码后获取结果参数赋值给Input
         let result = res.result
         if (result) {
@@ -178,7 +178,7 @@ Page({
   },
 
   // 获取订单详情
-  getOrderDetail () {
+  getOrderDetail() {
     let self = this
     let data = {
       orderNum: self.data.tradeno
@@ -204,7 +204,7 @@ Page({
   },
 
   // 确定按钮
-  confrim () {
+  confrim() {
     let self = this
     let orderDetail = self.data.orderDetail
     let tradeno = self.data.tradeno

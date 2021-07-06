@@ -51,6 +51,7 @@ Page({
   onShow: function () {
     let self = this
     let ordernum = app.globalData.ordernum
+    app.globalData.ordernum = ''
     // 检查是否取消后返回进入，订单列表对应数据刷新
     if (ordernum) {
       let e = {
@@ -121,7 +122,7 @@ Page({
   // },
 
   // 切换选项
-  setStatusType (e) {
+  setStatusType(e) {
     let self = this
     let statusType = e.currentTarget.dataset.type
     self.setData({
@@ -134,7 +135,7 @@ Page({
   },
 
   // 设置查询开始日期
-  setStartdate (e) {
+  setStartdate(e) {
     let self = this
     self.setData({
       startdate: e.detail,
@@ -146,7 +147,7 @@ Page({
   },
 
   // 获取订单列表
-  getOrderList () {
+  getOrderList() {
     let self = this
     wx.showLoading({
       title: '正在加载',
@@ -192,7 +193,7 @@ Page({
   },
 
   // 去再支付页面
-  toAgainPay (e) {
+  toAgainPay(e) {
     let self = this
     let tradeno = e.currentTarget.dataset.tradeno
     wx.navigateTo({
@@ -201,7 +202,7 @@ Page({
   },
 
   // 设置订单列表
-  setOrderList (e) {
+  setOrderList(e) {
     let self = this
     let ordernum = Number(e.detail)
     let orderList = self.data.orderList

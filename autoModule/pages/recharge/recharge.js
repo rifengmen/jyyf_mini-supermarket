@@ -18,7 +18,7 @@ Page({
     swiperCurrent: 0,
     // 卡号
     memcode: '',
-    // 余额
+    // 储值卡
     cardInfo: '',
     // 充值金额
     money: '',
@@ -36,7 +36,7 @@ Page({
     })
     // 获取banner列表
     // self.getBannerList()
-    // 获取卡余额
+    // 获取余额
     self.getCardInfo()
   },
 
@@ -107,7 +107,7 @@ Page({
     app.toBannerDetail(banner)
   },
 
-  // 获取卡余额
+  // 获取余额
   getCardInfo() {
     let self = this
     let data = {}

@@ -106,10 +106,10 @@ Page({
   // },
 
   // stops 阻止冒泡
-  stops () {},
+  stops() { },
 
   // 获取可用积分
-  getScore () {
+  getScore() {
     let self = this
     let data = {
       payMoney: parseFloat(self.data.payMoney),
@@ -134,7 +134,7 @@ Page({
   },
 
   // 设置积分使用开关
-  setScoreFlag (e) {
+  setScoreFlag(e) {
     let self = this
     let scoreFlag = self.data.scoreFlag
     let score = self.data.score
@@ -154,7 +154,7 @@ Page({
   },
 
   // 设置订单支付金额
-  setPayMoney () {
+  setPayMoney() {
     let self = this
     // 商品总金额
     let totalMoney = self.data.orderDetail.actmoney
@@ -179,7 +179,7 @@ Page({
   },
 
   // 验证支付信息完整以及是否调用密码弹框
-  payVerify (e) {
+  payVerify(e) {
     let self = this
     let address = app.globalData.address || ''
     let from = e.currentTarget.dataset.from
@@ -199,7 +199,7 @@ Page({
   },
 
   // 设置密码弹框开关
-  setPasswordFlag () {
+  setPasswordFlag() {
     let self = this
     self.setData({
       passwordFlag: !self.data.passwordFlag
@@ -207,7 +207,7 @@ Page({
   },
 
   // 获取子组件支付密码
-  getPassword (e) {
+  getPassword(e) {
     let self = this
     let from = self.data.frombtn
     // 获取支付按钮

@@ -3,8 +3,9 @@
   <view class="goodsInfo_cont bgffffff border_r20">
     <view class="goodsInfo_name goods_section font32">{{goodsInfo.productName}}</view>
     <view class="goods_section">{{goodsInfo.barcode}}</view>
-    <view class="goods_section" wx:if="{{item.scalageFlag}}">购买数量   ×1</view>
-    <view class="goods_section" wx:else>购买数量   ×{{goodsInfo.quantity}}</view>
+    <view class="goods_section">门店库存：{{goodsInfo.stockamount}}</view>
+    <view class="goods_section" wx:if="{{item.scalageFlag}}">购买数量：1</view>
+    <view class="goods_section" wx:else>购买数量：{{goodsInfo.quantity}}</view>
     <view class="goods_section font32 font_blod colorfa6400">￥{{goodsInfo.actualSaleMoney}}</view>
     <del class="goods_section del font26 color999999" wx:if="{{goodsInfo.actualSaleMoney !== goodsInfo.saleMoney}}">
       ￥{{goodsInfo.saleMoney}}

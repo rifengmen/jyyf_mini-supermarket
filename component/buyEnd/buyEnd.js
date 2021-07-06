@@ -94,11 +94,11 @@ Component({
 
     // 结算buyend
     buyend(data, goods) {
-      let self = this
       wx.showLoading({
         title: '请求等待中...',
         mask: true,
       });
+      let self = this
       API.bill.buyend(data).then(result => {
         let res = result.data
         if (res.flag === 1) {
@@ -120,6 +120,9 @@ Component({
           // 判断是否有默认收货地址或者只能自提，-1：只能自提；0：未设置默认收货地址，>0:默认收货地址id
           if (orderDetail.sendId > 0) {
             app.globalData.addressId = orderDetail.sendId
+          } else { // 清空上次地址信息
+            app.globalData.addressId = ''
+            app.globalData.address = ''
           }
           // 判断再支付还是编辑订单
           if (self.data.from === 'order') { // 再支付

@@ -1,0 +1,40 @@
+<!--component/navbar/navbar.wxml-->
+<import src="/pages/template/template.wxml" />
+<view class="navbar color333333 font28 overflow z_index_10"
+  style="height:{{navHeight}}px; background: rgb({{homebgcolor}});">
+  <!-- 搜索、apptitle start -->
+  <block wx:if="{{showsearch}}">
+    <view class="navbar_nav border_af0f0f0 border_r500"
+      style="top:{{navTop}}px;height:{{jnheight - 2}}px;width:{{jnwidth - 2}}">
+      <template is="search"></template>
+    </view>
+    <view class="apptitle tc ellipsis"
+      style="color: {{homebgcolor === '255, 255, 255' ? homebgcolor : '#ffffff'}};top:{{navTop}}px;height:{{jnheight - 2}}px;">
+      {{apptitle}}
+    </view>
+  </block>
+  <!-- 搜索、apptitle end -->
+  <!-- 胶囊、标题 start -->
+  <block wx:elif="{{shownav}}">
+    <!-- 左上角胶囊 start -->
+    <view class="navbar_nav bg000000_60 border_r500 border_af0f0f0"
+      style="top:{{navTop}}px;height:{{jnheight - 2}}px;width:{{jnwidth - 2}}px">
+      <!-- 返回 start -->
+      <view class="nav" bindtap="navBack">
+        <image src="/lib/images/back.png" mode="widthFix"></image>
+      </view>
+      <!-- 返回 end -->
+      <view class="separator bgf0f0f0"></view>
+      <!-- home按钮 start -->
+      <view class="nav" bindtap="navHome">
+        <image src="/lib/images/backhome.png" mode="widthFix"></image>
+      </view>
+      <!-- home按钮 end -->
+    </view>
+    <!-- 左上角胶囊 end -->
+    <!-- 中间标题 start -->
+    <view class="navbar_title tc ellipsis" style="top:{{navTop}}px;">{{pagename}}</view>
+    <!-- 中间标题 end -->
+  </block>
+  <!-- 胶囊、标题 end -->
+</view>

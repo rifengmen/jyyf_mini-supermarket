@@ -55,6 +55,8 @@ Page({
     password: '',
     // 密码弹框开关
     passwordFlag: false,
+    // 储值卡名称
+    cardname: app.globalData.cardname,
   },
 
   /**
@@ -134,7 +136,7 @@ Page({
   // },
 
   // 获取订单详情
-  getScanOrderDetail () {
+  getScanOrderDetail() {
     let self = this
     let data = {
       ordernum: self.data.flowno,
@@ -161,7 +163,7 @@ Page({
   },
 
   // 获取支付方式列表
-  getMicroFlowPayMoney () {
+  getMicroFlowPayMoney() {
     let self = this
     let data = {
       shopCode: self.data.deptcode,
@@ -189,7 +191,7 @@ Page({
   },
 
   // 获取可用积分
-  getScore () {
+  getScore() {
     let self = this
     let data = {
       payMoney: Number(self.data.payMoney),
@@ -212,7 +214,7 @@ Page({
   },
 
   // 获取电子券信息
-  getScanTick () {
+  getScanTick() {
     let self = this
     let scanTick = app.globalData.scanTick
     self.setData({
@@ -225,7 +227,7 @@ Page({
   },
 
   // 设置电子券可用标识
-  getEditorOrder () {
+  getEditorOrder() {
     let self = this
     let data = {
       payMoney: Number(self.data.payMoney),
@@ -244,7 +246,7 @@ Page({
   },
 
   // 去电子券列表
-  toTickList () {
+  toTickList() {
     let self = this
     wx.navigateTo({
       url: '/autoModule/pages/tickList/tickList?from=scanEditorOrder&tradeno=' + self.data.flowno + '&payMoney=' + self.data.payMoney + '&Totalmoney=' + self.data.totalMoney,
@@ -252,7 +254,7 @@ Page({
   },
 
   // 设置积分使用开关
-  setScoreFlag (e) {
+  setScoreFlag(e) {
     let self = this
     let scoreFlag = self.data.scoreFlag
     let score = self.data.score
@@ -272,7 +274,7 @@ Page({
   },
 
   // 设置订单支付金额
-  setPaymoney () {
+  setPaymoney() {
     let self = this
     // 商品总金额
     let totalMoney = self.data.totalMoney
@@ -302,7 +304,7 @@ Page({
   },
 
   // 设置支付信息
-  setPaylist () {
+  setPaylist() {
     let self = this
     let paymode = self.data.paymode
     let scanTick = self.data.scanTick
@@ -310,7 +312,7 @@ Page({
     let payMoney = self.data.payMoney
     // 组合支付方式列表
     let paylist = [
-      {paymode: paymode, paymoney: payMoney},
+      { paymode: paymode, paymoney: payMoney },
     ]
     // 电子券
     if (scanTick) {
@@ -329,7 +331,7 @@ Page({
     }
     // 积分抵扣
     if (self.data.scoreFlag) {
-      let paydesc = {score: score.useScore, paymoney: score.Money, memcode: app.globalData.memcode, paymode: 5}
+      let paydesc = { score: score.useScore, paymoney: score.Money, memcode: app.globalData.memcode, paymode: 5 }
       paylist.push(paydesc)
     }
     self.setData({
@@ -347,7 +349,7 @@ Page({
   },
 
   // 切换支付方式
-  radioChange (e) {
+  radioChange(e) {
     let self = this
     let paymode = parseFloat(e.detail.value)
     let payFlag = true
@@ -363,7 +365,11 @@ Page({
   },
 
   // 立即支付
-  pay () {
+  pay() {
+    wx.showLoading({
+      title: '请求等待中...',
+      mask: true,
+    });
     let self = this
     let paymode = self.data.paymode
     let data = {
@@ -394,13 +400,15 @@ Page({
         })
         toast(res.message)
       }
+      wx.hideLoading()
     }).catch(error => {
+      wx.hideLoading()
       toast(error.error)
     })
   },
 
   // 微信支付
-  wechatPayment () {
+  wechatPayment() {
     let self = this
     let payStr = self.data.payStr
     wx.requestPayment({
@@ -410,22 +418,22 @@ Page({
       package: payStr.package,
       signType: payStr.signType,
       paySign: payStr.paySign,
-      success:function(res){
+      success: function (res) {
         wx.redirectTo({
           url: '/shopping/pages/payEnd/payEnd?text=支付成功&type=1',
         })
       },
-      fail:function(res){
+      fail: function (res) {
         wx.redirectTo({
           url: '/shopping/pages/payEnd/payEnd?text=支付失败&type=0',
         })
       },
-      complete:function(res){}
+      complete: function (res) { }
     })
   },
 
   // 设置密码弹框开关
-  setPasswordFlag () {
+  setPasswordFlag() {
     let self = this
     self.setData({
       passwordFlag: !self.data.passwordFlag
@@ -433,7 +441,7 @@ Page({
   },
 
   // 获取子组件支付密码
-  getPassword (e) {
+  getPassword(e) {
     let self = this
     self.setData({
       password: e.detail,

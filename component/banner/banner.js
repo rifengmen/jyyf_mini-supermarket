@@ -14,6 +14,11 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    // isMarginFlag,两侧是否留边距
+    isMarginFlag: {
+      type: Boolean,
+      value: true,
+    },
     // banner列表
     bannerList: {
       type: Array,
@@ -119,7 +124,7 @@ Component({
           case 11:
             // 我的积分
             wx.navigateTo({
-              url: '/userInfo/pages/score/score',
+              url: '/userInfo/pages/balance/balance?type=score',
             })
             break;
           // case 12:
@@ -147,7 +152,7 @@ Component({
           case 17:
             // 我的余额
             wx.navigateTo({
-              url: '/userInfo/pages/balance/balance',
+              url: '/userInfo/pages/balance/balance?type=balance',
             })
             break;
           case 18:

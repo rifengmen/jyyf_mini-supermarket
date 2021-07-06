@@ -159,9 +159,8 @@ Page({
   onUnload: function () {
     let self = this
     app.globalData.tick = ''
-    self.setData({
-      tick: '',
-    })
+    app.globalData.addressId = ''
+    app.globalData.address = ''
   },
 
   /**
@@ -278,23 +277,16 @@ Page({
     }
     API.bill.getFreight(data).then(result => {
       let res = result.data
+      // 成功设置地址及运费
       if (res.flag === 1) {
         let address = app.globalData.address
         self.setData({
           address: address,
           freight: res.data,
         })
-      } else {
-        // 请求运费失败清除地址信息
-        self.setData({
-          address: '',
-        })
+      } else { // 失败还原旧地址及运费
         app.globalData.addressId = ''
-        app.globalData.address = ''
-        self.setData({
-          freight: ''
-        })
-        toast(res.message)
+        app.globalData.address = self.data.address
       }
       // 设置订单支付金额
       self.setPayMoney()

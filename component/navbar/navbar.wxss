@@ -1,0 +1,46 @@
+/* component/navbar/navbar.wxss */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+.navbar_nav {
+  position: relative;
+  margin-left: 8px;
+}
+.navbar_nav .capsule {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar_nav .nav {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.navbar_nav .separator {
+  width: 1px;
+  height: 100%;
+}
+.navbar_title {
+  position: absolute;
+  left: 0;
+  width: calc(100% - 200px);
+  height: 32px;
+  line-height: 32px;
+  padding: 0 100px;
+}
+.apptitle {
+  position: relative;
+  width: calc(40% - 20px);
+  height: 32px;
+  line-height: 32px;
+  padding: 0 10px;
+}
+.search {
+  height: 30px;
+}

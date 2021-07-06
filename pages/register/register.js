@@ -96,7 +96,7 @@ Page({
   // },
 
   // 获取图形验证码
-  getVerifyCodeGraphic () {
+  getVerifyCodeGraphic() {
     let self = this
     let data = {}
     API.system.getVerifyCodeGraphic(data).then(result => {
@@ -116,7 +116,7 @@ Page({
   },
 
   // 填写手机号
-  setMobile (e) {
+  setMobile(e) {
     let self = this
     self.setData({
       mobile: e.detail.value
@@ -124,7 +124,7 @@ Page({
   },
 
   // 填写图形验证码
-  setImgcode (e) {
+  setImgcode(e) {
     let self = this
     self.setData({
       imgcode: e.detail.value
@@ -132,7 +132,7 @@ Page({
   },
 
   // 填写短信验证码
-  setCode (e) {
+  setCode(e) {
     let self = this
     self.setData({
       code: e.detail.value
@@ -140,7 +140,7 @@ Page({
   },
 
   // 倒计时
-  countDown () {
+  countDown() {
     let self = this
     let mobile = self.data.mobile
     let imgcode = self.data.imgcode
@@ -159,10 +159,10 @@ Page({
       numflag: true
     })
     // 倒计时
-    let timer = setInterval(function(){
+    let timer = setInterval(function () {
       countdownnum--
       self.setData({
-        num:countdownnum
+        num: countdownnum
       })
       if (countdownnum <= 0) {
         self.setData({
@@ -171,13 +171,13 @@ Page({
         })
         clearInterval(timer)
       }
-    },1000)
+    }, 1000)
     // 获取短信验证码
     self.getCheckCode()
   },
 
   // 获取短信验证码
-  getCheckCode () {
+  getCheckCode() {
     let self = this
     let mobile = self.data.mobile
     let imgcode = self.data.imgcode
@@ -196,13 +196,13 @@ Page({
   },
 
   // 注册
-  perfectInfoForWX () {
+  perfectInfoForWX() {
     let self = this
     let mobile = self.data.mobile
     let code = self.data.code
     // 验证手机号
     if (!mobile) {
-     toast('请填写手机号!')
+      toast('请填写手机号!')
       return false
     }
     // 验证图形验证码
@@ -229,7 +229,7 @@ Page({
   },
 
   // 获取用户信息
-  login () {
+  login() {
     let self = this
     let data = {
       wxID: app.globalData.openid,
@@ -251,7 +251,7 @@ Page({
         let memcode = res.data.memcode
         // 用户身份标识，0：批发客户（app功能）；1：普通客户
         let iscustomer = res.data.iscustomer
-        // 身份信息，0：顾客；1：配送员；2：团长
+        // 身份信息，0：顾客；1：配送员；2：团长；3：核销员
         let role = res.data.role
         // 卡支付标志，1：开通；0：未开通；null：未知
         let coflag = res.data.coflag

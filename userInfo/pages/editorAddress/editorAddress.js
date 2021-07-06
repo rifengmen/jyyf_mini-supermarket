@@ -56,8 +56,8 @@ Page({
         addressAddress: address.address,
         mapaddress: address.house,
         gps: {
-          longitude: address.longitude,
-          latitude: address.latitude,
+          longitude: address.Longitude || address.lng,
+          latitude: address.Latitude || address.lat,
         }
       })
     }

@@ -22,7 +22,7 @@
   width: 100%;
   height: auto;
   line-height: 1.5;
-  margin-bottom: 20rpx;
+  margin-bottom: 10rpx;
 }
 .goods_name .price {
   display: flex;

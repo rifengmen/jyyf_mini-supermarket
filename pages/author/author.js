@@ -162,7 +162,7 @@ Page({
         let memcode = res.data.memcode
         // 用户身份标识，0：批发客户（app功能）；1：普通客户
         let iscustomer = res.data.iscustomer
-        // 身份信息，0：顾客；1：配送员；2：团长
+        // 身份信息，0：顾客；1：配送员；2：团长；3：核销员
         let role = res.data.role
         // 卡支付标志，1：开通；0：未开通；null：未知
         let coflag = res.data.coflag

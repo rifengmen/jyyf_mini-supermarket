@@ -75,7 +75,7 @@
 .address_item .item_editor .isdefault {
   width: 100%;
   margin-top: 30rpx;
-  scale: 0.7;
+  scale: 0.5;
 }
 .address_item .no_send {
   position: absolute;

@@ -1,6 +1,5 @@
 {
   "usingComponents": {
     "startdate": "/component/startdate/startdate"
-  },
-  "navigationBarTitleText": "我的余额"
+  }
 }

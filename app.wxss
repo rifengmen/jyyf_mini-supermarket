@@ -1,6 +1,6 @@
 /**app.wxss**/
-@import "/lib/style/base.wxss";
-@import "/lib/style/common.wxss";
+@import '/lib/style/base.wxss';
+@import '/lib/style/common.wxss';
 page {
   background-color: #f9f9f9;
 }

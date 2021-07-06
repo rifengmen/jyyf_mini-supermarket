@@ -30,7 +30,8 @@
   <!-- 按钮部分 start -->
   <view class="btn_cont scan_section">
     <!-- 确认按钮 start -->
-    <view class="btn colorffffff font32 bg71d793 border_r500 border_a71d793 tc" bindtap="confrim">确认</view>
+    <view class="btn colorffffff font32 bg71d793 border_r500 border_a71d793 tc" bindtap="confrim">{{orderDetail ? '确认' :
+      '查询'}}</view>
     <!-- 确认按钮 end -->
     <!-- 重置按钮 start -->
     <view class="btn color71d793 font32 bgffffff border_r500 border_a71d793 tc" bindtap="resetTradeno">重置</view>

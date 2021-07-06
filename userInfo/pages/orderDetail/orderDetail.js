@@ -28,6 +28,8 @@ Page({
     score: '',
     // 再支付金额
     againPaymoney: 0,
+    // 储值卡名称
+    cardname: app.globalData.cardname,
   },
 
   /**
@@ -92,10 +94,11 @@ Page({
   // },
 
   // 获取订单详情
-  getOrderDetail () {
+  getOrderDetail() {
     let self = this
+    let { tradeno, cardname } = self.data
     let data = {
-      orderNum: self.data.tradeno
+      orderNum: tradeno
     }
     wx.showLoading({
       title: '正在加载',
@@ -120,7 +123,7 @@ Page({
         if (paylist.length) {
           paylist.forEach(item => {
             if (item.paymodeid === 3) {
-              paymodenameArr.push('储值卡')
+              paymodenameArr.push(cardname)
             } else if (item.paymodeid === 7) {
               paymodenameArr.push('微信')
             }
@@ -149,7 +152,7 @@ Page({
   },
 
   // 返回
-  backs () {
+  backs() {
     let self = this
     app.globalData.ordernum = self.data.tradeno
     wx.navigateBack()

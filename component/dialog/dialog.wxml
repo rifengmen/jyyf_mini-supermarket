@@ -1,6 +1,8 @@
 <!--component/dialog/dialog.wxml-->
 <!-- dialog start -->
-<view class="dialog_cont {{dialogFlag ? 'dialog_show z_index_99999' : 'z_index_-2'}} color999999 font28 bg000000_70 overflow" catchtouchmove="catchTouchMove">
+<view
+  class="dialog_cont {{dialogFlag ? 'dialog_show z_index_999999' : 'z_index_-2'}} color999999 font28 bg000000_70 overflow"
+  catchtouchmove="catchTouchMove">
   <!--<view class="dialog border_r20 bgffffff ellipsis">-->
   <view class="dialog bgffffff">
     <!-- 商品 start -->
@@ -10,7 +12,8 @@
         <view class="goods_item bgffffff border_be5e5e5">
           <!-- 商品图片 start -->
           <view class="item_img overflow">
-            <image class="img" src="{{goods.Defaultimage ? (baseUrl + goods.Defaultimage) : defgoodsimg}}" mode="aspectFit" lazy-load="true"></image>
+            <image class="img" src="{{goods.Defaultimage ? (baseUrl + goods.Defaultimage) : defgoodsimg}}"
+              mode="aspectFit" lazy-load="true"></image>
           </view>
           <!-- 商品图片 end -->
           <!-- 商品文字 start -->
@@ -62,13 +65,15 @@
       <view class="dialog_section">
         <view class="dialog_section_tit">斤数(500g)：</view>
         <view class="dialog_section_cont color333333">
-          <input class="dialog_input bge7e7e7 border_r500" type="number" placeholder="请输入斤数" value="{{dialogJin}}" disabled="{{!dialogFlag}}" bindinput="setDialogJin" />
+          <input class="dialog_input bge7e7e7 border_r500" type="number" placeholder="请输入斤数" value="{{dialogJin}}"
+            disabled="{{!dialogFlag}}" bindinput="setDialogJin" />
         </view>
       </view>
       <view class="dialog_section">
         <view class="dialog_section_tit">两数(50g)：</view>
         <view class="dialog_section_cont color333333">
-          <input class="dialog_input bge7e7e7 border_r500" type="number" placeholder="请输入两数" value="{{dialogLiang}}" disabled="{{!dialogFlag}}" bindinput="setDialogLiang" />
+          <input class="dialog_input bge7e7e7 border_r500" type="number" placeholder="请输入两数" value="{{dialogLiang}}"
+            disabled="{{!dialogFlag}}" bindinput="setDialogLiang" />
         </view>
       </view>
       <view class="dialog_section">

@@ -1,8 +1,10 @@
 {
   "usingComponents": {
+    "navbar": "/component/navbar/navbar",
     "banner": "/component/banner/banner",
     "goods": "/component/goods/goods"
   },
+  "navigationStyle": "custom",
   "enablePullDownRefresh": true,
   "onReachBottomDistance": 50
 }

@@ -6,6 +6,7 @@ App({
   onLaunch: function () {
     let self = this;
     // 新版本校验
+
     if (wx.canIUse('getUpdateManager')) {
       const updateManager = wx.getUpdateManager();
       updateManager.onCheckForUpdate(function (res) {
@@ -30,12 +31,46 @@ App({
     } else {
       toast('当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。');
     }
+
+    //设置导航栏
+    //获取菜单按钮的布局位置信息
+    let menuButtonObject = wx.getStorageSync('jyyfmenubuttonobject')
+    //获取系统信息
+    let systemInfo = wx.getStorageSync('jyyfsysteminfo')
+    if (!menuButtonObject && !systemInfo) {
+      menuButtonObject = wx.getMenuButtonBoundingClientRect();
+      systemInfo = wx.getSystemInfoSync()
+      wx.setStorageSync('jyyfmenubuttonobject', menuButtonObject);
+      wx.setStorageSync('jyyfsysteminfo', systemInfo);
+    }
+    // 设备像素比
+    let dpr = systemInfo.pixelRatio;
+    //状态栏的高度
+    let statusBarHeight = systemInfo.statusBarHeight;
+    //胶囊按钮与顶部的距离
+    let navTop = menuButtonObject.top;
+    let navHeight = statusBarHeight + menuButtonObject.height + (menuButtonObject.top - statusBarHeight) * 2;
+    self.globalData.dpr = dpr;
+    self.globalData.navHeight = navHeight + 5;
+    self.globalData.navTop = navTop;
+    self.globalData.jnheight = menuButtonObject.height;
+    self.globalData.jnwidth = menuButtonObject.width;
   },
 
   // 全局变量
   globalData: {
     // 当前线上版本号
     version: '',
+    // 设备像素比
+    dpr: 1,
+    //导航栏高度
+    navHeight: 0,
+    //胶囊按钮与顶部的距离
+    navTop: 0,
+    //胶囊的高度
+    jnheight: 0,
+    //胶囊的宽度
+    jnwidth: 0,
     // openid
     openid: '',
     // sessionId
@@ -48,7 +83,7 @@ App({
     memname: '',
     // 手机号
     mobile: '',
-    // 身份信息，0：顾客；1：配送员；2：团长
+    // 身份信息，0：顾客；1：配送员；2：团长；3：核销员
     role: '',
     // 支付开通标志,1为开通，0未开通，null未知
     coflag: 0,
@@ -133,7 +168,6 @@ App({
     ],
     // 各种类别商品轮播列表
     promotemodeList: [
-      { label: '特价', name: '特价商品', promotemode: 999, list: [] },
       { label: '拼团', name: '一起拼团', promotemode: 100, list: [] },
       { label: '秒杀', name: '限时秒杀', promotemode: 101, list: [] },
       { label: '砍价', name: '一砍到底', promotemode: 102, list: [] },
@@ -214,9 +248,10 @@ App({
     ],
     // 身份标识列表
     roleList: [
-      { name: '顾 客', role: 0, num: 0 },
+      { name: '顾  客', role: 0, num: 0 },
       { name: '配送员', role: 1, num: 0 },
-      { name: '团 长', role: 2, num: 0 },
+      { name: '团  长', role: 2, num: 0 },
+      { name: '核销员', role: 3, num: 0 },
     ],
     // 订单状态列表
     statusList: [
@@ -251,13 +286,17 @@ App({
     apptitle: '嘉元科技',
     // 基础路径
     // baseUrl: 'http://192.168.1.107:8089/simple-eshop/',
+    // baseUrl: 'http://192.168.1.116:8088/simple-eshop/',
     baseUrl: 'https://www.91jyrj.com/shop/',
+    // 储值卡名称
+    cardname: '储值卡'
 
     // // 金威快购 长治金威超市
     // apptitle: '金威快购',
     // // baseUrl: 'http://www.jwkgou.com:8088/simple-eshop/', // 2.1.35版以前路径
     // // baseUrl: 'https://www.jwkgou.com:8443/simple-eshop/', // 2.1.35版（包含2.1.35版）以后路径
     // baseUrl: 'https://jw.jwkgou.com:9443/eshop/', // 2.5.0版（包含2.5.0版）以后路径
+    // cardname: '金币'
 
     // // 美廉美优选 牙克石美廉美超市
     // apptitle: '美廉美优选',
@@ -275,6 +314,7 @@ App({
     // // 科飞连锁超市 陵川县科飞连锁超市
     // apptitle: '科飞连锁超市',
     // baseUrl: 'https://www.kefeichaoshi.com/eshop/',
+    // cardname: '储值卡'
   },
 
   // 新版本校验

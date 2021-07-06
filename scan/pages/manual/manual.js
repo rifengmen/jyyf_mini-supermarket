@@ -80,7 +80,7 @@ Page({
   // },
 
   // 商品条码
-  setGoodscode (e) {
+  setGoodscode(e) {
     let self = this
     self.setData({
       goodscode: e.detail.value
@@ -88,7 +88,7 @@ Page({
   },
 
   // 清除商品条码
-  clearGoodscode () {
+  clearGoodscode() {
     let self = this
     self.setData({
       goodscode: ''
@@ -96,7 +96,11 @@ Page({
   },
 
   // 获取商品信息
-  getGoodsInfo () {
+  getGoodsInfo() {
+    wx.showLoading({
+      title: '请求等待中...',
+      mask: true,
+    });
     let self = this
     let data = {
       barcode: self.data.goodscode,
@@ -122,13 +126,15 @@ Page({
       } else {
         toast(res.message)
       }
+      wx.hideLoading()
     }).catch(error => {
+      wx.hideLoading()
       toast(error.error)
     })
   },
 
   // 添加商品到购物车
-  addScancart () {
+  addScancart() {
     let self = this
     app.setScanCart(self.data.goodsInfo, 'add')
     // 关闭购物车弹窗
@@ -136,7 +142,7 @@ Page({
   },
 
   // 关闭购物车弹窗
-  cancel () {
+  cancel() {
     let self = this
     self.setData({
       goodsInfoFlag: false,
@@ -144,7 +150,7 @@ Page({
   },
 
   // 加入返回
-  addBack () {
+  addBack() {
     let self = this
     // 加入购物车
     self.addScancart()
@@ -154,7 +160,7 @@ Page({
   },
 
   // 加入继续
-  addGoOn () {
+  addGoOn() {
     let self = this
     // 加入购物车
     self.addScancart('goOn')

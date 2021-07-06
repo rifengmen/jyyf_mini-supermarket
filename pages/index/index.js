@@ -6,6 +6,8 @@ import API from '../../api/index';
 
 Page({
   data: {
+    //导航栏高度
+    navHeight: app.globalData.navHeight,
     // 基础路径
     baseUrl: app.globalData.baseUrl,
     // 图片路径为空时默认图路径
@@ -54,14 +56,20 @@ Page({
     rowCount: 0,
     // tabs商品列表
     goodsList: [],
-    // indexHotList
+    // 活动一商品列表
     indexHotList: [],
     // 专区列表
     hotList: [],
-    // 各种类别商品轮播列表
+    // 拼团、秒杀、砍价、预售商品轮播列表
     promotemodeList: app.globalData.promotemodeList,
+    // 特价商品列表
+    specialGoodsList: [],
     // 导航栏前景颜色值，包括按钮、标题、状态栏的颜色，仅支持 #ffffff 和 #000000
     frontColor: '#ffffff',
+    // banner两侧是否留边距
+    isMarginFlag: true,
+    // banner高度尺寸
+    bannerHeight: 280,
     // 主题背景图
     home_bgurl: '',
     // 主题背景色
@@ -78,6 +86,20 @@ Page({
     shareDeptname: '',
     // 分享门店code
     shareDeptcode: '',
+    // 自定义排列顺序
+    autoSort: [
+      { title: '定位', name: 'location', sort: 0 },
+      { title: '轮播', name: 'banner', sort: 1 },
+      { title: '通知', name: 'notice', sort: 2 },
+      { title: '模块', name: 'module', sort: 3 },
+      { title: '视频', name: 'video', sort: 4 },
+      { title: '友链', name: 'friend', sort: 5 },
+      { title: '海报', name: 'poster', sort: 6 },
+      { title: '专区', name: 'zone', sort: 7 },
+      { title: '秒杀', name: 'seckill', sort: 8 },
+      { title: '特价', name: 'special', sort: 9 },
+      { title: '活动一', name: 'activity1', sort: 10 },
+    ],
   },
   /**
    * 生命周期函数--监听页面加载
@@ -104,11 +126,7 @@ Page({
       });
       app.globalData.deptname = deptname;
       app.globalData.deptcode = deptcode;
-      // // 初始化
-      // self.init()
     }
-    // // 获取code
-    // self.getCode();
     // 是否请求openid
     self.isGetOpenid()
   },
@@ -254,22 +272,20 @@ Page({
       .then((result) => {
         let res = result.data;
         if (res.flag === 1) {
+          let options = res.data
           self.setData({
-            home_bgurl: res.data.home_bgurl || '',
-            home_bgcolor: app.colorRgb(res.data.home_bgcolor || '#71d793'),
-            home_promotebg: res.data.home_promotebg || '#f68e74',
+            home_bgurl: options.home_bgurl || '',
+            home_bgcolor: app.colorRgb(options.home_bgcolor || '#71d793'),
+            home_promotebg: options.home_promotebg || '#f68e74',
+            isMarginFlag: Number(options.isMarginFlag) ? true : false,
+            bannerHeight: options.bannerHeight || 280,
           });
-          app.globalData.home_bgcolor = res.data.home_bgcolor;
-          app.globalData.cent_istrunbg = res.data.cent_istrunbg;
-          app.globalData.cent_bgurl = res.data.cent_bgurl;
-          app.globalData.cent_turnurl = res.data.cent_turnurl;
-          app.globalData.cent_btnurl = res.data.cent_btnurl;
-          app.globalData.moneyType = res.data.moneyType;
-          // 设置主题背景色
-          wx.setNavigationBarColor({
-            frontColor: self.data.frontColor,
-            backgroundColor: res.data.home_bgcolor || '#71d793',
-          });
+          app.globalData.home_bgcolor = options.home_bgcolor;
+          app.globalData.cent_istrunbg = options.cent_istrunbg;
+          app.globalData.cent_bgurl = options.cent_bgurl;
+          app.globalData.cent_turnurl = options.cent_turnurl;
+          app.globalData.cent_btnurl = options.cent_btnurl;
+          app.globalData.moneyType = options.moneyType;
         } else {
           toast(res.message);
         }
@@ -278,56 +294,6 @@ Page({
         toast(error.error);
       });
   },
-
-  // // 获取code
-  // async getCode() {
-  //   let self = this;
-  //   let openid = wx.getStorageSync('jyyfo2oopenid');
-  //   if (openid) {
-  //     self.setData({
-  //       openid: openid,
-  //     });
-  //     app.globalData.openid = openid;
-  //     // 获取用户信息
-  //     self.login();
-  //   } else {
-  //     try {
-  //       let res = await app.wxLogin()
-  //       // 获取openid
-  //       self.getOpenID(res.data)
-  //     } catch (error) {
-  //       toast(error.msg)
-  //     }
-  //   }
-  // },
-
-  // // 获取openid
-  // getOpenID(code) {
-  //   let self = this;
-  //   let data = {
-  //     code: code,
-  //   };
-  //   API.system
-  //     .getOpenID(data)
-  //     .then((result) => {
-  //       let res = result.data;
-  //       if (res.flag === 1) {
-  //         let openid = res.data.openid;
-  //         self.setData({
-  //           openid: openid,
-  //         });
-  //         wx.setStorageSync('jyyfo2oopenid', openid);
-  //         app.globalData.openid = openid;
-  //         // 获取用户信息
-  //         self.login();
-  //       } else {
-  //         toast(res.message);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       toast(error.error);
-  //     });
-  // },
 
   // 是否请求openid
   async isGetOpenid() {
@@ -376,7 +342,7 @@ Page({
           let memcode = res.data.memcode;
           // 用户身份标识，0：批发客户（app功能）；1：普通客户
           let iscustomer = res.data.iscustomer;
-          // 身份信息，0：顾客；1：配送员；2：团长
+          // 身份信息，0：顾客；1：配送员；2：团长；3：核销员
           let role = res.data.role;
           // 卡支付标志，1：开通；0：未开通；null：未知
           let coflag = res.data.coflag;
@@ -502,11 +468,9 @@ Page({
   // 初始化
   init() {
     let self = this;
-    let { bannerTypeList, promotemodeList } = self.data;
+    let { bannerTypeList } = self.data;
     // 清空list
     bannerTypeList.forEach((item) => (item.list = []));
-    // 清空list
-    promotemodeList.forEach((item) => (item.list = []));
     // 获取各种banner图列表
     self.getBannerList();
     // 获取自定义功能列表
@@ -519,10 +483,10 @@ Page({
     self.getClusterList();
     // 获取专区列表
     self.getHotList();
-    // 获取特价商品轮播列表
-    self.getProductList();
-    // 获取各种类别商品轮播列表
+    // 获取拼团、秒杀、砍价、预售商品轮播列表
     self.getProductListByPromote();
+    // 获取特价商品列表
+    self.getSpecialGoodsList();
     // 获取弹窗广告图
     self.getAdDialogImg();
   },
@@ -677,7 +641,7 @@ Page({
       });
   },
 
-  // 获取各种类别商品轮播列表
+  // 获取拼团、秒杀、砍价、预售商品轮播列表
   getProductListByPromote() {
     let self = this;
     let data = {
@@ -711,8 +675,8 @@ Page({
       });
   },
 
-  // 获取特价商品轮播列表
-  getProductList() {
+  // 获取特价商品列表
+  getSpecialGoodsList() {
     let self = this;
     let data = {
       Datatype: '1',
@@ -727,22 +691,15 @@ Page({
         let res = result.data;
         if (res.flag === 1) {
           // 商品code统一字段
-          let list = res.data;
-          list.forEach((item) => {
+          let specialGoodsList = res.data;
+          specialGoodsList.forEach((item) => {
             if (item.goodscode && !item.Gdscode) {
               item.Gdscode = item.goodscode;
             }
           });
-          // 设置各种类别商品轮播列表
-          let promotemodeList = self.data.promotemodeList;
-          promotemodeList.forEach((item) => {
-            if (item.promotemode === 999) {
-              item.list = list;
-            }
-          });
-          self.setData({
-            promotemodeList: promotemodeList,
-          });
+          self.specialGoodsList = specialGoodsList;
+          // 设置数据方法
+          self.setDataFn();
         } else {
           toast(res.message);
         }
@@ -824,6 +781,7 @@ Page({
       modulePictureList,
       hotList,
       friendLinkList,
+      specialGoodsList,
       adDialogImg,
     } = self;
     if (
@@ -832,6 +790,7 @@ Page({
       modulePictureList !== undefined &&
       hotList !== undefined &&
       friendLinkList !== undefined &&
+      specialGoodsList !== undefined &&
       adDialogImg !== undefined
     ) {
       self.setData({
@@ -840,6 +799,7 @@ Page({
         modulePictureList: modulePictureList || [],
         hotList: hotList || [],
         friendLinkList: friendLinkList || [],
+        specialGoodsList: specialGoodsList || [],
         adDialogImg: adDialogImg[0] || [],
       });
       // 关闭等待动画
@@ -898,7 +858,7 @@ Page({
   setTabsActiveIndex(e) {
     let self = this;
     let { index } = e.currentTarget.dataset;
-    let { tabsActiveIndex, tabsScrollTop } = self.data;
+    let { tabsActiveIndex, tabsScrollTop, navHeight } = self.data;
     self.setData({
       scrollTabsData: 'tabs_name' + (index - 1),
     });
@@ -911,7 +871,7 @@ Page({
       page: 1,
     });
     wx.pageScrollTo({
-      scrollTop: tabsScrollTop,
+      scrollTop: tabsScrollTop - navHeight,
       duration: 300,
     });
     // 获取商品列表

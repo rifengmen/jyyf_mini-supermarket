@@ -6,31 +6,26 @@
 		<!-- 背景图 end -->
 		<!-- 按钮 start -->
 		<view class="lottery_btn_cont colorfa6400">
-			<navigator class="btn bgffffff tc" hover-class="none" url="/userInfo/pages/score/score">我的积分</navigator>
+			<navigator class="btn bgffffff tc" hover-class="none" url="/userInfo/pages/balance/balance?type=score">
+				我的积分
+			</navigator>
 			<view class="btn bgffffff tc border_r500" wx:if="{{prizeUseCent}}">{{prizeUseCent}}积分抽奖一次</view>
 			<view class="btn color333333 bgffffff tc border_r500" wx:else>暂无抽奖活动</view>
-			<navigator class="btn bgffffff tc" hover-class="none" url="/autoModule/pages/lotteryList/lotteryList">中奖记录</navigator>
+			<navigator class="btn bgffffff tc" hover-class="none" url="/autoModule/pages/lotteryList/lotteryList">中奖记录
+			</navigator>
 		</view>
 		<!-- 按钮 end -->
 		<!-- 倒计时 start -->
 		<block wx:if="{{!startFlag}}">
 			<view class="lottery_countdown colorffffff font24">
 				<view>距开始还剩 </view>
-				<countdown
-						class="countdown_cont"
-						times="{{prizeStart}}"
-						type="{{1}}"
-						bind:setFlag="setStartFlag"></countdown>
+				<countdown class="countdown_cont" times="{{prizeStart}}" type="{{1}}" bind:setFlag="setStartFlag"></countdown>
 			</view>
 		</block>
 		<block wx:if="{{startFlag && !endFlag}}">
 			<view class="lottery_countdown colorffffff font24">
 				<view>距结束还剩 </view>
-				<countdown
-						class="countdown_cont"
-						times="{{prizeEnd}}"
-						type="{{0}}"
-						bind:setFlag="setEndFlag"></countdown>
+				<countdown class="countdown_cont" times="{{prizeEnd}}" type="{{0}}" bind:setFlag="setEndFlag"></countdown>
 			</view>
 		</block>
 		<!-- 倒计时 end -->
@@ -42,8 +37,7 @@
 				<view class="lottery_turn turnbg colorffffff overflow">
 					<view class="turn_text tc overflow" animation="{{animationData}}">
 						<block wx:for="{{prizeList}}" wx:key="index">
-							<view class="text_item font24"
-								  style="{{'transform: rotate(-' + item.angle + 'deg)'}}">
+							<view class="text_item font24" style="{{'transform: rotate(-' + item.angle + 'deg)'}}">
 								<view class="name">{{item.prizename}}</view>
 								<image src="{{item.prize_bgurl}}" mode="aspectFit"></image>
 							</view>
@@ -57,8 +51,7 @@
 				<view class="lottery_turn colorffffff overflow">
 					<view class="turn_text tc overflow" animation="{{animationData}}">
 						<block wx:for="{{prizeList}}" wx:key="index">
-							<view class="text_item font26"
-								  style="{{'transform: rotate(-' + item.angle + 'deg)'}}">
+							<view class="text_item font26" style="{{'transform: rotate(-' + item.angle + 'deg)'}}">
 								<view class="name">{{item.prizename}}</view>
 							</view>
 						</block>
@@ -66,7 +59,7 @@
 					<view class="turn_text tc overflow" animation="{{animationData}}">
 						<block wx:for="{{prizeList}}" wx:key="index">
 							<view class="text_decollator border_affffff"
-								  style="{{'transform: rotate(-' + item.decollatorAngle + 'deg); transform-origin: left bottom'}}"></view>
+								style="{{'transform: rotate(-' + item.decollatorAngle + 'deg); transform-origin: left bottom'}}"></view>
 						</block>
 					</view>
 				</view>

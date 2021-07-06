@@ -53,7 +53,6 @@
       "root": "scan",
       "name": "scan",
       "pages": [
-        "pages/scan/scan",
         "pages/manual/manual",
         "pages/cart/cart",
         "pages/shopBag/shopBag",
@@ -69,7 +68,6 @@
       "pages": [
         "pages/payPassword/payPassword",
         "pages/setPayPassword/setPayPassword",
-        "pages/score/score",
         "pages/balance/balance",
         "pages/recordList/recordList",
         "pages/recordDetail/recordDetail",

@@ -55,7 +55,7 @@
     <view class="order_sections margin_b20 bgffffff">
       <view>电子券</view>
       <view class="section_cont" bindtap="toTickList" wx:if="{{isUseTickflag}}">
-        <view class="color999999" wx:if="{{!scanTick}}">请选择电子券  ></view>
+        <view class="color999999" wx:if="{{!scanTick}}">请选择电子券 ></view>
         <view wx:else>优惠<text class="colorfa6400">￥{{scanTick.paymoney}}</text></view>
       </view>
       <view class="section_cont" wx:else>
@@ -98,7 +98,7 @@
       <block wx:if="{{paymode3Flag}}">
         <view class="btn">
           <radio id="card" value="3" checked="{{!payFlag}}"></radio>
-          <label class="font24" for="card"><text>储值卡</text></label>
+          <label class="font24" for="card"><text>{{cardname}}</text></label>
         </view>
       </block>
     </radio-group>
@@ -144,7 +144,8 @@
   <!-- 已支付 end -->
   <!-- 支付 start -->
   <view class="order_money bgffffff">
-    <view class="order_money_totalMoney font24 ellipsis">实付：<span class="colorfa6400 font34">￥{{payMoney || 0}}</span></view>
+    <view class="order_money_totalMoney font24 ellipsis">实付：<span class="colorfa6400 font34">￥{{payMoney || 0}}</span>
+    </view>
     <view class="pay colorffffff bg71d793" bindtap="setPaylist" wx:if="{{paymode3Flag || paymode7Flag}}">立即支付</view>
     <view class="pay colorffffff bgcecece" wx:else>立即支付</view>
   </view>

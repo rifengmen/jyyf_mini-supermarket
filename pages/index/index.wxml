@@ -1,9 +1,9 @@
 <!--index.wxml-->
 <import src="/pages/template/template.wxml" />
-<view class="container color333333 font28 bgf9f9f9" data-weui-theme="dark">
+<view class="container color333333 font28">
 	<block wx:if="{{loadingFlag}}">
 		<!-- 背景 start -->
-		<view class="index_cont overflow">
+		<view class="index_cont overflow" style="top: {{navHeight}}px">
 			<!-- 背景图 start -->
 			<block wx:if="{{home_bgurl}}">
 				<image class="index_bg" src="{{baseUrl + home_bgurl}}" mode="widthFix"></image>
@@ -19,134 +19,168 @@
 		</view>
 		<!-- 背景 end -->
 		<!-- 内容部分 start -->
-		<view class="index_cont">
-			<!-- 定位 搜索 start -->
-			<view class="gps_search_cont margin_tb12">
+		<view class="index_cont" style="top: {{navHeight}}px">
+			<!-- 导航栏 start -->
+			<navbar homebgcolor="{{home_bgcolor}}" pagename="{{deptname}}" shownav="{{false}}" showsearch="{{true}}"></navbar>
+			<!-- 导航栏 end -->
+			<block wx:for="{{autoSort}}" wx:key="index">
 				<!-- 定位 start -->
-				<navigator class="gps_cont" hover-class="none" url="/pages/shopList/shopList">
-					<view class="gps_img overflow">
-						<image src="/lib/images/gps.png"></image>
+				<block wx:if="{{item.name === 'location' && index === item.sort}}">
+					<view class="gps_cont colorffffff margin_tb12">
+						<view class="gps_img overflow">
+							<image src="/lib/images/gps.png"></image>
+						</view>
+						<text class="name ellipsis">{{deptname}}</text>
+						<navigator hover-class="none" url="/pages/shopList/shopList">切换门店 ></navigator>
 					</view>
-					<text class="name font32 colorffffff ellipsis">{{deptname}}</text>
-					<text class="font32 colorffffff"> > </text>
-				</navigator>
+				</block>
 				<!-- 定位 end -->
-				<!-- 搜索 srtart -->
-				<view class="search_cont">
-					<template is="search"></template>
-				</view>
-				<!-- 搜索 end -->
-			</view>
-			<!-- 定位 搜索 end -->
-			<!-- banner start -->
-			<block wx:if="{{bannerTypeList[0].list.length}}">
-				<view class="banner_cont margin_tb12">
-					<banner id="banner" bannerList="{{bannerTypeList[0].list}}"></banner>
-				</view>
-			</block>
-			<!-- banner end -->
-			<!-- 公告 start -->
-			<view class="notice_cont colorffffff border_r500 overflow margin_tb12">
-				<navigator class="notice_img overflow" hover-class="none" url="/message/pages/noticeList/noticeList">
-					<image src="/lib/images/notice.png"></image>
-				</navigator>
-				<view class="notice_list">
-					<swiper class="notice_swiper" autoplay="true" circular="true" interval="5000" vertical="true">
-						<block wx:for="{{noticeList}}" wx:key="index">
-							<swiper-item catchtouchmove='catchTouchMove'>
-								<navigator class="notice_item font24 ellipsis" hover-class="none"
-									url="/message/pages/detail/detail?id={{item.id}}&type=notice&time={{item.Pubdate}}">{{item.title}}
-								</navigator>
-							</swiper-item>
-						</block>
-					</swiper>
-				</view>
-			</view>
-			<!-- 公告 end -->
-			<!-- 自定义功能区 start -->
-			<block wx:if="{{modulePictureList.length}}">
-				<view class="auto_cont margin_tb12">
-					<banner id="autoModule" bannerList="{{modulePictureList}}" bannerType="autoModule"></banner>
-				</view>
-			</block>
-			<!-- 自定义功能区 end -->
-			<!-- 视频广告区 start -->
-			<block wx:if="{{bannerTypeList[3].list.length}}">
-				<view class="advideo_cont margin_tb12">
-					<block wx:for="{{bannerTypeList[3].list}}" wx:key="index">
-						<video class="advideo" autoplay controls="{{false}}" loop muted show-progress="{{false}}"
-							show-fullscreen-btn="{{false}}" show-play-btn="{{false}}" show-center-play-btn="{{false}}"
-							src="{{baseUrl + item.videourl}}" bindtap="toBannerDetail" data-banner="{{item}}"></video>
-					</block>
-				</view>
-			</block>
-			<!-- 视频广告区 end -->
-			<!-- 友链banner区域 start -->
-			<block wx:if="{{friendLinkList.length}}">
-				<view class="link_cont margin_tb12">
-					<banner id="friendLink" bannerList="{{friendLinkList}}" bannerType="friendLink"></banner>
-				</view>
-			</block>
-			<!-- 友链banner区域 end -->
-			<!-- 海报区 start -->
-			<block wx:if="{{bannerTypeList[2].list.length}}">
-				<view class="poster overflow">
-					<block wx:for="{{bannerTypeList[2].list}}" wx:key="index">
-						<view class="poster_img fl overflow" bindtap="toBannerDetail" data-banner="{{item}}">
-							<image src="{{baseUrl + item.Imageurl}}"></image>
-						</view>
-					</block>
-				</view>
-			</block>
-			<!-- 海报区 end -->
-			<!-- 专区 start -->
-			<block wx:if="{{hotList.length}}">
-				<view class="zone overflow margin_tb12">
-					<block wx:for="{{hotList}}" wx:key="index">
-						<navigator class="zone_item {{item.lastItem ? 'lastItem' : ''}} border_r10 bgfbd2af fl" hover-class="none"
-							url="/shopping/pages/goodsList/goodsList?Cateid={{item.Id}}&title={{item.storecategoryname}}">
-							<view class="zone_itemtit">
-								<view class="zone_itemname colorfa6400 font32 font_blod ellipsis">{{item.storecategoryname}}</view>
-								<view class="tozone border_r500 colorffffff font24 bgd17537 tc">去看看</view>
-							</view>
-							<view class="zone_itemimg">
-								<image src="{{baseUrl + item.ico}}" mode="aspectFit"></image>
-							</view>
-						</navigator>
-					</block>
-				</view>
-			</block>
-			<!-- 专区 end -->
-			<!-- 各种类别商品轮播列表 start -->
-			<block wx:for="{{promotemodeList}}" wx:key="index" wx:if="{{item.list.length}}">
-				<view class="timeslimit border_r10 margin_tb12"
-					style="background: linear-gradient(180deg, {{home_promotebg}} 0%, #f9f9f9 100%);">
-					<navigator class="tit" hover-class="none"
-						url="/shopping/pages/goodsList/goodsList?title={{item.name}}&{{item.promotemode === 999 ? 'Datatype=1' : ('panicBuy=panicbuy&promotemode=' + item.promotemode)}}">
-						<view class="tit_name">
-							<image class="tit_img overflow" src="/lib/images/timeslimit.png" mode="aspectFit"></image>
-							<view class="colorffffff font32 font_blod">{{item.name}}</view>
-						</view>
-						<view class="more colorffffff">查看更多...</view>
-					</navigator>
-					<view class="goods_list3 scroll_x">
-						<block wx:for-item="goods" wx:key-index="gindex" wx:for="{{item.list}}" wx:key="gindex">
-							<goods goods="{{goods}}" showType="{{3}}" bind:getCartCount="getCartCount"></goods>
-						</block>
+				<!-- banner start -->
+				<block wx:if="{{item.name === 'banner' && index === item.sort}}">
+					<view class="banner_cont margin_tb12" style="height: {{bannerHeight}}rpx;">
+						<banner id="banner" isMarginFlag="{{isMarginFlag}}" bannerList="{{bannerTypeList[0].list}}"></banner>
 					</view>
-				</view>
-			</block>
-			<!-- 各种类别商品轮播列表 end -->
-			<!-- 首页活动样式一 start -->
-			<block wx:if="{{indexHotList.length}}">
-				<view class="index_hot1 margin_tb12">
-					<block wx:for="{{indexHotList}}" wx:key="index">
-						<template is="index_hot1" data="{{item, baseUrl, deptname, deptcode, defgoodsimg}}"></template>
+				</block>
+				<!-- banner end -->
+				<!-- 公告 start -->
+				<block wx:if="{{item.name === 'notice' && index === item.sort}}">
+					<view class="notice_cont colorffffff border_r500 overflow margin_tb12">
+						<navigator class="notice_img overflow" hover-class="none" url="/message/pages/noticeList/noticeList">
+							<image src="/lib/images/notice.png" mode="aspectFit"></image>
+						</navigator>
+						<view class="notice_list">
+							<swiper class="notice_swiper" autoplay="true" circular="true" interval="5000" vertical="true">
+								<block wx:for="{{noticeList}}" wx:key="index">
+									<swiper-item catchtouchmove='catchTouchMove'>
+										<navigator class="notice_item font24 ellipsis" hover-class="none"
+											url="/message/pages/detail/detail?id={{item.id}}&type=notice&time={{item.Pubdate}}">{{item.title}}
+										</navigator>
+									</swiper-item>
+								</block>
+							</swiper>
+						</view>
+					</view>
+				</block>
+				<!-- 公告 end -->
+				<!-- 自定义功能区 start -->
+				<block wx:if="{{item.name === 'module' && index === item.sort}}">
+					<view class="auto_cont margin_tb12">
+						<banner id="autoModule" bannerList="{{modulePictureList}}" bannerType="autoModule"></banner>
+					</view>
+				</block>
+				<!-- 自定义功能区 end -->
+				<!-- 视频广告区 start -->
+				<block wx:if="{{item.name === 'video' && index === item.sort}}">
+					<block wx:if="{{bannerTypeList[3].list.length}}">
+						<view class="advideo_cont margin_tb12">
+							<block wx:for="{{bannerTypeList[3].list}}" wx:key="index">
+								<video class="advideo" autoplay controls="{{false}}" loop muted show-progress="{{false}}"
+									show-fullscreen-btn="{{false}}" show-play-btn="{{false}}" show-center-play-btn="{{false}}"
+									src="{{baseUrl + item.videourl}}" bindtap="toBannerDetail" data-banner="{{item}}"></video>
+							</block>
+						</view>
 					</block>
-				</view>
+				</block>
+				<!-- 视频广告区 end -->
+				<!-- 友链banner区域 start -->
+				<block wx:if="{{item.name === 'friend' && index === item.sort}}">
+					<block wx:if="{{friendLinkList.length}}">
+						<view class="link_cont margin_tb12">
+							<banner id="friendLink" bannerList="{{friendLinkList}}" bannerType="friendLink"></banner>
+						</view>
+					</block>
+				</block>
+				<!-- 友链banner区域 end -->
+				<!-- 海报区 start -->
+				<block wx:if="{{item.name === 'poster' && index === item.sort}}">
+					<block wx:if="{{bannerTypeList[2].list.length}}">
+						<view class="poster overflow">
+							<block wx:for="{{bannerTypeList[2].list}}" wx:key="index">
+								<view class="poster_img fl overflow" bindtap="toBannerDetail" data-banner="{{item}}">
+									<image src="{{baseUrl + item.Imageurl}}"></image>
+								</view>
+							</block>
+						</view>
+					</block>
+				</block>
+				<!-- 海报区 end -->
+				<!-- 专区 start -->
+				<block wx:if="{{item.name === 'zone' && index === item.sort}}">
+					<block wx:if="{{hotList.length}}">
+						<view class="zone overflow margin_tb12">
+							<block wx:for="{{hotList}}" wx:key="index">
+								<navigator class="zone_item {{item.lastItem ? 'lastItem' : ''}} border_r10 bgfbd2af fl"
+									hover-class="none"
+									url="/shopping/pages/goodsList/goodsList?Cateid={{item.Id}}&title={{item.storecategoryname}}">
+									<view class="zone_itemtit">
+										<view class="zone_itemname colorfa6400 font32 font_blod ellipsis">{{item.storecategoryname}}</view>
+										<view class="tozone border_r500 colorffffff font24 bgd17537 tc">去看看</view>
+									</view>
+									<view class="zone_itemimg">
+										<image src="{{baseUrl + item.ico}}" mode="aspectFit"></image>
+									</view>
+								</navigator>
+							</block>
+						</view>
+					</block>
+				</block>
+				<!-- 专区 end -->
+				<!-- 各种类别商品轮播列表 start -->
+				<block wx:if="{{item.name === 'seckill' && index === item.sort}}">
+					<block wx:for="{{promotemodeList}}" wx:key="index" wx:if="{{item.list.length}}">
+						<view class="timeslimit border_r10 margin_tb12"
+							style="background: linear-gradient(180deg, {{home_promotebg}} 0%, #f9f9f9 100%);">
+							<navigator class="tit" hover-class="none"
+								url="/shopping/pages/goodsList/goodsList?title={{item.name}}&{{item.promotemode === 999 ? 'Datatype=1' : ('panicBuy=panicbuy&promotemode=' + item.promotemode)}}">
+								<view class="tit_name">
+									<image class="tit_img overflow" src="/lib/images/timeslimit.png" mode="aspectFit"></image>
+									<view class="colorffffff font32 font_blod">{{item.name}}</view>
+								</view>
+								<view class="more colorffffff">查看更多...</view>
+							</navigator>
+							<view class="goods_list3 scroll_x">
+								<block wx:for-item="goods" wx:key-index="gindex" wx:for="{{item.list}}" wx:key="gindex">
+									<goods goods="{{goods}}" showType="{{3}}" bind:getCartCount="getCartCount"></goods>
+								</block>
+							</view>
+						</view>
+					</block>
+				</block>
+				<!-- 各种类别商品轮播列表 end -->
+				<!-- 特价商品列表 start -->
+				<block wx:if="{{item.name === 'special' && index === item.sort}}">
+					<block wx:if="{{specialGoodsList.length}}">
+						<view class="timeslimit border_r10 margin_tb12"
+							style="background: linear-gradient(180deg, {{home_promotebg}} 0%, #f9f9f9 100%);">
+							<navigator class="tit" hover-class="none" url="/shopping/pages/goodsList/goodsList?title=特价商品&Datatype=1">
+								<view class="tit_name">
+									<image class="tit_img overflow" src="/lib/images/timeslimit.png" mode="aspectFit"></image>
+									<view class="colorffffff font32 font_blod">特价商品</view>
+								</view>
+								<view class="more colorffffff">查看更多...</view>
+							</navigator>
+							<view class="goods_list3 scroll_x">
+								<block wx:for="{{specialGoodsList}}" wx:key="index">
+									<goods goods="{{item}}" showType="{{3}}" bind:getCartCount="getCartCount"></goods>
+								</block>
+							</view>
+						</view>
+					</block>
+				</block>
+				<!-- 特价商品列表 end -->
+				<!-- 活动一（集群3） start -->
+				<block wx:if="{{item.name === 'activity1' && index === item.sort}}">
+					<block wx:if="{{indexHotList.length}}">
+						<view class="index_hot1 margin_tb12">
+							<block wx:for="{{indexHotList}}" wx:key="index">
+								<template is="index_hot1" data="{{item, baseUrl, deptname, deptcode, defgoodsimg}}"></template>
+							</block>
+						</view>
+					</block>
+				</block>
+				<!-- 活动一（集群3） end -->
 			</block>
-			<!-- 首页活动样式一 end -->
-			<!-- clusterList start -->
+			<!-- clusterList（集群1） start -->
 			<view class="clusterList overflow">
 				<block wx:for="{{clusterList}}" wx:key="index">
 					<view class="cluster apply-section border_r10 overflow" data-index='{{index}}'>
@@ -204,11 +238,11 @@
 					</view>
 				</block>
 			</view>
-			<!-- clusterList end -->
-			<!-- tabs_clusterList start -->
+			<!-- clusterList（集群1） end -->
+			<!-- tabs_clusterList（集群2） start -->
 			<view class="tabs_cont apply-section">
 				<!-- tit start -->
-				<view class="tabs_tit bgffffff z_index_99999">
+				<view class="tabs_tit bgffffff z_index_99999" style="top: {{navHeight}}px">
 					<scroll-view class="scroll_tabs_tit" scroll-x="true" scroll-with-animation="true"
 						scroll-into-view="{{scrollTabsData}}">
 						<block wx:for="{{tabsList}}" wx:key="index">
@@ -237,7 +271,7 @@
 				</block>
 				<!-- 商品列表_2 end -->
 			</view>
-			<!-- tabs_clusterList end -->
+			<!-- tabs_clusterList（集群2） end -->
 		</view>
 		<!-- 内容部分 end -->
 	</block>
@@ -250,7 +284,7 @@
 	<!-- 加载动画 end -->
 	<!-- 弹框广告 start -->
 	<block wx:if="{{addialogFlag}}">
-		<view class="ad_dialog bg000000_40" catchtouchmove="catchTouchMove">
+		<view class="ad_dialog bg000000_40 z_index_99999" catchtouchmove="catchTouchMove">
 			<view class="ad" bindtap="toBannerDetail" data-banner="{{adDialogImg}}">
 				<image src="{{baseUrl + adDialogImg.adsurl}}" mode="aspectFit"></image>
 			</view>

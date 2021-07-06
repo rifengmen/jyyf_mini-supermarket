@@ -1,4 +1,4 @@
-@import "/pages/template/template.wxss";
+@import '/pages/template/template.wxss';
 /* pages/category/category.wxss */
 .search_cont {
   position: fixed;
@@ -74,7 +74,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   flex-flow: wrap;
-  transition: linear .5s;
+  transition: linear 0.5s;
 }
 .level2 .name_cont.active .name_cont_1 {
   height: 0;
@@ -90,7 +90,7 @@
   height: 70rpx;
   line-height: 70rpx;
   padding: 0 24rpx;
-  transition: .5s linear;
+  transition: 0.5s linear;
 }
 .level2 .more.active {
   transform: rotate(180deg);
@@ -117,4 +117,7 @@
 .goodscont.active {
   min-height: calc(100vh - 90rpx - 70rpx);
   padding-top: 160rpx;
+}
+.goods_list1 {
+  min-height: calc(100vh - 140rpx);
 }

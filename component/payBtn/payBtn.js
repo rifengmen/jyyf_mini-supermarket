@@ -112,6 +112,8 @@ Component({
   data: {
     // 微信支付参数
     payStr: '',
+    // 储值卡名称
+    cardname: app.globalData.cardname,
   },
 
   /**

@@ -29,7 +29,11 @@ Component({
    */
   methods: {
     // 加入购物车
-    addCart (goods) {
+    addCart(goods) {
+      wx.showLoading({
+        title: '请求等待中...',
+        mask: true,
+      });
       let self = this
       let data = {
         Userid: self.data.userid,
@@ -55,7 +59,9 @@ Component({
         } else {
           toast(res.message)
         }
+        wx.hideLoading()
       }).catch(error => {
+        wx.hideLoading()
         toast(error.error)
       })
     },

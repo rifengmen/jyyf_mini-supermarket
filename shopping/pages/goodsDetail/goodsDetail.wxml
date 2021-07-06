@@ -12,19 +12,22 @@
 		<view class="goods_desc1 bgffffff">
 			<view class="goods_name">
 				<view class="name_section font32 font_blod">{{goodsDetail.Name}}</view>
+				<view class="name_section color666666">{{goodsDetail.barcode}}</view>
 				<!-- 活动人数 start -->
-				<view class="name_section">
-					<view class="tag_cont">
-						<block wx:if="{{goodsDetail.promotemode === 100}}">
-							<text
-								class="tag color71d793 font24 bgffffff border_r500 border_a71d793 tc">{{goodsDetail.topamount}}人拼团</text>
-						</block>
-						<block wx:elif="{{goodsDetail.promotemode === 102}}">
-							<text
-								class="tag color71d793 font24 bgffffff border_r500 border_a71d793 tc">{{goodsDetail.topamount}}人砍价</text>
-						</block>
+				<block wx:if="{{goodsDetail.topamount}}">
+					<view class="name_section">
+						<view class="tag_cont">
+							<block wx:if="{{goodsDetail.promotemode === 100}}">
+								<text
+									class="tag color71d793 font24 bgffffff border_r500 border_a71d793 tc">{{goodsDetail.topamount}}人拼团</text>
+							</block>
+							<block wx:elif="{{goodsDetail.promotemode === 102}}">
+								<text
+									class="tag color71d793 font24 bgffffff border_r500 border_a71d793 tc">{{goodsDetail.topamount}}人砍价</text>
+							</block>
+						</view>
 					</view>
-				</view>
+				</block>
 				<!-- 活动人数 end -->
 				<!-- 价格显示 start -->
 				<block wx:if="{{goodsDetail.scaleflag}}">

@@ -21,9 +21,9 @@
                   <view class="price color999999 font22">
                     <view class="actual_price">
                       <text class="colorfa6400">￥</text>
-                      <text class="colorfa6400 font36">{{item.actualmoney}}</text>
+                      <text class="colorfa6400 font36">{{item.price}}</text>
                     </view>
-                    <block wx:if="{{item.actualmoney !== item.saleprice}}">
+                    <block wx:if="{{item.price !== item.saleprice}}">
                       <del>
                         <text>￥</text>
                         <text class="font22">{{item.saleprice}}</text>
@@ -66,9 +66,12 @@
         </view>
         <view class="item_btn" wx:if="{{orderDetail.payflag || orderDetail.cancelflag}}">
           <view class="pay_btn border_r4 bg71d793 colorffffff border_a71d793" wx:if="{{orderDetail.payflag}}">
-            <navigator class="btn" hover-class="none" url="/scan/pages/editorOrder/editorOrder?deptcode={{deptcode}}&deptname={{deptname}}&flowno={{flowno}}">付款</navigator>
+            <navigator class="btn" hover-class="none"
+              url="/scan/pages/editorOrder/editorOrder?deptcode={{deptcode}}&deptname={{deptname}}&flowno={{flowno}}">付款
+            </navigator>
           </view>
-          <view class="cancel_btn border_r4 bgffffff color666666 border_a999999" wx:if="{{orderDetail.cancelflag}}" bindtap="cancelBtn">
+          <view class="cancel_btn border_r4 bgffffff color666666 border_a999999" wx:if="{{orderDetail.cancelflag}}"
+            bindtap="cancelBtn">
             <scanCancelBtn id="scanCancelBtn" class="btn" flowno="{{flowno}}"></scanCancelBtn>
           </view>
         </view>

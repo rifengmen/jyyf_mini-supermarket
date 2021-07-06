@@ -111,28 +111,53 @@ Page({
    */
   onReachBottom: function () {
     let self = this
+    let { rowCount, count, page, level1, level1ActiveIndex, level2, level2ActiveIndex } = self.data
     // 计算总页数
-    let totalPage = Math.ceil(self.data.rowCount / self.data.count)
+    let totalPage = Math.ceil(rowCount / count)
     // 下一页
-    let page = self.data.page
     page++
-    self.setData({
-      page: page
-    })
-    if (self.data.page > totalPage) {
-      toast('暂无更多')
-      return false
+    if (page > totalPage) {
+      // toast('暂无更多')
+      // return false
+      // 下一个一级分类
+      level1ActiveIndex++
+      // 下一个二级分类
+      level2ActiveIndex++
+      // 判断下一个二级分类是否存在
+      if ((level2.length - 1) >= level2ActiveIndex) {
+        let data = {
+          currentTarget: {
+            dataset: {
+              index: level2ActiveIndex
+            }
+          }
+        }
+        // 设置选中二级分类
+        self.setLevel2ActiveIndex(data)
+      } else if (((level1.length - 1) >= level1ActiveIndex) && ((level2.length - 1) < level2ActiveIndex)) {
+        let data = {
+          currentTarget: {
+            dataset: {
+              index: level1ActiveIndex
+            }
+          }
+        }
+        // 设置选中一级分类
+        self.setLevel1ActiveIndex(data)
+      }
+    } else {
+      wx.showLoading({
+        title: '正在加载',
+        mask: true,
+      })
+      // 设置请求开关
+      self.setData({
+        page: page,
+        getFlag: false,
+      })
+      // 获取商品列表
+      self.getGoodsList()
     }
-    wx.showLoading({
-      title: '正在加载',
-      mask: true,
-    })
-    // 设置请求开关
-    self.setData({
-      getFlag: false
-    })
-    // 获取商品列表
-    self.getGoodsList()
   },
 
   /**
@@ -226,13 +251,14 @@ Page({
   // 获取商品列表
   getGoodsList() {
     let self = this
-    let index1 = self.data.level1ActiveIndex
-    let index2 = self.data.level2ActiveIndex
-    let level1 = self.data.level1
-    let level2 = self.data.level2
+    let { level1, level2, level1ActiveIndex: index1, level2ActiveIndex: index2 } = self.data
+    // let index1 = self.data.level1ActiveIndex
+    // let index2 = self.data.level2ActiveIndex
+    // let level1 = self.data.level1
+    // let level2 = self.data.level2
     let data = {
       classcode: level1[index1].classid,
-      Cateid: level2[index2].classid,
+      Cateid: level2[index2].classid || '-1',
       Page: self.data.page,
       Count: self.data.count,
       Sortflg: self.data.sortflg,
@@ -265,16 +291,13 @@ Page({
   setLevel1ActiveIndex(e) {
     let self = this
     let index = e.currentTarget.dataset.index
-    // 设置二级类滚动数据
-    self.setData({
-      scroll1Data: 'level1_name' + (index - 1),
-      scroll2Data: 'level2_name0'
-    })
     // 重复选择不发送请求
     if (index === self.data.level1ActiveIndex) {
       return false
     }
     self.setData({
+      scroll1Data: 'level1_name' + (index - 1),
+      scroll2Data: 'level2_name0',
       level1ActiveIndex: index,
       level2ActiveIndex: 0,
       page: 1,
@@ -288,14 +311,12 @@ Page({
   setLevel2ActiveIndex(e) {
     let self = this
     let index = e.currentTarget.dataset.index
-    self.setData({
-      scroll2Data: 'level2_name' + index
-    })
     // 重复选择不发送请求
     if (index === self.data.level2ActiveIndex) {
       return false
     }
     self.setData({
+      scroll2Data: 'level2_name' + index,
       level2ActiveIndex: index,
       page: 1,
       goodsList: [],
@@ -312,6 +333,8 @@ Page({
       // 设置二级类全部显示开关
       self.setLevel2ShowFlag()
     }
+    // 回到顶部
+    self.toTop()
     // 获取商品列表
     self.getGoodsList()
   },
@@ -324,6 +347,14 @@ Page({
     })
   },
 
+  // 回到顶部
+  toTop() {
+    let self = this
+    wx.pageScrollTo({
+      scrollTop: 0,
+      duration: 500,
+    });
+  },
   // 更新购物车数量
   getCartCount() {
     let self = this

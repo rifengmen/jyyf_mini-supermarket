@@ -148,7 +148,7 @@ Page({
     }).exec(res => {
       const canvas = res[0].node
       const ctx = canvas.getContext('2d')
-      const dpr = wx.getSystemInfoSync().pixelRatio
+      const dpr = app.globalData.dpr
       // 新接口需显示设置画布宽高
       canvas.width = res[0].width * dpr
       canvas.height = res[0].height * dpr

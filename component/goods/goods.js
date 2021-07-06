@@ -1,9 +1,8 @@
 // component/goods/goods.js
-import toast from "../../utils/toast";
-import API from "../../api/index";
-
 require('../../app.js')
 const app = getApp()
+import toast from "../../utils/toast";
+import API from "../../api/index";
 
 Component({
   /**
@@ -67,7 +66,7 @@ Component({
    */
   methods: {
     // 调用子组件添加购物车方法
-    addCart (goods) {
+    addCart(goods) {
       let self = this
       // 购物车修改数量
       if (self.data.cartType === 1) {
@@ -87,7 +86,7 @@ Component({
     },
 
     // 加购物车弹框
-    dialogConfirm (goods) {
+    dialogConfirm(goods) {
       let self = this
       // 调用子组件添加购物车方法
       self.addCart(goods.detail)
@@ -96,9 +95,9 @@ Component({
     },
 
     // 购物车数量操作
-    editorCartCount (e) {
+    editorCartCount(e) {
       let self = this
-      let {type} = e.currentTarget.dataset
+      let { type } = e.currentTarget.dataset
       let goods = self.data.goods
       // 判断是否为标签商品
       if (goods.striperbarcodeflag === 1) {
@@ -135,7 +134,7 @@ Component({
     },
 
     // 设置加购物车弹框开关
-    setDialogFlag () {
+    setDialogFlag() {
       let self = this
       self.setData({
         dialogFlag: !self.data.dialogFlag
@@ -143,7 +142,7 @@ Component({
     },
 
     // 修改购物车商品数量的方法
-    updateIntoCar (cartdesc) {
+    updateIntoCar(cartdesc) {
       let self = this
       API.bill.updateIntoCar(cartdesc).then(result => {
         let res = result.data
@@ -166,13 +165,13 @@ Component({
     },
 
     // 设置购物车
-    setCartList (cartdesc) {
+    setCartList(cartdesc) {
       let self = this
       self.triggerEvent('setCartList', cartdesc)
     },
 
     // 更新购物车数量
-    getCartCount () {
+    getCartCount() {
       let self = this
       self.triggerEvent('getCartCount')
     },
@@ -183,11 +182,11 @@ Component({
    */
   pageLifetimes: {
     // 页面被展示
-    show: function() {
+    show: function () {
 
     },
     // 页面被隐藏
-    hide: function() {
+    hide: function () {
       let self = this
       // 页面隐藏关闭弹框
       if (self.data.dialogFlag) {
@@ -196,7 +195,7 @@ Component({
       }
     },
     // 页面尺寸变化
-    resize: function(size) {
+    resize: function (size) {
 
     }
   },
@@ -206,7 +205,7 @@ Component({
    */
   lifetimes: {
     // 在组件实例进入页面节点树时执行
-    attached: function() {
+    attached: function () {
       let self = this
       self.setData({
         // 门店名称
@@ -216,7 +215,7 @@ Component({
       })
     },
     // 在组件实例被从页面节点树移除时执行
-    detached: function() {
+    detached: function () {
 
     },
   },

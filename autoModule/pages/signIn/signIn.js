@@ -94,7 +94,7 @@ Page({
   // },
 
   // 签到
-  signIn () {
+  signIn() {
     let self = this
     let data = {
       date: utils.formatDate(new Date())
@@ -116,7 +116,7 @@ Page({
   },
 
   // 获取推荐商品列表
-  getRecommendList () {
+  getRecommendList() {
     let self = this
     let data = {
       Datatype: '1',
@@ -146,8 +146,8 @@ Page({
     })
   },
 
-  // 获取积分
-  getScore () {
+  // 获取积分记录
+  getScore() {
     let self = this
     let data = {
       memcode: app.globalData.memcode,

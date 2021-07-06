@@ -14,7 +14,7 @@ Page({
     frontColor: '#ffffff',
     // 主题背景色
     home_bgcolor: '',
-    // 身份信息，0：顾客；1：配送员；2：团长
+    // 身份信息，0：顾客；1：配送员；2：团长；3：核销员
     role: 0,
     // 身份标识列表
     roleList: app.globalData.roleList,
@@ -26,7 +26,9 @@ Page({
     memcode: '',
     // 是否注册
     bindmobileFlag: false,
-    // 余额
+    // 储值卡名称
+    cardname: app.globalData.cardname,
+    // 储值卡
     cardInfo: '',
     // 电子券
     tickNum: 0,
@@ -147,7 +149,7 @@ Page({
     self.getOrderNum()
     // 获取电子券数量
     self.getTickNum()
-    // 获取卡余额
+    // 获取余额
     self.getCardInfo()
     // 获取积分
     self.getScore()
@@ -198,7 +200,7 @@ Page({
     })
   },
 
-  // 获取卡余额
+  // 获取余额
   getCardInfo() {
     let self = this
     let data = {}
@@ -214,7 +216,7 @@ Page({
     })
   },
 
-  // 获取积分
+  // 获取积分记录
   getScore() {
     let self = this
     let data = {

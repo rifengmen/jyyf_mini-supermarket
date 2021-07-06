@@ -28,7 +28,7 @@ Component({
    */
   methods: {
     // 取消
-    isCancel () {
+    isCancel() {
       let self = this
       wx.showModal({
         title: '提示',
@@ -44,7 +44,7 @@ Component({
     },
 
     // 取消订单
-    cancel () {
+    cancel() {
       let self = this
       let data = {
         flowno: self.data.flowno,
